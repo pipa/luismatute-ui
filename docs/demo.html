@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-theme="sandals">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Sandals stop · @luismatute/ui</title>
+    <link rel="stylesheet" href="./ui/tokens.css" />
+    <link rel="stylesheet" href="./ui/fonts.css" />
+    <link rel="stylesheet" href="./ui/base.css" />
+    <link rel="stylesheet" href="./demo.css" />
+  </head>
+  <body>
+    <a class="lm-skip" href="#stop-sandals">Skip to stop</a>
+    <header class="lm-topbar">
+      <lm-motion-toggle></lm-motion-toggle>
+      <lm-pause></lm-pause>
+    </header>
+    <main class="stop" id="stop-sandals">
+      <div class="scene" aria-hidden="true">
+        <div class="layer sky" data-art="sky"></div>
+        <div class="layer rays" data-art="sun-rays"></div>
+        <div class="layer sun" data-art="sun"></div>
+        <div class="layer cloud c1 drift" data-art="cloud"></div>
+        <div class="layer cloud c2 drift" data-art="cloud"></div>
+        <div class="layer cloud c3 drift" data-art="cloud"></div>
+        <div class="layer gull g1" data-art="gull"></div>
+        <div class="layer gull g2" data-art="gull"></div>
+        <div class="layer sea" data-art="sea"></div>
+        <div class="layer waves" data-art="waves"></div>
+        <div class="layer island" data-art="island-sandals"></div>
+        <div class="layer plane fly" data-art="plane"></div>
+      </div>
+      <h1 class="lm-stage-title stop-title lm-on">
+        <span class="ln">Sandals</span>
+        <span class="ln">Resorts</span>
+      </h1>
+      <lm-card variant="stop">
+        <p class="lm-kicker">Stop 2 of 6 · July 2011 – August 2017</p>
+        <h2 id="h-sandals">Front-end developer, Sandals Resorts</h2>
+        <p>Frontend developer with some backend on sandals.com and beaches.com.</p>
+        <lm-more label="More" panel="more-sandals">
+          <p>Led several full redesigns and re-engineering efforts. Introduced Sass, JS templating frameworks, pre-compilers and other frontend tooling that was a breakthrough at the time, improving performance and productivity.</p>
+          <div class="lm-shots two">
+            <lm-shot
+              href="https://web.archive.org/web/20160620110713/http://www.sandals.com/"
+              src="./shots/sandals-600.webp"
+              chrome="sandals.com"
+              caption="sandals.com"
+              alt=""
+              width="600"
+              height="390"
+            ></lm-shot>
+            <lm-shot
+              href="https://web.archive.org/web/20150110181715/http://www.beaches.com/"
+              src="./shots/beaches-600.webp"
+              chrome="beaches.com"
+              caption="beaches.com"
+              alt=""
+              width="600"
+              height="390"
+            ></lm-shot>
+          </div>
+        </lm-more>
+        <ul class="lm-chips">
+          <li><lm-chip>sandals.com</lm-chip></li>
+          <li><lm-chip>beaches.com</lm-chip></li>
+        </ul>
+      </lm-card>
+      <lm-avatar pose="beach" label="Luis at the window"></lm-avatar>
+      <lm-globe class="stop-globe" heading="Route" description="Honduras, the Caribbean, then Amsterdam."></lm-globe>
+    </main>
+    <script type="module">
+      import { inlineIllustration } from './ui/index.js';
+
+      for (const el of document.querySelectorAll('[data-art]')) {
+        el.innerHTML = inlineIllustration(el.dataset.art, `${el.dataset.art}-${el.className.replace(/\s+/g, '-')}`);
+        if (el.classList.contains('sky') || el.classList.contains('sea')) {
+          el.querySelector('svg')?.setAttribute('preserveAspectRatio', 'none');
+        }
+      }
+    </script>
+  </body>
+</html>

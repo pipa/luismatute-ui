@@ -1,0 +1,115 @@
+{
+  "name": "@luismatute/ui",
+  "version": "0.1.0",
+  "description": "Design system for Luis Matute's sites, extracted from the Wheels up design.",
+  "license": "MIT",
+  "type": "module",
+  "author": "Luis Matute",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipa/luismatute-ui.git"
+  },
+  "keywords": [
+    "design-system",
+    "web-components",
+    "luismatute"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.33.4",
+  "sideEffects": [
+    "**/*.css",
+    "./dist/components/*.js",
+    "./dist/index.js"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens/index.d.ts",
+      "import": "./dist/tokens/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./theme.css": "./dist/theme.css",
+    "./base.css": "./dist/base.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./components/card": {
+      "types": "./dist/components/card.d.ts",
+      "import": "./dist/components/card.js"
+    },
+    "./components/chip": {
+      "types": "./dist/components/chip.d.ts",
+      "import": "./dist/components/chip.js"
+    },
+    "./components/more": {
+      "types": "./dist/components/more.d.ts",
+      "import": "./dist/components/more.js"
+    },
+    "./components/motion-toggle": {
+      "types": "./dist/components/motion-toggle.d.ts",
+      "import": "./dist/components/motion-toggle.js"
+    },
+    "./components/pause": {
+      "types": "./dist/components/pause.d.ts",
+      "import": "./dist/components/pause.js"
+    },
+    "./components/shot": {
+      "types": "./dist/components/shot.d.ts",
+      "import": "./dist/components/shot.js"
+    },
+    "./components/avatar": {
+      "types": "./dist/components/avatar.d.ts",
+      "import": "./dist/components/avatar.js"
+    },
+    "./components/globe": {
+      "types": "./dist/components/globe.d.ts",
+      "import": "./dist/components/globe.js"
+    },
+    "./components/flight-plan": {
+      "types": "./dist/components/flight-plan.d.ts",
+      "import": "./dist/components/flight-plan.js"
+    },
+    "./illustrations": {
+      "types": "./dist/illustrations/index.d.ts",
+      "import": "./dist/illustrations/index.js"
+    },
+    "./illustrations/*": "./dist/illustrations/*"
+  },
+  "scripts": {
+    "build": "node --experimental-strip-types scripts/build.mjs",
+    "build:docs": "node scripts/build-docs.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "test": "vitest run",
+    "visual": "playwright test",
+    "gen:illustrations": "node scripts/gen-illustrations.mjs"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/node": "26.6.5",
+    "happy-dom": "20.14.6",
+    "playwright": "1.64.0",
+    "svgo": "4.1.0",
+    "tsup": "8.5.1",
+    "typescript": "7.0.2",
+    "vitest": "5.0.3"
+  }
+}

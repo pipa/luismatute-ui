@@ -1,0 +1,2 @@
+export declare const pine = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 80 130\"><path fill=\"var(--lm-leaf)\" d=\"m40 20 20 38h-9l19 42H44v20h-8v-20H10l19-42h-9Z\"/></svg>";
+//# sourceMappingURL=pine.d.ts.map

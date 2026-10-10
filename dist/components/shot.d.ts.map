@@ -1,0 +1,1 @@
+{"version":3,"file":"shot.d.ts","sourceRoot":"","sources":["../../src/components/shot.ts"],"names":[],"mappings":"AAAA,qBAAa,MAAO,SAAQ,WAAW;IACrC,iBAAiB,IAAI,IAAI,CA+CxB;CACF;AAED,wBAAgB,YAAY,IAAI,IAAI,CAEnC;AAED,OAAO,CAAC,MAAM,CAAC;IACb,UAAU,qBAAqB;QAC7B,SAAS,EAAE,MAAM,CAAC;KACnB;CACF"}

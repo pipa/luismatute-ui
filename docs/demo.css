@@ -1,0 +1,209 @@
+.stop {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--lm-sea-4);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scene .layer {
+  position: absolute;
+}
+
+.scene svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.scene .sky,
+.scene .sea,
+.scene .waves {
+  left: 0;
+  right: 0;
+}
+
+.scene .sky {
+  top: 0;
+  height: 64%;
+}
+
+.scene .sky svg,
+.scene .sea svg {
+  width: 100%;
+  height: 100%;
+}
+
+.scene .rays {
+  left: 62%;
+  top: 58%;
+  width: 160vmax;
+  height: 160vmax;
+  transform: translate(-50%, -50%);
+}
+
+.scene .sun {
+  left: 62%;
+  top: 58%;
+  width: 24vh;
+  height: 24vh;
+  transform: translate(-50%, -50%);
+}
+
+.scene .cloud {
+  width: min(28vw, 280px);
+  opacity: 0.95;
+}
+
+.scene .cloud.c1 {
+  left: 8%;
+  top: 12%;
+}
+
+.scene .cloud.c2 {
+  left: 34%;
+  top: 6%;
+  width: min(22vw, 220px);
+}
+
+.scene .cloud.c3 {
+  left: 78%;
+  top: 16%;
+}
+
+.scene .gull {
+  width: 42px;
+  height: 22px;
+}
+
+.scene .gull.g1 {
+  left: 48%;
+  top: 18%;
+}
+
+.scene .gull.g2 {
+  left: 70%;
+  top: 12%;
+}
+
+.scene .sea {
+  bottom: 0;
+  height: 42%;
+}
+
+.scene .waves {
+  bottom: 16%;
+  height: 24%;
+}
+
+.scene .island {
+  left: 38%;
+  bottom: 6%;
+  width: min(56vw, 700px);
+}
+
+.scene .plane {
+  left: 74%;
+  top: 25.5%;
+  width: min(25vw, 42vh);
+  transform: translate(-50%, -50%) rotate(-1.5deg);
+}
+
+.stop-title {
+  position: absolute;
+  z-index: 2;
+  left: max(24px, 4vw);
+  top: 6.5vh;
+  margin: 0;
+  font-size: min(15vh, 12vw);
+  max-width: 62vw;
+}
+
+.stop-title .ln {
+  display: block;
+}
+
+.stop lm-card {
+  position: absolute;
+  z-index: 2;
+  left: max(24px, 4vw);
+  top: calc(6.5vh + 1.82 * min(15vh, 12vw));
+  width: clamp(280px, 38vw, 470px);
+  transform: rotate(-0.8deg);
+}
+
+.stop-globe {
+  position: fixed;
+  z-index: var(--lm-z-globe);
+  top: var(--lm-space-12);
+  right: var(--lm-space-12);
+}
+
+.stop lm-avatar {
+  position: absolute;
+  z-index: 3;
+  right: max(16px, 2.5vw);
+  bottom: max(16px, 3.5vh);
+  height: min(236px, 25vh);
+  width: auto;
+}
+
+@media (max-width: 639px) {
+  .scene .sun,
+  .scene .rays {
+    left: 72%;
+    top: 22%;
+  }
+
+  .scene .rays {
+    width: 140vmax;
+    height: 140vmax;
+  }
+
+  .scene .sun {
+    width: 30vw;
+    height: 30vw;
+  }
+
+  .scene .island {
+    left: 8%;
+    bottom: 22%;
+    width: 92vw;
+  }
+
+  .scene .plane {
+    left: 78%;
+    top: 10%;
+    width: 38vw;
+  }
+
+  .stop-title {
+    left: 12px;
+    top: 64px;
+    max-width: calc(100% - 120px);
+    font-size: min(10vh, 15vw);
+  }
+
+  .stop lm-card {
+    left: 12px;
+    right: 12px;
+    top: 34vh;
+    bottom: 8px;
+    width: auto;
+    overflow: auto;
+    transform: none;
+  }
+
+  .stop lm-avatar {
+    height: clamp(82px, 11.5vh, 112px);
+    right: 8px;
+    bottom: auto;
+    top: 15%;
+  }
+}

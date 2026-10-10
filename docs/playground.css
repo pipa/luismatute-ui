@@ -1,0 +1,149 @@
+body {
+  background: var(--lm-paper);
+  color: var(--lm-ink);
+}
+
+.docs {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 88px 0 72px;
+}
+
+.docs h1 {
+  margin: 0.1em 0 0.2em;
+  font:
+    var(--lm-weight-display) var(--lm-font-size-pass) / var(--lm-leading-pass)
+    var(--lm-font-display);
+  font-stretch: 75%;
+  letter-spacing: var(--lm-tracking-display);
+  text-shadow: var(--lm-shadow-text);
+}
+
+.docs h2 {
+  margin: 1.6em 0 0.5em;
+  font:
+    var(--lm-weight-bold) var(--lm-font-size-title) / var(--lm-leading-title)
+    var(--lm-font-text);
+}
+
+.docs p,
+.docs li {
+  max-width: 68ch;
+}
+
+.docs a.nav {
+  color: var(--lm-accent-ink);
+  font-weight: var(--lm-weight-bold);
+}
+
+.swatches,
+.bands,
+.art-grid,
+.pose-grid,
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lm-space-12);
+}
+
+.swatch {
+  width: 132px;
+  border: var(--lm-border-line) solid var(--lm-ink);
+  border-radius: var(--lm-radius-shot);
+  overflow: hidden;
+  background: var(--lm-white);
+  box-shadow: var(--lm-shadow-shot);
+}
+
+.swatch i {
+  display: block;
+  height: 64px;
+}
+
+.swatch span,
+.theme-card span,
+.token-note {
+  display: block;
+  padding: 6px 8px 8px;
+  font:
+    var(--lm-weight-medium) var(--lm-font-size-micro) /
+    var(--lm-leading-caption) var(--lm-font-mono);
+}
+
+.theme-card {
+  width: min(100%, 240px);
+  border: var(--lm-border-line) solid var(--lm-ink);
+  border-radius: var(--lm-radius-card);
+  overflow: hidden;
+  background: var(--lm-paper);
+  box-shadow: var(--lm-shadow-card);
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+
+.theme-card .sky {
+  height: 72px;
+}
+
+.theme-card.on {
+  outline: 3px solid var(--lm-focus);
+  outline-offset: 3px;
+}
+
+.type-row {
+  margin: 0 0 0.6em;
+}
+
+.motion-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lm-space-16);
+  align-items: center;
+}
+
+.motion-box {
+  width: 88px;
+  height: 88px;
+  border: var(--lm-border-thick) solid var(--lm-ink);
+  border-radius: var(--lm-radius-card);
+  background: var(--lm-highlight);
+  box-shadow: var(--lm-shadow-card);
+}
+
+.art-grid figure {
+  width: 160px;
+  margin: 0;
+  padding: var(--lm-space-8);
+  border: var(--lm-border-hair) solid var(--lm-ink);
+  border-radius: var(--lm-radius-shot);
+  background: var(--lm-sand);
+}
+
+.art-grid svg {
+  display: block;
+  width: 100%;
+  height: 110px;
+}
+
+.art-grid figcaption {
+  margin-top: 6px;
+  font:
+    var(--lm-weight-medium) var(--lm-font-size-micro) / 1.3 var(--lm-font-mono);
+}
+
+.pose-grid lm-avatar {
+  width: 120px;
+}
+
+.stack > * {
+  max-width: 420px;
+}
+
+.placeholder {
+  margin: 0;
+  padding: 8px 10px;
+  border: var(--lm-border-hair) dashed var(--lm-rule);
+  font:
+    var(--lm-weight-medium) var(--lm-font-size-micro) / 1.4 var(--lm-font-mono);
+}
