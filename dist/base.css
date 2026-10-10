@@ -750,7 +750,7 @@ lm-avatar .lu.ex-beach .lu-glint {
 
 lm-avatar .lu .lu-hand {
   transform-box: view-box;
-  transform-origin: 168px 156px;
+  transform-origin: 194px 156px;
 }
 
 lm-avatar:not([static]) .lu.ex-wave .lu-hand {
