@@ -1,6 +1,6 @@
 # Archived LM shield
 
-The old luismatute.me mark is the site favicon, a 48×48 grayscale PNG with alpha. It is two shapes: an L (left stem plus the whole pointed base) and an M (upper-right mass, diagonal left arm, high right peak, downward notch between the body and the right leg). Together they silhouette a heater shield.
+The old luismatute.me mark is the site favicon, a 48×48 grayscale PNG with alpha. It is two strokes that do not touch. The L is the left side of an open shield: it curves down into the bottom point and turns up a short way. The M is a chevron across the top that continues down the right side and stops short of that upturn. The counter is one open, shield-shaped space. The redraw in `01-shield` follows that construction.
 
 There is no separate logo SVG and no `og:image`. `favicon.ico` snapshots return 404. CSS backgrounds are project sprites, not a logo. `LM-Site.svg` is an icon font, not the shield. `lmmg.jpg` is a photograph.
 
