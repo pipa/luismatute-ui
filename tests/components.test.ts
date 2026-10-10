@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defineLmAvatar } from '../src/components/avatar.ts';
 import { defineLmCard } from '../src/components/card.ts';
@@ -13,6 +15,7 @@ import {
   illustrations,
   inlineIllustration,
 } from '../src/illustrations/index.ts';
+import { duration, skin } from '../src/tokens/tokens.ts';
 
 function media(matches: boolean): void {
   vi.stubGlobal('matchMedia', (query: string) => ({
@@ -241,6 +244,35 @@ describe('lm-avatar', () => {
     vi.advanceTimersByTime(8000);
     expect(svg?.classList.contains('blink')).toBe(false);
   });
+
+  it('tints the Erika lenses on the beach pose and draws no separate sunglasses', () => {
+    defineLmAvatar();
+    const avatar = document.createElement('lm-avatar');
+    avatar.setAttribute('pose', 'beach');
+    avatar.setAttribute('static', '');
+    document.body.append(avatar);
+    const svg = avatar.querySelector('svg');
+    expect(svg?.querySelector('.lu-glasses')).toBeNull();
+    const shades = svg?.querySelector('.lu-shades');
+    expect(shades?.querySelectorAll('rect').length).toBe(2);
+    expect(shades?.innerHTML).toContain('#3a2a22');
+    expect(shades?.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('raises an open hand for the wave pose', () => {
+    defineLmAvatar();
+    const avatar = document.createElement('lm-avatar');
+    avatar.setAttribute('pose', 'wave');
+    avatar.setAttribute('static', '');
+    document.body.append(avatar);
+    const svg = avatar.querySelector('svg');
+    expect(svg?.classList.contains('ex-wave')).toBe(true);
+    expect(svg?.querySelectorAll('.lu-finger').length).toBe(4);
+    expect(svg?.querySelector('.lu-thumb')).not.toBeNull();
+    expect(svg?.querySelector('.lu-hand')?.innerHTML).toContain(
+      'var(--lm-skin)',
+    );
+  });
 });
 
 describe('illustrations', () => {
@@ -255,5 +287,34 @@ describe('illustrations', () => {
     expect(one).not.toContain('__id__');
     expect(one).not.toContain('seat-b');
     expect(two).toContain('seat-b');
+  });
+
+  it('draws the likeness v3 face and a transform-only wave', () => {
+    const svg = illustrations.avatar;
+    expect(skin.skin).toBe('#c89a6b');
+    expect(skin.d).toBe('#a57950');
+    expect(skin.beard).toBe('#5c3a2c');
+    expect(svg).toContain('#4a2e24');
+    expect(svg).toContain('#8b5a3e');
+    expect(svg).toContain('#e1ad84');
+    expect(svg).toContain('rx="6.5"');
+    expect(svg).not.toContain('lu-glasses');
+    expect(svg).not.toContain('#e2a17a');
+    expect(svg.match(/class="lu-finger"/g)?.length).toBe(4);
+    const css = readFileSync(resolve('src/styles/base.css'), 'utf8');
+    expect(css).toContain('@keyframes lm-avatar-wave');
+    expect(css).toContain('rotate(-14deg)');
+    expect(css).toContain('rotate(14deg)');
+    expect(css).toContain('var(--lm-duration-avatar-wave)');
+    expect(duration.avatarWave).toBe('4.2s');
+    expect(duration.avatarWaveOnce).toBe('1.2s');
+    expect(css).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(css).toContain('lm-avatar[static] .lu.ex-wave .lu-hand');
+    const waveMotion = css.slice(
+      css.indexOf('@keyframes lm-avatar-wave'),
+      css.indexOf('@keyframes lm-bob'),
+    );
+    expect(waveMotion).toContain('transform: rotate');
+    expect(waveMotion).not.toContain('translate');
   });
 });

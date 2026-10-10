@@ -3,6 +3,11 @@
  * Every value is taken from design/travel-opus/concept-c-takeoff.html
  * at tag concept-c-v2 (the Wheels up page). Do not invent colours,
  * durations, or easings here.
+ *
+ * Avatar likeness v3 replaces the page skin, shadow, and beard:
+ * skin #c89a6b, shadow #a57950, beard mid #5c3a2c. The plane pilot
+ * shares those three tokens. Beard dark #4a2e24, beard light #8b5a3e,
+ * nostril #e1ad84, and the beach lens tint stay in the avatar drawing.
  */
 
 export const color = {
@@ -70,12 +75,12 @@ export const color = {
 } as const;
 
 export const skin = {
-  skin: '#c98e62',
-  d: '#a96f47',
+  skin: '#c89a6b',
+  d: '#a57950',
   blush: '#e0805f',
   hair: '#231812',
   fade: '#5a463a',
-  beard: '#2a1c15',
+  beard: '#5c3a2c',
   amber: '#b0662f',
   tort: '#5a2f18',
   lip: '#7a2e22',
@@ -366,6 +371,8 @@ export const duration = {
   flag: '0.9s',
   noteDraw: '0.9s',
   shade: '1.1s',
+  /** One wave gesture. Three swings, then the hand is back at rest. */
+  avatarWaveOnce: '1.2s',
   strip: '1.3s',
   beacon: '1.4s',
   puff: '1.5s',
@@ -377,6 +384,8 @@ export const duration = {
   twinkle: '3s',
   smoke: '3.2s',
   bob: '3.4s',
+  /** Wave gesture, then a rest, then it repeats. */
+  avatarWave: '4.2s',
   wave: '3.6s',
   beam: '3.6s',
   sway: '4.4s',

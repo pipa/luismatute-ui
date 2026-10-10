@@ -3,6 +3,11 @@
  * Every value is taken from design/travel-opus/concept-c-takeoff.html
  * at tag concept-c-v2 (the Wheels up page). Do not invent colours,
  * durations, or easings here.
+ *
+ * Avatar likeness v3 replaces the page skin, shadow, and beard:
+ * skin #c89a6b, shadow #a57950, beard mid #5c3a2c. The plane pilot
+ * shares those three tokens. Beard dark #4a2e24, beard light #8b5a3e,
+ * nostril #e1ad84, and the beach lens tint stay in the avatar drawing.
  */
 export declare const color: {
     readonly ink: '#2b1b14';
@@ -68,12 +73,12 @@ export declare const color: {
     readonly rays: '#fff6dc';
 };
 export declare const skin: {
-    readonly skin: '#c98e62';
-    readonly d: '#a96f47';
+    readonly skin: '#c89a6b';
+    readonly d: '#a57950';
     readonly blush: '#e0805f';
     readonly hair: '#231812';
     readonly fade: '#5a463a';
-    readonly beard: '#2a1c15';
+    readonly beard: '#5c3a2c';
     readonly amber: '#b0662f';
     readonly tort: '#5a2f18';
     readonly lip: '#7a2e22';
@@ -263,6 +268,8 @@ export declare const duration: {
     readonly flag: '0.9s';
     readonly noteDraw: '0.9s';
     readonly shade: '1.1s';
+    /** One wave gesture. Three swings, then the hand is back at rest. */
+    readonly avatarWaveOnce: '1.2s';
     readonly strip: '1.3s';
     readonly beacon: '1.4s';
     readonly puff: '1.5s';
@@ -274,6 +281,8 @@ export declare const duration: {
     readonly twinkle: '3s';
     readonly smoke: '3.2s';
     readonly bob: '3.4s';
+    /** Wave gesture, then a rest, then it repeats. */
+    readonly avatarWave: '4.2s';
     readonly wave: '3.6s';
     readonly beam: '3.6s';
     readonly sway: '4.4s';
@@ -547,12 +556,12 @@ export declare const tokens: {
         readonly rays: '#fff6dc';
     };
     readonly skin: {
-        readonly skin: '#c98e62';
-        readonly d: '#a96f47';
+        readonly skin: '#c89a6b';
+        readonly d: '#a57950';
         readonly blush: '#e0805f';
         readonly hair: '#231812';
         readonly fade: '#5a463a';
-        readonly beard: '#2a1c15';
+        readonly beard: '#5c3a2c';
         readonly amber: '#b0662f';
         readonly tort: '#5a2f18';
         readonly lip: '#7a2e22';
@@ -737,6 +746,8 @@ export declare const tokens: {
         readonly flag: '0.9s';
         readonly noteDraw: '0.9s';
         readonly shade: '1.1s';
+        /** One wave gesture. Three swings, then the hand is back at rest. */
+        readonly avatarWaveOnce: '1.2s';
         readonly strip: '1.3s';
         readonly beacon: '1.4s';
         readonly puff: '1.5s';
@@ -748,6 +759,8 @@ export declare const tokens: {
         readonly twinkle: '3s';
         readonly smoke: '3.2s';
         readonly bob: '3.4s';
+        /** Wave gesture, then a rest, then it repeats. */
+        readonly avatarWave: '4.2s';
         readonly wave: '3.6s';
         readonly beam: '3.6s';
         readonly sway: '4.4s';
