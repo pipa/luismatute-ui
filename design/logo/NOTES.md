@@ -8,14 +8,16 @@ Marks for luismatute.me. They share the Wheels up palette and the display face a
 
 Construction units are the SVG user units of the 2016 favicon, a 48×48 grid. The shield is two open strokes of one weight. View boxes hug the ink, with a little pad, and do not include clear space. A favicon tile is the mark, not a mark floating in a margin.
 
-1. **Shield** (`01-shield`). Two filled ribbons, weight 6.6, ends cut on a chamfer. The L is the left side: it curves down into the bottom point and turns up a short way. The M is the chevron: the left arm starts lower, dips to a V, rises to the top-right corner, then curves down the right side and stops short of the L. The counter is one open shield-shaped space. The gap between the two ends is about 3 units, so it survives the bolder cut.
+1. **Shield** (`01-shield`). Two filled ribbons, weight 6.6. The width is the offset between the rails, so along both strokes it stays within 3% of 6.6 (the body measures within 1%). The L is the left side: it curves down into the bottom point and turns up a short way. The M is the chevron: the left arm starts lower, dips to a V, rises to the top-right corner, then curves down the right side and stops short of the L. The counter is one open shield-shaped space.
+
+   The upturn and the right arm end on parallel chamfers, both at 36° to the horizontal. The gap between those two faces is 0.6 × the stroke, 3.96 units. The top-left terminal and the peak facet are the same angle, 22°. The inner arm starts on a square end.
 
    Centerlines, before the end trim:
 
    - L: `(7.2, 6.2)` curve to `(21.2, 42.2)`, line through `(23.4, 43.0)` to `(27.2, 39.2)`, curve to `(30.6, 33.6)`.
    - M: `(15.0, 11.6)` curve to `(23.6, 20.2)`, line to `(25.4, 21.4)` to `(31.2, 15.6)`, curve to `(40.2, 5.6)`, line to `(41.2, 4.6)` to `(40.4, 12)`, curve to `(35.2, 33.2)`.
 
-   `favicon.svg` is the same drawing at weight 8.15. Use it at 16 and 32. `mark.svg` is the 6.6 weight, for 180 and up.
+   `favicon.svg` is the same drawing at weight 8.15, with its own gap of 0.6 × 8.15 = 4.89 so the opening survives at 16px. Use it at 16 and 32. `mark.svg` is the 6.6 weight, for 180 and up.
 
 2. **Shield line** (`01b-shield-monoline`). The same centerlines as one stroke. Round cap, round join, stroke 3.5. That is the avatar’s line weight: option 02 is stroke 7 on an 84-wide view box, and 3.5 / 42 matches 7 / 84.
 
@@ -25,7 +27,7 @@ Construction units are the SVG user units of the 2016 favicon, a 48×48 grid. Th
 
 5. **Wordmark.** Outlines of Bricolage Grotesque 96pt ExtraBold (`fonts/BricolageGrotesque-Display.woff2`, wght 800, wdth 100). Word at scale 0.08, cap height 52.8. Extra pair kerning, in font units, on top of the font’s own kerning: Lu −8, ui −24, is −14, s/space −70, space/M −40, Ma −40, at −16, tu −36, ut −20, te −10. `favicon.svg` is LM at scale 0.12.
 
-6. **Stamp** (`05-stamp`). The shield inside a double ring. “LUIS MATUTE” follows the top of the ring and “AMS” sits at the bottom, both in Martian Mono (wght 580, wdth 100), baked as outlines. The type is a tool for the stamp, not a new brand colour. `favicon.svg` is the shield alone, the same bolder cut as 01.
+6. **Stamp** (`05-stamp`). The shield inside a double ring. “LUIS MATUTE” follows the top of the ring and “AMS” sits at the bottom. The letters are Martian Mono (wght 580, wdth 100) converted to outlines, including the A, so the ring does not depend on a live font. Spacing is the mono advance, one slot per letter, with the word space as one empty slot. The type is a tool for the stamp, not a new brand colour. `favicon.svg` is the shield alone, the same bolder cut as 01.
 
 7. **Tomato** (`06-shield-tomato`). The shield from 01. The M is tomato `#e2492f`, the L is ink. `mark-mono.svg` is the whole mark in one colour.
 
@@ -66,6 +68,6 @@ Long side of the ink.
 
 Use **01 Shield**.
 
-It is the 2016 favicon redrawn as what it actually is: an open shield of two even strokes, with the gap and the chamfered ends kept. It reads at 16px on the bolder cut, and it locks up next to the name at 1.4× the cap. This is the mark Luis is most likely to pick.
+It is the 2016 favicon redrawn as what it actually is: an open shield of two even strokes. The ends are parallel chamfers with a gap of 0.6 × the stroke, and the two top terminals share one angle. It reads at 16px on the bolder cut, and it locks up next to the name at 1.4× the cap. This is the mark Luis is most likely to pick.
 
 Keep **01b Shield line** as the bridge to the avatar stroke, and **06 Tomato** when the M should carry the tomato. Monoline, Departure, Wordmark, and the Stamp are the other alternates. The stamp is for the social card, not for the favicon.
