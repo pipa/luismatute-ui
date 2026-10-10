@@ -750,18 +750,18 @@ lm-avatar .lu.ex-beach .lu-glint {
 
 lm-avatar .lu .lu-hand {
   transform-box: view-box;
-  transform-origin: 194px 156px;
+  transform-origin: 163px 108px;
 }
 
 lm-avatar:not([static]) .lu.ex-wave .lu-hand {
-  animation: lm-avatar-wave var(--lm-duration-avatar-wave) var(--lm-ease-linear)
+  animation: lm-avatar-wave var(--lm-duration-avatar-wave) var(--lm-ease-in-out)
     infinite;
 }
 
 lm-avatar:not([static]):hover .lu.ex-wave .lu-hand,
 lm-avatar:not([static]):focus-within .lu.ex-wave .lu-hand {
   animation: lm-avatar-wave-once var(--lm-duration-avatar-wave-once)
-    var(--lm-ease-linear);
+    var(--lm-ease-in-out);
 }
 
 lm-avatar[static] .lu.ex-wave .lu-hand,
@@ -1165,7 +1165,7 @@ lm-globe .lm-leg[data-hot="true"] {
   }
 }
 
-/* Three swings across 1.2s of a 4.2s loop, then the hand rests. */
+/* Three swings about the wrist across 1.2s of a 4.2s loop, then the hand rests. */
 @keyframes lm-avatar-wave {
   0%,
   28.6%,

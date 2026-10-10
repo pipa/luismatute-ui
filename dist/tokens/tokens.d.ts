@@ -4,10 +4,9 @@
  * at tag concept-c-v2 (the Wheels up page). Do not invent colours,
  * durations, or easings here.
  *
- * Avatar likeness v3 replaces the page skin, shadow, and beard:
- * skin #c89a6b, shadow #a57950, beard mid #5c3a2c. The plane pilot
- * shares those three tokens. Beard dark #4a2e24, beard light #8b5a3e,
- * nostril #e1ad84, and the beach lens tint stay in the avatar drawing.
+ * Avatar skin is option B from the likeness study: skin #c89a6b and
+ * shadow #a57950 replace the page pair. The plane pilot shares them.
+ * The nostril (#e1ad84) and the beach lens tint stay in the drawing.
  */
 export declare const color: {
     readonly ink: '#2b1b14';
@@ -78,7 +77,7 @@ export declare const skin: {
     readonly blush: '#e0805f';
     readonly hair: '#231812';
     readonly fade: '#5a463a';
-    readonly beard: '#5c3a2c';
+    readonly beard: '#2a1c15';
     readonly amber: '#b0662f';
     readonly tort: '#5a2f18';
     readonly lip: '#7a2e22';
@@ -561,7 +560,7 @@ export declare const tokens: {
         readonly blush: '#e0805f';
         readonly hair: '#231812';
         readonly fade: '#5a463a';
-        readonly beard: '#5c3a2c';
+        readonly beard: '#2a1c15';
         readonly amber: '#b0662f';
         readonly tort: '#5a2f18';
         readonly lip: '#7a2e22';

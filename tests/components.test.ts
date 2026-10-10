@@ -245,7 +245,7 @@ describe('lm-avatar', () => {
     expect(svg?.classList.contains('blink')).toBe(false);
   });
 
-  it('tints the Erika lenses on the beach pose and draws no separate sunglasses', () => {
+  it('tints the round lenses on the beach pose and draws no separate sunglasses', () => {
     defineLmAvatar();
     const avatar = document.createElement('lm-avatar');
     avatar.setAttribute('pose', 'beach');
@@ -254,12 +254,15 @@ describe('lm-avatar', () => {
     const svg = avatar.querySelector('svg');
     expect(svg?.querySelector('.lu-glasses')).toBeNull();
     const shades = svg?.querySelector('.lu-shades');
-    expect(shades?.querySelectorAll('rect').length).toBe(2);
+    const lenses = shades?.querySelectorAll('circle');
+    expect(lenses?.length).toBe(2);
+    expect(lenses?.[0]?.getAttribute('r')).toBe('12.5');
+    expect(lenses?.[0]?.getAttribute('opacity')).toBe('.82');
     expect(shades?.innerHTML).toContain('#3a2a22');
     expect(shades?.querySelectorAll('path').length).toBe(2);
   });
 
-  it('raises an open hand for the wave pose', () => {
+  it('raises his own arm and open hand for the wave pose', () => {
     defineLmAvatar();
     const avatar = document.createElement('lm-avatar');
     avatar.setAttribute('pose', 'wave');
@@ -272,6 +275,9 @@ describe('lm-avatar', () => {
     expect(svg?.querySelector('.lu-hand')?.innerHTML).toContain(
       'var(--lm-skin)',
     );
+    const wave = svg?.querySelector('.lu-wave');
+    expect(wave?.closest('.lu-torso')).not.toBeNull();
+    expect(wave?.innerHTML).toContain('var(--lm-marigold)');
   });
 });
 
@@ -289,15 +295,30 @@ describe('illustrations', () => {
     expect(two).toContain('seat-b');
   });
 
-  it('draws the likeness v3 face and a transform-only wave', () => {
+  it('keeps the round glasses and beard, adds notches and a transform-only wave', () => {
     const svg = illustrations.avatar;
     expect(skin.skin).toBe('#c89a6b');
     expect(skin.d).toBe('#a57950');
-    expect(skin.beard).toBe('#5c3a2c');
-    expect(svg).toContain('#4a2e24');
-    expect(svg).toContain('#8b5a3e');
+    expect(skin.beard).toBe('#2a1c15');
+    expect(svg).toContain(
+      'd="M63 106c-2 36 9 65 37 72 28-7 39-36 37-72h-6c0 18-5 28-13 31-8-6-28-6-36 0-8-3-13-13-13-31Z"',
+    );
+    expect(svg).toContain('d="M86 162q14 8 28 0"');
+    expect(svg).toContain(
+      '<circle cx="85" cy="113" r="12.5" stroke="var(--lm-skin-tort)"',
+    );
+    expect(svg).toContain(
+      '<circle cx="115" cy="113" r="12.5" stroke="var(--lm-skin-tort)"',
+    );
+    expect(svg).toContain(
+      '<ellipse cx="87" cy="147" fill="var(--lm-skin)" rx="4.2" ry="2.8"/>',
+    );
+    expect(svg).toContain(
+      '<ellipse cx="113" cy="147" fill="var(--lm-skin)" rx="4.2" ry="2.8"/>',
+    );
     expect(svg).toContain('#e1ad84');
-    expect(svg).toContain('rx="6.5"');
+    expect(svg).not.toContain('linearGradient');
+    expect(svg).not.toContain('radialGradient');
     expect(svg).not.toContain('lu-glasses');
     expect(svg).not.toContain('#e2a17a');
     expect(svg.match(/class="lu-finger"/g)?.length).toBe(4);
@@ -305,6 +326,7 @@ describe('illustrations', () => {
     expect(css).toContain('@keyframes lm-avatar-wave');
     expect(css).toContain('rotate(-14deg)');
     expect(css).toContain('rotate(14deg)');
+    expect(css).toContain('transform-origin: 163px 108px;');
     expect(css).toContain('var(--lm-duration-avatar-wave)');
     expect(duration.avatarWave).toBe('4.2s');
     expect(duration.avatarWaveOnce).toBe('1.2s');
