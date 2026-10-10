@@ -1,0 +1,2 @@
+export declare const gull = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-16 -12 32 16\"><g class=\"flap\"><path stroke=\"var(--lm-ink)\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6\" d=\"M-12 0q6-7 12 0 6-7 12 0\"/></g></svg>";
+//# sourceMappingURL=gull.d.ts.map

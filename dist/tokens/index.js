@@ -1,0 +1,544 @@
+// src/tokens/tokens.ts
+var color = {
+  ink: "#2b1b14",
+  inkSoft: "#5b4536",
+  paper: "#fff6e4",
+  cream: "#fff4e2",
+  sand: "#f3e2c0",
+  tomato: "#e2492f",
+  tomatoD: "#a8321e",
+  marigold: "#f6b43c",
+  lagoon: "#1f7f7a",
+  white: "#ffffff",
+  leaf: "#62a64e",
+  blush: "#f2a08a",
+  plum: "#4a3570",
+  wood: "#b9773f",
+  steel: "#8d8178",
+  glass: "#bfe6ee",
+  theme: "#f6b44c",
+  foam: "#fffaf0",
+  cloudShade: "#f1dfc0",
+  night: "#120d2c",
+  stage: "#fbd682",
+  mat: "#e8e0d4",
+  wheel: "#a39282",
+  strut: "#7d6a5c",
+  wing: "#2f9a93",
+  belly: "#efdbb9",
+  stripe: "#fffdf6",
+  windowLit: "#ffd36b",
+  cockpit: "#5f97a6",
+  wingUnder: "#e0c391",
+  engine: "#d9c39c",
+  beacon: "#ff7a5c",
+  beaconHot: "#ff3b2b",
+  frame: "#eadbbf",
+  cabin: "#f5e1bb",
+  rail: "#e8cfa3",
+  stitch: "#16625e",
+  fold: "#d8901f",
+  hairLine: "#4b3428",
+  sideburn: "#6e5646",
+  teeth: "#fff7ea",
+  mouth: "#d9705e",
+  lipLine: "#1a100b",
+  scratch: "#c9843c",
+  cap: "#1a1a1a",
+  shade: "#efdcbc",
+  shadeLine: "#dcc49c",
+  shadePull: "#d4bf99",
+  trunk: "#b07a4c",
+  trunkRing: "#7f5333",
+  coconut: "#7a4b2a",
+  frond: "#4f9a48",
+  globeOcean: "#2f86a8",
+  globeDeep: "#3592b3",
+  globeLand: "#8cc06a",
+  globeShade: "#163a52",
+  routeCool: "#e8a090",
+  sun: "#fff3d0",
+  sunRing: "#fde3a6",
+  sunRing2: "#fdd88f",
+  rays: "#fff6dc"
+};
+var skin = {
+  skin: "#c98e62",
+  d: "#a96f47",
+  blush: "#e0805f",
+  hair: "#231812",
+  fade: "#5a463a",
+  beard: "#2a1c15",
+  amber: "#b0662f",
+  tort: "#5a2f18",
+  lip: "#7a2e22"
+};
+var sky = {
+  hero: [
+    "#f29a3a",
+    "#f4a742",
+    "#f6b34c",
+    "#f8bf5a",
+    "#f9ca6b",
+    "#fbd580",
+    "#fce09a",
+    "#fdebb7"
+  ],
+  high: [
+    "#3f8fc4",
+    "#4c9bcc",
+    "#5aa7d3",
+    "#69b3da",
+    "#7bbfe0",
+    "#8ecae5",
+    "#a3d5ea",
+    "#bae0ef"
+  ],
+  aa: [
+    "#4cacd5",
+    "#59b4d9",
+    "#67bcdd",
+    "#76c4e1",
+    "#86cce5",
+    "#98d4e9",
+    "#abdced",
+    "#bfe4f1"
+  ],
+  sandals: [
+    "#ec6a58",
+    "#ee7760",
+    "#f08568",
+    "#f29372",
+    "#f4a17c",
+    "#f6af88",
+    "#f8bd95",
+    "#f9cba4"
+  ],
+  bsc: [
+    "#1d877d",
+    "#229087",
+    "#289a90",
+    "#31a39a",
+    "#3dada3",
+    "#4bb7ad",
+    "#5dc1b7",
+    "#72cbc1"
+  ],
+  fluky: [
+    "#d6412b",
+    "#da4b32",
+    "#de5539",
+    "#e26042",
+    "#e56b4c",
+    "#e87857",
+    "#eb8564",
+    "#ee9372"
+  ],
+  move: [
+    "#1f1840",
+    "#251d4a",
+    "#2c2354",
+    "#33295e",
+    "#3b3068",
+    "#443872",
+    "#4e417c",
+    "#594b86"
+  ],
+  booking: [
+    "#f19c74",
+    "#f4a87e",
+    "#f6b389",
+    "#f8bf95",
+    "#f9caa1",
+    "#fbd4ad",
+    "#fcdebb",
+    "#fde8c9"
+  ]
+};
+var climb = [
+  "#3c8cc2",
+  "#4797ca",
+  "#54a3d1",
+  "#62aed7",
+  "#73b9dc",
+  "#87c4df",
+  "#a0cfdf",
+  "#bcd9d6",
+  "#d8dfc6",
+  "#eedcae",
+  "#f5c98a",
+  "#f4b46a"
+];
+var sea = {
+  aa: ["#2c84ad", "#2a789f", "#276b90", "#235e80"],
+  sandals: ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"],
+  bsc: ["#2c6f95", "#286386", "#235777", "#1e4b68"],
+  fluky: ["#1f7470", "#1c6764", "#185a58", "#144d4c"],
+  move: ["#2a3266", "#242b5a", "#1f254e", "#1a1f43"]
+};
+var font = {
+  display: '"Bricolage Display", "Arial Narrow", system-ui, sans-serif',
+  text: '"Bricolage", system-ui, -apple-system, "Segoe UI", sans-serif',
+  mono: '"IBM Plex Mono", ui-monospace, monospace',
+  hand: '"Caveat", "Segoe Print", cursive'
+};
+var fontSize = {
+  micro: "10.5px",
+  routeLabel: "11px",
+  kicker: "12px",
+  togglePort: "12.5px",
+  pause: "12px",
+  small: "13px",
+  chipPort: "14px",
+  meta: "14px",
+  chip: "14.5px",
+  globe: "14.5px",
+  copyPort: "15.5px",
+  skip: "15px",
+  body: "17px",
+  routePort: "17px",
+  route: "19px",
+  globeTitle: "20px",
+  close: "22px",
+  hand: "27px",
+  stage: "100px",
+  lead: "clamp(18px, 1.5vw, 21px)",
+  title: "clamp(22px, 1.8vw, 29px)",
+  titlePort: "clamp(20px, 5.3vw, 25px)",
+  contactLink: "clamp(18px, 1.7vw, 24px)",
+  pass: "clamp(34px, 3vw, 46px)",
+  passPort: "clamp(30px, 8.6vw, 40px)",
+  copy: "clamp(15.5px, 0.4vw + 10.5px, 17.5px)",
+  display: "clamp(76px, 11vw, 190px)"
+};
+var lineHeight = {
+  none: "1",
+  display: "0.86",
+  pass: "0.95",
+  title: "1.1",
+  tight: "1.15",
+  chip: "1.25",
+  snug: "1.3",
+  caption: "1.35",
+  kicker: "1.4",
+  body: "1.5"
+};
+var letterSpacing = {
+  tight: "-0.012em",
+  display: "-0.01em",
+  ui: "0.02em",
+  chrome: "0.06em",
+  label: "0.1em",
+  kicker: "0.12em"
+};
+var fontWeight = {
+  regular: "400",
+  medium: "500",
+  semibold: "600",
+  bold: "700",
+  display: "800"
+};
+var space = {
+  0: "0px",
+  1: "1px",
+  2: "2px",
+  3: "3px",
+  4: "4px",
+  5: "5px",
+  6: "6px",
+  7: "7px",
+  8: "8px",
+  9: "9px",
+  10: "10px",
+  11: "11px",
+  12: "12px",
+  14: "14px",
+  16: "16px",
+  18: "18px",
+  20: "20px",
+  22: "22px",
+  24: "24px",
+  26: "26px",
+  32: "32px"
+};
+var radius = {
+  plan: "8px",
+  skip: "12px",
+  shot: "14px",
+  globe: "16px",
+  card: "20px",
+  panel: "22px",
+  pill: "999px",
+  round: "50%"
+};
+var border = {
+  hair: "2px",
+  line: "2.5px",
+  thick: "3px"
+};
+var shadow = {
+  card: "6px 7px 0 var(--lm-ink)",
+  toggle: "4px 4px 0 var(--lm-ink)",
+  togglePress: "2px 2px 0 var(--lm-ink)",
+  pause: "3px 3px 0 var(--lm-ink)",
+  pausePress: "1px 1px 0 var(--lm-ink)",
+  more: "3px 3px 0 var(--lm-ink)",
+  morePress: "1px 1px 0 var(--lm-ink)",
+  shot: "4px 4px 0 var(--lm-ink)",
+  contact: "4px 5px 0 var(--lm-ink)",
+  contactPress: "1px 2px 0 var(--lm-ink)",
+  panel: "8px 9px 0 var(--lm-ink)",
+  close: "3px 3px 0 var(--lm-ink)",
+  closePress: "1px 1px 0 var(--lm-ink)",
+  globe: "4px 4px 0 var(--lm-ink)",
+  globePress: "2px 2px 0 var(--lm-ink)",
+  text: "0.045em 0.05em 0 var(--lm-title-shadow, var(--lm-tomato))",
+  nightText: "0 0 0.14em var(--lm-night), 0 0 0.32em var(--lm-night), 0.045em 0.05em 0 var(--lm-title-shadow, var(--lm-night))",
+  inset: "inset 0 -3px 0 rgba(43, 27, 20, 0.12)"
+};
+var zIndex = {
+  copy: "2",
+  hud: "3",
+  copies: "5",
+  contact: "6",
+  window: "7",
+  globe: "42",
+  topbar: "45",
+  overlay: "48",
+  skip: "50"
+};
+var easing = {
+  pop: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+  out: "cubic-bezier(0.16, 1, 0.3, 1)",
+  drop: "cubic-bezier(0.5, 0, 0.9, 0.5)",
+  settle: "cubic-bezier(0.2, 0.6, 0.4, 1)",
+  stamp: "cubic-bezier(0.6, 0, 1, 0.6)",
+  fall: "cubic-bezier(0.6, 0, 0.8, 0.4)",
+  inOut: "ease-in-out",
+  standard: "ease",
+  linear: "linear",
+  outCss: "ease-out"
+};
+var duration = {
+  idle: "0.16s",
+  chevron: "0.2s",
+  letter: "0.22s",
+  copy: "0.28s",
+  note: "0.35s",
+  brow: "0.35s",
+  turbHud: "0.38s",
+  prop: "0.45s",
+  turb: "0.46s",
+  flap: "0.5s",
+  copyOn: "0.5s",
+  puffFade: "0.5s",
+  copyPop: "0.7s",
+  drop: "0.72s",
+  lit: "0.8s",
+  flag: "0.9s",
+  noteDraw: "0.9s",
+  shade: "1.1s",
+  strip: "1.3s",
+  beacon: "1.4s",
+  puff: "1.5s",
+  cue: "1.6s",
+  scan: "1.8s",
+  stamper: "2.4s",
+  shim: "2.6s",
+  toss: "2.6s",
+  twinkle: "3s",
+  smoke: "3.2s",
+  bob: "3.4s",
+  wave: "3.6s",
+  beam: "3.6s",
+  sway: "4.4s",
+  tick: "4.8s",
+  mag: "5s",
+  crab: "5.2s",
+  belt: "6s",
+  shoot: "8.4s",
+  spin: "12s",
+  drift: "16s",
+  rays: "140s",
+  globeDraw: "2.2s",
+  copyDelay: "0.05s",
+  noteDelay: "0.5s"
+};
+var breakpoint = {
+  /** max-width query in the page. */
+  portMax: "639px",
+  /** min-width query in the page. */
+  sm: "640px",
+  /** Layout treats the viewport as a desk from this width, and only when width/height ≥ 1.15. */
+  deskMin: "560px",
+  deskAspect: "1.15"
+};
+var alpha = {
+  rule: "rgba(43, 27, 20, 0.28)",
+  ruleRoute: "rgba(43, 27, 20, 0.3)",
+  hover: "rgba(246, 180, 60, 0.22)",
+  overlay: "rgba(43, 27, 20, 0.55)",
+  inset: "rgba(43, 27, 20, 0.12)",
+  paperFade: "rgba(255, 246, 228, 0)",
+  porthole: "rgba(43, 27, 20, 0.3)"
+};
+var target = {
+  min: "44px"
+};
+var themes = {
+  hero: {
+    label: "Hero sunrise",
+    sky: sky.hero,
+    rays: "#fff6dc",
+    sun: ["#fff3d0", "#fde3a6", "#fdd88f"],
+    title: color.ink,
+    titleShadow: color.tomato
+  },
+  high: {
+    label: "High sky",
+    sky: sky.high,
+    rays: "#ffffff",
+    sun: ["#fff8e0", "#d3eff7", "#bfe6f2"],
+    title: color.ink,
+    titleShadow: "#2a7aa3"
+  },
+  aa: {
+    label: "AA sky",
+    sky: sky.aa,
+    sea: sea.aa,
+    rays: "#ffffff",
+    sun: ["#fff8e0", "#d3eff7", "#bfe6f2"],
+    cloud: ["#e6f5fa", "#cbe9f3"],
+    title: color.ink,
+    titleShadow: "#2a7aa3",
+    stop: "#3d9ad0",
+    wave: "#7fc0dc"
+  },
+  sandals: {
+    label: "Sandals coral",
+    sky: sky.sandals,
+    sea: sea.sandals,
+    rays: "#fff1c7",
+    sun: ["#fff1c7", "#fbc79d", "#fab88f"],
+    cloud: ["#fbd2bd", "#f4b49c"],
+    title: color.ink,
+    titleShadow: "#c54b3d",
+    stop: "#ef6f5a",
+    wave: "#a3e3da"
+  },
+  bsc: {
+    label: "BSc teal",
+    sky: sky.bsc,
+    sea: sea.bsc,
+    rays: "#e9fff8",
+    sun: ["#fff6d6", "#82d3c9", "#6dc9be"],
+    cloud: ["#b9e6df", "#93d6cc"],
+    title: color.ink,
+    titleShadow: "#13675f",
+    stop: "#22a093",
+    wave: "#5c9bc0"
+  },
+  fluky: {
+    label: "Fluky red",
+    sky: sky.fluky,
+    sea: sea.fluky,
+    rays: "#ffd9a8",
+    sun: ["#ffe7b0", "#f4a07f", "#f0906f"],
+    cloud: ["#f5b39b", "#e98f75"],
+    title: color.ink,
+    titleShadow: "#9e2a18",
+    stop: color.tomato,
+    wave: "#3f9a92"
+  },
+  move: {
+    label: "Move night",
+    sky: sky.move,
+    sea: sea.move,
+    rays: "#ffd36b",
+    sun: ["#ffd36b", "#ffd36b", "#ffd36b"],
+    cloud: ["#8b7cc4", "#5a4c92"],
+    title: color.cream,
+    titleShadow: color.night,
+    stop: "#7563bd",
+    wave: "#3a4278"
+  },
+  booking: {
+    label: "Booking",
+    sky: sky.booking,
+    rays: "#fff3d0",
+    sun: ["#fff3d0", "#fcd2a8", "#fbc79a"],
+    title: color.ink,
+    titleShadow: "#c8603f",
+    stop: "#f2913f"
+  }
+};
+var textPairs = [
+  { name: "ink on paper", fg: color.ink, bg: color.paper, large: false },
+  { name: "ink on sand", fg: color.ink, bg: color.sand, large: false },
+  { name: "ink on marigold", fg: color.ink, bg: color.marigold, large: false },
+  { name: "ink on white", fg: color.ink, bg: color.white, large: false },
+  { name: "ink on cream", fg: color.ink, bg: color.cream, large: false },
+  {
+    name: "ink-soft on paper",
+    fg: color.inkSoft,
+    bg: color.paper,
+    large: false
+  },
+  {
+    name: "tomato-d on paper",
+    fg: color.tomatoD,
+    bg: color.paper,
+    large: false
+  },
+  { name: "cream on move sky", fg: color.cream, bg: sky.move[0], large: true },
+  {
+    name: "cream on move sky end",
+    fg: color.cream,
+    bg: sky.move[7],
+    large: true
+  },
+  { name: "ink on hero sky", fg: color.ink, bg: sky.hero[0], large: true },
+  { name: "ink on aa sky", fg: color.ink, bg: sky.aa[0], large: true },
+  {
+    name: "ink on sandals sky",
+    fg: color.ink,
+    bg: sky.sandals[0],
+    large: true
+  },
+  { name: "ink on bsc sky", fg: color.ink, bg: sky.bsc[0], large: true },
+  { name: "ink on fluky sky", fg: color.ink, bg: sky.fluky[0], large: true },
+  {
+    name: "ink on booking sky",
+    fg: color.ink,
+    bg: sky.booking[0],
+    large: true
+  }
+];
+var tokens = {
+  color,
+  skin,
+  sky,
+  climb,
+  sea,
+  font,
+  fontSize,
+  lineHeight,
+  letterSpacing,
+  fontWeight,
+  space,
+  radius,
+  border,
+  shadow,
+  zIndex,
+  easing,
+  duration,
+  breakpoint,
+  alpha,
+  target,
+  themes,
+  textPairs
+};
+
+export { alpha, border, breakpoint, climb, color, duration, easing, font, fontSize, fontWeight, letterSpacing, lineHeight, radius, sea, shadow, skin, sky, space, target, textPairs, themes, tokens, zIndex };
+//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.js.map

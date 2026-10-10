@@ -1,0 +1,2 @@
+export declare const sun = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"-90 -90 180 180\"><circle r=\"76.8\" fill=\"var(--lm-sun-2)\"/><circle r=\"62.4\" fill=\"var(--lm-sun-3)\"/><circle r=\"48\" fill=\"var(--lm-sun)\"/></svg>";
+//# sourceMappingURL=sun.d.ts.map

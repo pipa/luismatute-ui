@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>@luismatute/ui · playground</title>
+    <link rel="stylesheet" href="./ui/tokens.css" />
+    <link rel="stylesheet" href="./ui/fonts.css" />
+    <link rel="stylesheet" href="./ui/base.css" />
+    <link rel="stylesheet" href="./playground.css" />
+  </head>
+  <body>
+    <a class="lm-skip" href="#main">Skip to playground</a>
+    <header class="lm-topbar">
+      <lm-motion-toggle></lm-motion-toggle>
+      <lm-pause></lm-pause>
+    </header>
+    <main class="docs" id="main">
+      <p class="lm-kicker">Design system · v0.1.0</p>
+      <h1>Wheels up</h1>
+      <p>Tokens, components and illustrations extracted from the approved takeoff page. <a class="nav" href="./demo.html">Sandals stop demo</a></p>
+
+      <h2>Colour</h2>
+      <div class="swatches" id="swatches"></div>
+
+      <h2>Scenes</h2>
+      <p class="token-note">Click a theme. Sky and sea bands follow <code>data-theme</code>.</p>
+      <div class="bands" id="themes"></div>
+
+      <h2>Type</h2>
+      <div id="type"></div>
+
+      <h2>Motion</h2>
+      <div class="motion-row">
+        <div class="motion-box sway" style="--a: -6deg; --b: 6deg"></div>
+        <div class="motion-box spin"></div>
+        <p id="motion-note"></p>
+      </div>
+
+      <h2>Components</h2>
+      <div class="stack">
+        <lm-card variant="pass">
+          <p class="lm-kicker">Boarding pass</p>
+          <h1>Luis Matute</h1>
+          <dl class="lm-route">
+            <div><dt>From</dt><dd>Honduras</dd></div>
+            <div><dt>To</dt><dd>Amsterdam</dd></div>
+            <div><dt>Stops</dt><dd>6</dd></div>
+          </dl>
+          <p class="lm-intro">Born in Honduras. At Booking.com in Amsterdam since October 2017.</p>
+        </lm-card>
+        <lm-card variant="stop">
+          <p class="lm-kicker">Stop 2 of 6 · July 2011 – August 2017</p>
+          <h2>Front-end developer, Sandals Resorts</h2>
+          <p>Frontend developer with some backend on sandals.com and beaches.com.</p>
+          <lm-more label="More" panel="more-demo">
+            <p>Led several full redesigns and re-engineering efforts.</p>
+          </lm-more>
+          <ul class="lm-chips">
+            <li><lm-chip>sandals.com</lm-chip></li>
+            <li><lm-chip variant="featured">Catch Advisory Group</lm-chip></li>
+          </ul>
+        </lm-card>
+        <lm-shot
+          href="https://web.archive.org/web/20160620110713/http://www.sandals.com/"
+          src="./shots/sandals-600.webp"
+          chrome="sandals.com"
+          caption="sandals.com"
+          alt=""
+          width="600"
+          height="390"
+        ></lm-shot>
+        <lm-flight-plan id="plan"></lm-flight-plan>
+        <lm-globe heading="Route" description="Honduras, the Caribbean, then Amsterdam."></lm-globe>
+      </div>
+
+      <h2>Avatar</h2>
+      <div class="pose-grid" id="poses"></div>
+
+      <h2>Illustrations</h2>
+      <div class="art-grid" id="art"></div>
+    </main>
+    <script type="module">
+      import { illustrationNames, inlineIllustration, tokens } from './ui/index.js';
+
+      const swatches = document.querySelector('#swatches');
+      for (const [name, value] of Object.entries(tokens.color)) {
+        if (typeof value !== 'string' || !value.startsWith('#')) continue;
+        const el = document.createElement('div');
+        el.className = 'swatch';
+        el.innerHTML = `<i style="background:${value}"></i><span>${name}<br>${value}</span>`;
+        swatches.append(el);
+      }
+
+      const themes = document.querySelector('#themes');
+      for (const [name, theme] of Object.entries(tokens.themes)) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'theme-card';
+        btn.dataset.theme = name;
+        const sky = theme.sky.map((hex) => `${hex} ${100 / theme.sky.length}%`).join(', ');
+        btn.innerHTML = `<i class="sky" style="display:block;height:72px;background:linear-gradient(${sky})"></i><span>${name}<br>${theme.label}</span>`;
+        btn.addEventListener('click', () => {
+          document.documentElement.dataset.theme = name;
+          for (const card of themes.querySelectorAll('.theme-card')) card.classList.toggle('on', card === btn);
+        });
+        themes.append(btn);
+      }
+
+      const type = document.querySelector('#type');
+      const samples = [
+        ['display', 'Landed.', 'lm-display'],
+        ['kicker', 'Stop 1 of 6', 'lm-kicker'],
+        ['body', 'Born in Honduras. At Booking.com in Amsterdam since October 2017.', ''],
+        ['hand', 'hola', 'lm-hand'],
+      ];
+      for (const [name, text, cls] of samples) {
+        const p = document.createElement('p');
+        p.className = `type-row ${cls}`.trim();
+        p.textContent = text;
+        p.title = name;
+        type.append(p);
+      }
+
+      document.querySelector('#motion-note').textContent =
+        `pop ${tokens.easing.pop} · out ${tokens.easing.out} · drop ${tokens.duration.drop} · sway ${tokens.duration.sway}`;
+
+      const plan = document.querySelector('#plan');
+      plan.stops = [
+        { href: '#stop-aa', years: '2006–2011', label: 'American Airlines' },
+        { href: '#stop-sandals', years: '2011–2017', label: 'Sandals Resorts' },
+        { href: '#stop-bsc', years: '2012', label: 'BSc Computer Science' },
+        { href: '#stop-fluky', years: 'c. 2012–2019', label: 'Fluky Factory' },
+        { href: '#stop-move', years: '2017', label: 'The move' },
+        { href: '#stop-booking', years: 'Since 2017', label: 'Booking.com' },
+      ];
+
+      const poses = document.querySelector('#poses');
+      for (const pose of ['', 'wow', 'wave', 'read', 'beach', 'grad', 'sleep', 'wink', 'eek']) {
+        const fig = document.createElement('figure');
+        const avatar = document.createElement('lm-avatar');
+        avatar.setAttribute('static', '');
+        if (pose) avatar.setAttribute('pose', pose);
+        avatar.setAttribute('label', pose ? `Luis, ${pose}` : 'Luis at the window');
+        const cap = document.createElement('figcaption');
+        cap.textContent = pose || 'rest';
+        fig.append(avatar, cap);
+        poses.append(fig);
+      }
+
+      const art = document.querySelector('#art');
+      for (const name of illustrationNames()) {
+        const fig = document.createElement('figure');
+        fig.innerHTML = inlineIllustration(name, `kit-${name}`);
+        const cap = document.createElement('figcaption');
+        cap.textContent = name;
+        fig.append(cap);
+        art.append(fig);
+      }
+    </script>
+  </body>
+</html>
