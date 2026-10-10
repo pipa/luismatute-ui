@@ -317,6 +317,13 @@ describe('illustrations', () => {
       '<path fill="var(--lm-skin)" d="M110.1 148.3A3.5 3.5 0 0 1 116.9 149.9C115.9 153.8 113.1 158.8 111.2 158.3C109.3 157.8 109.1 152.1 110.1 148.3Z"/>',
     );
     expect(svg).toContain('#e1ad84');
+    expect(skin.fade).toBe('#957a64');
+    const hair = svg.slice(
+      svg.indexOf('<g class="lu-hair">'),
+      svg.indexOf('<g class="lu-beard">'),
+    );
+    expect(hair.match(/fill="var\(--lm-sideburn\)"/g)?.length).toBe(2);
+    expect(hair.match(/fill="var\(--lm-skin-fade\)"/g)?.length).toBe(2);
     expect(svg).not.toContain('linearGradient');
     expect(svg).not.toContain('radialGradient');
     expect(svg).not.toContain('lu-glasses');

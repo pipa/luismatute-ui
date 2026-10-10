@@ -67,7 +67,7 @@ var skin = {
   d: "#a57950",
   blush: "#e0805f",
   hair: "#231812",
-  fade: "#5a463a",
+  fade: "#957a64",
   beard: "#2a1c15",
   amber: "#b0662f",
   tort: "#5a2f18",

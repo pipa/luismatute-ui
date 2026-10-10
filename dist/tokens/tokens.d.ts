@@ -76,7 +76,7 @@ export declare const skin: {
     readonly d: '#a57950';
     readonly blush: '#e0805f';
     readonly hair: '#231812';
-    readonly fade: '#5a463a';
+    readonly fade: '#957a64';
     readonly beard: '#2a1c15';
     readonly amber: '#b0662f';
     readonly tort: '#5a2f18';
@@ -559,7 +559,7 @@ export declare const tokens: {
         readonly d: '#a57950';
         readonly blush: '#e0805f';
         readonly hair: '#231812';
-        readonly fade: '#5a463a';
+        readonly fade: '#957a64';
         readonly beard: '#2a1c15';
         readonly amber: '#b0662f';
         readonly tort: '#5a2f18';
