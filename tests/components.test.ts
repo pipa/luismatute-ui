@@ -311,10 +311,10 @@ describe('illustrations', () => {
       '<circle cx="115" cy="113" r="12.5" stroke="var(--lm-skin-tort)"',
     );
     expect(svg).toContain(
-      '<ellipse cx="87" cy="147" fill="var(--lm-skin)" rx="4.2" ry="2.8"/>',
+      '<path fill="var(--lm-skin)" d="M83.1 149.9A3.5 3.5 0 0 1 89.9 148.3C90.9 152.1 90.7 157.8 88.8 158.3C86.9 158.8 84.1 153.8 83.1 149.9Z"/>',
     );
     expect(svg).toContain(
-      '<ellipse cx="113" cy="147" fill="var(--lm-skin)" rx="4.2" ry="2.8"/>',
+      '<path fill="var(--lm-skin)" d="M110.1 148.3A3.5 3.5 0 0 1 116.9 149.9C115.9 153.8 113.1 158.8 111.2 158.3C109.3 157.8 109.1 152.1 110.1 148.3Z"/>',
     );
     expect(svg).toContain('#e1ad84');
     expect(svg).not.toContain('linearGradient');
