@@ -71,11 +71,11 @@
   --lm-rays: #fff6dc;
   --lm-title: #2b1b14;
   --lm-title-shadow: #e2492f;
-  --lm-skin: #c98e62;
-  --lm-skin-d: #a96f47;
+  --lm-skin: #c89a6b;
+  --lm-skin-d: #a57950;
   --lm-skin-blush: #e0805f;
   --lm-skin-hair: #231812;
-  --lm-skin-fade: #5a463a;
+  --lm-skin-fade: #957a64;
   --lm-skin-beard: #2a1c15;
   --lm-skin-amber: #b0662f;
   --lm-skin-tort: #5a2f18;
@@ -225,6 +225,7 @@
   --lm-duration-flag: 0.9s;
   --lm-duration-note-draw: 0.9s;
   --lm-duration-shade: 1.1s;
+  --lm-duration-avatar-wave-once: 1.2s;
   --lm-duration-strip: 1.3s;
   --lm-duration-beacon: 1.4s;
   --lm-duration-puff: 1.5s;
@@ -236,6 +237,7 @@
   --lm-duration-twinkle: 3s;
   --lm-duration-smoke: 3.2s;
   --lm-duration-bob: 3.4s;
+  --lm-duration-avatar-wave: 4.2s;
   --lm-duration-wave: 3.6s;
   --lm-duration-beam: 3.6s;
   --lm-duration-sway: 4.4s;

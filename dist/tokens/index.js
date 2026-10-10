@@ -63,11 +63,11 @@ var color = {
   rays: "#fff6dc"
 };
 var skin = {
-  skin: "#c98e62",
-  d: "#a96f47",
+  skin: "#c89a6b",
+  d: "#a57950",
   blush: "#e0805f",
   hair: "#231812",
-  fade: "#5a463a",
+  fade: "#957a64",
   beard: "#2a1c15",
   amber: "#b0662f",
   tort: "#5a2f18",
@@ -338,6 +338,8 @@ var duration = {
   flag: "0.9s",
   noteDraw: "0.9s",
   shade: "1.1s",
+  /** One wave gesture. Three swings, then the hand is back at rest. */
+  avatarWaveOnce: "1.2s",
   strip: "1.3s",
   beacon: "1.4s",
   puff: "1.5s",
@@ -349,6 +351,8 @@ var duration = {
   twinkle: "3s",
   smoke: "3.2s",
   bob: "3.4s",
+  /** Wave gesture, then a rest, then it repeats. */
+  avatarWave: "4.2s",
   wave: "3.6s",
   beam: "3.6s",
   sway: "4.4s",

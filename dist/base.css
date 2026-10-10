@@ -731,23 +731,54 @@ lm-avatar .lu.ex-sleep .shade {
 }
 
 lm-avatar .lu .lu-cap,
-lm-avatar .lu .lu-glasses,
 lm-avatar .lu .lu-book,
-lm-avatar .lu .lu-wave {
+lm-avatar .lu .lu-wave,
+lm-avatar .lu .lu-shades {
   opacity: 0;
 }
 
 lm-avatar .lu.ex-grad .lu-cap,
-lm-avatar .lu.ex-beach .lu-glasses,
 lm-avatar .lu.ex-read .lu-book,
-lm-avatar .lu.ex-wave .lu-wave {
+lm-avatar .lu.ex-wave .lu-wave,
+lm-avatar .lu.ex-beach .lu-shades {
   opacity: 1;
 }
 
-lm-avatar .lu.ex-beach .eo,
-lm-avatar .lu.ex-beach .ec,
-lm-avatar .lu.ex-beach .brw {
+lm-avatar .lu.ex-beach .lu-glint {
   opacity: 0;
+}
+
+lm-avatar .lu .lu-hand {
+  transform-box: view-box;
+  transform-origin: 163px 108px;
+}
+
+lm-avatar:not([static]) .lu.ex-wave .lu-hand {
+  animation: lm-avatar-wave var(--lm-duration-avatar-wave) var(--lm-ease-in-out)
+    infinite;
+}
+
+lm-avatar:not([static]):hover .lu.ex-wave .lu-hand,
+lm-avatar:not([static]):focus-within .lu.ex-wave .lu-hand {
+  animation: lm-avatar-wave-once var(--lm-duration-avatar-wave-once)
+    var(--lm-ease-in-out);
+}
+
+lm-avatar[static] .lu.ex-wave .lu-hand,
+lm-avatar[static]:hover .lu.ex-wave .lu-hand,
+lm-avatar[static]:focus-within .lu.ex-wave .lu-hand,
+html[data-motion="reduce"] lm-avatar .lu.ex-wave .lu-hand,
+html[data-motion="reduce"] lm-avatar:hover .lu.ex-wave .lu-hand,
+html[data-motion="reduce"] lm-avatar:focus-within .lu.ex-wave .lu-hand {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) lm-avatar .lu.ex-wave .lu-hand,
+  html:not([data-motion="full"]) lm-avatar:hover .lu.ex-wave .lu-hand,
+  html:not([data-motion="full"]) lm-avatar:focus-within .lu.ex-wave .lu-hand {
+    animation: none;
+  }
 }
 
 lm-avatar .lm-note {
@@ -1131,6 +1162,54 @@ lm-globe .lm-leg[data-hot="true"] {
   }
   to {
     transform: translate3d(var(--dx, 12px), 0, 0);
+  }
+}
+
+/* Three swings about the wrist across 1.2s of a 4.2s loop, then the hand rests. */
+@keyframes lm-avatar-wave {
+  0%,
+  28.6%,
+  100% {
+    transform: rotate(0deg);
+  }
+  4.8% {
+    transform: rotate(-14deg);
+  }
+  9.5% {
+    transform: rotate(14deg);
+  }
+  14.3% {
+    transform: rotate(-14deg);
+  }
+  19% {
+    transform: rotate(14deg);
+  }
+  23.8% {
+    transform: rotate(-14deg);
+  }
+}
+
+@keyframes lm-avatar-wave-once {
+  0% {
+    transform: rotate(0deg);
+  }
+  16.7% {
+    transform: rotate(-14deg);
+  }
+  33.3% {
+    transform: rotate(14deg);
+  }
+  50% {
+    transform: rotate(-14deg);
+  }
+  66.7% {
+    transform: rotate(14deg);
+  }
+  83.3% {
+    transform: rotate(-14deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
 

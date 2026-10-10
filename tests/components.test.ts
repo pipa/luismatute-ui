@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defineLmAvatar } from '../src/components/avatar.ts';
 import { defineLmCard } from '../src/components/card.ts';
@@ -13,6 +15,7 @@ import {
   illustrations,
   inlineIllustration,
 } from '../src/illustrations/index.ts';
+import { duration, skin } from '../src/tokens/tokens.ts';
 
 function media(matches: boolean): void {
   vi.stubGlobal('matchMedia', (query: string) => ({
@@ -241,6 +244,41 @@ describe('lm-avatar', () => {
     vi.advanceTimersByTime(8000);
     expect(svg?.classList.contains('blink')).toBe(false);
   });
+
+  it('tints the round lenses on the beach pose and draws no separate sunglasses', () => {
+    defineLmAvatar();
+    const avatar = document.createElement('lm-avatar');
+    avatar.setAttribute('pose', 'beach');
+    avatar.setAttribute('static', '');
+    document.body.append(avatar);
+    const svg = avatar.querySelector('svg');
+    expect(svg?.querySelector('.lu-glasses')).toBeNull();
+    const shades = svg?.querySelector('.lu-shades');
+    const lenses = shades?.querySelectorAll('circle');
+    expect(lenses?.length).toBe(2);
+    expect(lenses?.[0]?.getAttribute('r')).toBe('12.5');
+    expect(lenses?.[0]?.getAttribute('opacity')).toBe('.82');
+    expect(shades?.innerHTML).toContain('#3a2a22');
+    expect(shades?.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('raises his own arm and open hand for the wave pose', () => {
+    defineLmAvatar();
+    const avatar = document.createElement('lm-avatar');
+    avatar.setAttribute('pose', 'wave');
+    avatar.setAttribute('static', '');
+    document.body.append(avatar);
+    const svg = avatar.querySelector('svg');
+    expect(svg?.classList.contains('ex-wave')).toBe(true);
+    expect(svg?.querySelectorAll('.lu-finger').length).toBe(4);
+    expect(svg?.querySelector('.lu-thumb')).not.toBeNull();
+    expect(svg?.querySelector('.lu-hand')?.innerHTML).toContain(
+      'var(--lm-skin)',
+    );
+    const wave = svg?.querySelector('.lu-wave');
+    expect(wave?.closest('.lu-torso')).not.toBeNull();
+    expect(wave?.innerHTML).toContain('var(--lm-marigold)');
+  });
 });
 
 describe('illustrations', () => {
@@ -255,5 +293,57 @@ describe('illustrations', () => {
     expect(one).not.toContain('__id__');
     expect(one).not.toContain('seat-b');
     expect(two).toContain('seat-b');
+  });
+
+  it('keeps the round glasses and beard, adds notches and a transform-only wave', () => {
+    const svg = illustrations.avatar;
+    expect(skin.skin).toBe('#c89a6b');
+    expect(skin.d).toBe('#a57950');
+    expect(skin.beard).toBe('#2a1c15');
+    expect(svg).toContain(
+      'd="M63 106c-2 36 9 65 37 72 28-7 39-36 37-72h-6c0 18-5 28-13 31-8-6-28-6-36 0-8-3-13-13-13-31Z"',
+    );
+    expect(svg).toContain('d="M86 162q14 8 28 0"');
+    expect(svg).toContain(
+      '<circle cx="85" cy="113" r="12.5" stroke="var(--lm-skin-tort)"',
+    );
+    expect(svg).toContain(
+      '<circle cx="115" cy="113" r="12.5" stroke="var(--lm-skin-tort)"',
+    );
+    expect(svg).toContain(
+      '<path fill="var(--lm-skin)" d="M83.1 149.9A3.5 3.5 0 0 1 89.9 148.3C90.9 152.1 90.7 157.8 88.8 158.3C86.9 158.8 84.1 153.8 83.1 149.9Z"/>',
+    );
+    expect(svg).toContain(
+      '<path fill="var(--lm-skin)" d="M110.1 148.3A3.5 3.5 0 0 1 116.9 149.9C115.9 153.8 113.1 158.8 111.2 158.3C109.3 157.8 109.1 152.1 110.1 148.3Z"/>',
+    );
+    expect(svg).toContain('#e1ad84');
+    expect(skin.fade).toBe('#957a64');
+    const hair = svg.slice(
+      svg.indexOf('<g class="lu-hair">'),
+      svg.indexOf('<g class="lu-beard">'),
+    );
+    expect(hair.match(/fill="var\(--lm-sideburn\)"/g)?.length).toBe(2);
+    expect(hair.match(/fill="var\(--lm-skin-fade\)"/g)?.length).toBe(2);
+    expect(svg).not.toContain('linearGradient');
+    expect(svg).not.toContain('radialGradient');
+    expect(svg).not.toContain('lu-glasses');
+    expect(svg).not.toContain('#e2a17a');
+    expect(svg.match(/class="lu-finger"/g)?.length).toBe(4);
+    const css = readFileSync(resolve('src/styles/base.css'), 'utf8');
+    expect(css).toContain('@keyframes lm-avatar-wave');
+    expect(css).toContain('rotate(-14deg)');
+    expect(css).toContain('rotate(14deg)');
+    expect(css).toContain('transform-origin: 163px 108px;');
+    expect(css).toContain('var(--lm-duration-avatar-wave)');
+    expect(duration.avatarWave).toBe('4.2s');
+    expect(duration.avatarWaveOnce).toBe('1.2s');
+    expect(css).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(css).toContain('lm-avatar[static] .lu.ex-wave .lu-hand');
+    const waveMotion = css.slice(
+      css.indexOf('@keyframes lm-avatar-wave'),
+      css.indexOf('@keyframes lm-bob'),
+    );
+    expect(waveMotion).toContain('transform: rotate');
+    expect(waveMotion).not.toContain('translate');
   });
 });
