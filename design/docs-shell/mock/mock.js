@@ -340,13 +340,21 @@ function initDemo() {
       const ink = stage?.getAttribute('data-surface') === 'ink';
       stage?.setAttribute('data-surface', ink ? 'paper' : 'ink');
       surface.setAttribute('aria-pressed', String(!ink));
-      surface.textContent = ink ? 'Paper ground' : 'Ink ground';
+      const long = surface.querySelector('.docs-demo-long');
+      const short = surface.querySelector('.docs-demo-short');
+      if (long) long.textContent = ink ? 'Paper ground' : 'Ink ground';
+      if (short) short.textContent = ink ? 'Paper' : 'Ink';
+      if (!long) surface.textContent = ink ? 'Paper ground' : 'Ink ground';
     });
     motion?.addEventListener('click', () => {
       const on = motion.getAttribute('aria-pressed') === 'true';
       motion.setAttribute('aria-pressed', String(!on));
       stage?.classList.toggle('is-still', !on);
-      motion.textContent = on ? 'Reduce motion' : 'Motion on';
+      const long = motion.querySelector('.docs-demo-long');
+      const short = motion.querySelector('.docs-demo-short');
+      if (long) long.textContent = on ? 'Reduce motion' : 'Motion on';
+      if (short) short.textContent = on ? 'Still' : 'Move';
+      if (!long) motion.textContent = on ? 'Reduce motion' : 'Motion on';
     });
   }
 }

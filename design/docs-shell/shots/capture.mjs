@@ -130,5 +130,24 @@ for (const [name, theme, viewport, urlPath] of pages) {
   await context.close();
 }
 
+{
+  const context = await browser.newContext({
+    viewport: { width: 2200, height: 1400 },
+    deviceScaleFactor: 1,
+    colorScheme: 'light',
+  });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4174/design/docs-shell/shots/sheet.html', {
+    waitUntil: 'networkidle',
+  });
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({
+    path: path.join(out, 'docs-shell-sheet.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await context.close();
+}
+
 await browser.close();
 console.log(`wrote shots to ${out}`);
