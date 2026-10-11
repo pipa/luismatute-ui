@@ -71,4 +71,4 @@
 | page vs sidebar (surface step) | `#1f1840` | `#2a3266` | 1.38:1 | n/a | note |
 | elev vs sunken (surface step) | `#443872` | `#120d2c` | 1.83:1 | n/a | note |
 
-Brightest star dot composited on the page is `#aaa0a4` (2.33:1 against star text). Dots are 1–2px, static, and do not form the text background. Text is measured on `#1f1840`.
+Brightest star dot composited on the page is `#d2c8c2` (1.51:1 if a glyph sat on the dot). Dots are about 3px, static, and sparse. Text is measured on `#1f1840`.

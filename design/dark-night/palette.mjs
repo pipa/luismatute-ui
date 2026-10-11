@@ -173,7 +173,7 @@ const pairs = [
   ['elev vs sunken (surface step)', N.elev, N.sunk, 0],
 ];
 
-const starDot = mix('#fff4e2', 0.62, N.bg);
+const starDot = mix('#fff4e2', 0.8, N.bg);
 const res = pairs.map(([name, fg, bg, min]) => ({
   name,
   fg,
@@ -188,7 +188,7 @@ const md = [
   '| --- | --- | --- | --- | --- | --- |',
   ...res.map((r) => `| ${r.name} | \`${r.fg}\` | \`${r.bg}\` | ${r.ratio}:1 | ${r.min ? r.min + ':1' : 'n/a'} | ${r.min ? (r.pass ? 'pass' : '**FAIL**') : 'note'} |`),
   '',
-  `Brightest star dot composited on the page is \`${starDot}\` (${cr(N.fg, starDot).toFixed(2)}:1 against star text). Dots are 1–2px, static, and do not form the text background. Text is measured on \`${N.bg}\`.`,
+  `Brightest star dot composited on the page is \`${starDot}\` (${cr(N.fg, starDot).toFixed(2)}:1 if a glyph sat on the dot). Dots are about 3px, static, and sparse. Text is measured on \`${N.bg}\`.`,
   '',
 ].join('\n');
 const ptab = [

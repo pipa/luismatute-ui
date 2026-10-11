@@ -32,14 +32,16 @@
   --night-tomato: #e2492f;    /* lighthouse stripes */
   --night-land: #8cc06a;      /* --lm-globe-land */
   --night-glass: #bfe6ee;     /* --lm-glass */
+  /* Solid core out to ~1.6px so a star survives rasterizing to a real pixel.
+     Alpha stays under the text colour. Dots are static and sparse. */
   --night-stars:
-    radial-gradient(1.5px 1.5px at 28px 36px, rgba(255, 244, 226, 0.55) 50%, transparent 52%),
-    radial-gradient(1px 1px at 132px 88px, rgba(255, 244, 226, 0.32) 50%, transparent 52%),
-    radial-gradient(2px 2px at 248px 22px, rgba(255, 244, 226, 0.62) 50%, transparent 52%),
-    radial-gradient(1px 1px at 310px 146px, rgba(255, 244, 226, 0.38) 50%, transparent 52%),
-    radial-gradient(1.5px 1.5px at 72px 196px, rgba(255, 244, 226, 0.28) 50%, transparent 52%),
-    radial-gradient(1px 1px at 188px 230px, rgba(255, 244, 226, 0.44) 50%, transparent 52%),
-    radial-gradient(1px 1px at 346px 64px, rgba(255, 244, 226, 0.3) 50%, transparent 52%);
+    radial-gradient(2.6px 2.6px at 36px 48px, rgba(255, 244, 226, 0.72) 0 62%, transparent 70%),
+    radial-gradient(2.2px 2.2px at 148px 112px, rgba(255, 244, 226, 0.42) 0 62%, transparent 70%),
+    radial-gradient(3px 3px at 264px 36px, rgba(255, 244, 226, 0.8) 0 60%, transparent 70%),
+    radial-gradient(2.2px 2.2px at 328px 168px, rgba(255, 244, 226, 0.38) 0 62%, transparent 70%),
+    radial-gradient(2.4px 2.4px at 78px 204px, rgba(255, 244, 226, 0.55) 0 62%, transparent 70%),
+    radial-gradient(2.2px 2.2px at 196px 236px, rgba(255, 244, 226, 0.34) 0 62%, transparent 70%),
+    radial-gradient(2.4px 2.4px at 352px 84px, rgba(255, 244, 226, 0.48) 0 62%, transparent 70%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -123,7 +125,7 @@ html[data-theme="dark"] {
   :root:not([data-theme="light"]) body {
     background-color: var(--docs-bg);
     background-image: var(--night-stars);
-    background-size: 380px 260px;
+    background-size: 400px 280px;
     background-repeat: repeat;
   }
 
@@ -131,18 +133,50 @@ html[data-theme="dark"] {
     background-color: var(--night-hull);
     background-image: linear-gradient(180deg, var(--night-hull) 0%, var(--night-sky-2) 100%);
   }
+
+  :root:not([data-theme="light"]) .docs-topbar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--night-stars);
+    background-size: 400px 280px;
+    background-repeat: repeat;
+  }
+
+  :root:not([data-theme="light"]) .docs-topbar > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 html[data-theme="dark"] body {
   background-color: var(--docs-bg);
   background-image: var(--night-stars);
-  background-size: 380px 260px;
+  background-size: 400px 280px;
   background-repeat: repeat;
 }
 
 html[data-theme="dark"] .docs-topbar {
   background-color: var(--night-hull);
   background-image: linear-gradient(180deg, var(--night-hull) 0%, var(--night-sky-2) 100%);
+}
+
+html[data-theme="dark"] .docs-topbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--night-stars);
+  background-size: 400px 280px;
+  background-repeat: repeat;
+}
+
+html[data-theme="dark"] .docs-topbar > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Lantern is the light. Labels and kickers stay the cloud rim. */
@@ -261,7 +295,7 @@ html[data-theme="dark"] .docs-demo-stage lm-card {
   :root:not([data-theme="light"]) .docs-search-panel {
     background-color: var(--docs-bg);
     background-image: var(--night-stars);
-    background-size: 380px 260px;
+    background-size: 400px 280px;
     background-repeat: repeat;
   }
 }
@@ -269,7 +303,7 @@ html[data-theme="dark"] .docs-demo-stage lm-card {
 html[data-theme="dark"] .docs-search-panel {
   background-color: var(--docs-bg);
   background-image: var(--night-stars);
-  background-size: 380px 260px;
+  background-size: 400px 280px;
   background-repeat: repeat;
 }
 

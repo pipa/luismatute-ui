@@ -85,7 +85,8 @@ The brightest star dot, composited, is a 2px speck. Text is measured on the page
 
 ## Render-look-fix
 
-Round 1 is the palette above, checked against the first-pass sheet. Notes from the stills are added after each look.
+1. **Round 1, against the first-pass sheet.** The page, the sea rail and the moonlit cards read as three planes (sidebar `#2a3266`, page `#1f1840`, cards `#443872`). The offset samples as a hard step: rim `#b9acd0`, then cloud slab `#8b7cc4`, then the page. The boarding pass is cream on the moon halo, with its ink edge, so it reads as a lit ticket. Lantern is the Dark segment, the links, the current nav label and the focus ring. Group labels are the cloud rim. Code is the deep sea under a lighter waterline. Tomato is only the title shadow. Green is the tip edge and Copied.
+2. **Stars had collapsed.** The first star field was a 1.5px gradient at 50% of its radius. In the 1280 still the only trace in an empty region was a pixel at `#5d556d`, which does not read as sky. The core now holds to about 62% of a 2.2–3px disc, alpha 0.34–0.8, and the same field sits on the top bar under the controls (`pointer-events: none`). Rechecked at 1280 and 375, top, code and search. The dots stay sparse. Text contrast is still measured on `#1f1840`.
 
 ## Reproduce
 
