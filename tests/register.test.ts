@@ -40,4 +40,28 @@ describe('element registration', () => {
     await import('../src/components/entries/avatar.ts');
     expect(customElements.get('lm-avatar')).toBeTruthy();
   });
+
+  it('applies the motion preference from every defineLmX', () => {
+    const files = [
+      'card',
+      'chip',
+      'more',
+      'motion-toggle',
+      'pause',
+      'shot',
+      'avatar',
+      'globe',
+      'flight-plan',
+    ];
+    for (const file of files) {
+      const source = readFileSync(`src/components/${file}.ts`, 'utf8');
+      const body = source.slice(source.indexOf('export function defineLm'));
+      expect(body).toContain('applyMotionPreference()');
+    }
+    document.documentElement.removeAttribute('data-motion');
+    return import('../src/components/card.ts').then(({ defineLmCard }) => {
+      defineLmCard();
+      expect(document.documentElement.dataset.motion).toBe('full');
+    });
+  });
 });

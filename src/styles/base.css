@@ -267,12 +267,18 @@ lm-more {
   display: block;
 }
 
+lm-more .lm-more-ctrl {
+  position: relative;
+  display: inline-block;
+  margin: 0.45em 0 0;
+}
+
 lm-more button {
   display: inline-flex;
   align-items: center;
   gap: var(--lm-space-8);
   position: relative;
-  margin: 0.45em 0 0;
+  margin: 0;
   padding: var(--lm-space-7) var(--lm-space-14) var(--lm-space-8);
   border: var(--lm-border-line) solid var(--lm-ink);
   border-radius: var(--lm-radius-pill);
@@ -285,15 +291,18 @@ lm-more button {
   cursor: pointer;
 }
 
-lm-more button:active {
+lm-more button:active,
+lm-more .lm-hit:active + button {
   transform: translate(2px, 2px);
   box-shadow: var(--lm-shadow-more-press);
 }
 
-lm-more button::before {
-  content: "";
+lm-more .lm-hit {
   position: absolute;
-  inset: -6px -2px;
+  z-index: 1;
+  /* Outside the pill, and not a child of it, so the press nudge cannot
+     move this target out from under the pointer. */
+  inset: calc(-6px - var(--lm-border-line)) -2px;
 }
 
 lm-more button::after {
@@ -411,7 +420,9 @@ lm-pause button {
 }
 
 html[data-motion="full"] lm-pause button,
-html.is-motion lm-pause button {
+html[data-motion="calm"] lm-pause button,
+html.is-motion lm-pause button,
+html.is-calm lm-pause button {
   display: inline-flex;
 }
 
@@ -787,6 +798,12 @@ lm-avatar:not([static]):focus-within .lu.ex-wave .lu-hand {
 lm-avatar[static] .lu.ex-wave .lu-hand,
 lm-avatar[static]:hover .lu.ex-wave .lu-hand,
 lm-avatar[static]:focus-within .lu.ex-wave .lu-hand,
+lm-avatar[motion="off"] .lu.ex-wave .lu-hand,
+lm-avatar[motion="off"]:hover .lu.ex-wave .lu-hand,
+lm-avatar[motion="off"]:focus-within .lu.ex-wave .lu-hand,
+lm-avatar[motion="reduce"] .lu.ex-wave .lu-hand,
+lm-avatar[motion="reduce"]:hover .lu.ex-wave .lu-hand,
+lm-avatar[motion="reduce"]:focus-within .lu.ex-wave .lu-hand,
 html[data-motion="reduce"] lm-avatar .lu.ex-wave .lu-hand,
 html[data-motion="reduce"] lm-avatar:hover .lu.ex-wave .lu-hand,
 html[data-motion="reduce"] lm-avatar:focus-within .lu.ex-wave .lu-hand {
@@ -796,9 +813,18 @@ html[data-motion="reduce"] lm-avatar:focus-within .lu.ex-wave .lu-hand {
 @media (prefers-reduced-motion: reduce) {
   html:not([data-motion="full"]) lm-avatar .lu.ex-wave .lu-hand,
   html:not([data-motion="full"]) lm-avatar:hover .lu.ex-wave .lu-hand,
-  html:not([data-motion="full"]) lm-avatar:focus-within .lu.ex-wave .lu-hand {
+  html:not([data-motion="full"]) lm-avatar:focus-within .lu.ex-wave .lu-hand,
+  html:not([data-motion="full"]) lm-avatar .zz text {
     animation: none;
   }
+}
+
+lm-avatar[static] .zz text,
+lm-avatar[motion="off"] .zz text,
+lm-avatar[motion="reduce"] .zz text,
+html[data-motion="reduce"] lm-avatar .zz text,
+html.paused lm-avatar .zz text {
+  animation: none;
 }
 
 lm-avatar .lm-note {
@@ -974,6 +1000,8 @@ lm-globe.is-open .lm-leg[data-hot="true"] {
   width: 100%;
   height: 100%;
   transform-origin: center;
+  /* Rest: the drawn burst, which reaches the viewBox. Motion rotates it. */
+  transform: none;
   animation: lm-spin var(--lm-duration-rays) var(--lm-ease-linear) infinite;
 }
 
@@ -1052,6 +1080,8 @@ lm-globe.is-open .lm-leg[data-hot="true"] {
 
 :where(.lm-art) .sway,
 :where(.lm-art.sway) {
+  /* Rest upright. The sway keyframes take over only while motion runs. */
+  transform: none;
   animation: lm-sway var(--t, var(--lm-duration-sway)) var(--lm-ease-in-out)
     infinite alternate;
 }
@@ -1210,6 +1240,14 @@ lm-globe.is-open .lm-leg[data-hot="true"] {
 :where(.lm-art) .zz text:nth-child(3),
 :where(.lm-art.zz) text:nth-child(3) {
   animation-delay: 2s;
+}
+
+/* Illustration motion is opt-in. .lu is the avatar, so Info/calm does not freeze it. */
+html:not([data-motion="full"]) :where(.lm-art):not(.lu),
+html:not([data-motion="full"]) :where(.lm-art):not(.lu) *,
+html:not([data-motion="full"]) :where(.lm-art):not(.lu) *::before,
+html:not([data-motion="full"]) :where(.lm-art):not(.lu) *::after {
+  animation: none !important;
 }
 
 /* Per-instance illustration values. Classes replace style attributes so style-src-attr can stay strict. */
@@ -1408,6 +1446,8 @@ lm-globe.is-open .lm-leg[data-hot="true"] {
   --t: 9s;
   transform-box: view-box;
   transform-origin: 0 0;
+  /* Windmill blades rest on the diagonal. */
+  transform: rotate(45deg);
 }
 :where(.lm-art) .lm-ix-ede0f3 {
   transform-origin: 548px 228px;
@@ -1761,10 +1801,17 @@ lm-globe.is-open .lm-leg[data-hot="true"] {
   }
 }
 
-/* Reduced motion holds the first frame, matching the source freeze. */
+/* Explicit off holds every frame. Info holds everything except the avatar idle. */
 html[data-motion="reduce"] *,
 html[data-motion="reduce"] *::before,
 html[data-motion="reduce"] *::after {
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+html[data-motion="calm"] :where(:not(lm-avatar, lm-avatar *)),
+html[data-motion="calm"] :where(:not(lm-avatar, lm-avatar *))::before,
+html[data-motion="calm"] :where(:not(lm-avatar, lm-avatar *))::after {
   animation-play-state: paused !important;
   transition: none !important;
 }

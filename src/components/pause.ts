@@ -1,3 +1,5 @@
+import { applyMotionPreference } from './motion.ts';
+
 export class LmPause extends HTMLElement {
   private button: HTMLButtonElement | null = null;
 
@@ -24,6 +26,7 @@ export class LmPause extends HTMLElement {
 }
 
 export function defineLmPause(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-pause'))
     customElements.define('lm-pause', LmPause);
 }

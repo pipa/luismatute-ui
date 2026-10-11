@@ -1,5 +1,9 @@
 import { avatar as avatarMarkup } from '../illustrations/svg/avatar.ts';
-import { bindMotionMedia, motionReduced } from './motion.ts';
+import {
+  applyMotionPreference,
+  bindMotionMedia,
+  motionReduced,
+} from './motion.ts';
 
 const POSES = new Set([
   'wow',
@@ -50,7 +54,7 @@ export class LmAvatar extends HTMLElement {
   private onPause = (): void => this.sync();
 
   static get observedAttributes(): string[] {
-    return ['pose', 'note'];
+    return ['pose', 'note', 'motion'];
   }
 
   connectedCallback(): void {
@@ -139,11 +143,23 @@ export class LmAvatar extends HTMLElement {
     }
   }
 
+  /**
+   * Idle stops for the OS reduced-motion setting, the pause control, explicit
+   * `data-motion="reduce"`, `static`, or `motion="off"|"reduce"`.
+   * `motion="idle"` (the default when the attribute is omitted) keeps running
+   * in Info (`data-motion="calm"`).
+   */
   private frozen(): boolean {
+    const choice = this.getAttribute('motion');
+    if (
+      this.hasAttribute('static') ||
+      choice === 'off' ||
+      choice === 'reduce'
+    ) {
+      return true;
+    }
     return (
-      motionReduced() ||
-      document.documentElement.classList.contains('paused') ||
-      this.hasAttribute('static')
+      motionReduced() || document.documentElement.classList.contains('paused')
     );
   }
 
@@ -251,6 +267,7 @@ export class LmAvatar extends HTMLElement {
 }
 
 export function defineLmAvatar(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-avatar'))
     customElements.define('lm-avatar', LmAvatar);
 }

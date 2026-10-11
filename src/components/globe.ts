@@ -1,5 +1,6 @@
 import { globe as globeMarkup } from '../illustrations/svg/globe.ts';
 import { type GlobeRoute, parseRoute } from './globe-route.ts';
+import { applyMotionPreference } from './motion.ts';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -188,6 +189,7 @@ export class LmGlobe extends HTMLElement {
 }
 
 export function defineLmGlobe(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-globe'))
     customElements.define('lm-globe', LmGlobe);
 }

@@ -87,6 +87,12 @@ describe('reduced motion stylesheet', () => {
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
     expect(css).toContain('html:not([data-motion="full"])');
     expect(css).toContain('animation-play-state: paused !important');
+    expect(css).toContain(
+      'html:not([data-motion="full"]) :where(.lm-art):not(.lu)',
+    );
+    expect(css).toContain('html[data-motion="calm"]');
+    expect(css).toContain('animation: none !important');
+    expect(css).toContain('transform: rotate(45deg)');
   });
 });
 
@@ -119,5 +125,6 @@ describe('lm-more hit target', () => {
     expect(css).not.toContain(
       'min-height: var(--lm-target);\n  min-width: var(--lm-target);',
     );
+    expect(css).toContain('calc(-6px - var(--lm-border-line))');
   });
 });

@@ -12,9 +12,15 @@ pnpm add github:pipa/luismatute-ui#v0.1.2
 
 ## Use in Astro
 
-Import the styles once in the layout. Register elements from a client script with an explicit `defineLmX()` call. Astro and other bundlers drop a bare side-effect import, so `import '@luismatute/ui/components/card'` is not reliable even though that file does call `defineLmCard()` and `package.json` lists `./dist/components/*.js` in `sideEffects`.
+Import the styles once in the layout. Each component subpath calls `defineLmX()` and `package.json` lists `./dist/components/*.js` in `sideEffects`, so a bare import registers that element:
 
-`import { tokens } from '@luismatute/ui'` does not register any element. Call `defineLmUi()` when you want the whole set.
+```astro
+<script>
+  import '@luismatute/ui/components/card';
+</script>
+```
+
+The recommended pattern is still the explicit call, which stays obvious in review and works even if a bundler is configured to drop side effects:
 
 ```astro
 ---
@@ -55,7 +61,7 @@ The CSS files live under `dist/`. A plain `<link>` does not follow the package `
 <lm-motion-toggle></lm-motion-toggle>
 ```
 
-Import `@luismatute/ui` if you also want the token object and `inlineIllustration`. Per-element entries (`@luismatute/ui/components/card`, and the rest) register that element when the module is evaluated; still call `defineLmCard()` (and the matching function for each element) so the registration cannot be tree-shaken.
+Import `@luismatute/ui` if you also want the token object and `inlineIllustration`. That root import does not register any element. Per-element entries (`@luismatute/ui/components/card`, and the rest) do: importing the module registers that element, and calling `defineLmCard()` (and the matching function for each element) does the same thing in a way a bundler will not drop.
 
 ## Theming
 
@@ -63,7 +69,9 @@ Set `data-theme` on any ancestor. Names are the scene ids from the source file: 
 
 Skin and beard follow `--lm-skin`, `--lm-skin-d`, `--lm-skin-blush`, `--lm-skin-hair`, `--lm-skin-fade`, `--lm-skin-beard`, `--lm-avatar-amber` (aliased as `--lm-skin-amber` so older overrides and the pilot’s glasses keep working), `--lm-skin-tort`, `--lm-skin-lip`, `--lm-beard-line`, `--lm-skin-highlight`, `--lm-lens-tint` and `--lm-lens-tint-opacity`.
 
-`lm-motion-toggle` stores `reduce` or `full` under `lm.ui.motion` and sets `data-motion` on `<html>`. The visible label switches between “Just the info” / “Full flight” (and the short “Info” / “Flight” labels below 640px). The control uses `data-pressed` for styling. `?motion=reduce` forces the still page. `?motion=on` forces motion. With no stored choice and no `?motion=` query, the page follows `prefers-reduced-motion`, including later OS changes. The same media query pauses CSS motion when JavaScript never runs and no toggle has set `data-motion="full"`.
+`lm-motion-toggle` stores `calm` or `full` under `lm.ui.motion` and sets `data-motion` on `<html>`. “Just the info” is `calm`: the Info layout, with decorative motion off and the avatar idle left running. “Full flight” is `full`. The visible label switches between “Just the info” / “Full flight” (and the short “Info” / “Flight” labels below 640px). The control uses `data-pressed` for styling. `?motion=calm` and `?motion=info` select Info. `?motion=on` forces full motion, including when the OS prefers reduced motion. `?motion=reduce` and `?motion=off` are explicit off: illustrations rest and the avatar idle stops. A saved `reduce` from an older build is read as `calm`, because that value was the Info click. `writeMotionPreference('reduce')` stores `off`, which still reads back as explicit reduce. Every `defineLmX()` calls `applyMotionPreference()`, which follows the query, then the saved choice, then `prefers-reduced-motion`.
+
+Illustration motion (rays, windmill, propeller, palm, windsock, and the rest of `.lm-art` except the avatar) runs only under `html[data-motion="full"]`. With JavaScript off, nothing sets that attribute, so server-rendered art rests on a neutral frame: palms and windsocks upright, windmill blades at 45°, sun rays at the full length they were drawn. `lm-avatar` is outside that gate. Its idle loop (blinks, glances, small poses) runs in Info (`calm`) and in Flight (`full`). It stops for `prefers-reduced-motion: reduce`, the pause control (`html.paused`), `data-motion="reduce"`, the `static` attribute, or `motion="off"` / `motion="reduce"` on the element. `motion="idle"` is the default when the attribute is omitted: the avatar ignores a layout-only `calm` state and still follows those stop conditions. The pause control stays available in Info so that idle loop can be stopped. Under `prefers-reduced-motion: reduce`, `base.css` pauses every animation and transition on the page unless the visitor has chosen `data-motion="full"`. In Info, that same pause applies to everything except `lm-avatar`.
 
 `lm-avatar` and `lm-shot` can render without JavaScript. Put a static `<svg class="lm-art">` inside `<lm-avatar>` (a `<noscript>` wrapper is enough on the demo) and a framed `<a><img>` inside `<lm-shot>`. With JavaScript, the components upgrade that markup.
 

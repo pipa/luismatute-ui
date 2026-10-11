@@ -148,12 +148,42 @@ test('card copy is 15.62px at 1280 and portrait padding applies on a tall tablet
   expect(desk).toBe('20px');
 });
 
-test('more button is the short pill, not a 44px target', async ({ page }) => {
+test('more button stays a 33px pill with a 44px hit area', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/demo.html?motion=on');
-  const height = await page.locator('lm-more button').evaluate((el) => {
-    return el.getBoundingClientRect().height;
+  const button = page.locator('lm-more button');
+  const box = await button.boundingBox();
+  if (!box) throw new Error('more button missing');
+  expect(box.height).toBeGreaterThan(32);
+  expect(box.height).toBeLessThan(36);
+  expect(box.width).toBeGreaterThanOrEqual(44);
+  await page.mouse.click(box.x + box.width / 2, box.y - 4);
+  await expect(button).toHaveAttribute('aria-expanded', 'true');
+  const after = await button.boundingBox();
+  expect(Math.abs((after?.height ?? 0) - box.height)).toBeLessThan(0.5);
+  const slop = await button.evaluate((el) => {
+    const pill = el.getBoundingClientRect();
+    const hit = el.parentElement?.querySelector('.lm-hit');
+    const area = hit?.getBoundingClientRect();
+    const above = document.elementFromPoint(
+      pill.left + pill.width / 2,
+      pill.top - 4,
+    );
+    const below = document.elementFromPoint(
+      pill.left + pill.width / 2,
+      pill.bottom + 4,
+    );
+    const reaches = (node: Element | null) =>
+      node === el || el.contains(node) || node === hit;
+    return {
+      above: reaches(above),
+      below: reaches(below),
+      hitHeight: area?.height ?? 0,
+      hitWidth: area?.width ?? 0,
+    };
   });
-  expect(height).toBeGreaterThan(30);
-  expect(height).toBeLessThan(40);
+  expect(slop.hitHeight).toBeGreaterThanOrEqual(44);
+  expect(slop.hitWidth).toBeGreaterThanOrEqual(44);
+  expect(slop.above).toBe(true);
+  expect(slop.below).toBe(true);
 });

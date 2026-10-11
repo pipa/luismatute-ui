@@ -1,3 +1,5 @@
+import { applyMotionPreference } from './motion.ts';
+
 export interface FlightStop {
   href: string;
   years: string;
@@ -79,6 +81,7 @@ export class LmFlightPlan extends HTMLElement {
 }
 
 export function defineLmFlightPlan(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-flight-plan'))
     customElements.define('lm-flight-plan', LmFlightPlan);
 }

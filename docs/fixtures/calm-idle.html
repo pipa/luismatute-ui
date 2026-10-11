@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calm idle</title>
+    <link rel="stylesheet" href="../ui/tokens.css" />
+    <link rel="stylesheet" href="../ui/base.css" />
+  </head>
+  <body>
+    <lm-pause></lm-pause>
+    <div id="rays" class="rays lm-art"></div>
+    <div id="mill" class="spin lm-art"></div>
+    <lm-avatar pose="beach" motion="idle" label="Luis at the window"></lm-avatar>
+    <script type="module">
+      import { defineLmAvatar } from '../ui/components/avatar.js';
+      import { defineLmPause } from '../ui/components/pause.js';
+
+      defineLmPause();
+      defineLmAvatar();
+    </script>
+  </body>
+</html>

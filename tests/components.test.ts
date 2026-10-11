@@ -11,6 +11,7 @@ import {
   MOTION_KEY,
   motionReduced,
   readMotionPreference,
+  writeMotionPreference,
 } from '../src/components/motion.ts';
 import { defineLmMotionToggle } from '../src/components/motion-toggle.ts';
 import { defineLmPause } from '../src/components/pause.ts';
@@ -117,9 +118,10 @@ describe('lm-motion-toggle', () => {
     button?.click();
     expect(button?.getAttribute('data-pressed')).toBe('true');
     expect(button?.textContent).toContain('Full flight');
-    expect(localStorage.getItem(MOTION_KEY)).toBe('reduce');
-    expect(document.documentElement.dataset.motion).toBe('reduce');
+    expect(localStorage.getItem(MOTION_KEY)).toBe('calm');
+    expect(document.documentElement.dataset.motion).toBe('calm');
     expect(document.documentElement.classList.contains('is-static')).toBe(true);
+    expect(document.documentElement.classList.contains('is-calm')).toBe(true);
     button?.click();
     expect(localStorage.getItem(MOTION_KEY)).toBe('full');
     expect(document.documentElement.dataset.motion).toBe('full');
@@ -135,6 +137,29 @@ describe('lm-motion-toggle', () => {
     history.replaceState(null, '', '/');
     localStorage.clear();
     expect(readMotionPreference()).toBe('reduce');
+  });
+
+  it('reads Info as calm and keeps explicit off on the query', () => {
+    history.replaceState(null, '', '/?motion=calm');
+    expect(readMotionPreference()).toBe('calm');
+    history.replaceState(null, '', '/?motion=info');
+    expect(readMotionPreference()).toBe('calm');
+    history.replaceState(null, '', '/?motion=off');
+    localStorage.setItem(MOTION_KEY, 'calm');
+    expect(readMotionPreference()).toBe('reduce');
+    history.replaceState(null, '', '/');
+    localStorage.setItem(MOTION_KEY, 'reduce');
+    expect(readMotionPreference()).toBe('calm');
+    writeMotionPreference('reduce');
+    expect(localStorage.getItem(MOTION_KEY)).toBe('off');
+    expect(readMotionPreference()).toBe('reduce');
+    document.documentElement.dataset.motion = 'calm';
+    media(false);
+    expect(motionReduced()).toBe(false);
+    media(true);
+    expect(motionReduced()).toBe(true);
+    document.documentElement.dataset.motion = 'full';
+    expect(motionReduced()).toBe(false);
   });
 
   it('reads prefers-reduced-motion when data-motion is unset', () => {
@@ -351,6 +376,67 @@ describe('lm-avatar', () => {
     expect(add).not.toHaveBeenCalledWith('blink');
     expect(head.style.transform).toBe(pose);
     expect(document.documentElement.dataset.motion).toBeUndefined();
+  });
+
+  it('idles in calm while pause, OS reduce, and explicit off stop it', () => {
+    vi.useFakeTimers();
+    defineLmAvatar();
+    document.documentElement.dataset.motion = 'calm';
+    media(false);
+    const avatar = document.createElement('lm-avatar');
+    avatar.setAttribute('motion', 'idle');
+    avatar.setAttribute('pose', 'beach');
+    document.body.append(avatar);
+    const svg = avatar.querySelector('svg');
+    const add = vi.spyOn(svg?.classList as DOMTokenList, 'add');
+    vi.advanceTimersByTime(8000);
+    expect(add).toHaveBeenCalledWith('blink');
+
+    add.mockClear();
+    document.documentElement.classList.add('paused');
+    document.documentElement.dispatchEvent(new CustomEvent('lm-pause'));
+    vi.advanceTimersByTime(8000);
+    expect(add).not.toHaveBeenCalledWith('blink');
+
+    document.documentElement.classList.remove('paused');
+    document.documentElement.dispatchEvent(new CustomEvent('lm-pause'));
+    add.mockClear();
+    media(true);
+    document.documentElement.dispatchEvent(
+      new CustomEvent('lm-motion', { detail: { motion: 'calm' } }),
+    );
+    vi.advanceTimersByTime(8000);
+    expect(add).not.toHaveBeenCalledWith('blink');
+
+    media(false);
+    document.documentElement.dataset.motion = 'reduce';
+    document.documentElement.dispatchEvent(
+      new CustomEvent('lm-motion', { detail: { motion: 'reduce' } }),
+    );
+    vi.advanceTimersByTime(8000);
+    expect(add).not.toHaveBeenCalledWith('blink');
+  });
+
+  it('motion=off freezes idle in Flight, and full still overrides the OS', () => {
+    vi.useFakeTimers();
+    defineLmAvatar();
+    document.documentElement.dataset.motion = 'full';
+    media(true);
+    const avatar = document.createElement('lm-avatar');
+    document.body.append(avatar);
+    const svg = avatar.querySelector('svg');
+    const add = vi.spyOn(svg?.classList as DOMTokenList, 'add');
+    vi.advanceTimersByTime(8000);
+    expect(add).toHaveBeenCalledWith('blink');
+    add.mockClear();
+    avatar.setAttribute('motion', 'off');
+    vi.advanceTimersByTime(8000);
+    expect(add).not.toHaveBeenCalledWith('blink');
+    avatar.setAttribute('motion', 'idle');
+    document.documentElement.classList.add('paused');
+    document.documentElement.dispatchEvent(new CustomEvent('lm-pause'));
+    vi.advanceTimersByTime(8000);
+    expect(add).not.toHaveBeenCalledWith('blink');
   });
 
   it('keeps motion and pause listeners after a DOM move', () => {

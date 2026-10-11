@@ -1,3 +1,5 @@
+import { applyMotionPreference } from './motion.ts';
+
 export class LmShot extends HTMLElement {
   connectedCallback(): void {
     const existing = this.querySelector('a');
@@ -62,6 +64,7 @@ export class LmShot extends HTMLElement {
 }
 
 export function defineLmShot(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-shot')) customElements.define('lm-shot', LmShot);
 }
 

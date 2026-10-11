@@ -3,25 +3,39 @@ var avatar = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="lu lm-a
 
 // src/components/motion.ts
 var MOTION_KEY = "lm.ui.motion";
+function modeFromQuery(value) {
+  if (value === "reduce" || value === "off") return "reduce";
+  if (value === "calm" || value === "info") return "calm";
+  if (value === "on" || value === "full") return "full";
+  return null;
+}
+function modeFromStorage(value) {
+  if (value === "off") return "reduce";
+  if (value === "reduce" || value === "calm" || value === "info") return "calm";
+  if (value === "full" || value === "on") return "full";
+  return null;
+}
 function readMotionPreference(search = globalThis.location?.search ?? "") {
-  const qs = new URLSearchParams(search).get("motion");
-  if (qs === "reduce") return "reduce";
-  if (qs === "on") return "full";
+  const query = modeFromQuery(new URLSearchParams(search).get("motion"));
+  if (query) return query;
   let stored = null;
   try {
     stored = globalThis.localStorage?.getItem(MOTION_KEY) ?? null;
   } catch {
     stored = null;
   }
-  if (stored === "reduce" || stored === "full") return stored;
+  const saved = modeFromStorage(stored);
+  if (saved) return saved;
   const reduce = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
   return reduce ? "reduce" : "full";
 }
 function applyMotionPreference(mode) {
+  if (typeof document === "undefined") return "full";
   const next = readMotionPreference();
   const root = document.documentElement;
   root.dataset.motion = next;
-  root.classList.toggle("is-static", next === "reduce");
+  root.classList.toggle("is-static", next === "reduce" || next === "calm");
+  root.classList.toggle("is-calm", next === "calm");
   root.classList.toggle("is-motion", next === "full");
   root.dispatchEvent(
     new CustomEvent("lm-motion", { detail: { motion: next } })
@@ -31,10 +45,10 @@ function applyMotionPreference(mode) {
 }
 function explicitMotionChoice(search = globalThis.location?.search ?? "") {
   const qs = new URLSearchParams(search).get("motion");
-  if (qs === "reduce" || qs === "on") return true;
+  if (modeFromQuery(qs)) return true;
   try {
     const stored = globalThis.localStorage?.getItem(MOTION_KEY) ?? null;
-    return stored === "reduce" || stored === "full";
+    return modeFromStorage(stored) !== null;
   } catch {
     return false;
   }
@@ -46,9 +60,16 @@ function bindMotionMedia() {
   if (!mq?.addEventListener) return;
   motionMediaBound = true;
   mq.addEventListener("change", () => {
-    if (explicitMotionChoice()) return;
     const root = document.documentElement;
-    if (root.dataset.motion === "reduce" || root.dataset.motion === "full") {
+    if (explicitMotionChoice()) {
+      root.dispatchEvent(
+        new CustomEvent("lm-motion", {
+          detail: { motion: root.dataset.motion }
+        })
+      );
+      return;
+    }
+    if (root.dataset.motion === "reduce" || root.dataset.motion === "calm" || root.dataset.motion === "full") {
       applyMotionPreference();
       return;
     }
@@ -100,7 +121,7 @@ var LmAvatar = class extends HTMLElement {
   onMotion = () => this.sync();
   onPause = () => this.sync();
   static get observedAttributes() {
-    return ["pose", "note"];
+    return ["pose", "note", "motion"];
   }
   connectedCallback() {
     if (!this.svg) {
@@ -183,8 +204,18 @@ var LmAvatar = class extends HTMLElement {
       note.textContent = text;
     }
   }
+  /**
+   * Idle stops for the OS reduced-motion setting, the pause control, explicit
+   * `data-motion="reduce"`, `static`, or `motion="off"|"reduce"`.
+   * `motion="idle"` (the default when the attribute is omitted) keeps running
+   * in Info (`data-motion="calm"`).
+   */
   frozen() {
-    return motionReduced() || document.documentElement.classList.contains("paused") || this.hasAttribute("static");
+    const choice = this.getAttribute("motion");
+    if (this.hasAttribute("static") || choice === "off" || choice === "reduce") {
+      return true;
+    }
+    return motionReduced() || document.documentElement.classList.contains("paused");
   }
   sync() {
     this.stop();
@@ -278,6 +309,7 @@ var LmAvatar = class extends HTMLElement {
   }
 };
 function defineLmAvatar() {
+  applyMotionPreference();
   if (!customElements.get("lm-avatar"))
     customElements.define("lm-avatar", LmAvatar);
 }
