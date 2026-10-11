@@ -1,0 +1,42 @@
+---
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="stylesheet" href={`${base}site.css`} />
+    <link rel="stylesheet" href={`${base}pagefind/pagefind-ui.css`} />
+  </head>
+  <body>
+    <header>
+      <a href={base}>Docs spike</a>
+      <label>
+        Theme
+        <select id="theme">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </label>
+    </header>
+    <div class="layout">
+      <nav aria-label="Sections">
+        <a href={base}>Getting started</a>
+        <a href={`${base}card/`}>Card</a>
+      </nav>
+      <main data-pagefind-body>
+        <slot />
+      </main>
+    </div>
+    <div id="search"></div>
+    <script is:inline src="/ui/theme.js"></script>
+    <script is:inline src="/ui/copy.js"></script>
+    <script is:inline src="/ui/pagefind/pagefind-ui.js"></script>
+    <script is:inline src="/ui/search-init.js"></script>
+  </body>
+</html>

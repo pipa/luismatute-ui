@@ -1,0 +1,13 @@
+---
+import Icon from '../../node_modules/@astrojs/starlight/dist/user-components/Icon.astro';
+
+const themeScript = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}csp/theme-provider.js`;
+---
+
+<script is:inline src={themeScript}></script>
+
+<template id="theme-icons">
+  <Icon name="sun" class="light" />
+  <Icon name="moon" class="dark" />
+  <Icon name="laptop" class="auto" />
+</template>

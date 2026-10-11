@@ -1,0 +1,25 @@
+{
+  "name": "starlight-csp-spike",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build:stock": "SPIKE_VARIANT=stock astro build --config astro.config.mjs",
+    "build:external": "SPIKE_VARIANT=external astro build --config astro.config.mjs",
+    "build:csp": "SPIKE_VARIANT=csp astro build --config astro.config.mjs",
+    "build:custom": "astro build --config astro.custom.mjs",
+    "scan": "node scripts/scan-inline.mjs",
+    "externalise": "node scripts/externalise.mjs",
+    "csp-check": "node scripts/csp-check.mjs"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.6",
+    "astro": "7.3.8",
+    "pagefind": "1.5.2"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "label": "custom-b",
+  "base": "http://127.0.0.1:4184/ui/",
+  "engines": {
+    "chromium": {
+      "violations": 0,
+      "messages": [],
+      "errors": [],
+      "features": {
+        "themeLight": true,
+        "themeDark": true,
+        "tocHash": true,
+        "copyFeedback": false,
+        "searchInput": true,
+        "searchHits": 2
+      }
+    },
+    "firefox": {
+      "violations": 0,
+      "messages": [],
+      "errors": [],
+      "features": {
+        "themeLight": true,
+        "themeDark": true,
+        "tocHash": true,
+        "copyFeedback": true,
+        "searchInput": true,
+        "searchHits": 2
+      }
+    },
+    "webkit": {
+      "violations": 1,
+      "messages": [
+        {
+          "type": "error",
+          "text": "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+        }
+      ],
+      "errors": [],
+      "features": {
+        "themeLight": true,
+        "themeDark": true,
+        "tocHash": true,
+        "copyFeedback": true,
+        "searchInput": true,
+        "searchHits": 2
+      }
+    }
+  }
+}

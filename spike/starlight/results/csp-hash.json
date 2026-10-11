@@ -1,0 +1,1709 @@
+{
+  "root": "dist-csp",
+  "htmlFiles": 3,
+  "inlineScripts": 26,
+  "styleBlocks": 0,
+  "styleAttributes": 240,
+  "findings": [
+    {
+      "file": "404.html",
+      "kind": "inline-script",
+      "line": 1,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 967,
+      "excerpt": "window.StarlightThemeProvider = (() => { const storedTheme = typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme'); const theme = storedTheme || (window.ma…"
+    },
+    {
+      "file": "404.html",
+      "kind": "inline-script",
+      "line": 27,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 454,
+      "excerpt": "(() => { const openBtn = document.querySelector('button[data-open-modal]'); const shortcut = openBtn?.querySelector('kbd'); if (!openBtn || !(shortcut instanceof HTMLElement)) retu…"
+    },
+    {
+      "file": "404.html",
+      "kind": "inline-script",
+      "line": 39,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 42,
+      "excerpt": "StarlightThemeProvider.updatePickers();"
+    },
+    {
+      "file": "404.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 766,
+      "excerpt": "var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStor…"
+    },
+    {
+      "file": "404.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 431,
+      "excerpt": "var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.l…"
+    },
+    {
+      "file": "404.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 755,
+      "excerpt": "var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStora…"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "display: none;"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "padding:0"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-select-width: 6.25em"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "404.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 1,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 967,
+      "excerpt": "window.StarlightThemeProvider = (() => { const storedTheme = typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme'); const theme = storedTheme || (window.ma…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 27,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 454,
+      "excerpt": "(() => { const openBtn = document.querySelector('button[data-open-modal]'); const shortcut = openBtn?.querySelector('kbd'); if (!openBtn || !(shortcut instanceof HTMLElement)) retu…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 39,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 42,
+      "excerpt": "StarlightThemeProvider.updatePickers();"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 766,
+      "excerpt": "var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStor…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 431,
+      "excerpt": "var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.l…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 408,
+      "excerpt": "var e=class extends HTMLElement{constructor(){super();let e=matchMedia(`(min-width: 50em)`),t=()=>{this.popover=e.matches?null:`auto`};t(),e.addEventListener(`change`,()=>t()),this…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": true,
+      "bytes": 797,
+      "excerpt": "(() => { try { if (!matchMedia('(min-width: 50em)').matches) return; /** @type {HTMLElement | null} */ const target = document.querySelector('sl-sidebar-state-persist'); const stat…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 64,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": true,
+      "bytes": 247,
+      "excerpt": "(() => { const scroller = document.getElementById('starlight__sidebar'); if (!window._starlightScrollRestore || !scroller) return; scroller.scrollTop = window._starlightScrollResto…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 71,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 42,
+      "excerpt": "StarlightThemeProvider.updatePickers();"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "inline-script",
+      "line": 73,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 755,
+      "excerpt": "var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStora…"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "display: none;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "padding:0"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-select-width: 6.25em"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 41,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 41,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 71,
+      "excerpt": "--sl-select-width: 6.25em"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 71,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 71,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--sl-icon-size: 1rem;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 75,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#FF6D6D;--1:#984E4D"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#80CBC4;--1:#096E72"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#80CBC4;--1:#096E72"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 96,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "card/index.html",
+      "kind": "style-attribute",
+      "line": 97,
+      "excerpt": "--sl-icon-size: 1.5rem;"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 1,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 967,
+      "excerpt": "window.StarlightThemeProvider = (() => { const storedTheme = typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme'); const theme = storedTheme || (window.ma…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 27,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 454,
+      "excerpt": "(() => { const openBtn = document.querySelector('button[data-open-modal]'); const shortcut = openBtn?.querySelector('kbd'); if (!openBtn || !(shortcut instanceof HTMLElement)) retu…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 39,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 42,
+      "excerpt": "StarlightThemeProvider.updatePickers();"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 766,
+      "excerpt": "var e=`starlight-theme`,t=e=>e===`auto`||e===`dark`||e===`light`?e:`auto`,n=()=>t(typeof localStorage<`u`&&localStorage.getItem(e));function r(t){typeof localStorage<`u`&&localStor…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 431,
+      "excerpt": "var e=class extends HTMLElement{constructor(){super();let e=this.querySelector(`select`);e&&(e.addEventListener(`change`,e=>{e.currentTarget instanceof HTMLSelectElement&&(window.l…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 408,
+      "excerpt": "var e=class extends HTMLElement{constructor(){super();let e=matchMedia(`(min-width: 50em)`),t=()=>{this.popover=e.matches?null:`auto`};t(),e.addEventListener(`change`,()=>t()),this…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 41,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": true,
+      "bytes": 797,
+      "excerpt": "(() => { try { if (!matchMedia('(min-width: 50em)').matches) return; /** @type {HTMLElement | null} */ const target = document.querySelector('sl-sidebar-state-persist'); const stat…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 64,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": true,
+      "bytes": 247,
+      "excerpt": "(() => { const scroller = document.getElementById('starlight__sidebar'); if (!window._starlightScrollRestore || !scroller) return; scroller.scrollTop = window._starlightScrollResto…"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 71,
+      "type": "(classic)",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 42,
+      "excerpt": "StarlightThemeProvider.updatePickers();"
+    },
+    {
+      "file": "index.html",
+      "kind": "inline-script",
+      "line": 73,
+      "type": "module",
+      "hasSrc": false,
+      "ariaHidden": false,
+      "bytes": 755,
+      "excerpt": "var e=document.getElementById(`starlight__sidebar`),t=e?.querySelector(`sl-sidebar-state-persist`),n=`sl-sidebar-state`,r=()=>{let r=[],i=t?.dataset.hash||``;try{let e=sessionStora…"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "display: none;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 27,
+      "excerpt": "padding:0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-select-width: 6.25em"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 39,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 41,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 41,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 71,
+      "excerpt": "--sl-select-width: 6.25em"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 71,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 71,
+      "excerpt": "--sl-icon-size: 1em;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--sl-icon-size: 1rem;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 0;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 73,
+      "excerpt": "--depth: 1;"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 76,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#919F9F;--1:#5F636F"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#C792EA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#919F9F;--1:#5F636F"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#ECC48D;--1:#984E4D"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D9F5DD;--1:#111111"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#7FDBCA;--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--1:#8844AE"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#CAECE6"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 79,
+      "excerpt": "--0:#7FDBCA"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#80CBC4;--1:#096E72"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#C5E478;--1:#3B61B0"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 82,
+      "excerpt": "--0:#D6DEEB;--1:#403F53"
+    },
+    {
+      "file": "index.html",
+      "kind": "style-attribute",
+      "line": 83,
+      "excerpt": "--sl-icon-size: 1.5rem;"
+    }
+  ]
+}

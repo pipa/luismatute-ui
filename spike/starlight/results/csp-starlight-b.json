@@ -1,0 +1,54 @@
+{
+  "label": "starlight-b",
+  "base": "http://127.0.0.1:4182/ui/",
+  "engines": {
+    "chromium": {
+      "violations": 0,
+      "messages": [],
+      "errors": [],
+      "features": {
+        "themeDefined": true,
+        "themeLight": true,
+        "themeDark": true,
+        "toc": true,
+        "copy": true,
+        "search": 3
+      }
+    },
+    "firefox": {
+      "violations": 0,
+      "messages": [],
+      "errors": [],
+      "features": {
+        "themeDefined": true,
+        "themeLight": true,
+        "themeDark": true,
+        "toc": true,
+        "copy": true,
+        "search": 3
+      }
+    },
+    "webkit": {
+      "violations": 2,
+      "messages": [
+        {
+          "type": "error",
+          "text": "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+        },
+        {
+          "type": "error",
+          "text": "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy."
+        }
+      ],
+      "errors": [],
+      "features": {
+        "themeDefined": true,
+        "themeLight": true,
+        "themeDark": true,
+        "toc": true,
+        "copy": true,
+        "search": 3
+      }
+    }
+  }
+}

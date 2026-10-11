@@ -14,7 +14,8 @@
       "!src/illustrations/svg",
       "!src/illustrations/files",
       "!fonts",
-      "!scripts/illustration-extras.js"
+      "!scripts/illustration-extras.js",
+      "!spike"
     ]
   },
   "formatter": {

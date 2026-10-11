@@ -1,0 +1,49 @@
+:root {
+  color-scheme: dark;
+  background: #111;
+  color: #f5f5f5;
+  font: 16px/1.5 sans-serif;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  background: #fff;
+  color: #111;
+}
+
+body {
+  margin: 0;
+}
+
+header,
+.layout {
+  display: flex;
+  gap: 1rem;
+}
+
+header,
+nav,
+main {
+  padding: 1rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  min-width: 10rem;
+}
+
+pre {
+  padding: 0.75rem;
+  background: #1b1b1b;
+  color: #d9f5dd;
+}
+
+[data-theme='light'] pre {
+  background: #f4f4f4;
+  color: #111;
+}
+
+#search {
+  padding: 1rem;
+}
