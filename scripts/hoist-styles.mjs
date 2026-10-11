@@ -23,6 +23,10 @@ export function hoistInlineStyles(svg) {
       } else {
         rest += ` class="${cls}"`;
       }
+      // Keep the space before `>` / `/>` that the v0.1.2 files were
+      // written with, so a later regen stays byte-identical.
+      if (rest.endsWith('"/')) rest = `${rest.slice(0, -1)} /`;
+      else if (rest.endsWith('"')) rest += ' ';
       return `<${tag}${rest}>`;
     },
   );

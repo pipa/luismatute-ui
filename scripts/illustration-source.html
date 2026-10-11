@@ -1,0 +1,592 @@
+<!doctype html>
+<html><head><title>illustration source</title></head><body>
+<!-- Slice of concept-c-takeoff.html (concept-c-v2): factories + globe land path. -->
+<script>
+const N = (v) => Math.round(v * 10) / 10;
+  const html = (s) => {
+    const t = document.createElement('template');
+    t.innerHTML = s.trim();
+    return t.content.firstElementChild;
+  };
+  const rng = (seed) => {
+    let s = seed;
+    return () => {
+      s = (s + 0x6d2b79f5) | 0;
+      let t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  };
+
+  /* ---------- colour ---------- */
+  const INK = '#2b1b14';
+  const C = {
+    paper: '#fff6e4',
+    cream: '#fff4e2',
+    sand: '#f3e2c0',
+    tomato: '#e2492f',
+    marigold: '#f6b43c',
+    lagoon: '#1f7f7a',
+    leaf: '#62a64e',
+    blush: '#f2a08a',
+    plum: '#4a3570',
+    wood: '#b9773f',
+    steel: '#8d8178',
+    glass: '#bfe6ee',
+  };
+  const SK = {
+    skin: 'var(--lu-skin)',
+    skinD: 'var(--lu-skin-d)',
+    blush: 'var(--lu-blush)',
+    hair: 'var(--lu-hair)',
+    fade: 'var(--lu-fade)',
+    beard: 'var(--lu-beard)',
+    amber: 'var(--lu-amber)',
+    tort: 'var(--lu-tort)',
+    lip: 'var(--lu-lip)',
+  };
+  const STATIC_EXPR = {
+    hero: 'wow',
+    plan: 'wave',
+    aa: 'read',
+    sandals: 'beach',
+    bsc: 'grad',
+    fluky: 'wave',
+    move: 'sleep',
+    booking: 'wink',
+  };
+  const hexRGB = (h) => [1, 3, 5].map((i) => Number.parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => {
+    const A = hexRGB(a);
+    const B = hexRGB(b);
+    return `#${A.map((v, i) =>
+      Math.round(v + (B[i] - v) * t)
+        .toString(16)
+        .padStart(2, '0'),
+    ).join('')}`;
+  };
+  const dk = (c, t = 0.2) => mix(c, INK, t);
+
+  /* ---------- svg helpers ---------- */
+  const ol = (w, c = INK) => ` stroke="${c}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"`;
+  const rect = (x, y, w, h, f, a = '') => `<rect x="${N(x)}" y="${N(y)}" width="${N(w)}" height="${N(h)}" fill="${f}"${a}/>`;
+  const rr = (x, y, w, h, r, f, a = '') => `<rect x="${N(x)}" y="${N(y)}" width="${N(w)}" height="${N(h)}" rx="${N(r)}" fill="${f}"${a}/>`;
+  const circ = (x, y, r, f, a = '') => `<circle cx="${N(x)}" cy="${N(y)}" r="${N(r)}" fill="${f}"${a}/>`;
+  const ell = (x, y, rx, ry, f, a = '') => `<ellipse cx="${N(x)}" cy="${N(y)}" rx="${N(rx)}" ry="${N(ry)}" fill="${f}"${a}/>`;
+  const path = (d, f, a = '') => `<path d="${d}" fill="${f}"${a}/>`;
+  const pts = (p) => p.map(([x, y], i) => `${i ? 'L' : 'M'}${N(x)} ${N(y)}`).join('');
+  const poly = (p, f, a = '') => path(`${pts(p)}Z`, f, a);
+  const line = (d, s, w, a = '') => `<path d="${d}" fill="none" stroke="${s}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${a}/>`;
+  const at = (x, y, s, inner, a = '') => `<g transform="translate(${N(x)} ${N(y)})${s === 1 ? '' : ` scale(${N(s * 1000) / 1000})`}"${a}>${inner}</g>`;
+  const anim = (cls, inner, style = '') => `<g class="${cls}"${style ? ` style="${style}"` : ''}>${inner}</g>`;
+  const text = (x, y, s, size, f, a = '') => `<text x="${N(x)}" y="${N(y)}" font-size="${size}" fill="${f}"${a}>${s}</text>`;
+  const curve = (p, close = false) => {
+    const n = p.length;
+    if (close) {
+      const m = (i) => [(p[i % n][0] + p[(i + 1) % n][0]) / 2, (p[i % n][1] + p[(i + 1) % n][1]) / 2];
+      let d = `M${N(m(n - 1)[0])} ${N(m(n - 1)[1])}`;
+      for (let i = 0; i < n; i++) d += `Q${N(p[i][0])} ${N(p[i][1])} ${N(m(i)[0])} ${N(m(i)[1])}`;
+      return `${d}Z`;
+    }
+    let d = `M${N(p[0][0])} ${N(p[0][1])}`;
+    for (let k = 1; k < n - 1; k++) d += `Q${N(p[k][0])} ${N(p[k][1])} ${N((p[k][0] + p[k + 1][0]) / 2)} ${N((p[k][1] + p[k + 1][1]) / 2)}`;
+    return `${d}L${N(p[n - 1][0])} ${N(p[n - 1][1])}`;
+  };
+  const svgBox = (x0, y0, w, h, inner) => `<svg class="art" width="${N(w)}" height="${N(h)}" viewBox="${N(x0)} ${N(y0)} ${N(w)} ${N(h)}">${inner}</svg>`;
+
+  // flat colour bands from y0 down to y1, thinning toward y1 (pow < 1) or thickening (pow > 1)
+  function bands(x0, x1, y0, y1, cols, pow = 0.72) {
+    let s = '';
+    let prev = y0;
+    for (let i = 0; i < cols.length; i++) {
+      const e = i === cols.length - 1 ? y1 : y0 + (y1 - y0) * ((i + 1) / cols.length) ** pow;
+      s += rect(x0, prev, x1 - x0, e - prev + 0.8, cols[i]);
+      prev = e;
+    }
+    return s;
+  }
+  const sunDisc = (x, y, r, c, rings) => rings.map((rc, i) => circ(x, y, r * (1 + (rings.length - i) * 0.3), rc)).join('') + circ(x, y, r, c);
+
+  /* ---------- clouds: an ink rim, a shaded base and a light top ---------- */
+  const PUFFS = [
+    [
+      [16, -11, 12],
+      [33, -21, 17],
+      [54, -27, 21],
+      [74, -18, 15],
+      [88, -10, 10],
+    ],
+    [
+      [14, -9, 10],
+      [30, -18, 15],
+      [48, -24, 17],
+      [66, -21, 15],
+      [83, -12, 11],
+    ],
+    [
+      [18, -12, 13],
+      [37, -27, 19],
+      [58, -35, 21],
+      [76, -22, 15],
+      [89, -11, 9],
+    ],
+  ];
+  function cloud(x, y, w, o = {}) {
+    const P = PUFFS[(o.t ?? 0) % 3];
+    const k = w / 100;
+    const X = (v) => x + v * k;
+    const Y = (v) => y + v * k;
+    const ow = o.ow ?? 0;
+    const light = o.light || '#fffaf0';
+    const shade = o.shade || '#f1dfc0';
+    let s = '';
+    if (ow) {
+      for (const [cx, cy, r] of P) s += circ(X(cx), Y(cy), r * k + ow, INK);
+      s += rr(X(4) - ow, Y(-12) - ow, 92 * k + 2 * ow, 12 * k + 2 * ow, 6 * k + ow, INK);
+    }
+    for (const [cx, cy, r] of P) s += circ(X(cx), Y(cy), r * k, shade);
+    s += rr(X(4), Y(-12), 92 * k, 12 * k, 6 * k, shade);
+    for (const [cx, cy, r] of P) s += circ(X(cx - r * 0.06), Y(cy - r * 0.15), r * k * 0.84, light);
+    return s;
+  }
+
+  /* ---------- the plane, side view, nose right, in a 640 × 260 box ---------- */
+  const PLANE = { w: 640, h: 260, cx: 330, cy: 132, foot: 241 };
+  function wheel(cx, cy, r) {
+    return `<g class="wh" style="transform-origin:${cx}px ${cy}px">${circ(cx, cy, r, INK)}${circ(cx, cy, r * 0.5, '#a39282')}${line(`M${cx - r * 0.5} ${cy}H${cx + r * 0.5}M${cx} ${cy - r * 0.5}V${cy + r * 0.5}`, INK, 2.2)}</g>`;
+  }
+  function tinyLuis(cx, cy) {
+    return (
+      circ(cx, cy + 3, 6.2, SK.skin) +
+      path(`M${cx - 6.3} ${cy + 2}Q${cx - 6} ${cy - 5.5} ${cx} ${cy - 6}Q${cx + 6} ${cy - 5.5} ${cx + 6.3} ${cy + 2}Q${cx + 3.5} ${cy - 2} ${cx} ${cy - 2}Q${cx - 3.5} ${cy - 2} ${cx - 6.3} ${cy + 2}Z`, SK.hair) +
+      circ(cx - 0.5, cy - 7.6, 2.8, SK.hair) +
+      path(`M${cx - 5.6} ${cy + 3.5}Q${cx - 5} ${cy + 10} ${cx} ${cy + 10.6}Q${cx + 5} ${cy + 10} ${cx + 5.6} ${cy + 3.5}Q${cx + 3} ${cy + 6.2} ${cx} ${cy + 6.2}Q${cx - 3} ${cy + 6.2} ${cx - 5.6} ${cy + 3.5}Z`, SK.beard) +
+      circ(cx - 2.5, cy + 1.8, 2.1, 'none', ol(1, SK.amber)) +
+      circ(cx + 2.5, cy + 1.8, 2.1, 'none', ol(1, SK.amber))
+    );
+  }
+  function planeSVG(id) {
+    const body = 'M100 88L466 82C538 80 597 100 611 127C620 147 604 167 568 171L204 175C152 175 108 157 72 125L60 114C58 98 76 89 100 88Z';
+    let s = `<defs><clipPath id="pb${id}"><path d="${body}"/></clipPath></defs>`;
+    // contrail puffs from the engine
+    s += '<g class="puffs">';
+    for (let i = 0; i < 5; i++) s += circ(282, 190, 13, '#fffaf0', ` class="puff" style="animation-delay:${-i * 0.3}s"`);
+    s += '</g>';
+    // gear sits behind the body so it folds up into it
+    s += `<g class="gM" style="transform-origin:258px 162px">${rect(253, 158, 10, 62, '#7d6a5c', ol(3))}${rect(240, 214, 36, 6, '#7d6a5c', ol(2.5))}${wheel(244, 226, 15)}${wheel(272, 226, 15)}</g>`;
+    s += `<g class="gN" style="transform-origin:548px 160px">${rect(544, 158, 8, 60, '#7d6a5c', ol(3))}${line('M548 176L560 168', INK, 3)}${wheel(548, 228, 13)}</g>`;
+    s += path('M94 92L52 20Q48 10 60 10L98 10Q108 10 114 20L186 90Z', C.lagoon, ol(5));
+    s += path('M70 40L102 40L118 56L78 56Z', '#2f9a93');
+    s += circ(90, 40, 14, C.cream, ol(3.5));
+    s += circ(90, 40, 6.5, C.marigold, ol(2));
+    for (let i = 0; i < 8; i++) {
+      const a = (i * Math.PI) / 4;
+      s += line(`M${N(90 + Math.cos(a) * 8.5)} ${N(40 + Math.sin(a) * 8.5)}L${N(90 + Math.cos(a) * 11)} ${N(40 + Math.sin(a) * 11)}`, C.marigold, 2.2);
+    }
+    s += path('M94 122L32 134Q22 139 32 144L130 140Z', C.sand, ol(4.5));
+    s += path(body, C.cream);
+    s += `<g clip-path="url(#pb${id})">${rect(40, 147, 600, 40, '#efdbb9')}${rect(40, 127, 600, 11, C.tomato)}${rect(40, 122, 600, 3.5, C.marigold)}${rect(40, 84, 600, 6, '#fffdf6')}</g>`;
+    s += path(body, 'none', ol(5));
+    for (let i = 0; i < 11; i++) {
+      const x = 178 + i * 30;
+      s += circ(x, 106, 9.5, C.glass, ol(3));
+      if (i === 4) s += `<g clip-path="url(#pw${id})">${tinyLuis(x, 106)}</g><clipPath id="pw${id}"><circle cx="${x}" cy="106" r="8"/></clipPath>`;
+      else s += line(`M${x - 5} ${103}Q${x - 3} ${99} ${x + 1} ${99}`, '#fff', 2);
+    }
+    s += '<g class="lit">';
+    for (let i = 0; i < 11; i++) if (i !== 4) s += circ(178 + i * 30, 106, 7.5, '#ffd36b');
+    s += '</g>';
+    s += rr(508, 92, 24, 56, 9, 'none', ol(2.5));
+    s += path('M554 100L588 101Q600 105 605 118L560 118Z', INK);
+    s += path('M562 104L574 104L569 114L558 114Z', '#5f97a6');
+    s += path('M578 104L588 105L590 114L574 114Z', '#5f97a6');
+    s += path('M388 144L262 149L202 212Q196 220 206 220L246 220Z', C.sand, ol(5));
+    s += path('M246 220L206 220L214 210L256 208Z', '#e0c391');
+    s += path('M318 158L348 158L342 170L324 170Z', '#d9c39c', ol(3));
+    s += rr(274, 166, 106, 46, 23, C.tomato, ol(5));
+    s += path('M352 168L360 168Q380 168 380 189Q380 210 360 210L352 210Z', C.cream, ol(3));
+    s += ell(381, 189, 9, 20, INK);
+    s += `<g class="sp">${circ(382, 189, 7, C.cream)}${line('M382 182.5Q388 186 382 189Q376 192 382 195.5', C.tomato, 2.6)}</g>`;
+    s += `<g class="bcn">${circ(330, 80, 12, '#ff7a5c', ' opacity=".4"')}${circ(330, 80, 5, '#ff3b2b', ol(2))}</g>`;
+    s += `<g class="stb">${circ(206, 215, 10, '#fff', ' opacity=".7"')}</g>`;
+    return s;
+  }
+  // top view for the globe, nose right, in a 120 × 100 box
+  function planeTop() {
+    return (
+      path('M64 48L40 8Q38 3 44 3L52 3L82 44Z', C.sand, ol(3.5)) +
+      path('M64 52L40 92Q38 97 44 97L52 97L82 56Z', C.sand, ol(3.5)) +
+      path('M22 49L10 30L17 30L32 46Z', C.lagoon, ol(3)) +
+      path('M22 51L10 70L17 70L32 54Z', C.lagoon, ol(3)) +
+      rr(6, 41, 108, 18, 9, C.cream, ol(3.5)) +
+      rect(14, 47.5, 92, 5, C.tomato) +
+      path('M98 44Q108 46 110 50Q108 54 98 56Z', INK) +
+      rr(52, 22, 16, 8, 4, C.tomato, ol(2.5)) +
+      rr(52, 70, 16, 8, 4, C.tomato, ol(2.5))
+    );
+  }
+
+  /* ---------- Luis at the window, in a 200 × 240 box. No other person is drawn anywhere. ---------- */
+  function luisSVG(id) {
+    let s = `<defs><clipPath id="lw${id}"><rect x="24" y="24" width="152" height="192" rx="70"/></clipPath></defs>`;
+    s += rr(15, 18, 184, 224, 88, 'rgba(43,27,20,.3)');
+    s += rr(8, 8, 184, 224, 88, C.cream, ol(5));
+    s += rr(17, 17, 166, 206, 79, '#eadbbf', ol(3));
+    s += `<g clip-path="url(#lw${id})">`;
+    s += rect(0, 0, 200, 240, '#f5e1bb');
+    s += rect(0, 150, 200, 4, '#e8cfa3');
+    s += `<g class="lu-seat">${path('M42 240L45 112Q48 72 100 68Q152 72 155 112L158 240Z', C.lagoon, ol(3))}${rr(63, 75, 74, 38, 14, C.cream, ol(2.5))}${line('M58 150H142', '#16625e', 3)}</g>`;
+    s += `<g class="lu-torso">${path('M24 240Q26 204 62 194Q82 188 100 189Q118 188 138 194Q174 204 176 240Z', C.marigold, ol(3))}${path('M84 190Q100 214 116 190Z', C.cream, ol(2.5))}${path('M81 189L96 224L68 205Z', '#d8901f', ol(2.5))}${path('M119 189L104 224L132 205Z', '#d8901f', ol(2.5))}${circ(100, 232, 2.6, INK)}</g>`;
+    s += rect(88, 150, 24, 42, SK.skinD);
+    s += '<g class="lu-head">';
+    s += `<g class="lu-bun">${circ(100, 60, 14.5, SK.hair, ol(3))}${line('M91 56Q100 49 109 56', '#4b3428', 2.2)}${line('M93 63Q100 59 107 63', '#4b3428', 2)}${rr(89, 70, 22, 7, 3.5, C.tomato, ol(2))}</g>`;
+    s += `<g class="lu-ears">${ell(63, 122, 8.5, 12, SK.skin, ol(3))}${ell(137, 122, 8.5, 12, SK.skin, ol(3))}${line('M62 116Q57 122 63 128', SK.skinD, 2.4)}${line('M138 116Q143 122 137 128', SK.skinD, 2.4)}</g>`;
+    s += ell(100, 118, 37, 45, SK.skin, ol(3));
+    s += path('M63.5 116Q62 99 68 90L76 93Q70 103 70.5 116Z', '#6e5646');
+    s += path('M136.5 116Q138 99 132 90L124 93Q130 103 129.5 116Z', '#6e5646');
+    s += path('M64 106Q63 96 68 90L76 93Q71 99 70.5 106Z', SK.fade);
+    s += path('M136 106Q137 96 132 90L124 93Q129 99 129.5 106Z', SK.fade);
+    s += `<g class="lu-hair">${path('M64 104Q62 69 100 67Q138 69 136 104Q130 87 116 83Q100 79 84 83Q70 87 64 104Z', SK.hair, ol(2.5))}${line('M82 77Q95 71 110 74', '#4b3428', 2)}</g>`;
+    s += `<g class="lu-beard">${path('M63 106C61 142 72 171 100 178C128 171 139 142 137 106L131 106C131 124 126 134 118 137C110 131 90 131 82 137C74 134 69 124 69 106Z', SK.beard, ol(3))}${line('M86 162Q100 170 114 162', '#3f2a20', 2)}</g>`;
+    s += '<g class="lu-face">';
+    s += ell(75, 128, 7, 4, SK.blush, ' opacity=".55"') + ell(125, 128, 7, 4, SK.blush, ' opacity=".55"');
+    s += `<g class="lu-nose">${path('M100 111Q95 125 93 130Q100 135 107 130Q105 125 100 111Z', SK.skinD)}${circ(97, 128, 1.6, '#e2a17a')}</g>`;
+    s += path('M83 138Q91 129 100 132Q109 129 117 138Q108 142 100 139Q92 142 83 138Z', SK.hair);
+    s += `<g class="ms">${path('M88 144.5Q100 158 112 144.5Q100 149.5 88 144.5Z', SK.lip, ol(1.8, '#1a100b'))}${path('M90.5 145.6Q100 149.6 109.5 145.6L108.6 148Q100 151.4 91.4 148Z', '#fff7ea')}</g>`;
+    s += `<g class="mo">${ell(100, 148, 6, 7.4, SK.lip, ol(1.8, '#1a100b'))}${ell(100, 151.5, 3.6, 2.4, '#d9705e')}</g>`;
+    s += `<g class="mw">${path('M85 143Q100 162 115 143Q100 149 85 143Z', SK.lip, ol(1.8, '#1a100b'))}${path('M88 144.2Q100 149.2 112 144.2L110.6 147.6Q100 152 89.4 147.6Z', '#fff7ea')}${ell(100, 155, 4.5, 2.2, '#d9705e')}</g>`;
+    s += `<g class="eo l">${ell(85, 113, 3.4, 4.3, SK.hair)}${circ(86.3, 111.4, 1.2, '#fff')}</g>`;
+    s += `<g class="eo r">${ell(115, 113, 3.4, 4.3, SK.hair)}${circ(116.3, 111.4, 1.2, '#fff')}</g>`;
+    s += `<g class="ec l">${line('M80 113Q85 117.5 90 113', SK.hair, 2.6)}</g>`;
+    s += `<g class="ec r">${line('M110 113Q115 117.5 120 113', SK.hair, 2.6)}</g>`;
+    s += circ(85, 113, 12.5, 'rgba(255,255,255,.14)') + circ(115, 113, 12.5, 'rgba(255,255,255,.14)');
+    s += circ(85, 113, 12.5, 'none', ol(4.6, SK.tort)) + circ(115, 113, 12.5, 'none', ol(4.6, SK.tort));
+    s += circ(85, 113, 12.5, 'none', ` stroke="#c9843c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1.4 3.6 3.2 5.4 0.8 4.2 2.2 6"`);
+    s += circ(115, 113, 12.5, 'none', ` stroke="#c9843c" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="2.6 4.8 1 3.8 3.6 6.2 1.4 4" stroke-dashoffset="7"`);
+    s += line('M97.5 112Q100 108.5 102.5 112', SK.tort, 3.6) + line('M72.5 110L64 106', SK.tort, 3) + line('M127.5 110L136 106', SK.tort, 3);
+    s += line('M78 106Q81 103 85 103', '#fff', 1.8, ' opacity=".75"') + line('M108 106Q111 103 115 103', '#fff', 1.8, ' opacity=".75"');
+    s += `<g class="brw">${line('M75 96Q85 90.5 94 95', SK.hair, 4.8)}${line('M106 95Q115 90.5 125 96', SK.hair, 4.8)}</g>`;
+    s += `<g class="lu-cap">${path('M72 78L128 78L100 58Z', '#1a1a1a', ol(2.5))}${rect(72, 78, 56, 8, '#1a1a1a', ol(2))}${circ(100, 90, 3, C.marigold)}</g>`;
+    s += `<g class="lu-glasses">${rect(72, 108, 26, 12, '#1a1a1a', ol(2))}${rect(102, 108, 26, 12, '#1a1a1a', ol(2))}${line('M98 114H102', '#1a1a1a', 2.5)}</g>`;
+    s += `<g class="lu-book">${rr(118, 168, 34, 26, 4, '#fff', ol(2.5))}${line('M124 174H146M124 180H146M124 186H140', INK, 1.8)}</g>`;
+    s += `<g class="lu-wave">${path('M28 178Q38 150 52 162L58 178Z', SK.skin, ol(2.5))}${path('M30 178L48 168L56 178Z', C.cream, ol(2))}</g>`;
+    s += '</g></g>';
+    s += `<g class="zz" font-family="Bricolage Display, sans-serif" font-weight="800" fill="${INK}">${text(146, 92, 'z', 18, INK)}${text(156, 74, 'z', 22, INK)}${text(166, 54, 'z', 26, INK)}</g>`;
+    s += path('M38 74L74 38L88 38L42 84Z', '#fff', ' opacity=".2"') + path('M42 104L106 40L116 40L46 114Z', '#fff', ' opacity=".12"');
+    s += `<g class="shade">${rect(18, -210, 164, 232, '#efdcbc')}${line('M18 -20H182M18 -2H182', '#dcc49c', 3)}${rr(88, 12, 24, 9, 4.5, '#d4bf99', ol(2.2))}</g>`;
+    s += '</g>';
+    s += rr(24, 24, 152, 192, 70, 'none', ol(3));
+    return s;
+  }
+
+  /* ---------- props ---------- */
+  function suitcase(x, y, w, h, c, o = {}) {
+    const lw = o.lw ?? 4;
+    let s = rr(x + w * 0.33, y - h * 0.17, w * 0.34, h * 0.22, h * 0.07, 'none', ol(lw));
+    s += rr(x, y, w, h, Math.min(w, h) * 0.16, c, ol(lw));
+    s += rect(x + w * 0.2, y + lw / 2, w * 0.09, h - lw, dk(c, 0.18)) + rect(x + w * 0.71, y + lw / 2, w * 0.09, h - lw, dk(c, 0.18));
+    if (o.tag) s += circ(x + w * 0.5, y + h * 0.45, Math.min(w, h) * 0.15, o.tag, ol(2.5));
+    return s;
+  }
+  function frond(x, y, ang, len, c = '#4f9a48') {
+    const a = (ang * Math.PI) / 180;
+    const ex = x + Math.cos(a) * len;
+    const ey = y + Math.sin(a) * len + len * 0.32;
+    const mx = x + Math.cos(a) * len * 0.55;
+    const my = y + Math.sin(a) * len * 0.55 - len * 0.06;
+    const nx = -Math.sin(a);
+    const ny = Math.cos(a);
+    const wd = len * 0.17;
+    let s = path(`M${N(x)} ${N(y)}Q${N(mx + nx * wd * 2)} ${N(my + ny * wd * 2)} ${N(ex)} ${N(ey)}Q${N(mx - nx * wd)} ${N(my - ny * wd)} ${N(x)} ${N(y)}Z`, c, ol(3.5));
+    s += line(`M${N(x)} ${N(y)}Q${N(mx)} ${N(my)} ${N(ex)} ${N(ey)}`, dk(c, 0.3), 2.4);
+    return s;
+  }
+  function palm(x, y, h, lean, o = {}) {
+    const tx = x + lean;
+    const ty = y - h;
+    const qx = x + lean * 0.05;
+    const qy = y - h * 0.55;
+    const tw = o.tw ?? 16;
+    const d = `M${N(x)} ${N(y)}Q${N(qx)} ${N(qy)} ${N(tx)} ${N(ty)}`;
+    let s = line(d, INK, tw + 8) + line(d, '#b07a4c', tw);
+    for (let i = 1; i < 8; i++) {
+      const t = i / 8;
+      const px = (1 - t) ** 2 * x + 2 * (1 - t) * t * qx + t * t * tx;
+      const py = (1 - t) ** 2 * y + 2 * (1 - t) * t * qy + t * t * ty;
+      s += line(`M${N(px - tw * 0.45)} ${N(py + 2)}Q${N(px)} ${N(py - 3)} ${N(px + tw * 0.45)} ${N(py + 2)}`, '#7f5333', 2.4);
+    }
+    let cr = '';
+    const L = h * 0.44;
+    for (const [a, f] of [
+      [-200, 0.82],
+      [-160, 1],
+      [-125, 1.06],
+      [-60, 1.06],
+      [-22, 1],
+      [18, 0.82],
+      [-92, 0.7],
+    ])
+      cr += frond(tx, ty, a, L * f, o.leaf);
+    cr += circ(tx - 7, ty + 9, 8, '#7a4b2a', ol(3)) + circ(tx + 8, ty + 10, 8, '#7a4b2a', ol(3)) + circ(tx + 1, ty + 17, 8, '#8a5a34', ol(3));
+    s += `<g class="sway" style="transform-origin:${N(tx)}px ${N(ty)}px;--t:${o.t ?? 4.6}s;--a:-2.5deg;--b:3deg">${cr}</g>`;
+    return s;
+  }
+  function pine(x, y, h, c) {
+    return poly(
+      [
+        [x, y - h],
+        [x + h * 0.2, y - h * 0.62],
+        [x + h * 0.11, y - h * 0.62],
+        [x + h * 0.3, y - h * 0.2],
+        [x + h * 0.04, y - h * 0.2],
+        [x + h * 0.04, y],
+        [x - h * 0.04, y],
+        [x - h * 0.04, y - h * 0.2],
+        [x - h * 0.3, y - h * 0.2],
+        [x - h * 0.11, y - h * 0.62],
+        [x - h * 0.2, y - h * 0.62],
+      ],
+      c,
+    );
+  }
+  function flower(cx, cy, r, c) {
+    let s = '';
+    for (let i = 0; i < 5; i++) {
+      const a = (i / 5) * Math.PI * 2 - Math.PI / 2;
+      s += circ(cx + Math.cos(a) * r * 0.62, cy + Math.sin(a) * r * 0.62, r * 0.56, c, ol(2));
+    }
+    return s + circ(cx, cy, r * 0.34, C.marigold, ol(1.6));
+  }
+  function bush(x, y, s, fc, seed) {
+    const r = rng(seed);
+    const P = [
+      [-34, -20, 26],
+      [0, -32, 32],
+      [34, -18, 24],
+    ];
+    let g = P.map(([cx, cy, q]) => circ(cx, cy, q + 3.5, INK)).join('') + rr(-63.5, -24, 127, 28, 12, INK);
+    g += P.map(([cx, cy, q]) => circ(cx, cy, q, '#4f9446')).join('') + rr(-60, -20.5, 120, 21, 9, '#4f9446');
+    g += P.map(([cx, cy, q]) => circ(cx - q * 0.12, cy - q * 0.22, q * 0.66, '#5fa955')).join('');
+    for (const [fx, fy] of [
+      [-30, -30],
+      [6, -48],
+      [34, -24],
+      [-8, -16],
+    ])
+      g += flower(fx + r() * 6, fy + r() * 4, 8.5, fc);
+    return at(x, y, s, g);
+  }
+  function raysLayer(cx, cy, R, n, c, o, name) {
+    let d = '';
+    for (let i = 0; i < n; i++) {
+      const a0 = (i / n) * Math.PI * 2;
+      const a1 = a0 + Math.PI / n;
+      d += `M0 0L${N(Math.cos(a0) * R)} ${N(Math.sin(a0) * R)}L${N(Math.cos(a1) * R)} ${N(Math.sin(a1) * R)}Z`;
+    }
+    return LY(Infinity, cx - R, cy - R, cx + R, cy + R, '', { html: `<div class="rays"><svg class="art" width="${N(2 * R)}" height="${N(2 * R)}" viewBox="${N(-R)} ${N(-R)} ${N(2 * R)} ${N(2 * R)}"><path d="${d}" fill="${c}" opacity="${o}"/></svg></div>`, name });
+  }
+  function foam(x0, x1, y, c = '#fffaf0', t = 3.4) {
+    let d = `M${x0} ${y}`;
+    for (let x = x0; x < x1; x += 40) d += `Q${x + 10} ${y - 9} ${x + 20} ${y}Q${x + 30} ${y + 7} ${x + 40} ${y}`;
+    return anim('wave', line(d, c, 5), `--t:${t}s;--dx:10px`);
+  }
+  function gear(cx, cy, r, c, teeth, cls) {
+    let d = '';
+    for (let i = 0; i < teeth * 2; i++) {
+      const a = (i / (teeth * 2)) * Math.PI * 2;
+      const rr2 = i % 2 ? r : r * 1.22;
+      const a2 = a + Math.PI / (teeth * 2);
+      d += `${i ? 'L' : 'M'}${N(cx + Math.cos(a) * rr2)} ${N(cy + Math.sin(a) * rr2)}L${N(cx + Math.cos(a2) * rr2)} ${N(cy + Math.sin(a2) * rr2)}`;
+    }
+    return `<g class="${cls}">${path(`${d}Z`, c, ol(3.5))}${circ(cx, cy, r * 0.35, C.cream, ol(3))}</g>`;
+  }
+
+  /* ---------- islands, each in a 1000 × 560 box with the waterline at y 440 ---------- */
+  function isleAA(id) {
+    let s = '';
+    for (const x of [150, 310, 480, 650, 820]) s += rect(x - 10, 360, 20, 112, '#8b6d55', ol(4));
+    s += rr(88, 336, 824, 44, 12, '#eadfc8', ol(5));
+    let hz = '';
+    for (let x = 60; x < 940; x += 36) hz += poly([[x, 382], [x + 18, 382], [x + 34, 362], [x + 16, 362]], C.tomato);
+    s += `<clipPath id="hz${id}"><rect x="91" y="362" width="818" height="15" rx="6"/></clipPath><g clip-path="url(#hz${id})">${rect(91, 362, 818, 18, C.cream)}${hz}</g>`;
+    s += line('M91 362H909', INK, 3);
+    // a parked jet under inspection
+    s += at(104, 236, 0.66, `${path('M20 52L210 48C246 47 274 58 282 72C286 82 276 90 258 92L60 94C40 94 26 84 16 70L12 62C11 56 14 52 20 52Z', C.cream, ol(5))}${path('M24 54L6 14Q5 8 12 8L30 8Q36 8 39 12L76 52Z', C.lagoon, ol(5))}${rect(30, 70, 250, 7, C.tomato)}${path('M20 52L210 48C246 47 274 58 282 72C286 82 276 90 258 92L60 94C40 94 26 84 16 70L12 62C11 56 14 52 20 52Z', 'none', ol(5))}${[90, 115, 140, 165, 190].map((x) => circ(x, 62, 6, C.glass, ol(2.5))).join('')}${path('M180 76L118 78L90 104Q87 108 93 108L114 108Z', C.sand, ol(4.5))}${circ(80, 136 - 30, 9, INK)}${circ(236, 108, 9, INK)}${rect(77, 92, 6, 12, '#7d6a5c')}${rect(233, 92, 6, 12, '#7d6a5c')}`);
+    s += anim('mag', `${line('M216 300L240 330', '#7a4b2a', 11)}${line('M216 300L240 330', INK, 3, ' opacity=".0"')}${circ(198, 276, 30, 'rgba(191,230,238,.55)', ol(5))}${path('M182 262Q192 252 206 254', 'none', ' stroke="#fff" stroke-width="4" stroke-linecap="round"')}`);
+    // belt, bags and the x-ray
+    s += rr(330, 292, 390, 22, 11, '#5b4a42', ol(4));
+    for (let x = 346; x < 712; x += 30) s += `<g class="spin" style="--t:1.4s">${circ(x, 303, 6, '#a39282')}${line(`M${x - 4} 303H${x + 4}`, INK, 2)}</g>`;
+    s += rect(350, 314, 10, 24, '#5b4a42', ol(3)) + rect(690, 314, 10, 24, '#5b4a42', ol(3));
+    let bags = '';
+    const BAGS = [
+      [C.tomato, 62, 46],
+      [C.lagoon, 50, 58],
+      [C.marigold, 70, 40],
+      ['#7b5ea7', 54, 50],
+    ];
+    for (let r = 0; r < 2; r++)
+      BAGS.forEach(([c, w, h], i) => {
+        const x = -440 + r * 440 + 330 + i * 110 + (110 - w) / 2 - 110;
+        bags += suitcase(x, 292 - h, w, h, c, { lw: 3.5, tag: i % 2 ? C.cream : null });
+      });
+    s += `<clipPath id="bc${id}"><rect x="330" y="150" width="390" height="146"/></clipPath><g clip-path="url(#bc${id})"><g class="belt" style="--dx:440px;--t:7s">${bags}</g></g>`;
+    s += rr(452, 172, 176, 138, 18, C.cream, ol(5));
+    s += rr(472, 222, 136, 84, 10, '#3a2a24');
+    for (let i = 0; i < 6; i++) s += rect(474 + i * 22.4, 222, 20, 74, i % 2 ? '#c23b26' : C.tomato, ` class="strip" style="animation-delay:${-i * 0.21}s"`);
+    s += rr(452, 172, 176, 40, 14, '#efe4cd', ol(4)) + text(540, 199, 'X-RAY', 20, INK, ' text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500" letter-spacing="3"');
+    s += rect(532, 132, 10, 42, '#7d6a5c', ol(3)) + rr(494, 82, 88, 58, 10, INK) + rr(502, 90, 72, 42, 6, '#173f4f');
+    s += `<clipPath id="mon${id}"><rect x="502" y="90" width="72" height="42" rx="6"/></clipPath><g clip-path="url(#mon${id})">${rr(518, 100, 40, 26, 5, 'none', ol(3, '#ff9a3d'))}${rr(531, 95, 14, 6, 3, 'none', ol(2.5, '#ff9a3d'))}${rect(524, 106, 12, 8, '#3e8bff')}${circ(547, 115, 5, '#43e39b')}<g class="scan">${rect(502, 88, 72, 3, '#e6fcff', ' opacity=".8"')}</g></g>`;
+    // clipboard with the four checks
+    s += at(640, 214, 1, `${rr(0, 8, 64, 86, 8, C.wood, ol(4))}${rr(7, 18, 50, 70, 4, C.cream, ol(2.5))}${rr(20, 2, 24, 14, 4, C.steel, ol(3))}${[0, 1, 2, 3].map((i) => rr(13, 26 + i * 15, 9, 9, 2, '#fff', ol(2)) + line(`M15 ${31 + i * 15}L18 ${34 + i * 15}L24 ${25 + i * 15}`, C.tomato, 2.6, ` pathLength="1" class="tick" style="--d:${i * 0.5}s"`) + rect(28, 29 + i * 15, 22 - (i % 2) * 6, 3, '#cdb894')).join('')}`);
+    // passport and the stamp
+    s += at(742, 186, 1, `${path('M8 32L80 24L152 32L152 150L80 142L8 150Z', '#3f2f6e', ol(5))}${path('M16 36L78 30L78 138L16 144Z', C.cream, ol(3.5))}${path('M82 30L144 36L144 144L82 138Z', '#fffaf0', ol(3.5))}${[0, 1, 2, 3].map((i) => line(`M24 ${92 + i * 11}L70 ${88 + i * 11}`, '#cdb894', 3)).join('')}${rr(26, 44, 26, 32, 4, 'none', ol(2.5, '#cdb894'))}${circ(113, 70, 20, 'none', ol(3.5, C.tomato))}${text(113, 75, 'VISA', 12, C.tomato, ' text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500"')}${anim('inkmark', `${circ(113, 116, 14, 'none', ol(3, '#7b5ea7'))}${line('M104 116H122', '#7b5ea7', 3)}`)}${anim('stamper', `${rr(98, 76, 30, 10, 3, '#7a4b2a', ol(3))}${rect(108, 52, 10, 26, '#7a4b2a', ol(3))}${circ(113, 46, 11, C.tomato, ol(3.5))}`)}`);
+    return s;
+  }
+
+  function isleSandals(id) {
+    let s = '';
+    s += path('M54 444C110 398 196 378 300 370C420 360 560 354 690 362C810 370 890 404 946 444Z', '#f6d79b', ol(5));
+    s += path('M100 434C210 414 330 406 480 404C640 404 790 412 900 432L938 444L62 444Z', '#e9c27c');
+    s += palm(236, 390, 250, -46, { tw: 17 });
+    s += palm(352, 378, 184, 34, { tw: 14, t: 5.3 });
+    s += ell(300, 392, 60, 8, '#e0b56c');
+    // sandcastle with a Sass flag
+    s += at(452, 372, 1, `${rect(0, -44, 92, 44, '#ebc683', ol(4))}${rect(-12, -70, 34, 70, '#ebc683', ol(4))}${rect(70, -70, 34, 70, '#ebc683', ol(4))}${path('M-12 -70v-8h8v8h9v-8h8v8h9v-8h8v8', 'none', ol(4))}${path('M70 -70v-8h8v8h9v-8h8v8h9v-8h8v8', 'none', ol(4))}${rr(36, -26, 20, 26, 10, '#c9a062', ol(3))}${line('M5 -78V-118', INK, 3)}${anim('flag', `${path('M5 -118L52 -108L5 -98Z', C.tomato, ol(3))}${text(10, -104, 'Sass', 10, C.cream, ' font-family="Bricolage, sans-serif" font-weight="700"')}`)}`);
+    // umbrella and loungers
+    s += at(640, 372, 1, `${line('M0 0V-150', INK, 7)}${line('M0 0V-150', '#e9dcc4', 3)}${path('M-96 -118Q-80 -176 0 -184Q80 -176 96 -118Q72 -132 48 -118Q24 -132 0 -118Q-24 -132 -48 -118Q-72 -132 -96 -118Z', C.cream, ol(5))}${path('M-96 -118Q-80 -176 0 -184L-24 -126Q-36 -132 -48 -118Q-72 -132 -96 -118Z', C.tomato)}${path('M0 -184Q30 -176 48 -118Q36 -132 24 -126Z', C.tomato)}${path('M0 -184Q80 -176 96 -118Q72 -132 48 -118', C.tomato, ' opacity="0"')}${path('M-96 -118Q-80 -176 0 -184Q80 -176 96 -118Q72 -132 48 -118Q24 -132 0 -118Q-24 -132 -48 -118Q-72 -132 -96 -118Z', 'none', ol(5))}${circ(0, -188, 6, C.marigold, ol(3))}`);
+    s += at(540, 372, 1, `${path('M0 -10L74 -10L96 -36', 'none', ol(10))}${path('M0 -10L74 -10L96 -36', 'none', ' stroke="#fff4e2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"')}${line('M8 -10V0M66 -10V0', INK, 4)}`);
+    s += at(668, 372, 1, `${path('M0 -10L74 -10L96 -36', 'none', ol(10))}${path('M0 -10L74 -10L96 -36', 'none', ' stroke="#4fb3a6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"')}${line('M8 -10V0M66 -10V0', INK, 4)}`);
+    s += at(560, 392, 1, `${ell(0, 0, 13, 6, C.marigold, ol(3))}${ell(26, 3, 13, 6, C.marigold, ol(3))}${line('M-4 0Q0 -6 4 0M22 3Q26 -3 30 3', INK, 2.5)}`);
+    // the two sites on a signpost
+    s += at(836, 380, 1, `${rect(-6, -150, 12, 150, C.wood, ol(4))}${path('M-70 -146H40L58 -130L40 -114H-70Z', C.cream, ol(4))}${text(-60, -124, 'sandals.com', 19, INK, ' font-family="Bricolage, sans-serif" font-weight="700"')}${path('M70 -100H-40L-58 -84L-40 -68H70Z', C.cream, ol(4))}${text(-44, -78, 'beaches.com', 19, INK, ' font-family="Bricolage, sans-serif" font-weight="700"')}`);
+    s += anim('crab', at(780, 428, 1, `${anim('claw', `${path('M-28 -10Q-44 -26 -34 -36Q-26 -30 -30 -22Q-22 -26 -20 -16Z', C.tomato, ol(3))}`)}${anim('claw', `${path('M28 -10Q44 -26 34 -36Q26 -30 30 -22Q22 -26 20 -16Z', C.tomato, ol(3))}`, 'animation-delay:-.25s')}${ell(0, -6, 22, 13, C.tomato, ol(3.5))}${line('M-8 -16V-26M8 -16V-26', INK, 3)}${circ(-8, -28, 4, '#fff', ol(2))}${circ(8, -28, 4, '#fff', ol(2))}${line('M-18 2L-26 8M-10 5L-14 12M18 2L26 8M10 5L14 12', INK, 3)}`));
+    s += foam(60, 940, 446);
+    return s;
+  }
+
+  function isleBSc(id) {
+    let s = '';
+    s += path('M60 444C130 372 250 312 420 300C600 290 770 330 870 392C904 414 924 430 936 444Z', '#7dbb5a', ol(5));
+    s += path('M110 428C240 404 400 396 560 398C720 402 840 414 922 438L936 444L66 444Z', '#5f9e46');
+    s += path('M70 444C120 434 200 430 300 430C500 430 760 432 932 444Z', '#f0d39a');
+    // tree
+    s += at(208, 340, 1, `${rect(-9, -60, 18, 64, '#8a5a34', ol(4))}${anim('sway', `${circ(-26, -86, 34, '#4e9442', ol(4))}${circ(22, -96, 40, '#4e9442', ol(4))}${circ(-6, -126, 38, '#5aa64b', ol(4))}${circ(-4, -86, 30, '#5aa64b')}${circ(-14, -132, 14, '#79c062')}`, 'transform-origin:0px -60px;--t:5s;--a:-2deg;--b:2deg')}`);
+    // faculty building with a clock
+    s += at(530, 314, 1, `${rect(-170, -10, 340, 18, '#e3d4b8', ol(4))}${rect(-150, -150, 300, 142, C.cream, ol(5))}${[-110, -50, 10, 70].map((x) => rect(x, -138, 26, 128, '#f6ecd8', ol(3.5))).join('')}${rect(-162, -162, 324, 18, '#eadfc8', ol(4))}${path('M-172 -162L0 -236L172 -162Z', C.tomato, ol(5))}${circ(0, -192, 22, C.cream, ol(4))}${anim('spin', line('M0 -192V-208', INK, 3), '--t:60s;transform-box:view-box;transform-origin:0px -192px')}${anim('spin', line('M0 -192H11', INK, 3.5), '--t:240s;transform-box:view-box;transform-origin:0px -192px')}${rect(-22, -60, 44, 50, '#7a4b2a', ol(4))}${rect(-12, -262, 24, 30, C.cream, ol(4))}${path('M-16 -262L0 -280L16 -262Z', C.tomato, ol(4))}${line('M0 -280V-312', INK, 3)}${anim('flag', path('M0 -312L36 -302L0 -292Z', C.marigold, ol(3)))}`);
+    // mortarboards in the air
+    const board = (c) => `${path('M-26 0L0 -12L26 0L0 12Z', INK)}${path('M-14 4L-14 14Q0 20 14 14L14 4L0 10Z', '#3d2c24', ol(2))}${line('M0 0L18 6L18 20', c, 3)}${circ(18, 22, 3.5, c)}`;
+    s += at(770, 360, 1, `<g class="toss" style="--t:2.8s;--d:-.4s;--dx:10px;--r:190deg">${board(C.marigold)}</g>`);
+    s += at(830, 380, 1, `<g class="toss" style="--t:3.2s;--d:-1.6s;--dx:-8px;--r:-210deg">${board(C.blush)}</g>`);
+    s += at(720, 384, 0.9, `<g class="toss" style="--t:3s;--d:-2.4s;--dx:6px;--r:170deg">${board(C.cream)}</g>`);
+    // diploma
+    s += at(330, 404, 1, `${rr(-40, -12, 80, 24, 12, C.cream, ol(4))}${ell(-40, 0, 7, 12, '#efe2c8', ol(3))}${rect(-6, -13, 12, 26, C.tomato)}${path('M-6 13L-12 30L-2 24L0 13Z', C.tomato, ol(2.5))}${path('M6 13L12 30L2 24L0 13Z', C.tomato, ol(2.5))}`);
+    s += foam(70, 930, 446);
+    return s;
+  }
+
+  function isleFluky(id) {
+    let s = '';
+    // the dock on the right, its posts in the water
+    s += [784, 846, 908, 968].map((x) => rect(x - 7, 400, 14, 58, '#7f6250', ol(3.5))).join('');
+    s += rect(748, 394, 240, 16, '#c08a56', ol(4)) + line('M808 396V408M868 396V408M928 396V408', '#8f5a2c', 2.5);
+    s += rr(962, 372, 16, 24, 6, '#5b4a42', ol(3.5)) + line('M970 380Q990 396 984 420', INK, 3);
+    // the rock: faceted, with strata and boulders at the waterline
+    const rock = 'M60 444C88 400 130 374 188 366L280 356C330 338 420 334 520 340C620 345 720 350 790 366C826 376 846 404 852 444Z';
+    s += path(rock, '#b59a80', ol(5));
+    s += `<clipPath id="rk${id}"><path d="${rock}"/></clipPath><g clip-path="url(#rk${id})">`;
+    s += poly([[60, 444], [150, 396], [240, 420], [330, 392], [430, 414], [520, 396], [640, 416], [740, 394], [852, 444]], '#a3876d');
+    s += poly([[120, 444], [210, 424], [290, 444]], '#8e735c') + poly([[440, 444], [530, 420], [600, 444]], '#8e735c') + poly([[680, 444], [760, 418], [830, 444]], '#8e735c');
+    s += line('M150 404Q300 384 470 392Q620 398 760 382', '#8c7058', 3) + line('M110 426Q260 414 420 420', '#8c7058', 2.5);
+    s += '</g>';
+    s += path('M188 368C260 352 360 346 520 348C640 350 740 356 800 372C760 364 660 358 520 358C380 356 270 362 188 368Z', '#6aa84f', ol(3));
+    for (const [x, y, q, c] of [
+      [108, 436, 20, '#c2a88e'],
+      [140, 442, 14, '#9a7f67'],
+      [812, 434, 22, '#c2a88e'],
+      [840, 442, 13, '#9a7f67'],
+    ])
+      s += ell(x, y, q * 1.3, q, c, ol(3.5));
+    // chimneys (one per co-founder) with smoke; the gears turn inside the roof
+    const bandC = [C.marigold, C.lagoon, C.blush, C.leaf];
+    let sm = '';
+    const puff = `${circ(0, 0, 23, INK)}${circ(-17, 7, 17, INK)}${circ(17, 6, 18, INK)}${circ(0, 0, 20, '#eadfd2')}${circ(-17, 7, 14, '#eadfd2')}${circ(17, 6, 15, '#eadfd2')}${circ(-1, -3, 16, '#fffaf0')}${circ(-18, 4, 10, '#fffaf0')}${circ(15, 3, 11, '#fffaf0')}`;
+    [336, 410, 484, 558].forEach((x, i) => {
+      s += rect(x - 15, 130, 30, 120, C.cream, ol(4)) + rect(x - 15, 152, 30, 16, bandC[i]) + rect(x - 15, 152, 30, 16, 'none', ol(3)) + rr(x - 19, 122, 38, 14, 4, '#5b4a42', ol(3.5));
+      for (let k = 0; k < 3; k++) sm += at(x, 108, 1, `<g class="smoke" style="--t:3.6s;--d:${-(k * 1.2 + i * 0.45).toFixed(2)}s;--dx:${36 + i * 8}px;--dy:-190px;--s:1.9">${puff}</g>`);
+    });
+    s += gear(666, 224, 40, C.marigold, 10, 'spin');
+    s += gear(610, 212, 19, C.tomato, 7, 'spin rev');
+    s += sm;
+    s += rect(296, 236, 420, 120, C.cream, ol(5));
+    s += path('M296 238L296 196L366 236L366 196L436 236L436 196L506 236L506 196L576 236L576 196L646 236L646 196L716 236Z', C.lagoon, ol(5));
+    for (let i = 0; i < 6; i++) s += rr(316 + i * 64, 262, 40, 34, 5, '#ffd36b', ol(3.5)) + line(`M${336 + i * 64} 262V296`, INK, 2.5);
+    s += rr(470, 300, 64, 56, 6, C.tomato, ol(4));
+    // sign with a four-leaf clover
+    const leaf = (r) => `<g transform="rotate(${r})">${path('M0 0C-14 -10 -16 -30 -6 -34C-2 -36 0 -30 0 -26C0 -30 2 -36 6 -34C16 -30 14 -10 0 0Z', C.leaf, ol(3))}</g>`;
+    s += at(232, 300, 1, `${rect(-6, 0, 12, 56, C.wood, ol(3.5))}${rr(-74, -58, 148, 62, 12, C.cream, ol(4.5))}${text(-30, -32, 'Fluky', 22, INK, ' font-family="Bricolage Display, sans-serif" font-weight="800"')}${text(-30, -10, 'Factory', 18, INK, ' font-family="Bricolage Display, sans-serif" font-weight="800"')}${at(-50, -28, 0.62, `<g class="spin" style="--t:14s">${leaf(0)}${leaf(90)}${leaf(180)}${leaf(270)}${circ(0, 0, 5, '#3f7d35')}</g>`)}`);
+    // crates on the dock, one per project, the featured one with a star
+    const crate = (x, y, w, h, label, feat) => `${rect(x, y, w, h, '#c98a4a', ol(4))}${line(`M${x + 4} ${y + 4}L${x + w - 4} ${y + h - 4}`, '#a8703a', 3)}${rr(x + 9, y + h * 0.26, w - 18, h * 0.48, 4, C.cream, ol(2.5))}${text(x + w / 2, y + h * 0.59, label, 14, INK, ' text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500"')}${feat ? `${circ(x + w - 6, y + 4, 15, C.marigold, ol(3))}${at(x + w - 6, y + 4, 1.25, path('M0 -8l2.4 5 5.4.6-4 3.6 1.1 5.3-4.9-2.7-4.9 2.7 1.1-5.3-4-3.6 5.4-.6z', INK))}` : ''}`;
+    s += crate(758, 340, 112, 56, 'EXCURSIONS', false);
+    s += crate(876, 330, 104, 66, 'CATCH', true);
+    s += crate(778, 290, 90, 50, 'MAYAN', false);
+    s += crate(890, 286, 78, 44, 'FERRY', false);
+    return s + foam(70, 990, 446);
+  }
+
+  /* ---------- Amsterdam: canal houses that draw in ---------- */
+  function house(x, base, w, h, kind, c) {
+    const top = base - h;
+    let sil;
+    if (kind === 'step') {
+      const s = w / 6;
+      sil = [[x, base], [x, top + 70], [x + s, top + 70], [x + s, top + 46], [x + 2 * s, top + 46], [x + 2 * s, top + 22], [x + 2.4 * s, top + 22], [x + 2.4 * s, top], [x + 3.6 * s, top], [x + 3.6 * s, top + 22], [x + 4 * s, top + 22], [x + 4 * s, top + 46], [x + 5 * s, top + 46], [x + 5 * s, top + 70], [x + w, top + 70], [x + w, base]];
+    } else if (kind === 'neck') {
+      sil = [[x, base], [x, top + 64], [x + w * 0.22, top + 64], [x + w * 0.22, top + 10], [x + w * 0.5, top - 6], [x + w * 0.78, top + 10], [x + w * 0.78, top + 64], [x + w, top + 64], [x + w, base]];
+    } else if (kind === 'bell') {
+      sil = [[x, base], [x, top + 72], [x + w * 0.12, top + 66], [x + w * 0.2, top + 30], [x + w * 0.34, top + 12], [x + w * 0.5, top], [x + w * 0.66, top + 12], [x + w * 0.8, top + 30], [x + w * 0.88, top + 66], [x + w, top + 72], [x + w, base]];
+    } else {
+      sil = [[x, base], [x, top + 40], [x + w * 0.5, top - 14], [x + w, top + 40], [x + w, base]];
+    }
+    const d = pts(sil);
+    let win = '';
+    let wd = '';
+    const cols = w > 120 ? 3 : 2;
+    const ww = (w - 24 - (cols - 1) * 12) / cols;
+    const rows = Math.floor((h - 120) / 58);
+    for (let r = 0; r < rows; r++)
+      for (let k = 0; k < cols; k++) {
+        const wx = x + 12 + k * (ww + 12);
+        const wy = top + 84 + r * 58;
+        win += rect(wx, wy, ww, 40, '#fffaf0') + rect(wx + 4, wy + 4, ww - 8, 32, '#2d5560') + rect(wx + ww / 2 - 1.5, wy + 4, 3, 32, '#fffaf0');
+        wd += `M${N(wx)} ${N(wy)}h${N(ww)}v40h${N(-ww)}Z`;
+      }
+    const door = rect(x + w / 2 - 15, base - 50, 30, 50, dk(c, 0.35)) + rect(x + w / 2 - 15, base - 50, 30, 50, 'none', ol(3));
+    return {
+      fill: `${path(`${d}Z`, c)}${win}${door}${rect(x + w / 2 - 3, top + 58, 6, 18, '#5b4a42')}`,
+      line: `${d}Z${wd}`,
+    };
+  }
+  function windmill(x, y, s) {
+    const sail = (r) => `<g transform="rotate(${r})">${rect(-5, -96, 10, 92, '#5b4a42')}${rect(5, -92, 20, 72, '#fff4e2', ' opacity=".9"')}${line('M5 -74H25M5 -56H25M5 -38H25', '#5b4a42', 2)}</g>`;
+    return at(x, y, s, `${poly([[-22, 0], [22, 0], [12, -118], [-12, -118]], '#6b5146')}${path('M-16 -118Q0 -140 16 -118Z', '#5b4a42')}<g transform="translate(0 -124)"><g class="spin" style="--t:9s;transform-box:view-box;transform-origin:0 0">${sail(0)}${sail(90)}${sail(180)}${sail(270)}${circ(0, 0, 6, '#5b4a42')}</g></g>`);
+  }
+  function stampSVG() {
+    const R = 100;
+    const ring = (r, w) => circ(0, 0, r, 'none', ` stroke="#d63c25" stroke-width="${w}"`);
+    let s = `<defs><path id="stp" d="M-78 0A78 78 0 1 1 78 0A78 78 0 1 1 -78 0"/></defs>`;
+    s += ring(R, 8) + ring(R - 14, 3) + ring(58, 3);
+    s += `<text font-family="Bricolage Display, sans-serif" font-weight="800" font-size="22" fill="#d63c25" letter-spacing="3"><textPath href="#stp" startOffset="2%">AMSTERDAM · ARRIVALS · AMSTERDAM · ARRIVALS ·</textPath></text>`;
+    s += text(0, 18, '2017', 46, '#d63c25', ' text-anchor="middle" font-family="Bricolage Display, sans-serif" font-weight="800"');
+    s += at(-20, -44, 0.34, planeTop().replaceAll(INK, '#d63c25').replaceAll(C.cream, 'none').replaceAll(C.sand, 'none').replaceAll(C.lagoon, 'none').replaceAll(C.tomato, '#d63c25'));
+    const r = rng(7);
+    for (let i = 0; i < 40; i++) {
+      const a = r() * Math.PI * 2;
+      const d = r() * R;
+      s += circ(Math.cos(a) * d, Math.sin(a) * d, 1 + r() * 2.6, '#fff4e2');
+    }
+    return s;
+  }
+
+  /* ---------- globe: */
+const GLOBE = { land: 'M286 571Q290 571 299 574Q309 578 314 583Q320 589 318 590Q317 592 309 589Q302 587 299 589Q296 592 292 589Q289 585 283 584Q277 584 276 581Q275 578 282 579Q290 581 287 576Q283 571 286 571ZM236 527Q244 532 261 549Q277 566 265 563Q252 560 255 559Q258 557 253 550Q249 544 239 538Q229 531 230 530Q230 528 219 527Q208 526 218 524Q228 522 236 527ZM446 325Q444 329 442 332Q440 336 442 335Q444 333 444 336Q445 338 451 340Q458 342 456 345Q455 348 457 347Q459 347 460 352Q461 357 459 360Q458 364 455 363Q451 362 452 358Q452 354 448 357Q444 361 442 360Q441 360 443 358Q445 357 443 355Q440 354 431 353Q423 352 430 340Q438 328 442 325Q447 321 446 325ZM691 274Q693 283 691 287Q689 291 685 291Q682 292 681 287Q681 283 678 279Q675 276 676 270Q678 264 683 264Q688 265 691 274ZM674 234Q677 232 678 237Q679 241 683 239Q686 237 688 244Q690 250 707 257Q724 264 727 269Q730 274 730 277Q730 280 723 284Q716 288 713 292Q710 297 708 297Q707 297 709 290Q711 283 706 283Q701 282 702 280Q704 278 700 274Q697 270 700 269Q703 268 702 266Q701 264 695 263Q690 262 687 258Q684 255 684 257Q684 259 680 254Q676 250 673 242Q671 235 674 234ZM596 200Q604 195 608 199Q613 203 608 211Q602 219 595 219Q587 219 588 217Q589 215 584 214Q580 213 582 211Q584 209 580 209Q576 208 576 206Q577 204 582 204Q588 205 596 200ZM376 161Q377 163 374 166Q371 169 375 167Q379 166 375 173Q372 180 381 173Q391 166 393 168Q396 170 392 178Q387 187 383 188Q379 189 376 187Q373 186 366 190Q359 195 339 202Q319 209 312 215Q306 221 308 222Q310 224 307 231Q304 237 306 237Q309 238 315 250Q321 262 326 264Q331 267 327 274Q324 281 324 290Q325 300 331 296Q336 292 338 283Q339 274 349 269Q360 265 360 255Q361 246 365 243Q369 240 373 231Q377 222 384 224Q392 225 394 231Q397 237 400 238Q403 239 401 247Q398 255 400 258Q403 262 412 255Q421 248 424 262Q428 276 426 278Q425 281 434 289Q443 297 446 302Q449 308 449 313Q448 317 435 324Q422 330 405 328Q389 325 372 336Q355 347 370 340Q385 334 389 334Q393 334 395 337Q397 339 394 341Q391 344 391 352Q390 359 399 362Q407 365 411 361Q415 357 416 361Q417 366 398 373Q380 381 378 380Q375 379 376 376Q377 372 383 370Q389 367 381 366Q373 366 363 370Q352 374 349 379Q345 384 347 388Q348 391 336 391Q324 391 330 393Q335 394 329 393Q322 393 317 399Q312 406 311 403Q310 400 310 405Q310 410 305 414Q301 418 303 410Q304 402 303 406Q301 411 300 409Q298 408 298 420Q298 433 276 444Q253 456 252 476Q250 497 247 503Q245 510 241 505Q237 501 237 486Q238 471 235 466Q233 460 229 461Q226 462 223 457Q220 452 213 449Q205 446 202 450Q200 455 191 447Q181 439 177 438Q173 437 163 441Q153 446 145 464Q136 483 136 492Q135 500 137 509Q138 519 141 524Q145 529 156 530Q168 531 171 525Q174 519 184 521Q195 523 184 544Q172 564 185 569Q198 574 202 579Q207 584 203 601Q199 617 206 629Q213 642 220 641Q227 640 237 647Q247 654 251 652Q256 650 259 645Q263 639 269 640Q274 641 281 637Q288 634 290 636Q292 638 289 640Q286 642 286 652Q286 662 289 659Q292 656 290 652Q289 647 294 646Q299 646 301 643Q302 640 308 648Q314 656 327 660Q341 665 343 663Q346 661 356 662Q366 664 362 664Q358 665 360 667Q361 669 367 673Q374 676 374 679Q375 682 381 686Q388 689 396 698Q404 707 417 709Q431 711 442 718Q454 724 457 733Q461 742 463 743Q465 744 462 749Q459 755 468 757Q477 759 477 763Q477 766 481 764Q484 762 497 765Q510 769 511 773Q512 777 532 777Q552 777 564 783Q576 790 584 791Q593 793 595 799Q597 805 595 811Q593 817 578 831Q562 846 559 860Q556 875 548 886Q541 898 537 901Q532 904 510 909Q487 914 484 916Q480 919 479 925Q478 931 461 942Q444 953 427 950Q411 948 418 953Q425 958 423 961Q420 963 405 962Q390 961 392 964Q395 967 386 966Q377 965 383 968Q390 971 381 972Q373 974 379 977Q386 979 381 981Q376 982 380 983Q385 985 368 981Q352 977 341 971Q330 965 330 963Q329 961 333 962Q337 964 335 961Q334 959 331 959Q327 959 321 950Q315 941 317 933Q319 926 315 918Q312 910 311 893Q310 875 307 866Q304 858 281 841Q258 824 241 795Q224 766 219 760Q213 755 212 750Q211 745 217 739Q222 734 218 731Q214 728 214 723Q214 719 217 713Q220 707 224 707Q229 706 230 702Q232 697 237 694Q242 691 241 680Q241 668 235 657Q230 646 225 647Q221 648 222 652Q223 655 221 656Q220 656 209 648Q199 639 195 631Q190 622 190 624Q189 626 187 624Q186 621 186 617Q186 612 182 601Q178 589 167 581Q155 573 147 558Q139 544 134 543Q128 542 114 519Q100 497 97 487Q95 477 98 467Q101 458 99 439Q97 419 101 386Q104 353 101 360Q97 366 93 401Q90 436 88 437Q86 438 85 426Q85 415 87 410Q89 405 88 394Q87 382 90 381Q92 379 98 357Q103 336 103 324Q103 313 112 293Q120 273 147 244Q173 214 171 220Q169 227 175 221Q181 215 184 203Q188 192 212 166Q236 141 237 135Q239 130 250 116Q261 101 258 102Q255 102 254 99Q253 96 260 95Q268 93 255 91Q242 90 243 85Q245 79 247 83Q249 86 254 86Q259 85 263 80Q266 75 280 68Q294 62 298 62Q302 62 300 65Q299 68 312 60Q326 53 322 58Q318 63 331 58Q344 54 343 55Q342 56 345 57Q349 59 350 62Q350 65 344 70Q338 74 329 87Q320 99 326 103Q332 106 330 107Q328 109 331 108Q335 108 331 111Q328 115 331 115Q334 114 331 116Q328 117 330 118Q332 118 332 126Q332 133 328 137Q325 141 328 143Q332 145 330 147Q329 150 336 148Q343 147 343 153Q343 159 347 161Q350 163 353 161Q357 159 354 164Q352 168 359 165Q367 161 368 157Q369 153 376 149Q383 145 381 151Q379 158 377 159Q374 160 376 161ZM357 117Q365 118 363 118Q361 119 363 120Q366 120 364 122Q363 124 366 124Q368 123 365 127Q361 131 367 129Q373 127 365 138Q357 150 353 151Q349 152 348 149Q346 145 339 141Q331 137 334 132Q338 126 342 128Q346 131 344 127Q342 123 345 122Q349 122 349 119Q348 117 357 117ZM408 145Q406 146 405 149Q404 151 411 149Q417 147 415 152Q412 157 417 156Q422 156 423 161Q425 167 427 167Q430 167 433 176Q436 185 433 186Q430 187 438 195Q446 203 441 209Q435 215 432 209Q429 204 427 204Q425 204 426 215Q428 226 427 229Q425 231 420 226Q414 221 417 228Q419 236 411 230Q404 225 400 217Q397 209 391 208Q384 206 387 204Q390 202 396 203Q403 205 408 199Q413 194 411 182Q408 170 404 170Q400 171 393 165Q386 160 390 154Q394 148 399 146Q404 143 408 143Q411 144 408 145ZM357 115Q346 116 343 115Q341 114 344 110Q347 107 357 104Q367 101 369 103Q370 104 368 110Q367 115 357 115ZM413 120Q416 120 416 126Q415 132 422 134Q429 137 428 139Q428 142 421 141Q413 140 409 136Q405 133 409 129Q412 124 412 122Q411 120 413 120ZM381 15Q397 11 390 14Q383 17 396 13Q408 9 437 5Q465 1 512 2Q558 3 589 9Q619 14 663 30Q707 45 735 60Q762 74 800 102Q837 130 858 153Q880 175 907 213Q934 251 937 260Q940 269 935 265Q930 261 931 266Q932 270 942 282Q952 294 948 281Q943 269 958 302Q972 336 980 372Q988 409 983 395Q979 382 967 366Q956 350 946 343Q935 335 933 330Q930 324 933 333Q936 341 930 336Q925 331 942 350Q960 369 976 395Q992 422 988 401Q985 380 991 414Q997 449 997 501Q997 552 988 597Q980 641 969 671Q958 700 935 741Q913 782 893 808Q873 833 887 808Q901 783 903 769Q905 755 914 733Q923 711 923 693Q922 674 915 665Q908 657 911 639Q913 622 909 617Q906 613 899 620Q892 627 887 622Q883 617 864 633Q846 649 838 652Q829 654 820 661Q810 669 805 669Q800 669 787 664Q774 659 764 647Q754 636 747 632Q740 629 739 623Q738 618 734 614Q730 610 733 603Q737 596 737 588Q737 579 731 564Q725 549 730 528Q735 507 746 486Q757 466 755 455Q752 443 756 434Q761 425 761 417Q761 409 772 407Q783 405 789 395Q796 384 809 374Q822 365 825 360Q828 356 830 357Q833 359 834 356Q835 353 840 367Q846 380 869 379Q892 378 890 364Q888 350 896 348Q903 346 909 342Q914 338 915 331Q915 325 917 325Q919 326 920 320Q921 315 909 294Q897 272 897 281Q896 289 894 289Q892 288 892 293Q891 299 888 300Q885 302 876 295Q867 288 866 268Q865 248 871 243Q876 238 875 231Q874 224 871 221Q867 218 858 218Q849 219 844 209Q838 200 840 209Q841 218 846 219Q850 221 851 227Q852 233 848 232Q844 231 843 228Q841 224 838 227Q835 229 844 246Q853 263 859 266Q864 269 864 276Q864 283 862 282Q860 280 858 281Q857 283 858 288Q860 293 857 293Q855 293 863 300Q872 308 870 308Q869 309 871 315Q874 322 861 313Q847 305 843 300Q840 294 820 290Q800 285 803 292Q806 298 826 303Q845 308 845 310Q846 311 842 311Q839 311 843 321Q848 331 842 325Q836 319 827 318Q817 316 805 311Q792 306 791 314Q790 321 783 326Q776 330 779 335Q781 339 778 346Q775 352 778 361Q781 371 779 382Q778 393 772 396Q766 398 765 403Q764 407 759 404Q754 401 748 404Q741 407 730 383Q718 359 720 354Q722 350 738 345Q753 340 753 337Q753 334 749 326Q745 319 733 315Q722 311 720 308Q718 306 725 303Q731 300 728 296Q725 292 727 293Q730 293 733 288Q736 283 734 280Q733 277 735 272Q737 267 735 261Q732 255 737 250Q741 245 731 233Q721 221 722 217Q723 213 728 221Q734 229 740 233Q746 236 747 233Q748 229 752 230Q756 230 757 223Q758 215 761 214Q765 213 764 209Q763 205 756 198Q749 192 749 190Q748 188 752 188Q756 188 748 183Q740 178 742 173Q744 167 743 164Q741 162 739 162Q737 162 736 169Q734 176 730 175Q726 175 719 170Q712 166 704 155Q696 144 694 144Q691 144 691 147Q691 149 702 164Q714 180 720 182Q726 183 736 198Q746 212 744 213Q742 214 744 217Q746 220 745 221Q743 223 727 213Q711 203 712 209Q714 214 709 216Q704 217 693 208Q683 198 681 186Q680 174 668 155Q657 135 656 126Q655 117 663 118Q670 118 669 117Q668 116 673 114Q677 112 684 110Q691 109 697 114Q702 119 699 122Q695 126 707 127Q719 129 714 127Q709 124 712 123Q714 122 707 116Q699 110 701 109Q703 108 693 105Q683 102 684 100Q685 98 691 100Q698 102 688 93Q678 85 681 85Q683 84 679 80Q674 76 676 76Q678 76 672 74Q665 72 667 67Q670 63 660 62Q650 62 640 58Q630 54 654 56Q678 58 670 56Q662 53 645 52Q627 52 632 51Q636 50 630 47Q624 44 619 45Q613 46 607 43Q601 40 577 37Q553 34 553 32Q553 30 547 27Q542 25 549 25Q557 24 553 22Q550 20 534 18Q517 17 513 14Q508 11 464 14Q420 18 396 27Q371 36 359 36Q348 36 350 34Q353 33 344 35Q336 36 344 31Q351 25 364 21Q376 17 371 18Q365 19 381 15ZM865 195Q874 200 884 210Q895 220 896 217Q897 214 895 210Q892 206 882 194Q871 183 868 182Q866 180 869 184Q872 188 863 184Q854 179 846 169Q838 160 847 175Q856 190 865 195ZM463 102Q477 103 479 106Q482 108 472 114Q462 119 457 120Q452 120 452 122Q451 125 445 127Q438 129 439 131Q440 133 436 134Q432 134 426 131Q420 127 425 124Q430 121 431 123Q432 125 432 122Q433 119 439 115Q445 111 448 111Q451 112 448 110Q445 109 447 105Q450 101 463 102ZM510 103Q518 102 523 103Q527 104 522 107Q517 110 522 109Q527 108 528 111Q530 113 533 110Q535 107 539 108Q542 109 540 113Q537 117 545 126Q552 134 550 136Q548 137 554 144Q561 150 558 151Q556 151 558 153Q561 155 558 157Q555 158 558 161Q561 164 558 164Q555 165 561 169Q568 173 566 174Q564 176 560 173Q556 171 556 175Q557 179 563 178Q568 177 563 184Q557 191 552 193Q546 195 540 204Q534 212 528 214Q522 216 518 227Q513 237 512 247Q511 257 508 257Q505 257 502 254Q499 251 495 251Q490 251 484 240Q478 230 476 217Q473 204 479 195Q485 186 480 186Q474 187 475 183Q476 179 480 180Q484 181 479 177Q473 173 475 170Q477 167 475 158Q473 148 463 145Q454 141 453 138Q452 135 457 135Q461 134 457 131Q452 128 461 126Q469 123 468 121Q468 119 474 115Q479 111 487 110Q495 109 498 111Q502 113 501 111Q499 108 501 106Q503 105 510 103Z' };
+</script></body></html>
