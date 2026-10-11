@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Luis Matute / UI</title>
+    <script src="./theme.js"></script>
+    <link rel="stylesheet" href="../../../dist/tokens.css" />
+    <link rel="stylesheet" href="../../../dist/fonts.css" />
+    <link rel="stylesheet" href="../../../dist/base.css" />
+    <link rel="stylesheet" href="./mock.css" />
+  </head>
+  <body>
+    <a class="lm-skip" href="#main">Skip to content</a>
+    <div class="docs-shell">
+      <header class="docs-topbar">
+        <button
+          class="docs-menu"
+          type="button"
+          data-drawer-open
+          aria-controls="docs-nav"
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          <span class="docs-menu-bars"></span>
+        </button>
+        <a class="docs-wordmark" href="./home.html">
+          <span class="docs-wordmark-name">Luis Matute</span>
+          <span class="docs-wordmark-slash">/</span>
+          <span class="docs-wordmark-ui">UI</span>
+        </a>
+        <span class="docs-hand">wheels up</span>
+        <span class="docs-version">v0.1.2</span>
+        <div class="docs-topbar-end">
+          <button
+            class="docs-search-trigger"
+            type="button"
+            data-search-open
+            aria-haspopup="dialog"
+            aria-controls="docs-search"
+          >
+            <span class="docs-search-label">Search</span>
+            <kbd class="docs-kbd">⌘K</kbd>
+          </button>
+          <fieldset class="docs-theme">
+            <legend class="lm-vh">Theme</legend>
+            <button type="button" data-theme-set="light" aria-pressed="false">
+              Light
+            </button>
+            <button type="button" data-theme-set="dark" aria-pressed="false">
+              Dark
+            </button>
+            <button type="button" data-theme-set="auto" aria-pressed="true">
+              Auto
+            </button>
+          </fieldset>
+          <a class="docs-ext" href="https://github.com/pipa/luismatute-ui"
+            >GitHub</a
+          >
+          <a class="docs-ext docs-ext-site" href="https://luismatute.me"
+            >luismatute.me</a
+          >
+        </div>
+      </header>
+      <div class="docs-body">
+        <div class="docs-backdrop" data-drawer-backdrop hidden></div>
+        <nav class="docs-nav" id="docs-nav" aria-label="Docs">
+          <div class="docs-nav-head">
+            <span class="docs-wordmark-ui">Menu</span>
+            <button
+              class="docs-nav-close"
+              type="button"
+              data-drawer-close
+              aria-label="Close menu"
+            >
+              ×
+            </button>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Getting started</h2>
+            <ul>
+              <li>
+                <a class="is-current" href="./home.html" aria-current="page"
+                  >Introduction</a
+                >
+              </li>
+              <li><a href="#install">Install</a></li>
+              <li><a href="#astro">Astro</a></li>
+              <li><a href="#html">Bare imports</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Tokens</h2>
+            <ul>
+              <li><a href="#tokens">Colour</a></li>
+              <li><a href="#type">Type</a></li>
+              <li><a href="#space">Spacing</a></li>
+              <li><a href="#motion">Motion</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Components</h2>
+            <ul>
+              <li><a href="./index.html">lm-card</a></li>
+              <li><a href="./index.html">lm-chip</a></li>
+              <li><a href="./index.html">lm-more</a></li>
+              <li><a href="./index.html">lm-motion-toggle</a></li>
+              <li><a href="./index.html">lm-pause</a></li>
+              <li><a href="./index.html">lm-shot</a></li>
+              <li><a href="./index.html">lm-avatar</a></li>
+              <li><a href="./index.html">lm-globe</a></li>
+              <li><a href="./index.html">lm-flight-plan</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Illustrations</h2>
+            <ul>
+              <li><a href="#art">SVG kit</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Changelog</h2>
+            <ul>
+              <li><a href="#changelog">v0.1.x</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="docs-content">
+          <div class="docs-toc-inline">
+            <button
+              type="button"
+              data-toc-toggle
+              aria-expanded="false"
+              aria-controls="docs-toc-panel"
+            >
+              On this page
+            </button>
+            <nav id="docs-toc-panel" data-toc-panel hidden>
+              <ol>
+                <li><a href="#install">Install</a></li>
+                <li><a href="#astro">Astro</a></li>
+                <li><a href="#tokens">Tokens</a></li>
+                <li><a href="#art">Illustrations</a></li>
+              </ol>
+            </nav>
+          </div>
+          <main id="main" class="docs-prose">
+            <p class="docs-kicker">Getting started</p>
+            <h1 class="docs-title">Wheels up</h1>
+            <p class="docs-lede">
+              Design system for Luis Matute’s sites. Same paper, ink and ticket
+              edges as luismatute.me. Served at
+              <a href="https://luismatute.me/ui">luismatute.me/ui</a>.
+            </p>
+            <div class="docs-home-pass">
+              <lm-card variant="pass">
+                <p class="lm-kicker">Boarding pass · docs</p>
+                <h1>@luismatute/ui</h1>
+                <dl class="lm-route">
+                  <div>
+                    <dt>From</dt>
+                    <dd>Tokens</dd>
+                  </div>
+                  <div>
+                    <dt>To</dt>
+                    <dd>Pages</dd>
+                  </div>
+                  <div>
+                    <dt>Stops</dt>
+                    <dd>9</dd>
+                  </div>
+                </dl>
+                <p class="lm-intro">
+                  Pin a git tag. Import the CSS. Register the elements.
+                </p>
+              </lm-card>
+            </div>
+            <div class="docs-cards">
+              <a class="docs-home-card" href="#install">
+                <span>01</span>
+                <strong>Install</strong>
+                <p>GitHub tag, no npm registry.</p>
+              </a>
+              <a class="docs-home-card" href="./index.html">
+                <span>02</span>
+                <strong>Components</strong>
+                <p>Nine custom elements, one page each.</p>
+              </a>
+              <a class="docs-home-card" href="#tokens">
+                <span>03</span>
+                <strong>Tokens</strong>
+                <p>Click a swatch to copy the variable.</p>
+              </a>
+            </div>
+            <hr class="docs-flight" />
+            <h2 id="install">Install</h2>
+            <p>
+              Install from a git tag. The version in the top bar comes from
+              <code>package.json</code>.
+            </p>
+            <figure class="docs-code">
+              <figcaption>
+                <span class="docs-code-name">terminal</span>
+                <button class="docs-copy" type="button" data-copy data-idle="Copy">
+                  Copy
+                </button>
+              </figcaption>
+              <pre><code><span class="token function">pnpm</span> add github:pipa/luismatute-ui#v0.1.0</code></pre>
+            </figure>
+            <h2 id="astro">Astro</h2>
+            <p>
+              Import the styles once in the layout. Register the elements in a
+              client script. No runtime dependencies.
+            </p>
+            <h2 id="html">Bare imports</h2>
+            <p>
+              Link <code>tokens.css</code>, <code>fonts.css</code> and
+              <code>base.css</code>. Keep scripts external. The site CSP hashes
+              inline work.
+            </p>
+            <h2 id="tokens">Colour</h2>
+            <p>Click a chip. The live region announces Copied.</p>
+            <div class="docs-swatches">
+              <button
+                class="docs-token"
+                type="button"
+                data-token-copy="--lm-ink"
+              >
+                <i class="docs-swatch" data-swatch="ink"></i>
+                <span class="docs-token-meta">
+                  <span class="docs-token-name">--lm-ink</span>
+                  <span class="docs-token-value">#2b1b14</span>
+                </span>
+                <span class="docs-copy" data-idle="Copy">Copy</span>
+              </button>
+              <button
+                class="docs-token"
+                type="button"
+                data-token-copy="--lm-paper"
+              >
+                <i class="docs-swatch" data-swatch="paper"></i>
+                <span class="docs-token-meta">
+                  <span class="docs-token-name">--lm-paper</span>
+                  <span class="docs-token-value">#fff6e4</span>
+                </span>
+                <span class="docs-copy" data-idle="Copy">Copy</span>
+              </button>
+              <button
+                class="docs-token"
+                type="button"
+                data-token-copy="--lm-sand"
+              >
+                <i class="docs-swatch" data-swatch="sand"></i>
+                <span class="docs-token-meta">
+                  <span class="docs-token-name">--lm-sand</span>
+                  <span class="docs-token-value">#f3e2c0</span>
+                </span>
+                <span class="docs-copy" data-idle="Copy">Copy</span>
+              </button>
+              <button
+                class="docs-token"
+                type="button"
+                data-token-copy="--lm-lagoon"
+              >
+                <i class="docs-swatch" data-swatch="lagoon"></i>
+                <span class="docs-token-meta">
+                  <span class="docs-token-name">--lm-lagoon</span>
+                  <span class="docs-token-value">#1f7f7a</span>
+                </span>
+                <span class="docs-copy" data-idle="Copy">Copy</span>
+              </button>
+            </div>
+            <h2 id="type">Type</h2>
+            <p>
+              Bricolage Display for titles, Bricolage for body, IBM Plex Mono
+              for chrome, Caveat only for a small handwritten accent.
+            </p>
+            <h2 id="space">Spacing</h2>
+            <p>
+              Use the published space scale. Docs chrome sits on 8, 12, 16, 20,
+              24 and 32.
+            </p>
+            <h2 id="motion">Motion</h2>
+            <p>
+              Animate transform and opacity only. Honour
+              <code>prefers-reduced-motion</code> and
+              <code>lm.ui.motion</code>.
+            </p>
+            <h2 id="art">Illustrations</h2>
+            <p>
+              SVG kit from the takeoff page. Fills use token variables so they
+              follow <code>data-theme</code> on the demo, not the docs shell.
+            </p>
+            <h2 id="changelog">Changelog</h2>
+            <p>v0.1.0 extracts the approved Wheels up page.</p>
+            <nav class="docs-pager" aria-label="Page">
+              <a href="./index.html">
+                <span>Next</span>
+                <strong>lm-card</strong>
+              </a>
+            </nav>
+          </main>
+        </div>
+        <aside class="docs-toc" aria-label="On this page">
+          <h2>On this page</h2>
+          <ol>
+            <li><a class="is-current" href="#install">Install</a></li>
+            <li><a href="#astro">Astro</a></li>
+            <li><a href="#tokens">Tokens</a></li>
+            <li><a href="#art">Illustrations</a></li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+    <div
+      class="docs-search"
+      id="docs-search"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="docs-search-title"
+      hidden
+    >
+      <div class="docs-search-panel">
+        <h2 class="lm-vh" id="docs-search-title">Search the docs</h2>
+        <div class="docs-search-bar">
+          <input
+            class="docs-search-input"
+            type="search"
+            placeholder="Search pages"
+            aria-label="Search pages"
+            autocomplete="off"
+          />
+          <button
+            class="docs-search-close"
+            type="button"
+            data-search-close
+            aria-label="Close search"
+          >
+            ×
+          </button>
+        </div>
+        <div
+          class="docs-search-hits"
+          data-search-results
+          role="listbox"
+          hidden
+        ></div>
+        <div class="docs-search-empty" data-search-empty hidden>
+          <span class="docs-hand">no flights found</span>
+          <p>Try a component name, a token, or install.</p>
+        </div>
+      </div>
+    </div>
+    <div class="docs-live" id="docs-live" aria-live="polite"></div>
+    <script src="./mock.js"></script>
+    <script type="module" src="../../../dist/components/index.js"></script>
+  </body>
+</html>
