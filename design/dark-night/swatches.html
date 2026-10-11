@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../dist/fonts.css">
+<style>
+body{margin:0;padding:36px;background:#fff6e4;color:#2b1b14;font:14px/1.3 "Bricolage",system-ui,sans-serif;width:max-content}
+h1{font:800 36px/1 "Bricolage Display",sans-serif;margin:0 0 20px}
+.row{display:flex;align-items:stretch;gap:10px;margin-bottom:18px}
+.lbl{width:130px;flex:none;font:700 12px/1.3 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;padding-top:8px}
+.sw{width:104px;flex:none;border:2.5px solid #2b1b14;border-radius:12px;overflow:hidden;background:#fff;box-shadow:3px 3px 0 #2b1b14}
+.sw i{display:block;height:64px;border-bottom:2px solid #2b1b14}
+.sw b{display:block;font:700 10.5px/1.25 "IBM Plex Mono",monospace;padding:6px 6px 2px;min-height:26px}
+.sw span{display:block;white-space:nowrap;font:500 9.5px/1.2 "IBM Plex Mono",monospace;padding:0 6px 7px;color:#5b4536}
+.night .lbl{color:#4a3570}.night .lbl::after{content:"proposal";display:block;margin-top:6px;font-weight:500;letter-spacing:.06em;color:#5b4536}
+.night .sw{border-width:3px}
+</style></head><body>
+<h1>Swatches: light · current dark · night dark</h1><p style="margin:-10px 0 18px;color:#5b4536">Roles are the <code>--docs-*</code> aliases in the docs shell. Alpha values are r, g, b, a, shown over that theme&rsquo;s page colour.</p>
+<div id="rows"></div>
+<script>
+const roles=['bg','cream','elev','sunken','fg','muted','border','rule','shadow','link · accent','on-accent','focus','hover','title shadow','code-bg','code caption','note','warn','tip'];
+const sets={
+ light:['#fff6e4','#fff4e2','#ffffff','#f3e2c0','#2b1b14','#5b4536','#2b1b14','rgba(43,27,20,.28)','#2b1b14','#a8321e','#2b1b14','#2b1b14','rgba(246,180,60,.22)','#e2492f','#2b1b14','#4b3428','#4a3570','#a8321e','#16625e'],
+ 'current dark':['#2b1b14','#120d2c','#120d2c','#4b3428','#fff6e4','#a39282','#fff6e4','#f3e2c0','#fff6e4','#f6b43c','#2b1b14','#fff6e4','rgba(246,180,60,.22)','#120d2c','#120d2c','#4b3428','#bfe6ee','#ff7a5c','#62a64e'],
+ 'night dark':['#1f1840','#1b1640','#2c2354','#120d2c','#fff4e2','#b3a8dc','#8b7cc4','#5a4c92','#5a4c92','#ffd36b','#120d2c','#ffd36b','rgba(139,124,196,.24)','#e2492f','#120d2c','#2a2450','#a89bd8','#ff6b5c','#8cc06a']};
+const el=document.getElementById('rows');
+for(const [k,v] of Object.entries(sets)){const r=document.createElement('div');r.className='row'+(k==='night dark'?' night':'');
+r.innerHTML=`<div class="lbl">${k}</div>`+v.map((c,i)=>`<div class="sw"><i style="background:linear-gradient(${c},${c}),${v[0]}"></i><b>${roles[i]}</b><span>${c.startsWith('rgba')?c.replace('rgba(','').replace(')',''):c}</span></div>`).join('');el.append(r)}
+</script></body></html>

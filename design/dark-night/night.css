@@ -1,0 +1,116 @@
+/*
+ * Night dark theme proposal (Muse, muse/dark-night).
+ * Every value comes from "The move." scene in
+ * luismatute.me design/travel-opus/concept-c-takeoff.html, or is a
+ * tint of one (marked "derived"). See PALETTE.md for sources and ratios.
+ * Load after mock.css. Only the --docs-* aliases and dark-only hardcodes change.
+ */
+:root {
+  --night-sky: #1f1840;      /* SKY.move[0] */
+  --night-rock: #1b1640;     /* lighthouse rock, cloud outlines */
+  --night-cloud-sky: #2c2354;/* SKY.move[2] */
+  --night-gallery: #2a2450;  /* lighthouse gallery rail */
+  --night-deep: #120d2c;     /* --lm-night, scene outlines */
+  --night-star: #fff4e2;     /* stars + title colour (= --lm-cream) */
+  --night-moon: #fff1cf;     /* moon disc, beam, moon path */
+  --night-lavender: #b3a8dc; /* derived: moonlit cloud #8b7cc4 tinted 35% to white */
+  --night-cloud: #8b7cc4;    /* moonlit cloud light */
+  --night-cloud-shade: #5a4c92; /* moonlit cloud shade */
+  --night-lantern: #ffd36b;  /* lighthouse lantern, lit windows */
+  --night-beacon: #ff6b5c;   /* ship mast beacon */
+  --night-violet: #a89bd8;   /* derived: stop marker #7563bd tinted 35% to white */
+  --night-tomato: #e2492f;   /* lighthouse stripes (= --lm-tomato) */
+  --night-land: #8cc06a;     /* --lm-globe-land, the package green */
+  --night-glass: #bfe6ee;    /* --lm-glass */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --docs-bg: var(--night-sky);
+    --docs-fg: var(--night-star);
+    --docs-muted: var(--night-lavender);
+    --docs-elev: var(--night-cloud-sky);
+    --docs-sunken: var(--night-deep);
+    --docs-cream: var(--night-rock);
+    --docs-border: var(--night-cloud);
+    --docs-rule: var(--night-cloud-shade);
+    --docs-link: var(--night-lantern);
+    --docs-hover: rgba(139, 124, 196, 0.24);
+    --docs-accent: var(--night-lantern);
+    --docs-on-accent: var(--night-deep);
+    --docs-focus: var(--night-lantern);
+    --docs-overlay: rgba(18, 13, 44, 0.8);
+    --docs-shadow: var(--night-cloud-shade);
+    --docs-title-shadow: var(--night-tomato);
+    --docs-code-bg: var(--night-deep);
+    --docs-code-caption: var(--night-gallery);
+    --docs-code-fg: var(--night-star);
+    --docs-code-comment: var(--night-cloud);
+    --docs-code-keyword: var(--night-lantern);
+    --docs-code-string: var(--night-land);
+    --docs-code-function: var(--lm-blush);
+    --docs-code-number: var(--night-moon);
+    --docs-code-tag: var(--night-beacon);
+    --docs-code-attr: var(--lm-fold);
+    --docs-code-property: var(--night-glass);
+    --docs-code-punct: var(--night-lavender);
+    --docs-code-literal: var(--lm-route-cool);
+    --docs-code-class: var(--night-violet);
+    --docs-note: var(--night-violet);
+    --docs-warn: var(--night-beacon);
+    --docs-tip: var(--night-land);
+  }
+}
+
+html[data-theme="dark"] {
+  --docs-bg: var(--night-sky);
+  --docs-fg: var(--night-star);
+  --docs-muted: var(--night-lavender);
+  --docs-elev: var(--night-cloud-sky);
+  --docs-sunken: var(--night-deep);
+  --docs-cream: var(--night-rock);
+  --docs-border: var(--night-cloud);
+  --docs-rule: var(--night-cloud-shade);
+  --docs-link: var(--night-lantern);
+  --docs-hover: rgba(139, 124, 196, 0.24);
+  --docs-accent: var(--night-lantern);
+  --docs-on-accent: var(--night-deep);
+  --docs-focus: var(--night-lantern);
+  --docs-overlay: rgba(18, 13, 44, 0.8);
+  --docs-shadow: var(--night-cloud-shade);
+  --docs-title-shadow: var(--night-tomato);
+  --docs-code-bg: var(--night-deep);
+  --docs-code-caption: var(--night-gallery);
+  --docs-code-fg: var(--night-star);
+  --docs-code-comment: var(--night-cloud);
+  --docs-code-keyword: var(--night-lantern);
+  --docs-code-string: var(--night-land);
+  --docs-code-function: var(--lm-blush);
+  --docs-code-number: var(--night-moon);
+  --docs-code-tag: var(--night-beacon);
+  --docs-code-attr: var(--lm-fold);
+  --docs-code-property: var(--night-glass);
+  --docs-code-punct: var(--night-lavender);
+  --docs-code-literal: var(--lm-route-cool);
+  --docs-code-class: var(--night-violet);
+  --docs-note: var(--night-violet);
+  --docs-warn: var(--night-beacon);
+  --docs-tip: var(--night-land);
+}
+
+/* Dark-only hardcodes in mock.css that pointed at brown ink or paper. */
+html:root[data-theme="dark"] .docs-title { text-shadow: 0.045em 0.05em 0 var(--docs-title-shadow); }
+html:root[data-theme="dark"] .docs-code { box-shadow: 4px 4px 0 var(--docs-shadow); }
+html:root[data-theme="dark"] .docs-code figcaption {
+  background: var(--docs-code-caption);
+  color: var(--docs-fg);
+  border-bottom-color: var(--docs-rule);
+}
+html:root[data-theme="dark"] .docs-search-trigger:hover,
+html:root[data-theme="dark"] .docs-theme button[aria-pressed="true"] { color: var(--docs-on-accent); }
+html:root[data-theme="dark"] .docs-copy { background: var(--night-moon); border-color: var(--night-moon); color: var(--night-deep); }
+html:root[data-theme="dark"] .docs-copy:hover,
+html:root[data-theme="dark"] .docs-copy.is-hover { background: var(--night-lantern); border-color: var(--night-lantern); }
+html:root[data-theme="dark"] .docs-copy.is-copied { background: var(--night-land); border-color: var(--night-land); }
+html:root[data-theme="dark"] .docs-copy.is-error { background: var(--night-deep); border-color: var(--night-beacon); color: var(--night-beacon); }
+html:root[data-theme="dark"] .docs-nav a.is-current { background: var(--docs-elev); }

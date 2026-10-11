@@ -1,0 +1,427 @@
+{
+  "night": [
+    {
+      "name": "text on page",
+      "fg": "#fff4e2",
+      "bg": "#1f1840",
+      "ratio": 15.27,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on sidebar",
+      "fg": "#fff4e2",
+      "bg": "#1b1640",
+      "ratio": 15.61,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on elev",
+      "fg": "#fff4e2",
+      "bg": "#2c2354",
+      "ratio": 13.07,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on sunken / table head",
+      "fg": "#fff4e2",
+      "bg": "#120d2c",
+      "ratio": 17.23,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover wash (page)",
+      "fg": "#fff4e2",
+      "bg": "#393060",
+      "ratio": 10.93,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover wash (sidebar)",
+      "fg": "#fff4e2",
+      "bg": "#362e60",
+      "ratio": 11.24,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover wash (elev)",
+      "fg": "#fff4e2",
+      "bg": "#43386f",
+      "ratio": 9.48,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted on page",
+      "fg": "#b3a8dc",
+      "bg": "#1f1840",
+      "ratio": 7.56,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted on sidebar",
+      "fg": "#b3a8dc",
+      "bg": "#1b1640",
+      "ratio": 7.73,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted on elev",
+      "fg": "#b3a8dc",
+      "bg": "#2c2354",
+      "ratio": 6.47,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted on sunken",
+      "fg": "#b3a8dc",
+      "bg": "#120d2c",
+      "ratio": 8.53,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "link on page",
+      "fg": "#ffd36b",
+      "bg": "#1f1840",
+      "ratio": 11.7,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "link on sidebar",
+      "fg": "#ffd36b",
+      "bg": "#1b1640",
+      "ratio": 11.97,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "link on elev",
+      "fg": "#ffd36b",
+      "bg": "#2c2354",
+      "ratio": 10.02,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "link on hover wash (page)",
+      "fg": "#ffd36b",
+      "bg": "#393060",
+      "ratio": 8.37,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "on-accent on accent (pressed, search hover)",
+      "fg": "#120d2c",
+      "bg": "#ffd36b",
+      "ratio": 13.2,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "copy idle text on moon",
+      "fg": "#120d2c",
+      "bg": "#fff1cf",
+      "ratio": 16.73,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "copy copied text on green",
+      "fg": "#120d2c",
+      "bg": "#8cc06a",
+      "ratio": 8.81,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "copy error text on night",
+      "fg": "#ff6b5c",
+      "bg": "#120d2c",
+      "ratio": 6.71,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code caption text on gallery",
+      "fg": "#fff4e2",
+      "bg": "#2a2450",
+      "ratio": 13.15,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code code fg on code bg",
+      "fg": "#fff4e2",
+      "bg": "#120d2c",
+      "ratio": 17.23,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code comment on code bg",
+      "fg": "#8b7cc4",
+      "bg": "#120d2c",
+      "ratio": 5.16,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code keyword on code bg",
+      "fg": "#ffd36b",
+      "bg": "#120d2c",
+      "ratio": 13.2,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code string on code bg",
+      "fg": "#8cc06a",
+      "bg": "#120d2c",
+      "ratio": 8.81,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code function on code bg",
+      "fg": "#f2a08a",
+      "bg": "#120d2c",
+      "ratio": 9.08,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code number on code bg",
+      "fg": "#fff1cf",
+      "bg": "#120d2c",
+      "ratio": 16.73,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code tag on code bg",
+      "fg": "#ff6b5c",
+      "bg": "#120d2c",
+      "ratio": 6.71,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code attr on code bg",
+      "fg": "#d8901f",
+      "bg": "#120d2c",
+      "ratio": 7.08,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code property on code bg",
+      "fg": "#bfe6ee",
+      "bg": "#120d2c",
+      "ratio": 14.08,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code punct on code bg",
+      "fg": "#b3a8dc",
+      "bg": "#120d2c",
+      "ratio": 8.53,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code literal on code bg",
+      "fg": "#e8a090",
+      "bg": "#120d2c",
+      "ratio": 8.81,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "code class on code bg",
+      "fg": "#a89bd8",
+      "bg": "#120d2c",
+      "ratio": 7.45,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "note label on elev",
+      "fg": "#a89bd8",
+      "bg": "#2c2354",
+      "ratio": 5.66,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "warning label on elev",
+      "fg": "#ff6b5c",
+      "bg": "#2c2354",
+      "ratio": 5.09,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "tip label on elev",
+      "fg": "#8cc06a",
+      "bg": "#2c2354",
+      "ratio": 6.68,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "border vs page (UI)",
+      "fg": "#8b7cc4",
+      "bg": "#1f1840",
+      "ratio": 4.57,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs elev (UI)",
+      "fg": "#8b7cc4",
+      "bg": "#2c2354",
+      "ratio": 3.92,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs sunken (UI)",
+      "fg": "#8b7cc4",
+      "bg": "#120d2c",
+      "ratio": 5.16,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs sidebar (UI)",
+      "fg": "#8b7cc4",
+      "bg": "#1b1640",
+      "ratio": 4.68,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "focus ring vs page (UI)",
+      "fg": "#ffd36b",
+      "bg": "#1f1840",
+      "ratio": 11.7,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "focus ring vs elev (UI)",
+      "fg": "#ffd36b",
+      "bg": "#2c2354",
+      "ratio": 10.02,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "focus ring vs sunken (UI)",
+      "fg": "#ffd36b",
+      "bg": "#120d2c",
+      "ratio": 13.2,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "accent fill vs elev (pressed segment, UI)",
+      "fg": "#ffd36b",
+      "bg": "#2c2354",
+      "ratio": 10.02,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "tomato vs page (large / decorative only)",
+      "fg": "#e2492f",
+      "bg": "#1f1840",
+      "ratio": 4.14,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "title shadow tomato vs page (decorative)",
+      "fg": "#e2492f",
+      "bg": "#1f1840",
+      "ratio": 4.14,
+      "min": 0,
+      "pass": true
+    },
+    {
+      "name": "rule vs page (decorative)",
+      "fg": "#5a4c92",
+      "bg": "#1f1840",
+      "ratio": 2.28,
+      "min": 0,
+      "pass": true
+    },
+    {
+      "name": "shadow vs page (decorative)",
+      "fg": "#5a4c92",
+      "bg": "#1f1840",
+      "ratio": 2.28,
+      "min": 0,
+      "pass": true
+    },
+    {
+      "name": "paper ticket inside demo (unchanged): ink on paper",
+      "fg": "#2b1b14",
+      "bg": "#fff6e4",
+      "ratio": 15.4,
+      "min": 4.5,
+      "pass": true
+    }
+  ],
+  "current": [
+    {
+      "name": "old text on page",
+      "fg": "#fff6e4",
+      "bg": "#2b1b14",
+      "ratio": 15.4,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "old muted on page",
+      "fg": "#a39282",
+      "bg": "#2b1b14",
+      "ratio": 5.51,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "old muted on elev",
+      "fg": "#a39282",
+      "bg": "#120d2c",
+      "ratio": 6.24,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "old link on page",
+      "fg": "#f6b43c",
+      "bg": "#2b1b14",
+      "ratio": 9.07,
+      "min": 4.5,
+      "pass": true
+    }
+  ],
+  "composites": {
+    "hovBg": "#393060",
+    "hovCream": "#362e60",
+    "hovElev": "#43386f"
+  }
+}
