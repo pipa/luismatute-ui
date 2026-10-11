@@ -2,6 +2,7 @@ export { defineLmUi } from './components/index.ts';
 export type { MotionMode } from './components/motion.ts';
 export {
   applyMotionPreference,
+  bindMotionMedia,
   MOTION_KEY,
   readMotionPreference,
 } from './components/motion.ts';

@@ -4,6 +4,7 @@ import { defineLmChip } from './chip.ts';
 import { defineLmFlightPlan } from './flight-plan.ts';
 import { defineLmGlobe } from './globe.ts';
 import { defineLmMore } from './more.ts';
+import { applyMotionPreference } from './motion.ts';
 import { defineLmMotionToggle } from './motion-toggle.ts';
 import { defineLmPause } from './pause.ts';
 import { defineLmShot } from './shot.ts';
@@ -20,6 +21,7 @@ export { defineLmMore, LmMore } from './more.ts';
 export type { MotionMode } from './motion.ts';
 export {
   applyMotionPreference,
+  bindMotionMedia,
   MOTION_KEY,
   readMotionPreference,
   writeMotionPreference,
@@ -38,6 +40,5 @@ export function defineLmUi(): void {
   defineLmAvatar();
   defineLmGlobe();
   defineLmFlightPlan();
+  if (typeof document !== 'undefined') applyMotionPreference();
 }
-
-defineLmUi();

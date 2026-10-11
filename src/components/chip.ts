@@ -1,3 +1,5 @@
+import { applyMotionPreference } from './motion.ts';
+
 const BADGE = 'Featured';
 
 export class LmChip extends HTMLElement {
@@ -27,6 +29,7 @@ export class LmChip extends HTMLElement {
 }
 
 export function defineLmChip(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-chip')) customElements.define('lm-chip', LmChip);
 }
 

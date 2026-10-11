@@ -1,5 +1,9 @@
 import { avatar as avatarMarkup } from '../illustrations/svg/avatar.ts';
-import { motionReduced } from './motion.ts';
+import {
+  applyMotionPreference,
+  bindMotionMedia,
+  motionReduced,
+} from './motion.ts';
 
 const POSES = new Set([
   'wow',
@@ -50,21 +54,35 @@ export class LmAvatar extends HTMLElement {
   private onPause = (): void => this.sync();
 
   static get observedAttributes(): string[] {
-    return ['pose', 'note'];
+    return ['pose', 'note', 'motion'];
   }
 
   connectedCallback(): void {
     if (!this.svg) {
       const prefix = `a${++avatarSeq}`;
-      const wrap = document.createElement('div');
-      wrap.innerHTML = avatarMarkup.replaceAll('__id__', prefix);
-      const svg = wrap.querySelector('svg');
-      if (!svg) return;
+      const existing = this.querySelector('svg');
+      let svg = existing;
+      if (!svg) {
+        const wrap = document.createElement('div');
+        wrap.innerHTML = avatarMarkup.replaceAll('__id__', prefix);
+        svg = wrap.querySelector('svg');
+        if (!svg) return;
+        this.append(svg);
+      } else if (svg.outerHTML.includes('__id__')) {
+        const html = svg.outerHTML.replaceAll('__id__', prefix);
+        const wrap = document.createElement('div');
+        wrap.innerHTML = html;
+        const next = wrap.querySelector('svg');
+        if (next) {
+          svg.replaceWith(next);
+          svg = next;
+        }
+      }
       svg.setAttribute('role', 'img');
       const label = this.getAttribute('label') ?? 'Luis at the window';
       svg.setAttribute('aria-label', label);
+      if (!svg.classList.contains('lm-art')) svg.classList.add('lm-art');
       this.svg = svg;
-      this.append(svg);
       const q = (sel: string) => svg.querySelector(sel) as SVGGElement;
       this.parts = {
         head: q('.lu-head'),
@@ -77,11 +95,14 @@ export class LmAvatar extends HTMLElement {
         torso: q('.lu-torso'),
         seat: q('.lu-seat'),
       };
-      this.parts.head.style.transformOrigin = '100px 172px';
-      this.parts.torso.style.transformOrigin = '100px 240px';
-      document.documentElement.addEventListener('lm-motion', this.onMotion);
-      document.documentElement.addEventListener('lm-pause', this.onPause);
+      if (this.parts.head)
+        this.parts.head.style.transformOrigin = '100px 172px';
+      if (this.parts.torso)
+        this.parts.torso.style.transformOrigin = '100px 240px';
     }
+    document.documentElement.addEventListener('lm-motion', this.onMotion);
+    document.documentElement.addEventListener('lm-pause', this.onPause);
+    bindMotionMedia();
     this.applyPose();
     this.sync();
   }
@@ -122,11 +143,23 @@ export class LmAvatar extends HTMLElement {
     }
   }
 
+  /**
+   * Idle stops for the OS reduced-motion setting, the pause control, explicit
+   * `data-motion="reduce"`, `static`, or `motion="off"|"reduce"`.
+   * `motion="idle"` (the default when the attribute is omitted) keeps running
+   * in Info (`data-motion="calm"`).
+   */
   private frozen(): boolean {
+    const choice = this.getAttribute('motion');
+    if (
+      this.hasAttribute('static') ||
+      choice === 'off' ||
+      choice === 'reduce'
+    ) {
+      return true;
+    }
     return (
-      motionReduced() ||
-      document.documentElement.classList.contains('paused') ||
-      this.hasAttribute('static')
+      motionReduced() || document.documentElement.classList.contains('paused')
     );
   }
 
@@ -234,6 +267,7 @@ export class LmAvatar extends HTMLElement {
 }
 
 export function defineLmAvatar(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-avatar'))
     customElements.define('lm-avatar', LmAvatar);
 }

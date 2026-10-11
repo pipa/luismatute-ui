@@ -111,6 +111,11 @@ body {
   box-shadow: var(--lm-shadow-card);
 }
 
+.motion-box.sway {
+  --a: -6deg;
+  --b: 6deg;
+}
+
 .art-grid figure {
   width: 160px;
   margin: 0;

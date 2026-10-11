@@ -3,13 +3,15 @@ export declare class LmGlobe extends HTMLElement {
     private overlay;
     private closeBtn;
     private stage;
-    private raf;
+    private stageSvg;
     connectedCallback(): void;
     disconnectedCallback(): void;
     private route;
-    private paint;
+    private buildStage;
+    private drawRoute;
     open(): void;
     close(): void;
+    private syncClosed;
     private trap;
 }
 export declare function defineLmGlobe(): void;

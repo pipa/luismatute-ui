@@ -119,9 +119,14 @@ export function renderTokensCss(): string {
   css += decl('skin-hair', skin.hair);
   css += decl('skin-fade', skin.fade);
   css += decl('skin-beard', skin.beard);
-  css += decl('skin-amber', skin.amber);
+  css += decl('avatar-amber', skin.amber);
+  css += decl('skin-amber', 'var(--lm-avatar-amber)');
   css += decl('skin-tort', skin.tort);
   css += decl('skin-lip', skin.lip);
+  css += decl('beard-line', skin.beardLine);
+  css += decl('skin-highlight', skin.highlight);
+  css += decl('lens-tint', skin.lensTint);
+  css += decl('lens-tint-opacity', skin.lensTintOpacity);
   css += decl('rule', alpha.rule);
   css += decl('rule-route', alpha.ruleRoute);
   css += decl('hover', alpha.hover);

@@ -69,9 +69,17 @@ var skin = {
   hair: "#231812",
   fade: "#957a64",
   beard: "#2a1c15",
+  /** Pilot glasses. Canonical custom property is --lm-avatar-amber. */
   amber: "#b0662f",
   tort: "#5a2f18",
-  lip: "#7a2e22"
+  lip: "#7a2e22",
+  /** Beard outline. Signed-off #3f2a20. */
+  beardLine: "#3f2a20",
+  /** Nostril highlight. Signed-off #e1ad84. */
+  highlight: "#e1ad84",
+  /** Beach lens tint. */
+  lensTint: "#3a2a22",
+  lensTintOpacity: "0.82"
 };
 var sky = {
   hero: [
@@ -369,12 +377,20 @@ var duration = {
   noteDelay: "0.5s"
 };
 var breakpoint = {
-  /** max-width query in the page. */
+  /**
+   * Motion-toggle long/short labels swap here (max-width: 639px / min-width: 640px).
+   * Card, pass, chip, route and stage-title portrait sizes do not: those follow deskMin.
+   */
   portMax: "639px",
-  /** min-width query in the page. */
+  /** min-width query for the motion-toggle labels. */
   sm: "640px",
-  /** Layout treats the viewport as a desk from this width, and only when width/height ≥ 1.15. */
+  /**
+   * Desk type and card padding apply only when the viewport is at least this wide
+   * AND width / height is at least deskAspect (1.15). Otherwise the portrait sizes apply.
+   * CSS: `@media (max-width: 559.98px), (max-aspect-ratio: 23/20)` where 23/20 = 1.15.
+   */
   deskMin: "560px",
+  /** width / height. 23/20 in the portrait media query. */
   deskAspect: "1.15"
 };
 var alpha = {

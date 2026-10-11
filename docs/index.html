@@ -18,7 +18,7 @@
       <lm-pause></lm-pause>
     </header>
     <main class="docs" id="main">
-      <p class="lm-kicker">Design system · v0.1.0</p>
+      <p class="lm-kicker">Design system · v0.1.2</p>
       <h1>Wheels up</h1>
       <p>Tokens, components and illustrations extracted from the approved takeoff page. <a class="nav" href="./demo.html">Sandals stop demo</a></p>
 
@@ -34,8 +34,8 @@
 
       <h2>Motion</h2>
       <div class="motion-row">
-        <div class="motion-box sway" style="--a: -6deg; --b: 6deg"></div>
-        <div class="motion-box spin"></div>
+        <div class="motion-box sway lm-art"></div>
+        <div class="motion-box spin lm-art"></div>
         <p id="motion-note"></p>
       </div>
 
@@ -83,14 +83,21 @@
       <div class="art-grid" id="art"></div>
     </main>
     <script type="module">
+      import { defineLmUi } from './ui/components/index.js';
       import { illustrationNames, inlineIllustration, tokens } from './ui/index.js';
+
+      defineLmUi();
 
       const swatches = document.querySelector('#swatches');
       for (const [name, value] of Object.entries(tokens.color)) {
         if (typeof value !== 'string' || !value.startsWith('#')) continue;
         const el = document.createElement('div');
         el.className = 'swatch';
-        el.innerHTML = `<i style="background:${value}"></i><span>${name}<br>${value}</span>`;
+        const chip = document.createElement('i');
+        chip.style.background = value;
+        const label = document.createElement('span');
+        label.textContent = `${name} ${value}`;
+        el.append(chip, label);
         swatches.append(el);
       }
 
@@ -101,7 +108,14 @@
         btn.className = 'theme-card';
         btn.dataset.theme = name;
         const sky = theme.sky.map((hex) => `${hex} ${100 / theme.sky.length}%`).join(', ');
-        btn.innerHTML = `<i class="sky" style="display:block;height:72px;background:linear-gradient(${sky})"></i><span>${name}<br>${theme.label}</span>`;
+        const band = document.createElement('i');
+        band.className = 'sky';
+        band.style.display = 'block';
+        band.style.height = '72px';
+        band.style.background = `linear-gradient(${sky})`;
+        const label = document.createElement('span');
+        label.textContent = `${name} ${theme.label}`;
+        btn.append(band, label);
         btn.addEventListener('click', () => {
           document.documentElement.dataset.theme = name;
           for (const card of themes.querySelectorAll('.theme-card')) card.classList.toggle('on', card === btn);

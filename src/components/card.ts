@@ -1,3 +1,5 @@
+import { applyMotionPreference } from './motion.ts';
+
 export class LmCard extends HTMLElement {
   static get observedAttributes(): string[] {
     return ['variant'];
@@ -9,6 +11,7 @@ export class LmCard extends HTMLElement {
 }
 
 export function defineLmCard(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-card')) customElements.define('lm-card', LmCard);
 }
 

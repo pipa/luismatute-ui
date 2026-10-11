@@ -1,3 +1,5 @@
+import { applyMotionPreference } from './motion.ts';
+
 let moreSeq = 0;
 
 export class LmMore extends HTMLElement {
@@ -19,9 +21,16 @@ export class LmMore extends HTMLElement {
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-controls', id);
     button.addEventListener('click', () => this.toggle());
+    const hit = document.createElement('span');
+    hit.className = 'lm-hit';
+    hit.setAttribute('aria-hidden', 'true');
+    hit.addEventListener('click', () => this.toggle());
+    const ctrl = document.createElement('span');
+    ctrl.className = 'lm-more-ctrl';
+    ctrl.append(hit, button);
     this.button = button;
     this.body = body;
-    this.append(button, body);
+    this.append(ctrl, body);
   }
 
   toggle(force?: boolean): void {
@@ -40,6 +49,7 @@ export class LmMore extends HTMLElement {
 }
 
 export function defineLmMore(): void {
+  applyMotionPreference();
   if (!customElements.get('lm-more')) customElements.define('lm-more', LmMore);
 }
 

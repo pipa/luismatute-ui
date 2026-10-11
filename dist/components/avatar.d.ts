@@ -22,6 +22,12 @@ export declare class LmAvatar extends HTMLElement {
     attributeChangedCallback(): void;
     private poseName;
     private applyPose;
+    /**
+     * Idle stops for the OS reduced-motion setting, the pause control, explicit
+     * `data-motion="reduce"`, `static`, or `motion="off"|"reduce"`.
+     * `motion="idle"` (the default when the attribute is omitted) keeps running
+     * in Info (`data-motion="calm"`).
+     */
     private frozen;
     private sync;
     private stop;
