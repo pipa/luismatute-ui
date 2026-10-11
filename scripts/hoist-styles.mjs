@@ -10,7 +10,9 @@ export function hoistInlineStyles(svg) {
       if (!style) return full;
       const value = style[1].trim();
       let rest = attrs.replace(style[0], '');
-      if (!value) return `<${tag}${rest}>`;
+      const selfClosing = /\/\s*$/.test(rest);
+      rest = rest.replace(/\/\s*$/, '');
+      if (!value) return `<${tag}${rest}${selfClosing ? ' /' : ''}>`;
       const id = createHash('sha1').update(value).digest('hex').slice(0, 6);
       const cls = `lm-ix-${id}`;
       rules.set(cls, value);
@@ -23,7 +25,10 @@ export function hoistInlineStyles(svg) {
       } else {
         rest += ` class="${cls}"`;
       }
-      return `<${tag}${rest}>`;
+      // Keep the space before `>` / `/>` that the v0.1.2 files were
+      // written with, so a later regen stays byte-identical.
+      if (!rest.endsWith(' ')) rest += ' ';
+      return `<${tag}${rest}${selfClosing ? '/' : ''}>`;
     },
   );
   return { svg: next, rules };

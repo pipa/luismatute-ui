@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Avatar poses</title>
+    <link rel="stylesheet" href="../ui/tokens.css" />
+    <link rel="stylesheet" href="../ui/fonts.css" />
+    <link rel="stylesheet" href="../ui/base.css" />
+    <style>
+      body {
+        margin: 16px;
+        background: var(--lm-paper);
+      }
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      figure {
+        margin: 0;
+      }
+      figcaption {
+        margin-top: 8px;
+        font: 600 12px/1.2 ui-sans-serif, system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid" id="poses"></div>
+    <script type="module">
+      import { defineLmAvatar } from '../ui/components/avatar.js';
+
+      defineLmAvatar();
+      const poses = ['', 'wow', 'wave', 'read', 'beach', 'grad', 'sleep', 'wink', 'eek'];
+      const root = document.getElementById('poses');
+      for (const pose of poses) {
+        const figure = document.createElement('figure');
+        const avatar = document.createElement('lm-avatar');
+        avatar.setAttribute('static', '');
+        avatar.setAttribute('motion', 'off');
+        avatar.setAttribute('label', pose ? `Luis ${pose}` : 'Luis idle');
+        if (pose) avatar.setAttribute('pose', pose);
+        const cap = document.createElement('figcaption');
+        cap.textContent = pose || 'idle';
+        figure.append(avatar, cap);
+        root.append(figure);
+      }
+    </script>
+  </body>
+</html>
