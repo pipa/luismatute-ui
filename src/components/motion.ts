@@ -38,9 +38,51 @@ export function applyMotionPreference(mode?: MotionMode): MotionMode {
   root.dispatchEvent(
     new CustomEvent('lm-motion', { detail: { motion: next } }),
   );
+  bindMotionMedia();
   return next;
 }
 
+function explicitMotionChoice(
+  search = globalThis.location?.search ?? '',
+): boolean {
+  const qs = new URLSearchParams(search).get('motion');
+  if (qs === 'reduce' || qs === 'on') return true;
+  try {
+    const stored = globalThis.localStorage?.getItem(MOTION_KEY) ?? null;
+    return stored === 'reduce' || stored === 'full';
+  } catch {
+    return false;
+  }
+}
+
+let motionMediaBound = false;
+
+/** Follow later OS changes when the page has not stored its own choice. */
+export function bindMotionMedia(): void {
+  if (motionMediaBound) return;
+  const mq = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)');
+  if (!mq?.addEventListener) return;
+  motionMediaBound = true;
+  mq.addEventListener('change', () => {
+    if (explicitMotionChoice()) return;
+    const root = document.documentElement;
+    if (root.dataset.motion === 'reduce' || root.dataset.motion === 'full') {
+      applyMotionPreference();
+      return;
+    }
+    root.dispatchEvent(
+      new CustomEvent('lm-motion', {
+        detail: { motion: mq.matches ? 'reduce' : 'full' },
+      }),
+    );
+  });
+}
+
 export function motionReduced(): boolean {
-  return document.documentElement.dataset.motion === 'reduce';
+  const mode = document.documentElement.dataset.motion;
+  if (mode === 'reduce') return true;
+  if (mode === 'full') return false;
+  return (
+    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+  );
 }

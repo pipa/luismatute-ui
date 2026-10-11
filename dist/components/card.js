@@ -11,6 +11,9 @@ function defineLmCard() {
   if (!customElements.get("lm-card")) customElements.define("lm-card", LmCard);
 }
 
+// src/components/entries/card.ts
+defineLmCard();
+
 export { LmCard, defineLmCard };
 //# sourceMappingURL=card.js.map
 //# sourceMappingURL=card.js.map

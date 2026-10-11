@@ -26,6 +26,9 @@ function defineLmChip() {
   if (!customElements.get("lm-chip")) customElements.define("lm-chip", LmChip);
 }
 
+// src/components/entries/chip.ts
+defineLmChip();
+
 export { LmChip, defineLmChip };
 //# sourceMappingURL=chip.js.map
 //# sourceMappingURL=chip.js.map

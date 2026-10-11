@@ -29,7 +29,38 @@ function applyMotionPreference(mode) {
   root.dispatchEvent(
     new CustomEvent("lm-motion", { detail: { motion: next } })
   );
+  bindMotionMedia();
   return next;
+}
+function explicitMotionChoice(search = globalThis.location?.search ?? "") {
+  const qs = new URLSearchParams(search).get("motion");
+  if (qs === "reduce" || qs === "on") return true;
+  try {
+    const stored = globalThis.localStorage?.getItem(MOTION_KEY) ?? null;
+    return stored === "reduce" || stored === "full";
+  } catch {
+    return false;
+  }
+}
+var motionMediaBound = false;
+function bindMotionMedia() {
+  if (motionMediaBound) return;
+  const mq = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)");
+  if (!mq?.addEventListener) return;
+  motionMediaBound = true;
+  mq.addEventListener("change", () => {
+    if (explicitMotionChoice()) return;
+    const root = document.documentElement;
+    if (root.dataset.motion === "reduce" || root.dataset.motion === "full") {
+      applyMotionPreference();
+      return;
+    }
+    root.dispatchEvent(
+      new CustomEvent("lm-motion", {
+        detail: { motion: mq.matches ? "reduce" : "full" }
+      })
+    );
+  });
 }
 
 // src/components/motion-toggle.ts
@@ -42,7 +73,7 @@ var LmMotionToggle = class extends HTMLElement {
       button.type = "button";
       button.innerHTML = '<span class="lm-mt-i" aria-hidden="true"></span><span class="lm-mt-s"><span class="lm-mt-long"></span><span class="lm-mt-short"></span></span>';
       button.addEventListener("click", () => {
-        const next = button.getAttribute("aria-pressed") === "true" ? "full" : "reduce";
+        const next = button.getAttribute("data-pressed") === "true" ? "full" : "reduce";
         writeMotionPreference(next);
         const params = new URLSearchParams(location.search);
         if (params.has("motion")) {
@@ -61,8 +92,9 @@ var LmMotionToggle = class extends HTMLElement {
     const button = this.button;
     if (!button) return;
     const reduced = mode === "reduce";
-    button.setAttribute("aria-pressed", String(reduced));
-    this.setAttribute("aria-pressed", String(reduced));
+    button.setAttribute("data-pressed", String(reduced));
+    button.removeAttribute("aria-pressed");
+    this.removeAttribute("aria-pressed");
     const long = button.querySelector(".lm-mt-long");
     const short = button.querySelector(".lm-mt-short");
     if (long) long.textContent = reduced ? "Full flight" : "Just the info";
@@ -73,6 +105,9 @@ function defineLmMotionToggle() {
   if (!customElements.get("lm-motion-toggle"))
     customElements.define("lm-motion-toggle", LmMotionToggle);
 }
+
+// src/components/entries/motion-toggle.ts
+defineLmMotionToggle();
 
 export { LmMotionToggle, defineLmMotionToggle };
 //# sourceMappingURL=motion-toggle.js.map

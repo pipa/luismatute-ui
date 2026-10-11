@@ -1,15 +1,16 @@
 import { globe as globeMarkup } from '../illustrations/svg/globe.ts';
 import { type GlobeRoute, parseRoute } from './globe-route.ts';
-import { motionReduced } from './motion.ts';
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
 
 let globeSeq = 0;
 
 export class LmGlobe extends HTMLElement {
   private button: HTMLButtonElement | null = null;
-  private overlay: HTMLElement | null = null;
+  private overlay: HTMLDialogElement | null = null;
   private closeBtn: HTMLButtonElement | null = null;
   private stage: HTMLElement | null = null;
-  private raf = 0;
+  private stageSvg: SVGSVGElement | null = null;
 
   connectedCallback(): void {
     if (this.button) return;
@@ -22,10 +23,9 @@ export class LmGlobe extends HTMLElement {
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-controls', id);
     button.innerHTML = globeMarkup.replaceAll('__id__', `${id}-mini`);
-    const overlay = document.createElement('div');
+    const overlay = document.createElement('dialog');
     overlay.className = 'lm-globe-overlay';
     overlay.id = id;
-    overlay.hidden = true;
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-labelledby', titleId);
@@ -45,93 +45,126 @@ export class LmGlobe extends HTMLElement {
     p.textContent = description ?? '';
     const stage = document.createElement('div');
     stage.className = 'lm-globe-stage';
+    stage.id = `${id}-stage`;
     stage.setAttribute('aria-hidden', 'true');
     panel.append(close, h, p, stage);
     overlay.append(panel);
     button.addEventListener('click', () =>
-      overlay.hidden ? this.open() : this.close(),
+      overlay.open ? this.close() : this.open(),
     );
     close.addEventListener('click', () => this.close());
     overlay.addEventListener('click', (event) => {
       if (event.target === overlay) this.close();
     });
+    overlay.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      this.close();
+    });
     overlay.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
+        event.preventDefault();
         event.stopPropagation();
         this.close();
       }
       if (event.key === 'Tab') this.trap(event);
     });
+    overlay.addEventListener('close', () => this.syncClosed());
     this.button = button;
     this.overlay = overlay;
     this.closeBtn = close;
     this.stage = stage;
     this.append(button, overlay);
-    this.paint(motionReduced() ? 1 : 0, false);
+    this.buildStage(id);
   }
 
   disconnectedCallback(): void {
-    if (this.raf) cancelAnimationFrame(this.raf);
+    this.overlay?.close();
   }
 
   private route(): GlobeRoute {
     return parseRoute(this.getAttribute('route'));
   }
 
-  private paint(reveal: number, animate: boolean): void {
+  private buildStage(id: string): void {
     const stage = this.stage;
-    const button = this.button;
-    if (!stage || !button) return;
+    if (!stage || this.stageSvg) return;
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 1000 1000');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    svg.setAttribute('fill', 'none');
+    const holder = document.createElement('div');
+    holder.innerHTML = globeMarkup.replaceAll('__id__', `${id}-map`);
+    const source = holder.querySelector('svg');
+    if (source) {
+      while (source.firstChild) svg.append(source.firstChild);
+    }
+    for (const circle of svg.querySelectorAll('circle')) {
+      if (circle.hasAttribute('stroke') && !circle.hasAttribute('fill'))
+        circle.setAttribute('fill', 'none');
+    }
+    this.drawRoute(svg);
+    stage.append(svg);
+    this.stageSvg = svg;
+  }
+
+  private drawRoute(svg: SVGSVGElement): void {
     const route = this.route();
     const active = route.active ?? route.legs.length - 1;
-    const legs = route.legs
-      .map((d, i) => {
-        const hot = i === active;
-        const offset = animate ? 1 - reveal : 0;
-        return `<path class="lm-leg" data-hot="${hot}" d="${d}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${hot ? offset : 0}" opacity="${hot ? 1 : 0.55}"/>`;
-      })
-      .join('');
-    const pins = route.stops
-      .map(
-        (stop) =>
-          `<g><circle cx="${stop.x}" cy="${stop.y}" r="9" fill="var(--lm-marigold)" stroke="var(--lm-ink)" stroke-width="3.5"/><circle cx="${stop.x}" cy="${stop.y}" r="3" fill="var(--lm-ink)"/></g>`,
-      )
-      .join('');
-    const svg = `<svg viewBox="0 0 1000 1000" width="100%" height="100%">${globeMarkup
-      .replaceAll('__id__', 'stage')
-      .replace(/^<svg[^>]*>/, '')
-      .replace(/<\/svg>$/, '')}${legs}${pins}</svg>`;
-    stage.innerHTML = svg;
-    if (!button.querySelector('svg'))
-      button.innerHTML = globeMarkup.replaceAll('__id__', 'mini');
+    for (const [i, d] of route.legs.entries()) {
+      const path = document.createElementNS(SVG_NS, 'path');
+      path.setAttribute('class', 'lm-leg');
+      path.setAttribute('data-hot', i === active ? 'true' : 'false');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', 'none');
+      if (i !== active) path.setAttribute('opacity', '0.55');
+      svg.append(path);
+    }
+    for (const stop of route.stops) {
+      if (!Number.isFinite(stop.x) || !Number.isFinite(stop.y)) continue;
+      const g = document.createElementNS(SVG_NS, 'g');
+      g.setAttribute('class', 'lm-pin');
+      const outer = document.createElementNS(SVG_NS, 'circle');
+      outer.setAttribute('cx', String(stop.x));
+      outer.setAttribute('cy', String(stop.y));
+      outer.setAttribute('r', '9');
+      outer.setAttribute('fill', 'var(--lm-marigold)');
+      outer.setAttribute('stroke', 'var(--lm-ink)');
+      outer.setAttribute('stroke-width', '3.5');
+      const inner = document.createElementNS(SVG_NS, 'circle');
+      inner.setAttribute('cx', String(stop.x));
+      inner.setAttribute('cy', String(stop.y));
+      inner.setAttribute('r', '3');
+      inner.setAttribute('fill', 'var(--lm-ink)');
+      g.append(outer, inner);
+      svg.append(g);
+    }
   }
 
   open(): void {
     const overlay = this.overlay;
     const button = this.button;
-    if (!overlay || !button || !overlay.hidden) return;
-    overlay.hidden = false;
+    if (!overlay || !button || overlay.open) return;
+    overlay.showModal();
     button.setAttribute('aria-expanded', 'true');
+    this.classList.add('is-open');
     this.closeBtn?.focus();
-    if (motionReduced()) {
-      this.paint(1, false);
-      return;
-    }
-    const t0 = performance.now();
-    const run = (now: number): void => {
-      const reveal = Math.min(1, (now - t0) / 2200);
-      this.paint(reveal, true);
-      if (reveal < 1) this.raf = requestAnimationFrame(run);
-    };
-    this.raf = requestAnimationFrame(run);
   }
 
   close(): void {
-    if (!this.overlay || !this.button || this.overlay.hidden) return;
-    this.overlay.hidden = true;
-    this.button.setAttribute('aria-expanded', 'false');
-    if (this.raf) cancelAnimationFrame(this.raf);
-    this.button.focus();
+    const overlay = this.overlay;
+    if (!overlay?.open) return;
+    overlay.close();
+  }
+
+  private syncClosed(): void {
+    this.classList.remove('is-open');
+    this.button?.setAttribute('aria-expanded', 'false');
+    if (
+      document.activeElement &&
+      this.overlay?.contains(document.activeElement)
+    )
+      this.button?.focus();
   }
 
   private trap(event: KeyboardEvent): void {

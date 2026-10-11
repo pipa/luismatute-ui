@@ -139,10 +139,8 @@
 }
 
 .stop-globe {
-  position: fixed;
-  z-index: var(--lm-z-globe);
-  top: var(--lm-space-12);
-  right: var(--lm-space-12);
+  position: relative;
+  z-index: auto;
 }
 
 .stop lm-avatar {

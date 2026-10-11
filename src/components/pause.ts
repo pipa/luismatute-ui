@@ -11,7 +11,7 @@ export class LmPause extends HTMLElement {
     button.addEventListener('click', () => {
       const on = button.getAttribute('aria-pressed') !== 'true';
       button.setAttribute('aria-pressed', String(on));
-      this.setAttribute('aria-pressed', String(on));
+      this.removeAttribute('aria-pressed');
       document.documentElement.classList.toggle('paused', on);
       document.documentElement.dataset.paused = on ? 'true' : 'false';
       document.documentElement.dispatchEvent(

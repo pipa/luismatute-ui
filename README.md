@@ -1,18 +1,20 @@
 # @luismatute/ui
 
-Design system for Luis Matute’s sites, extracted from the approved “Wheels up” page (`concept-c-takeoff.html` at `concept-c-v2`). Version 0.1.0.
+Design system for Luis Matute’s sites, extracted from the approved “Wheels up” page (`concept-c-takeoff.html` at `concept-c-v2`). Version 0.1.2.
 
 Code is MIT. The self-hosted fonts stay under the SIL Open Font License; see `dist/fonts/OFL-*.txt`.
 
 `dist/` is committed so a git install does not need a build. There is no `prepare` script: pnpm git installs skip dev dependencies, so a prepare build would fail.
 
 ```bash
-pnpm add github:pipa/luismatute-ui#v0.1.0
+pnpm add github:pipa/luismatute-ui#v0.1.2
 ```
 
 ## Use in Astro
 
-Import the styles once in the layout. Register the elements in a client script. No runtime dependencies.
+Import the styles once in the layout. Register elements from a client script with an explicit `defineLmX()` call. Astro and other bundlers drop a bare side-effect import, so `import '@luismatute/ui/components/card'` is not reliable even though that file does call `defineLmCard()` and `package.json` lists `./dist/components/*.js` in `sideEffects`.
+
+`import { tokens } from '@luismatute/ui'` does not register any element. Call `defineLmUi()` when you want the whole set.
 
 ```astro
 ---
@@ -24,33 +26,50 @@ import '@luismatute/ui/base.css';
   <body>
     <lm-card variant="stop"><h2>Front-end developer, Sandals Resorts</h2></lm-card>
     <script>
-      import '@luismatute/ui/components';
+      import { defineLmCard } from '@luismatute/ui/components/card';
+      defineLmCard();
     </script>
   </body>
 </html>
 ```
 
+```astro
+<script>
+  import { defineLmUi } from '@luismatute/ui/components';
+  defineLmUi();
+</script>
+```
+
 ## Use in HTML
 
+The CSS files live under `dist/`. A plain `<link>` does not follow the package `exports` map, so point at `dist/` directly.
+
 ```html
-<link rel="stylesheet" href="./node_modules/@luismatute/ui/tokens.css" />
-<link rel="stylesheet" href="./node_modules/@luismatute/ui/fonts.css" />
-<link rel="stylesheet" href="./node_modules/@luismatute/ui/base.css" />
+<link rel="stylesheet" href="./node_modules/@luismatute/ui/dist/tokens.css" />
+<link rel="stylesheet" href="./node_modules/@luismatute/ui/dist/fonts.css" />
+<link rel="stylesheet" href="./node_modules/@luismatute/ui/dist/base.css" />
 <script type="module">
-  import '@luismatute/ui/components';
+  import { defineLmUi } from '@luismatute/ui/components';
+  defineLmUi();
 </script>
 <lm-motion-toggle></lm-motion-toggle>
 ```
 
-Import `@luismatute/ui` if you also want the token object and `inlineIllustration`. Per-element entries (`@luismatute/ui/components/card`, and the rest) register that element only.
+Import `@luismatute/ui` if you also want the token object and `inlineIllustration`. Per-element entries (`@luismatute/ui/components/card`, and the rest) register that element when the module is evaluated; still call `defineLmCard()` (and the matching function for each element) so the registration cannot be tree-shaken.
 
 ## Theming
 
 Set `data-theme` on any ancestor. Names are the scene ids from the source file: `hero`, `high`, `aa`, `sandals`, `bsc`, `fluky`, `move`, `booking`. Each theme sets the sky bands, sun, rays, title colour and, where the file has a sea, the sea bands.
 
-Skin and beard follow `--lm-skin`, `--lm-skin-d`, `--lm-skin-blush`, `--lm-skin-hair`, `--lm-skin-fade`, `--lm-skin-beard`, `--lm-skin-amber`, `--lm-skin-tort`, `--lm-skin-lip`.
+Skin and beard follow `--lm-skin`, `--lm-skin-d`, `--lm-skin-blush`, `--lm-skin-hair`, `--lm-skin-fade`, `--lm-skin-beard`, `--lm-avatar-amber` (aliased as `--lm-skin-amber` so older overrides and the pilot’s glasses keep working), `--lm-skin-tort`, `--lm-skin-lip`, `--lm-beard-line`, `--lm-skin-highlight`, `--lm-lens-tint` and `--lm-lens-tint-opacity`.
 
-`lm-motion-toggle` stores `reduce` or `full` under `lm.ui.motion`, sets `data-motion` on `<html>`, and follows `prefers-reduced-motion`. `?motion=reduce` forces the still page. `?motion=on` forces motion.
+`lm-motion-toggle` stores `reduce` or `full` under `lm.ui.motion` and sets `data-motion` on `<html>`. The visible label switches between “Just the info” / “Full flight” (and the short “Info” / “Flight” labels below 640px). The control uses `data-pressed` for styling. `?motion=reduce` forces the still page. `?motion=on` forces motion. With no stored choice and no `?motion=` query, the page follows `prefers-reduced-motion`, including later OS changes. The same media query pauses CSS motion when JavaScript never runs and no toggle has set `data-motion="full"`.
+
+`lm-avatar` and `lm-shot` can render without JavaScript. Put a static `<svg class="lm-art">` inside `<lm-avatar>` (a `<noscript>` wrapper is enough on the demo) and a framed `<a><img>` inside `<lm-shot>`. With JavaScript, the components upgrade that markup.
+
+Illustration motion classes (`.wave`, `.flag`, `.spin`, `.tick`, and the rest) apply only under `:where(.lm-art)`, which `inlineIllustration` adds. The old class names still work on that art. The two-up shot grid accepts `.lm-shots--two` and the previous `.lm-shots.two`.
+
+The globe route opens in a modal `<dialog>`. Put `lm-pause` and `lm-globe` in a normal-flow cluster (the demo uses `.lm-topbar-end`) so the pause control does not cover the mini globe.
 
 Tailwind v4 can load the theme with `@import "@luismatute/ui/theme.css";`.
 
@@ -77,4 +96,6 @@ Consumers install `github:pipa/luismatute-ui#vX.Y.Z`.
 
 ## Develop
 
-Node 22. `pnpm install`, then `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:docs`. The playground is `docs-dist/index.html` and the stop demo is `docs-dist/demo.html`. `pnpm visual` screenshots the demo and https://luismatute.me at 390 and 1280 (Playwright is not part of CI). The docs script is `build:docs` because `pnpm docs` is the package-homepage command.
+Node 22 and pnpm 10.33.4. `pnpm install`, then `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:docs`, `pnpm test:e2e`. The playground is `docs-dist/index.html` and the stop demo is `docs-dist/demo.html`. `pnpm test:e2e` runs the QA specs in Chromium, Firefox and WebKit against `docs-dist`. `pnpm visual` screenshots the demo and https://luismatute.me at 390 and 1280 and stays out of CI. The docs script is `build:docs` because `pnpm docs` is the package-homepage command.
+
+Shipped components and illustration SVGs do not use inline `style` attributes. A few components still set transform origins through the CSSOM (`element.style`), which a strict `style-src-attr` policy allows. The docs pages still load with inline module scripts. `scripts/gen-illustrations.mjs` does not yet emit the hashed `lm-ix-*` motion classes; the files in `src/illustrations/` are the source of truth until that generator is extended.

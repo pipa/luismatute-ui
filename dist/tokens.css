@@ -77,9 +77,14 @@
   --lm-skin-hair: #231812;
   --lm-skin-fade: #957a64;
   --lm-skin-beard: #2a1c15;
-  --lm-skin-amber: #b0662f;
+  --lm-avatar-amber: #b0662f;
+  --lm-skin-amber: var(--lm-avatar-amber);
   --lm-skin-tort: #5a2f18;
   --lm-skin-lip: #7a2e22;
+  --lm-beard-line: #3f2a20;
+  --lm-skin-highlight: #e1ad84;
+  --lm-lens-tint: #3a2a22;
+  --lm-lens-tint-opacity: 0.82;
   --lm-rule: rgba(43, 27, 20, 0.28);
   --lm-rule-route: rgba(43, 27, 20, 0.3);
   --lm-hover: rgba(246, 180, 60, 0.22);

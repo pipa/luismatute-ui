@@ -8,6 +8,7 @@ export class LmFlightPlan extends HTMLElement {
   private built = false;
 
   connectedCallback(): void {
+    if (this.upgradeProperty('stops')) return;
     this.render();
   }
 
@@ -15,14 +16,23 @@ export class LmFlightPlan extends HTMLElement {
     this.render(value);
   }
 
+  private upgradeProperty(prop: 'stops'): boolean {
+    const desc = Object.getOwnPropertyDescriptor(this, prop);
+    if (!desc || !('value' in desc)) return false;
+    const value = desc.value as FlightStop[];
+    delete (this as unknown as Record<string, unknown>)[prop];
+    this.stops = value;
+    return true;
+  }
+
   private stopsFromAttr(): FlightStop[] | null {
     const fromAttr = this.getAttribute('stops');
     if (!fromAttr) return null;
     try {
-      const parsed = JSON.parse(fromAttr) as FlightStop[];
-      return Array.isArray(parsed) ? parsed : [];
+      const parsed = JSON.parse(fromAttr) as unknown;
+      return Array.isArray(parsed) ? (parsed as FlightStop[]) : null;
     } catch {
-      return [];
+      return null;
     }
   }
 

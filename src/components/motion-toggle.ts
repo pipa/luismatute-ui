@@ -16,7 +16,7 @@ export class LmMotionToggle extends HTMLElement {
         '<span class="lm-mt-i" aria-hidden="true"></span><span class="lm-mt-s"><span class="lm-mt-long"></span><span class="lm-mt-short"></span></span>';
       button.addEventListener('click', () => {
         const next: MotionMode =
-          button.getAttribute('aria-pressed') === 'true' ? 'full' : 'reduce';
+          button.getAttribute('data-pressed') === 'true' ? 'full' : 'reduce';
         writeMotionPreference(next);
         const params = new URLSearchParams(location.search);
         if (params.has('motion')) {
@@ -36,8 +36,9 @@ export class LmMotionToggle extends HTMLElement {
     const button = this.button;
     if (!button) return;
     const reduced = mode === 'reduce';
-    button.setAttribute('aria-pressed', String(reduced));
-    this.setAttribute('aria-pressed', String(reduced));
+    button.setAttribute('data-pressed', String(reduced));
+    button.removeAttribute('aria-pressed');
+    this.removeAttribute('aria-pressed');
     const long = button.querySelector('.lm-mt-long');
     const short = button.querySelector('.lm-mt-short');
     if (long) long.textContent = reduced ? 'Full flight' : 'Just the info';

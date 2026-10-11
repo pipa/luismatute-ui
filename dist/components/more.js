@@ -39,6 +39,9 @@ function defineLmMore() {
   if (!customElements.get("lm-more")) customElements.define("lm-more", LmMore);
 }
 
+// src/components/entries/more.ts
+defineLmMore();
+
 export { LmMore, defineLmMore };
 //# sourceMappingURL=more.js.map
 //# sourceMappingURL=more.js.map

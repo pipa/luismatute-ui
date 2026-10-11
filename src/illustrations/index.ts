@@ -71,5 +71,9 @@ export function illustrationNames(): IllustrationName[] {
 export function inlineIllustration(name: IllustrationName, prefix: string = name): string {
   const svg = illustrations[name];
   if (!svg) throw new Error(`Unknown illustration: ${name}`);
-  return svg.replaceAll('__id__', prefix);
+  const marked = svg.replaceAll('__id__', prefix);
+  if (/\bclass="[^"]*\blm-art\b/.test(marked)) return marked;
+  if (/<svg\b[^>]*\bclass="/.test(marked))
+    return marked.replace(/<svg\b([^>]*?)class="([^"]*)"/, '<svg$1class="$2 lm-art"');
+  return marked.replace('<svg', '<svg class="lm-art"');
 }

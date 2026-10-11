@@ -2,19 +2,28 @@
 var LmFlightPlan = class extends HTMLElement {
   built = false;
   connectedCallback() {
+    if (this.upgradeProperty("stops")) return;
     this.render();
   }
   set stops(value) {
     this.render(value);
+  }
+  upgradeProperty(prop) {
+    const desc = Object.getOwnPropertyDescriptor(this, prop);
+    if (!desc || !("value" in desc)) return false;
+    const value = desc.value;
+    delete this[prop];
+    this.stops = value;
+    return true;
   }
   stopsFromAttr() {
     const fromAttr = this.getAttribute("stops");
     if (!fromAttr) return null;
     try {
       const parsed = JSON.parse(fromAttr);
-      return Array.isArray(parsed) ? parsed : [];
+      return Array.isArray(parsed) ? parsed : null;
     } catch {
-      return [];
+      return null;
     }
   }
   stopsFromChildren() {
@@ -59,6 +68,9 @@ function defineLmFlightPlan() {
   if (!customElements.get("lm-flight-plan"))
     customElements.define("lm-flight-plan", LmFlightPlan);
 }
+
+// src/components/entries/flight-plan.ts
+defineLmFlightPlan();
 
 export { LmFlightPlan, defineLmFlightPlan };
 //# sourceMappingURL=flight-plan.js.map

@@ -138,6 +138,7 @@ a {
   right: var(--lm-space-12);
   z-index: var(--lm-z-topbar);
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--lm-space-10);
@@ -146,6 +147,13 @@ a {
 
 .lm-topbar > * {
   pointer-events: auto;
+}
+
+.lm-topbar-end {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--lm-space-10);
+  margin-left: auto;
 }
 
 /* ---------- cards ---------- */
@@ -159,6 +167,7 @@ lm-card {
   border-radius: var(--lm-radius-card);
   box-shadow: var(--lm-shadow-card);
   padding: var(--lm-space-20) var(--lm-space-22) var(--lm-space-18);
+  font-size: var(--lm-font-size-copy);
 }
 
 lm-card[variant="pass"] {
@@ -262,8 +271,7 @@ lm-more button {
   display: inline-flex;
   align-items: center;
   gap: var(--lm-space-8);
-  min-height: var(--lm-target);
-  min-width: var(--lm-target);
+  position: relative;
   margin: 0.45em 0 0;
   padding: var(--lm-space-7) var(--lm-space-14) var(--lm-space-8);
   border: var(--lm-border-line) solid var(--lm-ink);
@@ -280,6 +288,12 @@ lm-more button {
 lm-more button:active {
   transform: translate(2px, 2px);
   box-shadow: var(--lm-shadow-more-press);
+}
+
+lm-more button::before {
+  content: "";
+  position: absolute;
+  inset: -6px -2px;
 }
 
 lm-more button::after {
@@ -351,7 +365,7 @@ lm-motion-toggle button:active {
   box-shadow: var(--lm-shadow-toggle-press);
 }
 
-lm-motion-toggle button[aria-pressed="true"] {
+lm-motion-toggle button[data-pressed="true"] {
   background: var(--lm-paper);
   font-weight: var(--lm-weight-semibold);
 }
@@ -366,7 +380,7 @@ lm-motion-toggle .lm-mt-i {
   box-shadow: var(--lm-shadow-inset);
 }
 
-lm-motion-toggle button[aria-pressed="true"] .lm-mt-i {
+lm-motion-toggle button[data-pressed="true"] .lm-mt-i {
   background: var(--lm-lagoon);
 }
 
@@ -452,9 +466,13 @@ lm-pause button[aria-pressed="true"] .lm-pi {
     clip-path: inset(50%);
     white-space: nowrap;
   }
+}
 
+/* Portrait when width < 560px or width/height < 1.15. Motion-toggle labels stay on 640px. */
+@media (max-width: 559.98px), (max-aspect-ratio: 23 / 20) {
   lm-card {
     padding: 15px var(--lm-space-16) 13px;
+    font-size: var(--lm-font-size-copy-port);
   }
 
   lm-card h2 {
@@ -498,7 +516,8 @@ lm-pause button[aria-pressed="true"] .lm-pi {
   margin: 0.85em 0 0.2em;
 }
 
-.lm-shots.two {
+.lm-shots.two,
+.lm-shots--two {
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
@@ -519,6 +538,7 @@ lm-shot a:focus-visible {
 }
 
 lm-shot .lm-shot-frame {
+  display: block;
   overflow: hidden;
   border: var(--lm-border-line) solid var(--lm-ink);
   border-radius: var(--lm-radius-shot);
@@ -826,11 +846,38 @@ lm-globe .lm-globe-overlay {
   position: fixed;
   inset: 0;
   z-index: var(--lm-z-overlay);
-  display: grid;
-  place-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
   padding: max(var(--lm-space-12), env(safe-area-inset-top)) var(--lm-space-12)
     max(var(--lm-space-12), env(safe-area-inset-bottom));
   background: var(--lm-overlay);
+  color: var(--lm-ink);
+}
+
+lm-globe dialog.lm-globe-overlay:not([open]) {
+  display: none;
+}
+
+lm-globe dialog.lm-globe-overlay[open] {
+  display: grid;
+  place-items: center;
+}
+
+lm-globe dialog.lm-globe-overlay:modal {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+}
+
+lm-globe dialog.lm-globe-overlay::backdrop {
+  background: transparent;
 }
 
 lm-globe .lm-globe-overlay[hidden] {
@@ -850,6 +897,7 @@ lm-globe .lm-globe-panel {
 
 lm-globe .lm-globe-panel h2 {
   margin: 0 0 0.35em;
+  padding-right: calc(var(--lm-target) + var(--lm-space-10));
   font:
     var(--lm-weight-bold) var(--lm-font-size-globe-title) /
     var(--lm-leading-tight) var(--lm-font-text);
@@ -857,6 +905,7 @@ lm-globe .lm-globe-panel h2 {
 
 lm-globe .lm-globe-panel p {
   margin: 0 0 0.75em;
+  padding-right: calc(var(--lm-target) + var(--lm-space-10));
   color: var(--lm-ink-soft);
   font-size: var(--lm-font-size-globe);
 }
@@ -902,108 +951,145 @@ lm-globe .lm-leg {
 lm-globe .lm-leg[data-hot="true"] {
   stroke: var(--lm-tomato);
   stroke-width: 5.5;
+  opacity: 0;
+}
+
+lm-globe.is-open .lm-leg[data-hot="true"] {
+  animation: lm-globe-reveal var(--lm-duration-globe-draw) linear forwards;
+}
+
+@keyframes lm-globe-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ---------- illustration motion ---------- */
 
-.rays {
+:where(.lm-art) .rays,
+:where(.lm-art.rays) {
   width: 100%;
   height: 100%;
   transform-origin: center;
   animation: lm-spin var(--lm-duration-rays) var(--lm-ease-linear) infinite;
 }
 
-.puffs {
+:where(.lm-art) .puffs,
+:where(.lm-art.puffs) {
   opacity: 0;
   transition: opacity var(--lm-duration-puff-fade) var(--lm-ease-standard);
 }
 
-.fly .puffs,
-.plane.fly .puffs {
+:where(.lm-art) .fly .puffs,
+:where(.lm-art.fly) .puffs,
+:where(.lm-art) .plane.fly .puffs,
+:where(.lm-art.plane.fly) .puffs {
   opacity: 1;
 }
 
-.fly .gM,
-.plane.fly .gM {
+:where(.lm-art) .fly .gM,
+:where(.lm-art.fly) .gM,
+:where(.lm-art) .plane.fly .gM,
+:where(.lm-art.plane.fly) .gM {
   transform: rotate(-96deg) scale(0.75);
 }
 
-.fly .gN,
-.plane.fly .gN {
+:where(.lm-art) .fly .gN,
+:where(.lm-art.fly) .gN,
+:where(.lm-art) .plane.fly .gN,
+:where(.lm-art.plane.fly) .gN {
   transform: rotate(100deg) scale(0.75);
 }
 
-.fly > svg,
-.plane.fly .pb {
+:where(.lm-art) .fly > svg,
+:where(.lm-art.fly) > svg,
+:where(.lm-art) .plane.fly .pb,
+:where(.lm-art.plane.fly) .pb {
   transform-origin: 50% 60%;
   animation: lm-bob var(--lm-duration-bob) var(--lm-ease-in-out) infinite
     alternate;
 }
 
-.sp {
+:where(.lm-art) .sp,
+:where(.lm-art.sp) {
   transform-box: fill-box;
   transform-origin: center;
   animation: lm-spin var(--lm-duration-prop) var(--lm-ease-linear) infinite;
 }
 
-.spin {
+:where(.lm-art) .spin,
+:where(.lm-art.spin) {
   transform-box: fill-box;
   transform-origin: center;
   animation: lm-spin var(--t, var(--lm-duration-spin)) var(--lm-ease-linear)
     infinite;
 }
 
-.spin.rev {
+:where(.lm-art) .spin.rev,
+:where(.lm-art.spin.rev) {
   animation-direction: reverse;
 }
 
-.bcn {
+:where(.lm-art) .bcn,
+:where(.lm-art.bcn) {
   animation: lm-bcn var(--lm-duration-beacon) steps(1, end) infinite;
 }
 
-.stb {
+:where(.lm-art) .stb,
+:where(.lm-art.stb) {
   animation: lm-bcn var(--lm-duration-beacon) 0.5s steps(1, end) infinite;
 }
 
-.puff {
+:where(.lm-art) .puff,
+:where(.lm-art.puff) {
   transform-box: fill-box;
   transform-origin: center;
   animation: lm-puff var(--lm-duration-puff) var(--lm-ease-linear) infinite;
 }
 
-.sway {
+:where(.lm-art) .sway,
+:where(.lm-art.sway) {
   animation: lm-sway var(--t, var(--lm-duration-sway)) var(--lm-ease-in-out)
     infinite alternate;
 }
 
-.tw {
+:where(.lm-art) .tw,
+:where(.lm-art.tw) {
   animation: lm-tw var(--t, var(--lm-duration-twinkle)) var(--lm-ease-in-out)
     infinite alternate;
 }
 
-.drift {
+:where(.lm-art) .drift,
+:where(.lm-art.drift) {
   animation: lm-drift var(--t, var(--lm-duration-drift)) var(--lm-ease-in-out)
     infinite alternate;
 }
 
-.wave {
+:where(.lm-art) .wave,
+:where(.lm-art.wave) {
   animation: lm-wave var(--t, var(--lm-duration-wave)) var(--lm-ease-in-out)
     infinite alternate;
 }
 
-.bob {
+:where(.lm-art) .bob,
+:where(.lm-art.bob) {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: lm-bobs var(--t, var(--lm-duration-bob)) var(--lm-ease-in-out)
     infinite alternate;
 }
 
-.belt {
+:where(.lm-art) .belt,
+:where(.lm-art.belt) {
   animation: lm-belt var(--t, var(--lm-duration-belt)) var(--lm-ease-linear)
     infinite;
 }
 
-.strip {
+:where(.lm-art) .strip,
+:where(.lm-art.strip) {
   transform-box: fill-box;
   transform-origin: 50% 0;
   animation: lm-sway var(--lm-duration-strip) var(--lm-ease-in-out) infinite
@@ -1012,38 +1098,45 @@ lm-globe .lm-leg[data-hot="true"] {
   --b: 7deg;
 }
 
-.scan {
+:where(.lm-art) .scan,
+:where(.lm-art.scan) {
   animation: lm-scan var(--lm-duration-scan) var(--lm-ease-in-out) infinite
     alternate;
 }
 
-.stamper {
+:where(.lm-art) .stamper,
+:where(.lm-art.stamper) {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: lm-stamper var(--lm-duration-stamper) infinite;
 }
 
-.inkmark {
+:where(.lm-art) .inkmark,
+:where(.lm-art.inkmark) {
   animation: lm-inkmark var(--lm-duration-stamper) infinite;
 }
 
-.tick {
+:where(.lm-art) .tick,
+:where(.lm-art.tick) {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: lm-tick var(--lm-duration-tick) var(--d, 0s) infinite;
 }
 
-.mag {
+:where(.lm-art) .mag,
+:where(.lm-art.mag) {
   animation: lm-mag var(--lm-duration-mag) var(--lm-ease-in-out) infinite
     alternate;
 }
 
-.crab {
+:where(.lm-art) .crab,
+:where(.lm-art.crab) {
   animation: lm-crab var(--lm-duration-crab) var(--lm-ease-in-out) infinite
     alternate;
 }
 
-.claw {
+:where(.lm-art) .claw,
+:where(.lm-art.claw) {
   transform-box: fill-box;
   transform-origin: 30% 80%;
   animation: lm-sway var(--lm-duration-flap) var(--lm-ease-in-out) infinite
@@ -1052,32 +1145,37 @@ lm-globe .lm-leg[data-hot="true"] {
   --b: 10deg;
 }
 
-.toss {
+:where(.lm-art) .toss,
+:where(.lm-art.toss) {
   transform-box: fill-box;
   transform-origin: center;
   animation: lm-toss var(--t, var(--lm-duration-toss)) var(--d, 0s) infinite;
 }
 
-.smoke {
+:where(.lm-art) .smoke,
+:where(.lm-art.smoke) {
   transform-box: fill-box;
   transform-origin: center;
   animation: lm-smoke var(--t, var(--lm-duration-smoke)) var(--d, 0s)
     var(--lm-ease-linear) infinite;
 }
 
-.flag {
+:where(.lm-art) .flag,
+:where(.lm-art.flag) {
   transform-box: fill-box;
   transform-origin: 0 50%;
   animation: lm-flag var(--lm-duration-flag) var(--lm-ease-in-out) infinite
     alternate;
 }
 
-.shim {
+:where(.lm-art) .shim,
+:where(.lm-art.shim) {
   animation: lm-shim var(--t, var(--lm-duration-shim)) var(--lm-ease-in-out)
     infinite alternate;
 }
 
-.beam {
+:where(.lm-art) .beam,
+:where(.lm-art.beam) {
   transform-box: view-box;
   animation: lm-sway var(--lm-duration-beam) var(--lm-ease-in-out) infinite
     alternate;
@@ -1085,28 +1183,262 @@ lm-globe .lm-leg[data-hot="true"] {
   --b: 26deg;
 }
 
-.flap {
+:where(.lm-art) .flap,
+:where(.lm-art.flap) {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: lm-flap var(--lm-duration-flap) var(--lm-ease-in-out) infinite
     alternate;
 }
 
-.shoot {
+:where(.lm-art) .shoot,
+:where(.lm-art.shoot) {
   opacity: 0;
   animation: lm-shoot var(--lm-duration-shoot) var(--lm-ease-linear) infinite;
 }
 
-.zz text {
+:where(.lm-art) .zz text,
+:where(.lm-art.zz) text {
   animation: lm-zz var(--lm-duration-twinkle) var(--lm-ease-linear) infinite;
 }
 
-.zz text:nth-child(2) {
+:where(.lm-art) .zz text:nth-child(2),
+:where(.lm-art.zz) text:nth-child(2) {
   animation-delay: 1s;
 }
 
-.zz text:nth-child(3) {
+:where(.lm-art) .zz text:nth-child(3),
+:where(.lm-art.zz) text:nth-child(3) {
   animation-delay: 2s;
+}
+
+/* Per-instance illustration values. Classes replace style attributes so style-src-attr can stay strict. */
+:where(.lm-art) .lm-ix-0816da {
+  --t: 3s;
+  --d: -2.4s;
+  --dx: 6px;
+  --r: 170deg;
+}
+:where(.lm-art) .lm-ix-0e60ce {
+  animation-delay: -1.05s;
+}
+:where(.lm-art) .lm-ix-1068fe {
+  --t: 3.6s;
+  --d: -2.85s;
+  --dx: 44px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-10bc13 {
+  transform-origin: 0 -60px;
+  --t: 5s;
+  --a: -2deg;
+  --b: 2deg;
+}
+:where(.lm-art) .lm-ix-150238 {
+  transform-origin: 548px 160px;
+}
+:where(.lm-art) .lm-ix-1860b1 {
+  --t: 3.2s;
+  --d: -1.6s;
+  --dx: -8px;
+  --r: -210deg;
+}
+:where(.lm-art) .lm-ix-18a58b {
+  --t: 2.8s;
+  --d: -0.4s;
+  --dx: 10px;
+  --r: 190deg;
+}
+:where(.lm-art) .lm-ix-2101d8 {
+  --t: 3.6s;
+  --d: -1.65s;
+  --dx: 44px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-22f9a2 {
+  --t: 3.6s;
+  --d: -1.35s;
+  --dx: 60px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-2887c1 {
+  transform-origin: 258px 162px;
+}
+:where(.lm-art) .lm-ix-33f764 {
+  --t: 14s;
+}
+:where(.lm-art) .lm-ix-42a38d {
+  --t: 3.6s;
+  --d: -2.1s;
+  --dx: 52px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-443b73 {
+  transform-origin: 50px 80px;
+  --t: 4.6s;
+  --a: -2.5deg;
+  --b: 3deg;
+}
+:where(.lm-art) .lm-ix-44755a {
+  --d: 0.5s;
+}
+:where(.lm-art) .lm-ix-4baa2c {
+  --t: 3.6s;
+  --d: -2.4s;
+  --dx: 36px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-5281ba {
+  animation-delay: 0s;
+}
+:where(.lm-art) .lm-ix-536872 {
+  --t: 3.6s;
+  --d: -1.2s;
+  --dx: 36px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-54cebe {
+  animation-delay: -0.8999999999999999s;
+}
+:where(.lm-art) .lm-ix-561c6a {
+  --t: 1.4s;
+}
+:where(.lm-art) .lm-ix-58f444 {
+  animation-delay: -0.21s;
+}
+:where(.lm-art) .lm-ix-5c970f {
+  --d: 1s;
+}
+:where(.lm-art) .lm-ix-5d8497 {
+  --dx: 440px;
+  --t: 7s;
+}
+:where(.lm-art) .lm-ix-64b719 {
+  animation-delay: -0.63s;
+}
+:where(.lm-art) .lm-ix-71030b {
+  --t: 240s;
+  transform-box: view-box;
+  transform-origin: 0 -192px;
+}
+:where(.lm-art) .lm-ix-7997b4 {
+  --t: 3.6s;
+  --d: -0.9s;
+  --dx: 52px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-7d0f50 {
+  --d: 1.5s;
+}
+:where(.lm-art) .lm-ix-820ece {
+  --t: 3.6s;
+  --d: -2.55s;
+  --dx: 60px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-848d46 {
+  transform-origin: 2px -94px;
+  --t: 1.2s;
+  --a: -6deg;
+  --b: 5deg;
+}
+:where(.lm-art) .lm-ix-8a5518 {
+  animation-delay: -0.84s;
+}
+:where(.lm-art) .lm-ix-93e2eb {
+  animation-delay: -1.2s;
+}
+:where(.lm-art) .lm-ix-9594eb {
+  --t: 3.4s;
+  --dx: 10px;
+}
+:where(.lm-art) .lm-ix-986d43 {
+  transform-origin: 272px 226px;
+}
+:where(.lm-art) .lm-ix-9c010d {
+  animation-delay: -0.6s;
+}
+:where(.lm-art) .lm-ix-a0b3dc {
+  transform-origin: 386px 194px;
+  --t: 5.3s;
+  --a: -2.5deg;
+  --b: 3deg;
+}
+:where(.lm-art) .lm-ix-b1449f {
+  --t: 3.6s;
+  --d: 0s;
+  --dx: 36px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-bc9b7c {
+  transform-origin: 244px 226px;
+}
+:where(.lm-art) .lm-ix-be98a0 {
+  --t: 3.6s;
+  --d: -3.3s;
+  --dx: 52px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-c43b4e {
+  animation-delay: -0.25s;
+}
+:where(.lm-art) .lm-ix-c588dd {
+  --d: 0s;
+}
+:where(.lm-art) .lm-ix-cfb6c9 {
+  transform-origin: 0 -118px;
+}
+:where(.lm-art) .lm-ix-d9b48d {
+  animation-delay: -0.3s;
+}
+:where(.lm-art) .lm-ix-d9e780 {
+  animation-delay: -0.42s;
+}
+:where(.lm-art) .lm-ix-df4c8d {
+  --t: 9s;
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+:where(.lm-art) .lm-ix-ede0f3 {
+  transform-origin: 548px 228px;
+}
+:where(.lm-art) .lm-ix-ef8cc1 {
+  --t: 1.8s;
+}
+:where(.lm-art) .lm-ix-f37fb9 {
+  --t: 60s;
+  transform-box: view-box;
+  transform-origin: 0 -192px;
+}
+:where(.lm-art) .lm-ix-f399ee {
+  --t: 3.6s;
+  --d: -3.75s;
+  --dx: 60px;
+  --dy: -190px;
+  --s: 1.9;
+}
+:where(.lm-art) .lm-ix-f8d402 {
+  transform-origin: 190px 140px;
+  --t: 4.6s;
+  --a: -2.5deg;
+  --b: 3deg;
+}
+:where(.lm-art) .lm-ix-fa974f {
+  --t: 3.6s;
+  --d: -0.45s;
+  --dx: 44px;
+  --dy: -190px;
+  --s: 1.9;
 }
 
 @keyframes lm-spin {
@@ -1443,7 +1775,38 @@ html.paused *::after {
   animation-play-state: paused !important;
 }
 
-html[data-motion="reduce"] .tick,
-html.paused .tick {
+html[data-motion="reduce"] :where(.lm-art) .tick,
+html[data-motion="reduce"] :where(.lm-art.tick),
+html.paused :where(.lm-art) .tick,
+html.paused :where(.lm-art.tick) {
   stroke-dashoffset: 0;
+}
+
+html[data-motion="reduce"] lm-globe .lm-leg[data-hot="true"],
+html.is-static lm-globe .lm-leg[data-hot="true"] {
+  animation: none !important;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) *,
+  html:not([data-motion="full"]) *::before,
+  html:not([data-motion="full"]) *::after {
+    animation-play-state: paused !important;
+    transition: none !important;
+  }
+
+  html:not([data-motion="full"]) :where(.lm-art) .tick,
+  html:not([data-motion="full"]) :where(.lm-art.tick) {
+    stroke-dashoffset: 0;
+  }
+
+  html:not([data-motion="full"]) lm-globe .lm-leg[data-hot="true"],
+  html:not([data-motion="full"]) lm-avatar .lu.ex-wave .lu-hand {
+    animation: none !important;
+  }
+
+  html:not([data-motion="full"]) lm-globe .lm-leg[data-hot="true"] {
+    opacity: 1;
+  }
 }

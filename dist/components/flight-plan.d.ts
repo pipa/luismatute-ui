@@ -7,6 +7,7 @@ export declare class LmFlightPlan extends HTMLElement {
     private built;
     connectedCallback(): void;
     set stops(value: FlightStop[]);
+    private upgradeProperty;
     private stopsFromAttr;
     private stopsFromChildren;
     private render;

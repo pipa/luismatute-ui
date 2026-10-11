@@ -6,7 +6,9 @@
  *
  * Avatar skin is option B from the likeness study: skin #c89a6b and
  * shadow #a57950 replace the page pair. The plane pilot shares them.
- * The nostril (#e1ad84) and the beach lens tint stay in the drawing.
+ * The nostril and beach lenses are tokens too. Their defaults are the
+ * signed-off paint: nostril #e1ad84 (not the earlier #e2a17a swatch),
+ * beard line #3f2a20, lens tint #3a2a22 at 82%.
  */
 export declare const color: {
     readonly ink: '#2b1b14';
@@ -78,9 +80,17 @@ export declare const skin: {
     readonly hair: '#231812';
     readonly fade: '#957a64';
     readonly beard: '#2a1c15';
+    /** Pilot glasses. Canonical custom property is --lm-avatar-amber. */
     readonly amber: '#b0662f';
     readonly tort: '#5a2f18';
     readonly lip: '#7a2e22';
+    /** Beard outline. Signed-off #3f2a20. */
+    readonly beardLine: '#3f2a20';
+    /** Nostril highlight. Signed-off #e1ad84. */
+    readonly highlight: '#e1ad84';
+    /** Beach lens tint. */
+    readonly lensTint: '#3a2a22';
+    readonly lensTintOpacity: '0.82';
 };
 /** Eight-band skies, top to bottom, from the SKY table. */
 export declare const sky: {
@@ -298,12 +308,20 @@ export declare const duration: {
     readonly noteDelay: '0.5s';
 };
 export declare const breakpoint: {
-    /** max-width query in the page. */
+    /**
+     * Motion-toggle long/short labels swap here (max-width: 639px / min-width: 640px).
+     * Card, pass, chip, route and stage-title portrait sizes do not: those follow deskMin.
+     */
     readonly portMax: '639px';
-    /** min-width query in the page. */
+    /** min-width query for the motion-toggle labels. */
     readonly sm: '640px';
-    /** Layout treats the viewport as a desk from this width, and only when width/height ≥ 1.15. */
+    /**
+     * Desk type and card padding apply only when the viewport is at least this wide
+     * AND width / height is at least deskAspect (1.15). Otherwise the portrait sizes apply.
+     * CSS: `@media (max-width: 559.98px), (max-aspect-ratio: 23/20)` where 23/20 = 1.15.
+     */
     readonly deskMin: '560px';
+    /** width / height. 23/20 in the portrait media query. */
     readonly deskAspect: '1.15';
 };
 export declare const alpha: {
@@ -561,9 +579,17 @@ export declare const tokens: {
         readonly hair: '#231812';
         readonly fade: '#957a64';
         readonly beard: '#2a1c15';
+        /** Pilot glasses. Canonical custom property is --lm-avatar-amber. */
         readonly amber: '#b0662f';
         readonly tort: '#5a2f18';
         readonly lip: '#7a2e22';
+        /** Beard outline. Signed-off #3f2a20. */
+        readonly beardLine: '#3f2a20';
+        /** Nostril highlight. Signed-off #e1ad84. */
+        readonly highlight: '#e1ad84';
+        /** Beach lens tint. */
+        readonly lensTint: '#3a2a22';
+        readonly lensTintOpacity: '0.82';
     };
     readonly sky: {
         readonly hero: readonly ['#f29a3a', '#f4a742', '#f6b34c', '#f8bf5a', '#f9ca6b', '#fbd580', '#fce09a', '#fdebb7'];
@@ -776,12 +802,20 @@ export declare const tokens: {
         readonly noteDelay: '0.5s';
     };
     readonly breakpoint: {
-        /** max-width query in the page. */
+        /**
+         * Motion-toggle long/short labels swap here (max-width: 639px / min-width: 640px).
+         * Card, pass, chip, route and stage-title portrait sizes do not: those follow deskMin.
+         */
         readonly portMax: '639px';
-        /** min-width query in the page. */
+        /** min-width query for the motion-toggle labels. */
         readonly sm: '640px';
-        /** Layout treats the viewport as a desk from this width, and only when width/height ≥ 1.15. */
+        /**
+         * Desk type and card padding apply only when the viewport is at least this wide
+         * AND width / height is at least deskAspect (1.15). Otherwise the portrait sizes apply.
+         * CSS: `@media (max-width: 559.98px), (max-aspect-ratio: 23/20)` where 23/20 = 1.15.
+         */
         readonly deskMin: '560px';
+        /** width / height. 23/20 in the portrait media query. */
         readonly deskAspect: '1.15';
     };
     readonly alpha: {

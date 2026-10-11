@@ -10,7 +10,7 @@ var LmPause = class extends HTMLElement {
     button.addEventListener("click", () => {
       const on = button.getAttribute("aria-pressed") !== "true";
       button.setAttribute("aria-pressed", String(on));
-      this.setAttribute("aria-pressed", String(on));
+      this.removeAttribute("aria-pressed");
       document.documentElement.classList.toggle("paused", on);
       document.documentElement.dataset.paused = on ? "true" : "false";
       document.documentElement.dispatchEvent(
@@ -25,6 +25,9 @@ function defineLmPause() {
   if (!customElements.get("lm-pause"))
     customElements.define("lm-pause", LmPause);
 }
+
+// src/components/entries/pause.ts
+defineLmPause();
 
 export { LmPause, defineLmPause };
 //# sourceMappingURL=pause.js.map
