@@ -36,6 +36,7 @@
             class="docs-search-trigger"
             type="button"
             data-search-open
+            aria-label="Search"
             aria-haspopup="dialog"
             aria-controls="docs-search"
           >
@@ -166,10 +167,12 @@
                   ></span>
                   <span class="docs-demo-name">Live demo</span>
                   <button type="button" data-demo-surface aria-pressed="false">
-                    Paper ground
+                    <span class="docs-demo-long">Paper ground</span>
+                    <span class="docs-demo-short">Paper</span>
                   </button>
                   <button type="button" data-demo-motion aria-pressed="false">
-                    Reduce motion
+                    <span class="docs-demo-long">Reduce motion</span>
+                    <span class="docs-demo-short">Still</span>
                   </button>
                 </div>
                 <div class="docs-demo-stage" data-surface="paper">
@@ -426,7 +429,7 @@
       hidden
     >
       <div class="docs-search-panel">
-        <h2 class="lm-vh" id="docs-search-title">Search the docs</h2>
+        <p class="docs-search-kicker" id="docs-search-title">Search the docs</p>
         <div class="docs-search-bar">
           <input
             class="docs-search-input"

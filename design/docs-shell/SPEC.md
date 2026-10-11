@@ -55,7 +55,8 @@ The brief’s `#111412` is **not** a package token. Do not add it. Dark canvas i
 | Text | `--lm-paper` | `#fff6e4` | 15.40:1 |
 | Muted text | `--lm-wheel` | `#a39282` | 5.51:1 |
 | Links, group labels | `--lm-marigold` | `#f6b43c` | 9.07:1 |
-| Elevations / sunken | `--lm-night` | `#120d2c` | |
+| Elevations | `--lm-night` | `#120d2c` | |
+| Sunken (badge, table head) | `--lm-hair-line` | `#4b3428` | visible on ink |
 | Borders, dashed rails | `--lm-paper` | | 15.40:1 |
 | Focus ring | `--lm-paper` | | |
 | Overlay | `--lm-night` | solid (ink-tinted overlay is invisible on ink) |
@@ -149,7 +150,7 @@ Breakpoints (max-width):
 | ≤1439 | Nav 220, TOC 200, pad 28 |
 | ≤1279 | Pad 24 |
 | ≤1199 | TOC aside hides. Inline “On this page” appears at the **top of the content column**. |
-| ≤1023 | Nav 200, pad 20, title uses `--lm-font-size-pass-port` |
+| ≤1023 | Nav 200, pad 20, title uses `--lm-font-size-pass-port`. Hide “wheels up”, the site link, and the Search label (keep ⌘K). Wordmark stays one line. |
 | ≤767 | Nav becomes a left drawer. Menu button shows. Top bar wraps to two rows (112px). Site link hides. Search label hides; ⌘K remains. |
 
 Grid:
@@ -212,7 +213,7 @@ Phone drawer: `translateX(-100%)` → `0` in `--lm-duration-copy` / `--lm-ease-o
 
 ≥1200: sticky aside, pad 24 16 32 0. Label: muted mono kicker. Links 13px, pad 6 0. Current: `inset 3px 0 0 marigold`, pad-left 10.
 
-&lt;1200: `<button>` “On this page” 44px tall, radius 14, cream fill, 4px shadow. `aria-expanded`. Panel hidden until open. Chevron rotates 45° → 225° via **transform only**.
+&lt;1200: `<button>` “On this page” 44px tall, radius 8, **dashed** 2.5px border, cream fill, 4px shadow. `aria-expanded`. Panel hidden until open. Chevron rotates 45° → 225° via **transform only**.
 
 ## Component page
 
