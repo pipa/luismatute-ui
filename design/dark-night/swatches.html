@@ -18,7 +18,7 @@ const roles=['bg','cream','elev','sunken','fg','muted','border','rule','shadow',
 const sets={
  light:['#fff6e4','#fff4e2','#ffffff','#f3e2c0','#2b1b14','#5b4536','#2b1b14','rgba(43,27,20,.28)','#2b1b14','#a8321e','#2b1b14','#2b1b14','rgba(246,180,60,.22)','#e2492f','#2b1b14','#4b3428','#4a3570','#a8321e','#16625e'],
  'current dark':['#2b1b14','#120d2c','#120d2c','#4b3428','#fff6e4','#a39282','#fff6e4','#f3e2c0','#fff6e4','#f6b43c','#2b1b14','#fff6e4','rgba(246,180,60,.22)','#120d2c','#120d2c','#4b3428','#bfe6ee','#ff7a5c','#62a64e'],
- 'night dark':['#1f1840','#1b1640','#2c2354','#120d2c','#fff4e2','#b3a8dc','#8b7cc4','#5a4c92','#5a4c92','#ffd36b','#120d2c','#ffd36b','rgba(139,124,196,.24)','#e2492f','#120d2c','#2a2450','#a89bd8','#ff6b5c','#8cc06a']};
+ 'night dark':['#1f1840','#2a3266','#443872','#120d2c','#fff4e2','#c3bbe0','#b9acd0','#aea0cd','#8b7cc4','#ffd36b','#120d2c','#ffd36b','rgba(139,124,196,.12)','#e2492f','#1a1f43','#242b5a','#b9aacf','#ff9383','#8cc06a']};
 const el=document.getElementById('rows');
 for(const [k,v] of Object.entries(sets)){const r=document.createElement('div');r.className='row'+(k==='night dark'?' night':'');
 r.innerHTML=`<div class="lbl">${k}</div>`+v.map((c,i)=>`<div class="sw"><i style="background:linear-gradient(${c},${c}),${v[0]}"></i><b>${roles[i]}</b><span>${c.startsWith('rgba')?c.replace('rgba(','').replace(')',''):c}</span></div>`).join('');el.append(r)}

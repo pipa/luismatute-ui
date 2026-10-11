@@ -1,51 +1,70 @@
 /*
- * Night dark theme proposal (Muse, muse/dark-night).
- * Every value comes from "The move." scene in
- * luismatute.me design/travel-opus/concept-c-takeoff.html, or is a
- * tint of one (marked "derived"). See PALETTE.md for sources and ratios.
- * Load after mock.css. Only the --docs-* aliases and dark-only hardcodes change.
+ * Night dark theme, second pass (Muse, muse/dark-night).
+ * Load after mock.css. Values are from "The move." or a tint of one
+ * (marked derived in PALETTE.md). No --lm-* changes.
+ *
+ * v2: the page stays the zenith. The sidebar steps to the sea, cards
+ * step up into a moonlit sky band, code sinks into the deep sea.
+ * Lantern is the light (links, focus, current, pressed), not the labels.
+ * Borders are the lit rim of the moonlit cloud; the offset is the cloud
+ * itself, so the ink-edge stays a hard slab.
  */
 :root {
-  --night-sky: #1f1840;      /* SKY.move[0] */
-  --night-rock: #1b1640;     /* lighthouse rock, cloud outlines */
-  --night-cloud-sky: #2c2354;/* SKY.move[2] */
-  --night-gallery: #2a2450;  /* lighthouse gallery rail */
-  --night-deep: #120d2c;     /* --lm-night, scene outlines */
-  --night-star: #fff4e2;     /* stars + title colour (= --lm-cream) */
-  --night-moon: #fff1cf;     /* moon disc, beam, moon path */
-  --night-lavender: #b3a8dc; /* derived: moonlit cloud #8b7cc4 tinted 35% to white */
-  --night-cloud: #8b7cc4;    /* moonlit cloud light */
-  --night-cloud-shade: #5a4c92; /* moonlit cloud shade */
-  --night-lantern: #ffd36b;  /* lighthouse lantern, lit windows */
-  --night-beacon: #ff6b5c;   /* ship mast beacon */
-  --night-violet: #a89bd8;   /* derived: stop marker #7563bd tinted 35% to white */
-  --night-tomato: #e2492f;   /* lighthouse stripes (= --lm-tomato) */
-  --night-land: #8cc06a;     /* --lm-globe-land, the package green */
-  --night-glass: #bfe6ee;    /* --lm-glass */
+  --night-sky: #1f1840;       /* SKY.move[0], zenith */
+  --night-sky-2: #2c2354;     /* SKY.move[2] */
+  --night-hull: #18143a;      /* ship hull, darker than the zenith */
+  --night-band: #443872;      /* SKY.move[5], moonlit band */
+  --night-sea: #2a3266;       /* SEA.move[0], horizon */
+  --night-sea-line: #242b5a;  /* SEA.move[1] */
+  --night-sea-deep: #1a1f43;  /* SEA.move[3], deep water */
+  --night-halo: #3e3470;      /* moon halo ring */
+  --night-deep: #120d2c;      /* --lm-night, outlines */
+  --night-star: #fff4e2;      /* stars, "The move." title */
+  --night-moon: #fff1cf;      /* moon disc, beam */
+  --night-cloud: #8b7cc4;     /* moonlit cloud, light side */
+  --night-rim: #b9acd0;       /* derived: cloud mixed 40% toward the star */
+  --night-dash: #aea0cd;      /* derived: cloud mixed 30% toward the star */
+  --night-muted: #c3bbe0;     /* derived: cloud mixed 48% toward white */
+  --night-comment: #9486c6;   /* derived: cloud mixed 8% toward the star */
+  --night-lantern: #ffd36b;   /* lighthouse lantern */
+  --night-beacon: #ff9383;    /* derived: mast beacon #ff6b5c mixed 29% toward the star */
+  --night-violet: #b9aacf;    /* derived: stop marker #7563bd mixed 49% toward the star */
+  --night-tomato: #e2492f;    /* lighthouse stripes */
+  --night-land: #8cc06a;      /* --lm-globe-land */
+  --night-glass: #bfe6ee;     /* --lm-glass */
+  --night-stars:
+    radial-gradient(1.5px 1.5px at 28px 36px, rgba(255, 244, 226, 0.55) 50%, transparent 52%),
+    radial-gradient(1px 1px at 132px 88px, rgba(255, 244, 226, 0.32) 50%, transparent 52%),
+    radial-gradient(2px 2px at 248px 22px, rgba(255, 244, 226, 0.62) 50%, transparent 52%),
+    radial-gradient(1px 1px at 310px 146px, rgba(255, 244, 226, 0.38) 50%, transparent 52%),
+    radial-gradient(1.5px 1.5px at 72px 196px, rgba(255, 244, 226, 0.28) 50%, transparent 52%),
+    radial-gradient(1px 1px at 188px 230px, rgba(255, 244, 226, 0.44) 50%, transparent 52%),
+    radial-gradient(1px 1px at 346px 64px, rgba(255, 244, 226, 0.3) 50%, transparent 52%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --docs-bg: var(--night-sky);
     --docs-fg: var(--night-star);
-    --docs-muted: var(--night-lavender);
-    --docs-elev: var(--night-cloud-sky);
+    --docs-muted: var(--night-muted);
+    --docs-elev: var(--night-band);
     --docs-sunken: var(--night-deep);
-    --docs-cream: var(--night-rock);
-    --docs-border: var(--night-cloud);
-    --docs-rule: var(--night-cloud-shade);
+    --docs-cream: var(--night-sea);
+    --docs-border: var(--night-rim);
+    --docs-rule: var(--night-dash);
     --docs-link: var(--night-lantern);
-    --docs-hover: rgba(139, 124, 196, 0.24);
+    --docs-kicker: var(--night-rim);
+    --docs-hover: rgba(139, 124, 196, 0.12);
     --docs-accent: var(--night-lantern);
     --docs-on-accent: var(--night-deep);
     --docs-focus: var(--night-lantern);
     --docs-overlay: rgba(18, 13, 44, 0.8);
-    --docs-shadow: var(--night-cloud-shade);
+    --docs-shadow: var(--night-cloud);
     --docs-title-shadow: var(--night-tomato);
-    --docs-code-bg: var(--night-deep);
-    --docs-code-caption: var(--night-gallery);
+    --docs-code-bg: var(--night-sea-deep);
+    --docs-code-caption: var(--night-sea-line);
     --docs-code-fg: var(--night-star);
-    --docs-code-comment: var(--night-cloud);
+    --docs-code-comment: var(--night-comment);
     --docs-code-keyword: var(--night-lantern);
     --docs-code-string: var(--night-land);
     --docs-code-function: var(--lm-blush);
@@ -53,7 +72,7 @@
     --docs-code-tag: var(--night-beacon);
     --docs-code-attr: var(--lm-fold);
     --docs-code-property: var(--night-glass);
-    --docs-code-punct: var(--night-lavender);
+    --docs-code-punct: var(--night-muted);
     --docs-code-literal: var(--lm-route-cool);
     --docs-code-class: var(--night-violet);
     --docs-note: var(--night-violet);
@@ -65,24 +84,25 @@
 html[data-theme="dark"] {
   --docs-bg: var(--night-sky);
   --docs-fg: var(--night-star);
-  --docs-muted: var(--night-lavender);
-  --docs-elev: var(--night-cloud-sky);
+  --docs-muted: var(--night-muted);
+  --docs-elev: var(--night-band);
   --docs-sunken: var(--night-deep);
-  --docs-cream: var(--night-rock);
-  --docs-border: var(--night-cloud);
-  --docs-rule: var(--night-cloud-shade);
+  --docs-cream: var(--night-sea);
+  --docs-border: var(--night-rim);
+  --docs-rule: var(--night-dash);
   --docs-link: var(--night-lantern);
-  --docs-hover: rgba(139, 124, 196, 0.24);
+  --docs-kicker: var(--night-rim);
+  --docs-hover: rgba(139, 124, 196, 0.12);
   --docs-accent: var(--night-lantern);
   --docs-on-accent: var(--night-deep);
   --docs-focus: var(--night-lantern);
   --docs-overlay: rgba(18, 13, 44, 0.8);
-  --docs-shadow: var(--night-cloud-shade);
+  --docs-shadow: var(--night-cloud);
   --docs-title-shadow: var(--night-tomato);
-  --docs-code-bg: var(--night-deep);
-  --docs-code-caption: var(--night-gallery);
+  --docs-code-bg: var(--night-sea-deep);
+  --docs-code-caption: var(--night-sea-line);
   --docs-code-fg: var(--night-star);
-  --docs-code-comment: var(--night-cloud);
+  --docs-code-comment: var(--night-comment);
   --docs-code-keyword: var(--night-lantern);
   --docs-code-string: var(--night-land);
   --docs-code-function: var(--lm-blush);
@@ -90,7 +110,7 @@ html[data-theme="dark"] {
   --docs-code-tag: var(--night-beacon);
   --docs-code-attr: var(--lm-fold);
   --docs-code-property: var(--night-glass);
-  --docs-code-punct: var(--night-lavender);
+  --docs-code-punct: var(--night-muted);
   --docs-code-literal: var(--lm-route-cool);
   --docs-code-class: var(--night-violet);
   --docs-note: var(--night-violet);
@@ -98,19 +118,218 @@ html[data-theme="dark"] {
   --docs-tip: var(--night-land);
 }
 
-/* Dark-only hardcodes in mock.css that pointed at brown ink or paper. */
-html:root[data-theme="dark"] .docs-title { text-shadow: 0.045em 0.05em 0 var(--docs-title-shadow); }
-html:root[data-theme="dark"] .docs-code { box-shadow: 4px 4px 0 var(--docs-shadow); }
+/* Sky: a zenith band on the bar, stars on the page. Static, no images. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body {
+    background-color: var(--docs-bg);
+    background-image: var(--night-stars);
+    background-size: 380px 260px;
+    background-repeat: repeat;
+  }
+
+  :root:not([data-theme="light"]) .docs-topbar {
+    background-color: var(--night-hull);
+    background-image: linear-gradient(180deg, var(--night-hull) 0%, var(--night-sky-2) 100%);
+  }
+}
+
+html[data-theme="dark"] body {
+  background-color: var(--docs-bg);
+  background-image: var(--night-stars);
+  background-size: 380px 260px;
+  background-repeat: repeat;
+}
+
+html[data-theme="dark"] .docs-topbar {
+  background-color: var(--night-hull);
+  background-image: linear-gradient(180deg, var(--night-hull) 0%, var(--night-sky-2) 100%);
+}
+
+/* Lantern is the light. Labels and kickers stay the cloud rim. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .docs-nav-group h2,
+  :root:not([data-theme="light"]) .docs-kicker,
+  :root:not([data-theme="light"]) .docs-search-kicker,
+  :root:not([data-theme="light"]) .docs-home-card span {
+    color: var(--docs-kicker);
+  }
+
+  :root:not([data-theme="light"]) .docs-nav a.is-current {
+    background: var(--docs-elev);
+    color: var(--docs-link);
+    box-shadow: inset 4px 0 0 var(--docs-accent);
+  }
+
+  :root:not([data-theme="light"]) .docs-toc a.is-current,
+  :root:not([data-theme="light"]) .docs-toc-inline a.is-current {
+    color: var(--docs-link);
+  }
+}
+
+html:root[data-theme="dark"] .docs-nav-group h2,
+html:root[data-theme="dark"] .docs-kicker,
+html:root[data-theme="dark"] .docs-search-kicker,
+html:root[data-theme="dark"] .docs-home-card span {
+  color: var(--docs-kicker);
+}
+
+html:root[data-theme="dark"] .docs-nav a.is-current {
+  background: var(--docs-elev);
+  color: var(--docs-link);
+  box-shadow: inset 4px 0 0 var(--docs-accent);
+}
+
+html:root[data-theme="dark"] .docs-toc a.is-current,
+html:root[data-theme="dark"] .docs-toc-inline a.is-current {
+  color: var(--docs-link);
+}
+
+/* Title extrusion stays the lighthouse stripe. */
+@media (prefers-color-scheme: dark) {
+  html:root:not([data-theme="light"]) .docs-title {
+    text-shadow: 0.045em 0.05em 0 var(--docs-title-shadow);
+  }
+}
+
+html:root[data-theme="dark"] .docs-title {
+  text-shadow: 0.045em 0.05em 0 var(--docs-title-shadow);
+}
+
+/* Kind shadows were losing to the flat dark offset. Put the colour back. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .docs-callout[data-kind="note"] {
+    box-shadow: 4px 4px 0 var(--docs-note);
+  }
+
+  :root:not([data-theme="light"]) .docs-callout[data-kind="warning"] {
+    box-shadow: 4px 4px 0 var(--docs-warn);
+  }
+
+  :root:not([data-theme="light"]) .docs-callout[data-kind="tip"] {
+    box-shadow: 4px 4px 0 var(--docs-tip);
+  }
+}
+
+html:root[data-theme="dark"] .docs-callout[data-kind="note"] {
+  box-shadow: 4px 4px 0 var(--docs-note);
+}
+
+html:root[data-theme="dark"] .docs-callout[data-kind="warning"] {
+  box-shadow: 4px 4px 0 var(--docs-warn);
+}
+
+html:root[data-theme="dark"] .docs-callout[data-kind="tip"] {
+  box-shadow: 4px 4px 0 var(--docs-tip);
+}
+
+/* Code caption is the waterline. Stars stay off the sea. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .docs-code figcaption {
+    background: var(--docs-code-caption);
+    color: var(--docs-fg);
+    border-bottom-color: var(--docs-rule);
+  }
+}
+
 html:root[data-theme="dark"] .docs-code figcaption {
   background: var(--docs-code-caption);
   color: var(--docs-fg);
   border-bottom-color: var(--docs-rule);
 }
+
+/* The boarding pass is the light. The stage is the moon halo, not a second sheet of cream. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .docs-demo-stage[data-surface="paper"] {
+    background: var(--night-halo);
+  }
+
+  :root:not([data-theme="light"]) .docs-demo-stage lm-card {
+    box-shadow: 6px 7px 0 var(--docs-shadow);
+  }
+}
+
+html[data-theme="dark"] .docs-demo-stage[data-surface="paper"] {
+  background: var(--night-halo);
+}
+
+html[data-theme="dark"] .docs-demo-stage lm-card {
+  box-shadow: 6px 7px 0 var(--docs-shadow);
+}
+
+/* Search sits on the same sky, so the stars continue into the dialog. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .docs-search-panel {
+    background-color: var(--docs-bg);
+    background-image: var(--night-stars);
+    background-size: 380px 260px;
+    background-repeat: repeat;
+  }
+}
+
+html[data-theme="dark"] .docs-search-panel {
+  background-color: var(--docs-bg);
+  background-image: var(--night-stars);
+  background-size: 380px 260px;
+  background-repeat: repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .docs-search-trigger:hover,
+  :root:not([data-theme="light"]) .docs-theme button[aria-pressed="true"] {
+    color: var(--docs-on-accent);
+  }
+
+  :root:not([data-theme="light"]) .docs-copy {
+    background: var(--night-moon);
+    border-color: var(--night-moon);
+    color: var(--night-deep);
+  }
+
+  :root:not([data-theme="light"]) .docs-copy:hover,
+  :root:not([data-theme="light"]) .docs-copy.is-hover {
+    background: var(--night-lantern);
+    border-color: var(--night-lantern);
+  }
+
+  :root:not([data-theme="light"]) .docs-copy.is-copied {
+    background: var(--night-land);
+    border-color: var(--night-land);
+    color: var(--night-deep);
+  }
+
+  :root:not([data-theme="light"]) .docs-copy.is-error {
+    background: var(--night-deep);
+    border-color: var(--night-beacon);
+    color: var(--night-beacon);
+  }
+}
+
 html:root[data-theme="dark"] .docs-search-trigger:hover,
-html:root[data-theme="dark"] .docs-theme button[aria-pressed="true"] { color: var(--docs-on-accent); }
-html:root[data-theme="dark"] .docs-copy { background: var(--night-moon); border-color: var(--night-moon); color: var(--night-deep); }
+html:root[data-theme="dark"] .docs-theme button[aria-pressed="true"] {
+  color: var(--docs-on-accent);
+}
+
+html:root[data-theme="dark"] .docs-copy {
+  background: var(--night-moon);
+  border-color: var(--night-moon);
+  color: var(--night-deep);
+}
+
 html:root[data-theme="dark"] .docs-copy:hover,
-html:root[data-theme="dark"] .docs-copy.is-hover { background: var(--night-lantern); border-color: var(--night-lantern); }
-html:root[data-theme="dark"] .docs-copy.is-copied { background: var(--night-land); border-color: var(--night-land); }
-html:root[data-theme="dark"] .docs-copy.is-error { background: var(--night-deep); border-color: var(--night-beacon); color: var(--night-beacon); }
-html:root[data-theme="dark"] .docs-nav a.is-current { background: var(--docs-elev); }
+html:root[data-theme="dark"] .docs-copy.is-hover {
+  background: var(--night-lantern);
+  border-color: var(--night-lantern);
+  color: var(--night-deep);
+}
+
+html:root[data-theme="dark"] .docs-copy.is-copied {
+  background: var(--night-land);
+  border-color: var(--night-land);
+  color: var(--night-deep);
+}
+
+html:root[data-theme="dark"] .docs-copy.is-error {
+  background: var(--night-deep);
+  border-color: var(--night-beacon);
+  color: var(--night-beacon);
+}

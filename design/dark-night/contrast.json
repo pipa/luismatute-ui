@@ -11,21 +11,21 @@
     {
       "name": "text on sidebar",
       "fg": "#fff4e2",
-      "bg": "#1b1640",
-      "ratio": 15.61,
+      "bg": "#2a3266",
+      "ratio": 11.04,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "text on elev",
       "fg": "#fff4e2",
-      "bg": "#2c2354",
-      "ratio": 13.07,
+      "bg": "#443872",
+      "ratio": 9.39,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "text on sunken / table head",
+      "name": "text on sunken",
       "fg": "#fff4e2",
       "bg": "#120d2c",
       "ratio": 17.23,
@@ -33,58 +33,130 @@
       "pass": true
     },
     {
-      "name": "text on hover wash (page)",
+      "name": "text on code sea",
       "fg": "#fff4e2",
-      "bg": "#393060",
-      "ratio": 10.93,
+      "bg": "#1a1f43",
+      "ratio": 14.6,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "text on hover wash (sidebar)",
+      "name": "text on code caption",
       "fg": "#fff4e2",
-      "bg": "#362e60",
-      "ratio": 11.24,
+      "bg": "#242b5a",
+      "ratio": 12.3,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "text on hover wash (elev)",
+      "name": "text on top-bar light end",
       "fg": "#fff4e2",
-      "bg": "#43386f",
-      "ratio": 9.48,
+      "bg": "#2c2354",
+      "ratio": 13.07,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover (page)",
+      "fg": "#fff4e2",
+      "bg": "#2c2450",
+      "ratio": 13.08,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover (sidebar)",
+      "fg": "#fff4e2",
+      "bg": "#363b71",
+      "ratio": 9.55,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover (elev)",
+      "fg": "#fff4e2",
+      "bg": "#4d407c",
+      "ratio": 8.24,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "text on hover (sunken)",
+      "fg": "#fff4e2",
+      "bg": "#211a3e",
+      "ratio": 15.05,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "muted on page",
-      "fg": "#b3a8dc",
+      "fg": "#c3bbe0",
       "bg": "#1f1840",
-      "ratio": 7.56,
+      "ratio": 9.11,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "muted on sidebar",
-      "fg": "#b3a8dc",
-      "bg": "#1b1640",
-      "ratio": 7.73,
+      "fg": "#c3bbe0",
+      "bg": "#2a3266",
+      "ratio": 6.59,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "muted on elev",
-      "fg": "#b3a8dc",
-      "bg": "#2c2354",
-      "ratio": 6.47,
+      "fg": "#c3bbe0",
+      "bg": "#443872",
+      "ratio": 5.6,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "muted on sunken",
-      "fg": "#b3a8dc",
+      "fg": "#c3bbe0",
       "bg": "#120d2c",
-      "ratio": 8.53,
+      "ratio": 10.28,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted on hover (elev)",
+      "fg": "#c3bbe0",
+      "bg": "#4d407c",
+      "ratio": 4.92,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted on hover (page)",
+      "fg": "#c3bbe0",
+      "bg": "#2c2450",
+      "ratio": 7.8,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "kicker on page",
+      "fg": "#b9acd0",
+      "bg": "#1f1840",
+      "ratio": 7.82,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "kicker on sidebar",
+      "fg": "#b9acd0",
+      "bg": "#2a3266",
+      "ratio": 5.65,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "kicker on elev (home card)",
+      "fg": "#b9acd0",
+      "bg": "#443872",
+      "ratio": 4.81,
       "min": 4.5,
       "pass": true
     },
@@ -99,13 +171,21 @@
     {
       "name": "link on sidebar",
       "fg": "#ffd36b",
-      "bg": "#1b1640",
-      "ratio": 11.97,
+      "bg": "#2a3266",
+      "ratio": 8.46,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "link on elev",
+      "fg": "#ffd36b",
+      "bg": "#443872",
+      "ratio": 7.2,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "link on top-bar light end",
       "fg": "#ffd36b",
       "bg": "#2c2354",
       "ratio": 10.02,
@@ -113,15 +193,31 @@
       "pass": true
     },
     {
-      "name": "link on hover wash (page)",
+      "name": "link on hover (page)",
       "fg": "#ffd36b",
-      "bg": "#393060",
-      "ratio": 8.37,
+      "bg": "#2c2450",
+      "ratio": 10.02,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "on-accent on accent (pressed, search hover)",
+      "name": "link on hover (elev)",
+      "fg": "#ffd36b",
+      "bg": "#4d407c",
+      "ratio": 6.32,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "current nav label on elev",
+      "fg": "#ffd36b",
+      "bg": "#443872",
+      "ratio": 7.2,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "on-accent on accent",
       "fg": "#120d2c",
       "bg": "#ffd36b",
       "ratio": 13.2,
@@ -129,7 +225,7 @@
       "pass": true
     },
     {
-      "name": "copy idle text on moon",
+      "name": "copy idle on moon",
       "fg": "#120d2c",
       "bg": "#fff1cf",
       "ratio": 16.73,
@@ -137,7 +233,7 @@
       "pass": true
     },
     {
-      "name": "copy copied text on green",
+      "name": "copy copied on green",
       "fg": "#120d2c",
       "bg": "#8cc06a",
       "ratio": 8.81,
@@ -145,143 +241,215 @@
       "pass": true
     },
     {
-      "name": "copy error text on night",
-      "fg": "#ff6b5c",
+      "name": "copy error on night",
+      "fg": "#ff9383",
       "bg": "#120d2c",
-      "ratio": 6.71,
+      "ratio": 8.71,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code caption text on gallery",
+      "name": "code code fg on sea",
       "fg": "#fff4e2",
-      "bg": "#2a2450",
-      "ratio": 13.15,
+      "bg": "#1a1f43",
+      "ratio": 14.6,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code code fg on code bg",
-      "fg": "#fff4e2",
-      "bg": "#120d2c",
-      "ratio": 17.23,
+      "name": "code comment on sea",
+      "fg": "#9486c6",
+      "bg": "#1a1f43",
+      "ratio": 4.91,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code comment on code bg",
-      "fg": "#8b7cc4",
-      "bg": "#120d2c",
-      "ratio": 5.16,
-      "min": 4.5,
-      "pass": true
-    },
-    {
-      "name": "code keyword on code bg",
+      "name": "code keyword on sea",
       "fg": "#ffd36b",
-      "bg": "#120d2c",
-      "ratio": 13.2,
+      "bg": "#1a1f43",
+      "ratio": 11.19,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code string on code bg",
+      "name": "code string on sea",
       "fg": "#8cc06a",
-      "bg": "#120d2c",
-      "ratio": 8.81,
+      "bg": "#1a1f43",
+      "ratio": 7.47,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code function on code bg",
+      "name": "code function on sea",
       "fg": "#f2a08a",
-      "bg": "#120d2c",
-      "ratio": 9.08,
+      "bg": "#1a1f43",
+      "ratio": 7.7,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code number on code bg",
+      "name": "code number on sea",
       "fg": "#fff1cf",
-      "bg": "#120d2c",
-      "ratio": 16.73,
+      "bg": "#1a1f43",
+      "ratio": 14.18,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code tag on code bg",
-      "fg": "#ff6b5c",
-      "bg": "#120d2c",
-      "ratio": 6.71,
+      "name": "code tag on sea",
+      "fg": "#ff9383",
+      "bg": "#1a1f43",
+      "ratio": 7.38,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code attr on code bg",
+      "name": "code attr on sea",
       "fg": "#d8901f",
-      "bg": "#120d2c",
-      "ratio": 7.08,
+      "bg": "#1a1f43",
+      "ratio": 6,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code property on code bg",
+      "name": "code property on sea",
       "fg": "#bfe6ee",
-      "bg": "#120d2c",
-      "ratio": 14.08,
+      "bg": "#1a1f43",
+      "ratio": 11.94,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code punct on code bg",
-      "fg": "#b3a8dc",
-      "bg": "#120d2c",
-      "ratio": 8.53,
+      "name": "code punct on sea",
+      "fg": "#c3bbe0",
+      "bg": "#1a1f43",
+      "ratio": 8.71,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code literal on code bg",
+      "name": "code literal on sea",
       "fg": "#e8a090",
-      "bg": "#120d2c",
-      "ratio": 8.81,
+      "bg": "#1a1f43",
+      "ratio": 7.47,
       "min": 4.5,
       "pass": true
     },
     {
-      "name": "code class on code bg",
-      "fg": "#a89bd8",
-      "bg": "#120d2c",
-      "ratio": 7.45,
+      "name": "code class on sea",
+      "fg": "#b9aacf",
+      "bg": "#1a1f43",
+      "ratio": 7.35,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "note label on elev",
-      "fg": "#a89bd8",
-      "bg": "#2c2354",
-      "ratio": 5.66,
+      "fg": "#b9aacf",
+      "bg": "#443872",
+      "ratio": 4.73,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "warning label on elev",
-      "fg": "#ff6b5c",
-      "bg": "#2c2354",
-      "ratio": 5.09,
+      "fg": "#ff9383",
+      "bg": "#443872",
+      "ratio": 4.75,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "tip label on elev",
       "fg": "#8cc06a",
-      "bg": "#2c2354",
-      "ratio": 6.68,
+      "bg": "#443872",
+      "ratio": 4.8,
       "min": 4.5,
       "pass": true
     },
     {
       "name": "border vs page (UI)",
+      "fg": "#b9acd0",
+      "bg": "#1f1840",
+      "ratio": 7.82,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs elev (UI)",
+      "fg": "#b9acd0",
+      "bg": "#443872",
+      "ratio": 4.81,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs sunken (UI)",
+      "fg": "#b9acd0",
+      "bg": "#120d2c",
+      "ratio": 8.82,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs sidebar (UI)",
+      "fg": "#b9acd0",
+      "bg": "#2a3266",
+      "ratio": 5.65,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs sea (UI)",
+      "fg": "#b9acd0",
+      "bg": "#1a1f43",
+      "ratio": 7.48,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs halo stage (UI)",
+      "fg": "#b9acd0",
+      "bg": "#3e3470",
+      "ratio": 5.12,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "border vs top-bar light end (UI)",
+      "fg": "#b9acd0",
+      "bg": "#2c2354",
+      "ratio": 6.69,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "rule vs elev (UI)",
+      "fg": "#aea0cd",
+      "bg": "#443872",
+      "ratio": 4.24,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "rule vs page (UI)",
+      "fg": "#aea0cd",
+      "bg": "#1f1840",
+      "ratio": 6.9,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "rule vs sunken (UI)",
+      "fg": "#aea0cd",
+      "bg": "#120d2c",
+      "ratio": 7.78,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "shadow vs page (UI)",
       "fg": "#8b7cc4",
       "bg": "#1f1840",
       "ratio": 4.57,
@@ -289,31 +457,15 @@
       "pass": true
     },
     {
-      "name": "border vs elev (UI)",
+      "name": "shadow vs sidebar (UI)",
       "fg": "#8b7cc4",
-      "bg": "#2c2354",
-      "ratio": 3.92,
+      "bg": "#2a3266",
+      "ratio": 3.31,
       "min": 3,
       "pass": true
     },
     {
-      "name": "border vs sunken (UI)",
-      "fg": "#8b7cc4",
-      "bg": "#120d2c",
-      "ratio": 5.16,
-      "min": 3,
-      "pass": true
-    },
-    {
-      "name": "border vs sidebar (UI)",
-      "fg": "#8b7cc4",
-      "bg": "#1b1640",
-      "ratio": 4.68,
-      "min": 3,
-      "pass": true
-    },
-    {
-      "name": "focus ring vs page (UI)",
+      "name": "focus vs page (UI)",
       "fg": "#ffd36b",
       "bg": "#1f1840",
       "ratio": 11.7,
@@ -321,15 +473,15 @@
       "pass": true
     },
     {
-      "name": "focus ring vs elev (UI)",
+      "name": "focus vs elev (UI)",
       "fg": "#ffd36b",
-      "bg": "#2c2354",
-      "ratio": 10.02,
+      "bg": "#443872",
+      "ratio": 7.2,
       "min": 3,
       "pass": true
     },
     {
-      "name": "focus ring vs sunken (UI)",
+      "name": "focus vs sunken (UI)",
       "fg": "#ffd36b",
       "bg": "#120d2c",
       "ratio": 13.2,
@@ -337,15 +489,31 @@
       "pass": true
     },
     {
-      "name": "accent fill vs elev (pressed segment, UI)",
+      "name": "focus vs sidebar (UI)",
       "fg": "#ffd36b",
-      "bg": "#2c2354",
-      "ratio": 10.02,
+      "bg": "#2a3266",
+      "ratio": 8.46,
       "min": 3,
       "pass": true
     },
     {
-      "name": "tomato vs page (large / decorative only)",
+      "name": "focus vs sea (UI)",
+      "fg": "#ffd36b",
+      "bg": "#1a1f43",
+      "ratio": 11.19,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "accent fill vs elev (UI)",
+      "fg": "#ffd36b",
+      "bg": "#443872",
+      "ratio": 7.2,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "tomato vs page (large)",
       "fg": "#e2492f",
       "bg": "#1f1840",
       "ratio": 4.14,
@@ -361,67 +529,44 @@
       "pass": true
     },
     {
-      "name": "rule vs page (decorative)",
-      "fg": "#5a4c92",
-      "bg": "#1f1840",
-      "ratio": 2.28,
-      "min": 0,
-      "pass": true
-    },
-    {
-      "name": "shadow vs page (decorative)",
-      "fg": "#5a4c92",
-      "bg": "#1f1840",
-      "ratio": 2.28,
-      "min": 0,
-      "pass": true
-    },
-    {
-      "name": "paper ticket inside demo (unchanged): ink on paper",
+      "name": "paper ticket: ink on paper",
       "fg": "#2b1b14",
       "bg": "#fff6e4",
       "ratio": 15.4,
       "min": 4.5,
       "pass": true
-    }
-  ],
-  "current": [
+    },
     {
-      "name": "old text on page",
-      "fg": "#fff6e4",
-      "bg": "#2b1b14",
-      "ratio": 15.4,
-      "min": 4.5,
+      "name": "page vs elev (surface step)",
+      "fg": "#1f1840",
+      "bg": "#443872",
+      "ratio": 1.63,
+      "min": 0,
       "pass": true
     },
     {
-      "name": "old muted on page",
-      "fg": "#a39282",
-      "bg": "#2b1b14",
-      "ratio": 5.51,
-      "min": 4.5,
+      "name": "page vs sidebar (surface step)",
+      "fg": "#1f1840",
+      "bg": "#2a3266",
+      "ratio": 1.38,
+      "min": 0,
       "pass": true
     },
     {
-      "name": "old muted on elev",
-      "fg": "#a39282",
+      "name": "elev vs sunken (surface step)",
+      "fg": "#443872",
       "bg": "#120d2c",
-      "ratio": 6.24,
-      "min": 4.5,
-      "pass": true
-    },
-    {
-      "name": "old link on page",
-      "fg": "#f6b43c",
-      "bg": "#2b1b14",
-      "ratio": 9.07,
-      "min": 4.5,
+      "ratio": 1.83,
+      "min": 0,
       "pass": true
     }
   ],
   "composites": {
-    "hovBg": "#393060",
-    "hovCream": "#362e60",
-    "hovElev": "#43386f"
-  }
+    "hovBg": "#2c2450",
+    "hovCream": "#363b71",
+    "hovElev": "#4d407c",
+    "hovSunk": "#211a3e",
+    "starDot": "#aaa0a4"
+  },
+  "fails": 0
 }
