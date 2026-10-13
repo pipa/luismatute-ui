@@ -13,6 +13,10 @@ const entries = {
   'components/avatar': 'src/components/entries/avatar.ts',
   'components/globe': 'src/components/entries/globe.ts',
   'components/flight-plan': 'src/components/entries/flight-plan.ts',
+  'components/theme-toggle': 'src/components/entries/theme-toggle.ts',
+  'components/sky-header': 'src/components/entries/sky-header.ts',
+  'theme-init': 'src/theme-init.ts',
+  'sky-art': 'src/components/sky-art.ts',
   'illustrations/index': 'src/illustrations/index.ts',
 };
 

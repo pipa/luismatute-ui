@@ -1,0 +1,52 @@
+.tall {
+  min-height: 3000px;
+}
+body {
+  margin: 0;
+  background: var(--lm-paper);
+  color: var(--lm-ink);
+  font-family: var(--lm-font-text);
+}
+.lm-sky-inner,
+.fx-main {
+  width: min(100%, 960px);
+  margin-inline: auto;
+  padding-inline: 20px;
+  box-sizing: border-box;
+}
+.fx-code {
+  padding: 16px;
+  overflow-x: auto;
+  background: var(--lm-code-bg);
+  color: var(--lm-code-text);
+  font: 500 15px / 1.6 var(--lm-font-mono);
+}
+.tok-text {
+  color: var(--lm-code-text);
+}
+.tok-keyword {
+  color: var(--lm-code-keyword);
+  font-weight: 600;
+}
+.tok-string {
+  color: var(--lm-code-string);
+}
+.tok-function {
+  color: var(--lm-code-function);
+}
+.tok-tag {
+  color: var(--lm-code-tag);
+}
+.tok-attr {
+  color: var(--lm-code-attr);
+}
+.tok-number {
+  color: var(--lm-code-number);
+}
+.tok-comment {
+  color: var(--lm-code-comment);
+  font-style: italic;
+}
+.tok-punct {
+  color: var(--lm-code-punct);
+}

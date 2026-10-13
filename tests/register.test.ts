@@ -11,6 +11,8 @@ const entries: Array<[string, string]> = [
   ['avatar', 'defineLmAvatar'],
   ['globe', 'defineLmGlobe'],
   ['flight-plan', 'defineLmFlightPlan'],
+  ['theme-toggle', 'defineLmThemeToggle'],
+  ['sky-header', 'defineLmSkyHeader'],
   ['index', 'defineLmUi'],
 ];
 

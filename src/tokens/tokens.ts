@@ -350,6 +350,8 @@ export const zIndex = {
 export const easing = {
   pop: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
   out: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  /** Porthole glare sweep (blog sky, M1 Cruise). */
+  glide: 'cubic-bezier(0.45, 0, 0.2, 1)',
   drop: 'cubic-bezier(0.5, 0, 0.9, 0.5)',
   settle: 'cubic-bezier(0.2, 0.6, 0.4, 1)',
   stamp: 'cubic-bezier(0.6, 0, 1, 0.6)',
@@ -584,6 +586,188 @@ export const textPairs = [
   },
 ] as const;
 
+/**
+ * Motion tokens for the day/night sky, theme switch and small UI. The one
+ * place these durations live: `--lm-dur-*` and `--lm-sky-*` in tokens.css.
+ * From design/blog/SPEC.md § Motion (luismatute.me #55).
+ */
+export const motion = {
+  durFast: '160ms',
+  durPop: '360ms',
+  durFade: '900ms',
+  durTheme: '1200ms',
+  /** Cloud strip speeds, per 1440px tile. */
+  skyFar: '180s',
+  skyMid: '110s',
+  skyNear: '70s',
+  /** Porthole glare cycle (one ~1.3s sweep, then rest). */
+  glare: '12s',
+  glareDelay: '2s',
+  twinkle1: '3.2s',
+  twinkle2: '4.4s',
+  twinkle3: '5.6s',
+} as const;
+
+/** Colours that do not change between day and night. */
+export const modeStable = {
+  inkFixed: '#2b1b14',
+  skyDay: ['#fde7b0', '#fcde98', '#fbd682', '#f9cc70'],
+  skyNight: ['#120d2c', '#1b1640', '#241d52', '#2e2563'],
+  moon: '#fff1cf',
+  moonCrater: '#e9d9b4',
+  star: '#fff6dc',
+  duneDay: '#f3e2c0',
+  duneNight: '#3a2c22',
+  /** The paper tag behind kickers on the sky, both modes. */
+  tagPaper: '#fff6e4',
+  tagInk: '#a8321e',
+} as const;
+
+/** Day values that the night block overrides (same names, so components don't branch). */
+export const day = {
+  link: '#1f7e7a',
+  shadowInk: '#2b1b14',
+  skyText: '#2b1b14',
+  pillBg: '#fff6e4',
+  pillInk: '#2b1b14',
+  pillRim: '#2b1b14',
+} as const;
+
+/** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
+export const night = {
+  paper: '#1d1510',
+  card: '#281d16',
+  sand: '#33261c',
+  ink: '#fff6e4',
+  inkSoft: '#d8c4a6',
+  tomatoD: '#ff9a7f',
+  white: '#281d16',
+  link: '#6fd0c6',
+  lagoon: '#6fd0c6',
+  ruleRoute: 'rgba(255, 246, 228, 0.3)',
+  shadowInk: '#5b4536',
+  skyText: '#fff6e4',
+  pillBg: '#241d52',
+  pillInk: '#fff6e4',
+  pillRim: '#fff6e4',
+} as const;
+
+/**
+ * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
+ * Night is the dark-sand theme from CONTRAST.md on #33261c; tag, attr and
+ * number were not in CONTRAST.md and were picked to clear AA (see tests).
+ */
+export const code = {
+  day: {
+    bg: '#f3e2c0',
+    text: '#2b1b14',
+    keyword: '#a3240f',
+    string: '#17665f',
+    function: '#1d4f9a',
+    tag: '#8a2a6b',
+    attr: '#7a5200',
+    number: '#4f6100',
+    comment: '#6e5c4c',
+    punct: '#5b4536',
+  },
+  night: {
+    bg: '#33261c',
+    text: '#f3e2c0',
+    keyword: '#ff8f73',
+    string: '#7fd3c6',
+    function: '#9cc0ff',
+    tag: '#f2a7d6',
+    attr: '#f6c66b',
+    number: '#c9dc7a',
+    comment: '#b9a48c',
+    punct: '#d8c4a6',
+  },
+} as const;
+
+/** Text pairs for both modes of the blog sky, cards and code (CONTRAST.md). */
+export const modePairs = [
+  {
+    name: 'day ink on sky band 4',
+    fg: modeStable.inkFixed,
+    bg: modeStable.skyDay[3],
+    large: false,
+  },
+  {
+    name: 'day tag kicker',
+    fg: modeStable.tagInk,
+    bg: modeStable.tagPaper,
+    large: false,
+  },
+  { name: 'night paper on page', fg: night.ink, bg: night.paper, large: false },
+  {
+    name: 'night ink-soft on page',
+    fg: night.inkSoft,
+    bg: night.paper,
+    large: false,
+  },
+  {
+    name: 'night kicker on page',
+    fg: night.tomatoD,
+    bg: night.paper,
+    large: false,
+  },
+  { name: 'night link on page', fg: night.link, bg: night.paper, large: false },
+  { name: 'night paper on card', fg: night.ink, bg: night.card, large: false },
+  {
+    name: 'night ink-soft on card',
+    fg: night.inkSoft,
+    bg: night.card,
+    large: false,
+  },
+  {
+    name: 'night kicker on card',
+    fg: night.tomatoD,
+    bg: night.card,
+    large: false,
+  },
+  { name: 'night paper on sand', fg: night.ink, bg: night.sand, large: false },
+  {
+    name: 'night ink-soft on sand',
+    fg: night.inkSoft,
+    bg: night.sand,
+    large: false,
+  },
+  {
+    name: 'night paper on pill',
+    fg: night.pillInk,
+    bg: night.pillBg,
+    large: false,
+  },
+  {
+    name: 'night paper on sky band 4',
+    fg: night.skyText,
+    bg: modeStable.skyNight[3],
+    large: false,
+  },
+  {
+    name: 'ink-fixed on marigold',
+    fg: modeStable.inkFixed,
+    bg: '#f6b43c',
+    large: false,
+  },
+  ...Object.entries(code.day)
+    .filter(([k]) => k !== 'bg')
+    .map(([k, fg]) => ({
+      name: `day code ${k}`,
+      fg,
+      bg: code.day.bg,
+      large: false,
+    })),
+  ...Object.entries(code.night)
+    .filter(([k]) => k !== 'bg')
+    .map(([k, fg]) => ({
+      name: `night code ${k}`,
+      fg,
+      bg: code.night.bg,
+      large: false,
+    })),
+] as const;
+
 export const tokens = {
   color,
   skin,
@@ -607,6 +791,12 @@ export const tokens = {
   target,
   themes,
   textPairs,
+  motion,
+  modeStable,
+  day,
+  night,
+  code,
+  modePairs,
 } as const;
 
 export type Tokens = typeof tokens;

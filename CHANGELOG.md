@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0
+
+### Added (blog Direction B, luismatute.me #55/#56; shared with the main site)
+
+- **Night tokens.** `html[data-mode="night"]` overrides the same names (`--lm-paper`, `--lm-card`, `--lm-sand`, `--lm-ink`, `--lm-ink-soft`, `--lm-tomato-d`, `--lm-white`, `--lm-link`, `--lm-lagoon`, `--lm-rule-route`, `--lm-shadow-ink`, `--lm-sky-text`, `--lm-pill-*`), so components don't branch. Theme-stable: `--lm-ink-fixed`, `--lm-sky-day-1..4`, `--lm-sky-night-1..4`, `--lm-moon`, `--lm-star`, `--lm-dune-day/night`, `--lm-tag-paper/ink`.
+- **Code tokens** `--lm-code-{bg,text,keyword,string,function,tag,attr,number,comment,punct}`: the blog's shipped day theme and the dark-sand night theme from CONTRAST.md. Night tag `#f2a7d6`, attr `#f6c66b` and number `#c9dc7a` were not in CONTRAST.md; all clear 4.5:1 on `#33261c` (unit tested).
+- **Motion tokens**, all in `src/tokens/tokens.ts`: `--lm-ease-glide`, `--lm-dur-{fast,pop,fade,theme,glare,glare-delay,twinkle-1..3}`, `--lm-sky-{far,mid,near}`.
+- **`lm-theme-toggle`** (`./components/theme-toggle`): 44px icon pill, `aria-label="Night"` + `aria-pressed`, stores `lm.ui.theme`, dispatches `lm-theme`, View Transitions unless reduced motion. `theme.ts` exports `readTheme`, `setTheme`, `applyTheme`, `THEME_KEY`.
+- **`theme-init.js`**: the blocking no-flash head script (`?mode=`, `lm.ui.theme`, `prefers-color-scheme`). Serve it as an external file for `script-src 'self'`.
+- **`lm-sky-header`** (`./components/sky-header`): M1 Cruise sky (bands, stars, sun/moon, three cloud strips, dunes). Off-screen pause via IntersectionObserver (`.lm-sky-off`), `button.lm-sky-pause` follows the `lm-pause` contract (`html.paused`, `lm-pause` event, "Pause sky"/"Play sky"), `compact` is the still post strip. `skyLayersHtml()` and `landEdge` server-render the layers; import them from the DOM-free `@luismatute/ui/sky-art` subpath in SSR (Astro).
+- **`sky.css`**: sky header, pills, porthole stills, ticket-stub card (`.lm-stubs`, `.lm-ticket`), porthole cover (`.lm-cover`), F1 Wheels down footer (`.lm-land`, `landEdge`). Only transform and opacity animate; everything is static under `prefers-reduced-motion`.
+
 ## 0.1.2
 
 ### Fixed

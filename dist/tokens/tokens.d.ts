@@ -248,6 +248,8 @@ export declare const zIndex: {
 export declare const easing: {
     readonly pop: 'cubic-bezier(0.34, 1.56, 0.64, 1)';
     readonly out: 'cubic-bezier(0.16, 1, 0.3, 1)';
+    /** Porthole glare sweep (blog sky, M1 Cruise). */
+    readonly glide: 'cubic-bezier(0.45, 0, 0.2, 1)';
     readonly drop: 'cubic-bezier(0.5, 0, 0.9, 0.5)';
     readonly settle: 'cubic-bezier(0.2, 0.6, 0.4, 1)';
     readonly stamp: 'cubic-bezier(0.6, 0, 1, 0.6)';
@@ -508,6 +510,181 @@ export declare const textPairs: readonly [{
     readonly bg: "#f19c74";
     readonly large: true;
 }];
+/**
+ * Motion tokens for the day/night sky, theme switch and small UI. The one
+ * place these durations live: `--lm-dur-*` and `--lm-sky-*` in tokens.css.
+ * From design/blog/SPEC.md § Motion (luismatute.me #55).
+ */
+export declare const motion: {
+    readonly durFast: '160ms';
+    readonly durPop: '360ms';
+    readonly durFade: '900ms';
+    readonly durTheme: '1200ms';
+    /** Cloud strip speeds, per 1440px tile. */
+    readonly skyFar: '180s';
+    readonly skyMid: '110s';
+    readonly skyNear: '70s';
+    /** Porthole glare cycle (one ~1.3s sweep, then rest). */
+    readonly glare: '12s';
+    readonly glareDelay: '2s';
+    readonly twinkle1: '3.2s';
+    readonly twinkle2: '4.4s';
+    readonly twinkle3: '5.6s';
+};
+/** Colours that do not change between day and night. */
+export declare const modeStable: {
+    readonly inkFixed: '#2b1b14';
+    readonly skyDay: readonly ['#fde7b0', '#fcde98', '#fbd682', '#f9cc70'];
+    readonly skyNight: readonly ['#120d2c', '#1b1640', '#241d52', '#2e2563'];
+    readonly moon: '#fff1cf';
+    readonly moonCrater: '#e9d9b4';
+    readonly star: '#fff6dc';
+    readonly duneDay: '#f3e2c0';
+    readonly duneNight: '#3a2c22';
+    /** The paper tag behind kickers on the sky, both modes. */
+    readonly tagPaper: '#fff6e4';
+    readonly tagInk: '#a8321e';
+};
+/** Day values that the night block overrides (same names, so components don't branch). */
+export declare const day: {
+    readonly link: '#1f7e7a';
+    readonly shadowInk: '#2b1b14';
+    readonly skyText: '#2b1b14';
+    readonly pillBg: '#fff6e4';
+    readonly pillInk: '#2b1b14';
+    readonly pillRim: '#2b1b14';
+};
+/** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
+export declare const night: {
+    readonly paper: '#1d1510';
+    readonly card: '#281d16';
+    readonly sand: '#33261c';
+    readonly ink: '#fff6e4';
+    readonly inkSoft: '#d8c4a6';
+    readonly tomatoD: '#ff9a7f';
+    readonly white: '#281d16';
+    readonly link: '#6fd0c6';
+    readonly lagoon: '#6fd0c6';
+    readonly ruleRoute: 'rgba(255, 246, 228, 0.3)';
+    readonly shadowInk: '#5b4536';
+    readonly skyText: '#fff6e4';
+    readonly pillBg: '#241d52';
+    readonly pillInk: '#fff6e4';
+    readonly pillRim: '#fff6e4';
+};
+/**
+ * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
+ * Night is the dark-sand theme from CONTRAST.md on #33261c; tag, attr and
+ * number were not in CONTRAST.md and were picked to clear AA (see tests).
+ */
+export declare const code: {
+    readonly day: {
+        readonly bg: '#f3e2c0';
+        readonly text: '#2b1b14';
+        readonly keyword: '#a3240f';
+        readonly string: '#17665f';
+        readonly function: '#1d4f9a';
+        readonly tag: '#8a2a6b';
+        readonly attr: '#7a5200';
+        readonly number: '#4f6100';
+        readonly comment: '#6e5c4c';
+        readonly punct: '#5b4536';
+    };
+    readonly night: {
+        readonly bg: '#33261c';
+        readonly text: '#f3e2c0';
+        readonly keyword: '#ff8f73';
+        readonly string: '#7fd3c6';
+        readonly function: '#9cc0ff';
+        readonly tag: '#f2a7d6';
+        readonly attr: '#f6c66b';
+        readonly number: '#c9dc7a';
+        readonly comment: '#b9a48c';
+        readonly punct: '#d8c4a6';
+    };
+};
+/** Text pairs for both modes of the blog sky, cards and code (CONTRAST.md). */
+export declare const modePairs: readonly [{
+    readonly name: 'day ink on sky band 4';
+    readonly fg: "#2b1b14";
+    readonly bg: "#f9cc70";
+    readonly large: false;
+}, {
+    readonly name: 'day tag kicker';
+    readonly fg: "#a8321e";
+    readonly bg: "#fff6e4";
+    readonly large: false;
+}, {
+    readonly name: 'night paper on page';
+    readonly fg: "#fff6e4";
+    readonly bg: "#1d1510";
+    readonly large: false;
+}, {
+    readonly name: 'night ink-soft on page';
+    readonly fg: "#d8c4a6";
+    readonly bg: "#1d1510";
+    readonly large: false;
+}, {
+    readonly name: 'night kicker on page';
+    readonly fg: "#ff9a7f";
+    readonly bg: "#1d1510";
+    readonly large: false;
+}, {
+    readonly name: 'night link on page';
+    readonly fg: "#6fd0c6";
+    readonly bg: "#1d1510";
+    readonly large: false;
+}, {
+    readonly name: 'night paper on card';
+    readonly fg: "#fff6e4";
+    readonly bg: "#281d16";
+    readonly large: false;
+}, {
+    readonly name: 'night ink-soft on card';
+    readonly fg: "#d8c4a6";
+    readonly bg: "#281d16";
+    readonly large: false;
+}, {
+    readonly name: 'night kicker on card';
+    readonly fg: "#ff9a7f";
+    readonly bg: "#281d16";
+    readonly large: false;
+}, {
+    readonly name: 'night paper on sand';
+    readonly fg: "#fff6e4";
+    readonly bg: "#33261c";
+    readonly large: false;
+}, {
+    readonly name: 'night ink-soft on sand';
+    readonly fg: "#d8c4a6";
+    readonly bg: "#33261c";
+    readonly large: false;
+}, {
+    readonly name: 'night paper on pill';
+    readonly fg: "#fff6e4";
+    readonly bg: "#241d52";
+    readonly large: false;
+}, {
+    readonly name: 'night paper on sky band 4';
+    readonly fg: "#fff6e4";
+    readonly bg: "#2e2563";
+    readonly large: false;
+}, {
+    readonly name: 'ink-fixed on marigold';
+    readonly fg: "#2b1b14";
+    readonly bg: '#f6b43c';
+    readonly large: false;
+}, ...({
+    name: string;
+    fg: "#17665f" | "#1d4f9a" | "#2b1b14" | "#4f6100" | "#5b4536" | "#6e5c4c" | "#7a5200" | "#8a2a6b" | "#a3240f" | "#f3e2c0";
+    bg: "#f3e2c0";
+    large: boolean;
+} | {
+    name: string;
+    fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+    bg: "#33261c";
+    large: boolean;
+})[]];
 export declare const tokens: {
     readonly color: {
         readonly ink: '#2b1b14';
@@ -743,6 +920,8 @@ export declare const tokens: {
     readonly easing: {
         readonly pop: 'cubic-bezier(0.34, 1.56, 0.64, 1)';
         readonly out: 'cubic-bezier(0.16, 1, 0.3, 1)';
+        /** Porthole glare sweep (blog sky, M1 Cruise). */
+        readonly glide: 'cubic-bezier(0.45, 0, 0.2, 1)';
         readonly drop: 'cubic-bezier(0.5, 0, 0.9, 0.5)';
         readonly settle: 'cubic-bezier(0.2, 0.6, 0.4, 1)';
         readonly stamp: 'cubic-bezier(0.6, 0, 1, 0.6)';
@@ -993,6 +1172,167 @@ export declare const tokens: {
         readonly bg: "#f19c74";
         readonly large: true;
     }];
+    readonly motion: {
+        readonly durFast: '160ms';
+        readonly durPop: '360ms';
+        readonly durFade: '900ms';
+        readonly durTheme: '1200ms';
+        /** Cloud strip speeds, per 1440px tile. */
+        readonly skyFar: '180s';
+        readonly skyMid: '110s';
+        readonly skyNear: '70s';
+        /** Porthole glare cycle (one ~1.3s sweep, then rest). */
+        readonly glare: '12s';
+        readonly glareDelay: '2s';
+        readonly twinkle1: '3.2s';
+        readonly twinkle2: '4.4s';
+        readonly twinkle3: '5.6s';
+    };
+    readonly modeStable: {
+        readonly inkFixed: '#2b1b14';
+        readonly skyDay: readonly ['#fde7b0', '#fcde98', '#fbd682', '#f9cc70'];
+        readonly skyNight: readonly ['#120d2c', '#1b1640', '#241d52', '#2e2563'];
+        readonly moon: '#fff1cf';
+        readonly moonCrater: '#e9d9b4';
+        readonly star: '#fff6dc';
+        readonly duneDay: '#f3e2c0';
+        readonly duneNight: '#3a2c22';
+        /** The paper tag behind kickers on the sky, both modes. */
+        readonly tagPaper: '#fff6e4';
+        readonly tagInk: '#a8321e';
+    };
+    readonly day: {
+        readonly link: '#1f7e7a';
+        readonly shadowInk: '#2b1b14';
+        readonly skyText: '#2b1b14';
+        readonly pillBg: '#fff6e4';
+        readonly pillInk: '#2b1b14';
+        readonly pillRim: '#2b1b14';
+    };
+    readonly night: {
+        readonly paper: '#1d1510';
+        readonly card: '#281d16';
+        readonly sand: '#33261c';
+        readonly ink: '#fff6e4';
+        readonly inkSoft: '#d8c4a6';
+        readonly tomatoD: '#ff9a7f';
+        readonly white: '#281d16';
+        readonly link: '#6fd0c6';
+        readonly lagoon: '#6fd0c6';
+        readonly ruleRoute: 'rgba(255, 246, 228, 0.3)';
+        readonly shadowInk: '#5b4536';
+        readonly skyText: '#fff6e4';
+        readonly pillBg: '#241d52';
+        readonly pillInk: '#fff6e4';
+        readonly pillRim: '#fff6e4';
+    };
+    readonly code: {
+        readonly day: {
+            readonly bg: '#f3e2c0';
+            readonly text: '#2b1b14';
+            readonly keyword: '#a3240f';
+            readonly string: '#17665f';
+            readonly function: '#1d4f9a';
+            readonly tag: '#8a2a6b';
+            readonly attr: '#7a5200';
+            readonly number: '#4f6100';
+            readonly comment: '#6e5c4c';
+            readonly punct: '#5b4536';
+        };
+        readonly night: {
+            readonly bg: '#33261c';
+            readonly text: '#f3e2c0';
+            readonly keyword: '#ff8f73';
+            readonly string: '#7fd3c6';
+            readonly function: '#9cc0ff';
+            readonly tag: '#f2a7d6';
+            readonly attr: '#f6c66b';
+            readonly number: '#c9dc7a';
+            readonly comment: '#b9a48c';
+            readonly punct: '#d8c4a6';
+        };
+    };
+    readonly modePairs: readonly [{
+        readonly name: 'day ink on sky band 4';
+        readonly fg: "#2b1b14";
+        readonly bg: "#f9cc70";
+        readonly large: false;
+    }, {
+        readonly name: 'day tag kicker';
+        readonly fg: "#a8321e";
+        readonly bg: "#fff6e4";
+        readonly large: false;
+    }, {
+        readonly name: 'night paper on page';
+        readonly fg: "#fff6e4";
+        readonly bg: "#1d1510";
+        readonly large: false;
+    }, {
+        readonly name: 'night ink-soft on page';
+        readonly fg: "#d8c4a6";
+        readonly bg: "#1d1510";
+        readonly large: false;
+    }, {
+        readonly name: 'night kicker on page';
+        readonly fg: "#ff9a7f";
+        readonly bg: "#1d1510";
+        readonly large: false;
+    }, {
+        readonly name: 'night link on page';
+        readonly fg: "#6fd0c6";
+        readonly bg: "#1d1510";
+        readonly large: false;
+    }, {
+        readonly name: 'night paper on card';
+        readonly fg: "#fff6e4";
+        readonly bg: "#281d16";
+        readonly large: false;
+    }, {
+        readonly name: 'night ink-soft on card';
+        readonly fg: "#d8c4a6";
+        readonly bg: "#281d16";
+        readonly large: false;
+    }, {
+        readonly name: 'night kicker on card';
+        readonly fg: "#ff9a7f";
+        readonly bg: "#281d16";
+        readonly large: false;
+    }, {
+        readonly name: 'night paper on sand';
+        readonly fg: "#fff6e4";
+        readonly bg: "#33261c";
+        readonly large: false;
+    }, {
+        readonly name: 'night ink-soft on sand';
+        readonly fg: "#d8c4a6";
+        readonly bg: "#33261c";
+        readonly large: false;
+    }, {
+        readonly name: 'night paper on pill';
+        readonly fg: "#fff6e4";
+        readonly bg: "#241d52";
+        readonly large: false;
+    }, {
+        readonly name: 'night paper on sky band 4';
+        readonly fg: "#fff6e4";
+        readonly bg: "#2e2563";
+        readonly large: false;
+    }, {
+        readonly name: 'ink-fixed on marigold';
+        readonly fg: "#2b1b14";
+        readonly bg: '#f6b43c';
+        readonly large: false;
+    }, ...({
+        name: string;
+        fg: "#17665f" | "#1d4f9a" | "#2b1b14" | "#4f6100" | "#5b4536" | "#6e5c4c" | "#7a5200" | "#8a2a6b" | "#a3240f" | "#f3e2c0";
+        bg: "#f3e2c0";
+        large: boolean;
+    } | {
+        name: string;
+        fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+        bg: "#33261c";
+        large: boolean;
+    })[]];
 };
 export type Tokens = typeof tokens;
 //# sourceMappingURL=tokens.d.ts.map

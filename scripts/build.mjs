@@ -25,6 +25,7 @@ writeFileSync(resolve(dist, 'theme.css'), renderThemeCss());
 writeFileSync(resolve(dist, 'tokens.json'), renderTokensJson());
 cpSync(resolve(root, 'src/styles/base.css'), resolve(dist, 'base.css'));
 cpSync(resolve(root, 'src/styles/fonts.css'), resolve(dist, 'fonts.css'));
+cpSync(resolve(root, 'src/styles/sky.css'), resolve(dist, 'sky.css'));
 cpSync(resolve(root, 'fonts'), resolve(dist, 'fonts'), { recursive: true });
 cpSync(
   resolve(root, 'src/illustrations/files'),
