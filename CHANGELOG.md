@@ -9,7 +9,7 @@
 - **Motion tokens**, all in `src/tokens/tokens.ts`: `--lm-ease-glide`, `--lm-dur-{fast,pop,fade,theme,glare,glare-delay,twinkle-1..3}`, `--lm-sky-{far,mid,near}`.
 - **`lm-theme-toggle`** (`./components/theme-toggle`): 44px icon pill, `aria-label="Night"` + `aria-pressed`, stores `lm.ui.theme`, dispatches `lm-theme`, View Transitions unless reduced motion. `theme.ts` exports `readTheme`, `setTheme`, `applyTheme`, `THEME_KEY`.
 - **`theme-init.js`**: the blocking no-flash head script (`?mode=`, `lm.ui.theme`, `prefers-color-scheme`). Serve it as an external file for `script-src 'self'`.
-- **`lm-sky-header`** (`./components/sky-header`): M1 Cruise sky (bands, stars, sun/moon, three cloud strips, dunes). Off-screen pause via IntersectionObserver (`.lm-sky-off`), `button.lm-sky-pause` follows the `lm-pause` contract (`html.paused`, `lm-pause` event, "Pause sky"/"Play sky"), `compact` is the still post strip. `skyLayersHtml()` server-renders the layers.
+- **`lm-sky-header`** (`./components/sky-header`): M1 Cruise sky (bands, stars, sun/moon, three cloud strips, dunes). Off-screen pause via IntersectionObserver (`.lm-sky-off`), `button.lm-sky-pause` follows the `lm-pause` contract (`html.paused`, `lm-pause` event, "Pause sky"/"Play sky"), `compact` is the still post strip. `skyLayersHtml()` and `landEdge` server-render the layers; import them from the DOM-free `@luismatute/ui/sky-art` subpath in SSR (Astro).
 - **`sky.css`**: sky header, pills, porthole stills, ticket-stub card (`.lm-stubs`, `.lm-ticket`), porthole cover (`.lm-cover`), F1 Wheels down footer (`.lm-land`, `landEdge`). Only transform and opacity animate; everything is static under `prefers-reduced-motion`.
 
 ## 0.1.2

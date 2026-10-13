@@ -1,11 +1,6 @@
-import { landEdge, skyLayersCompact, skyLayersFull } from './sky-art.ts';
+import { landEdge, skyLayersHtml } from './sky-art.ts';
 
-export { landEdge };
-
-/** Sky layers HTML for server rendering (Astro `set:html`). Decorative, aria-hidden. */
-export function skyLayersHtml(options: { compact?: boolean } = {}): string {
-  return options.compact ? skyLayersCompact : skyLayersFull;
-}
+export { landEdge, skyLayersHtml };
 
 function setPaused(on: boolean): void {
   const root = document.documentElement;

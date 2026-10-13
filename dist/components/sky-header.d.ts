@@ -1,9 +1,5 @@
-import { landEdge } from './sky-art.js';
-export { landEdge };
-/** Sky layers HTML for server rendering (Astro `set:html`). Decorative, aria-hidden. */
-export declare function skyLayersHtml(options?: {
-    compact?: boolean;
-}): string;
+import { landEdge, skyLayersHtml } from './sky-art.js';
+export { landEdge, skyLayersHtml };
 /**
  * Wraps a `.lm-sky-head` header. Adds the sky layers when the server did not,
  * pauses every loop while the header is off-screen (`.lm-sky-off`), and wires

@@ -16,6 +16,7 @@ const entries = {
   'components/theme-toggle': 'src/components/entries/theme-toggle.ts',
   'components/sky-header': 'src/components/entries/sky-header.ts',
   'theme-init': 'src/theme-init.ts',
+  'sky-art': 'src/components/sky-art.ts',
   'illustrations/index': 'src/illustrations/index.ts',
 };
 

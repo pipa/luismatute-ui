@@ -118,3 +118,10 @@ describe('lm-sky-header', () => {
     b.click();
   });
 });
+
+describe('sky-art subpath', () => {
+  it('is DOM-free so SSR can import it', () => {
+    const src = readFileSync('src/components/sky-art.ts', 'utf8');
+    expect(src).not.toMatch(/HTMLElement|customElements|document\./);
+  });
+});

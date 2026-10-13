@@ -91,6 +91,10 @@
       "types": "./dist/components/sky-header.d.ts",
       "import": "./dist/components/sky-header.js"
     },
+    "./sky-art": {
+      "types": "./dist/components/sky-art.d.ts",
+      "import": "./dist/sky-art.js"
+    },
     "./illustrations": {
       "types": "./dist/illustrations/index.d.ts",
       "import": "./dist/illustrations/index.js"
