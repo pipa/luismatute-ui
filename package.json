@@ -117,6 +117,7 @@
     ]
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@biomejs/biome": "2.5.15",
     "@types/node": "26.6.5",
     "happy-dom": "20.14.6",
