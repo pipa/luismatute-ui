@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 · Luis Matute / UI</title>
+    <script src="./theme.js"></script>
+    <link rel="stylesheet" href="../../../dist/tokens.css" />
+    <link rel="stylesheet" href="../../../dist/fonts.css" />
+    <link rel="stylesheet" href="../../../dist/base.css" />
+    <link rel="stylesheet" href="./mock.css" />
+  </head>
+  <body>
+    <a class="lm-skip" href="#main">Skip to content</a>
+    <div class="docs-shell">
+      <header class="docs-topbar">
+        <button
+          class="docs-menu"
+          type="button"
+          data-drawer-open
+          aria-controls="docs-nav"
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          <span class="docs-menu-bars"></span>
+        </button>
+        <a class="docs-wordmark" href="./home.html">
+          <span class="docs-wordmark-name">Luis Matute</span>
+          <span class="docs-wordmark-slash">/</span>
+          <span class="docs-wordmark-ui">UI</span>
+        </a>
+        <span class="docs-hand">wheels up</span>
+        <span class="docs-version">v0.1.2</span>
+        <div class="docs-topbar-end">
+          <button
+            class="docs-search-trigger"
+            type="button"
+            data-search-open
+            aria-label="Search"
+            aria-haspopup="dialog"
+            aria-controls="docs-search"
+          >
+            <span class="docs-search-label">Search</span>
+            <kbd class="docs-kbd">⌘K</kbd>
+          </button>
+          <fieldset class="docs-theme">
+            <legend class="lm-vh">Theme</legend>
+            <button type="button" data-theme-set="light" aria-pressed="false">
+              Light
+            </button>
+            <button type="button" data-theme-set="dark" aria-pressed="false">
+              Dark
+            </button>
+            <button type="button" data-theme-set="auto" aria-pressed="true">
+              Auto
+            </button>
+          </fieldset>
+          <a class="docs-ext" href="https://github.com/pipa/luismatute-ui"
+            >GitHub</a
+          >
+          <a class="docs-ext docs-ext-site" href="https://luismatute.me"
+            >luismatute.me</a
+          >
+        </div>
+      </header>
+      <div class="docs-body">
+        <div class="docs-backdrop" data-drawer-backdrop hidden></div>
+        <nav class="docs-nav" id="docs-nav" aria-label="Docs">
+          <div class="docs-nav-head">
+            <span class="docs-wordmark-ui">Menu</span>
+            <button
+              class="docs-nav-close"
+              type="button"
+              data-drawer-close
+              aria-label="Close menu"
+            >
+              ×
+            </button>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Getting started</h2>
+            <ul>
+              <li><a href="./home.html">Introduction</a></li>
+              <li><a href="./home.html#install">Install</a></li>
+              <li><a href="./home.html#astro">Astro</a></li>
+              <li><a href="./home.html#html">Bare imports</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Tokens</h2>
+            <ul>
+              <li><a href="./home.html#tokens">Colour</a></li>
+              <li><a href="./home.html#type">Type</a></li>
+              <li><a href="./home.html#space">Spacing</a></li>
+              <li><a href="./home.html#motion">Motion</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Components</h2>
+            <ul>
+              <li><a href="./index.html">lm-card</a></li>
+              <li><a href="./index.html">lm-chip</a></li>
+              <li><a href="./index.html">lm-more</a></li>
+              <li><a href="./index.html">lm-motion-toggle</a></li>
+              <li><a href="./index.html">lm-pause</a></li>
+              <li><a href="./index.html">lm-shot</a></li>
+              <li><a href="./index.html">lm-avatar</a></li>
+              <li><a href="./index.html">lm-globe</a></li>
+              <li><a href="./index.html">lm-flight-plan</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Illustrations</h2>
+            <ul>
+              <li><a href="./home.html#art">SVG kit</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Changelog</h2>
+            <ul>
+              <li><a href="./home.html#changelog">v0.1.x</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="docs-content">
+          <main id="main" class="docs-404 docs-prose">
+            <p class="docs-kicker">Gate closed</p>
+            <h1 class="docs-title">404</h1>
+            <p class="docs-hand">this flight was cancelled</p>
+            <p class="docs-lede">
+              That URL is not on the board. Search, or return to the gate.
+            </p>
+            <p>
+              <a href="./home.html">Back to /ui/</a>
+            </p>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div
+      class="docs-search"
+      id="docs-search"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="docs-search-title"
+      hidden
+    >
+      <div class="docs-search-panel">
+        <p class="docs-search-kicker" id="docs-search-title">Search the docs</p>
+        <div class="docs-search-bar">
+          <input
+            class="docs-search-input"
+            type="search"
+            placeholder="Search pages"
+            aria-label="Search pages"
+            autocomplete="off"
+          />
+          <button
+            class="docs-search-close"
+            type="button"
+            data-search-close
+            aria-label="Close search"
+          >
+            ×
+          </button>
+        </div>
+        <div
+          class="docs-search-hits"
+          data-search-results
+          role="listbox"
+          hidden
+        ></div>
+        <div class="docs-search-empty" data-search-empty hidden>
+          <span class="docs-hand">no flights found</span>
+          <p>Try a component name, a token, or install.</p>
+        </div>
+      </div>
+    </div>
+    <div class="docs-live" id="docs-live" aria-live="polite"></div>
+    <script src="./mock.js"></script>
+  </body>
+</html>

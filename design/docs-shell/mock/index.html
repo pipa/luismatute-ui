@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>lm-card · Luis Matute / UI</title>
+    <script src="./theme.js"></script>
+    <link rel="stylesheet" href="../../../dist/tokens.css" />
+    <link rel="stylesheet" href="../../../dist/fonts.css" />
+    <link rel="stylesheet" href="../../../dist/base.css" />
+    <link rel="stylesheet" href="./mock.css" />
+  </head>
+  <body>
+    <a class="lm-skip" href="#main">Skip to content</a>
+    <div class="docs-shell">
+      <header class="docs-topbar">
+        <button
+          class="docs-menu"
+          type="button"
+          data-drawer-open
+          aria-controls="docs-nav"
+          aria-expanded="false"
+          aria-label="Open menu"
+        >
+          <span class="docs-menu-bars"></span>
+        </button>
+        <a class="docs-wordmark" href="./home.html">
+          <span class="docs-wordmark-name">Luis Matute</span>
+          <span class="docs-wordmark-slash">/</span>
+          <span class="docs-wordmark-ui">UI</span>
+        </a>
+        <span class="docs-hand">wheels up</span>
+        <span class="docs-version">v0.1.2</span>
+        <div class="docs-topbar-end">
+          <button
+            class="docs-search-trigger"
+            type="button"
+            data-search-open
+            aria-label="Search"
+            aria-haspopup="dialog"
+            aria-controls="docs-search"
+          >
+            <span class="docs-search-label">Search</span>
+            <kbd class="docs-kbd">⌘K</kbd>
+          </button>
+          <fieldset class="docs-theme">
+            <legend class="lm-vh">Theme</legend>
+            <button type="button" data-theme-set="light" aria-pressed="false">
+              Light
+            </button>
+            <button type="button" data-theme-set="dark" aria-pressed="false">
+              Dark
+            </button>
+            <button type="button" data-theme-set="auto" aria-pressed="true">
+              Auto
+            </button>
+          </fieldset>
+          <a class="docs-ext" href="https://github.com/pipa/luismatute-ui"
+            >GitHub</a
+          >
+          <a class="docs-ext docs-ext-site" href="https://luismatute.me"
+            >luismatute.me</a
+          >
+        </div>
+      </header>
+      <div class="docs-body">
+        <div
+          class="docs-backdrop"
+          data-drawer-backdrop
+          hidden
+        ></div>
+        <nav class="docs-nav" id="docs-nav" aria-label="Docs">
+          <div class="docs-nav-head">
+            <span class="docs-wordmark-ui">Menu</span>
+            <button
+              class="docs-nav-close"
+              type="button"
+              data-drawer-close
+              aria-label="Close menu"
+            >
+              ×
+            </button>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Getting started</h2>
+            <ul>
+              <li><a href="./home.html">Introduction</a></li>
+              <li><a href="./home.html#install">Install</a></li>
+              <li><a href="./home.html#astro">Astro</a></li>
+              <li><a href="./home.html#html">Bare imports</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Tokens</h2>
+            <ul>
+              <li><a href="./home.html#tokens">Colour</a></li>
+              <li><a href="./home.html#type">Type</a></li>
+              <li><a href="./home.html#space">Spacing</a></li>
+              <li><a href="./home.html#motion">Motion</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Components</h2>
+            <ul>
+              <li>
+                <a class="is-current" href="./index.html" aria-current="page"
+                  >lm-card</a
+                >
+              </li>
+              <li><a href="./index.html">lm-chip</a></li>
+              <li><a href="./index.html">lm-more</a></li>
+              <li><a href="./index.html">lm-motion-toggle</a></li>
+              <li><a href="./index.html">lm-pause</a></li>
+              <li><a href="./index.html">lm-shot</a></li>
+              <li><a href="./index.html">lm-avatar</a></li>
+              <li><a href="./index.html">lm-globe</a></li>
+              <li><a href="./index.html">lm-flight-plan</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Illustrations</h2>
+            <ul>
+              <li><a href="./home.html#art">SVG kit</a></li>
+            </ul>
+          </div>
+          <div class="docs-nav-group">
+            <h2>Changelog</h2>
+            <ul>
+              <li><a href="./home.html#changelog">v0.1.x</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="docs-content">
+          <div class="docs-toc-inline">
+            <button
+              type="button"
+              data-toc-toggle
+              aria-expanded="false"
+              aria-controls="docs-toc-panel"
+            >
+              On this page
+            </button>
+            <nav id="docs-toc-panel" data-toc-panel hidden>
+              <ol>
+                <li><a href="#demo">Live demo</a></li>
+                <li><a href="#props">Props</a></li>
+                <li><a href="#css">CSS variables</a></li>
+                <li><a href="#a11y">Accessibility</a></li>
+                <li><a href="#code">Code</a></li>
+              </ol>
+            </nav>
+          </div>
+          <main id="main">
+            <p class="docs-kicker">Components · Card</p>
+            <h1 class="docs-title">lm-card</h1>
+            <p class="docs-lede">
+              Paper ticket for a stop or a boarding pass. Hard ink edge, offset
+              shadow, no glass.
+            </p>
+            <div class="docs-toc-inline-spacer"></div>
+            <section id="demo" class="docs-prose">
+              <h2>Live demo</h2>
+              <div class="docs-demo">
+                <div class="docs-demo-chrome">
+                  <span class="docs-demo-dots" aria-hidden="true"
+                    ><i></i><i></i><i></i
+                  ></span>
+                  <span class="docs-demo-name">Live demo</span>
+                  <button type="button" data-demo-surface aria-pressed="false">
+                    <span class="docs-demo-long">Paper ground</span>
+                    <span class="docs-demo-short">Paper</span>
+                  </button>
+                  <button type="button" data-demo-motion aria-pressed="false">
+                    <span class="docs-demo-long">Reduce motion</span>
+                    <span class="docs-demo-short">Still</span>
+                  </button>
+                </div>
+                <div class="docs-demo-stage" data-surface="paper">
+                  <lm-card variant="pass">
+                    <p class="lm-kicker">Boarding pass</p>
+                    <h1>Luis Matute</h1>
+                    <dl class="lm-route">
+                      <div>
+                        <dt>From</dt>
+                        <dd>Honduras</dd>
+                      </div>
+                      <div>
+                        <dt>To</dt>
+                        <dd>Amsterdam</dd>
+                      </div>
+                      <div>
+                        <dt>Stops</dt>
+                        <dd>6</dd>
+                      </div>
+                    </dl>
+                    <p class="lm-intro">
+                      Born in Honduras. At Booking.com in Amsterdam since
+                      October 2017.
+                    </p>
+                  </lm-card>
+                </div>
+              </div>
+            </section>
+            <hr class="docs-flight" />
+            <section id="props" class="docs-prose">
+              <h2>Props</h2>
+              <div class="docs-table-wrap">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Default</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>variant</code></td>
+                      <td><code>"stop" | "pass"</code></td>
+                      <td><code>"stop"</code></td>
+                      <td>Pass is the boarding-pass layout.</td>
+                    </tr>
+                    <tr>
+                      <td>slot</td>
+                      <td>HTML</td>
+                      <td>—</td>
+                      <td>Kicker, title, route list, body copy.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section id="css" class="docs-prose">
+              <h2>CSS variables</h2>
+              <div class="docs-table-wrap">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Variable</th>
+                      <th>Role</th>
+                      <th>Token</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>--lm-card</code></td>
+                      <td>Fill</td>
+                      <td>paper</td>
+                    </tr>
+                    <tr>
+                      <td><code>--lm-ink</code></td>
+                      <td>Border and type</td>
+                      <td>ink</td>
+                    </tr>
+                    <tr>
+                      <td><code>--lm-shadow-card</code></td>
+                      <td>Offset shadow</td>
+                      <td>6px 7px 0 ink</td>
+                    </tr>
+                    <tr>
+                      <td><code>--lm-radius-card</code></td>
+                      <td>Corner</td>
+                      <td>20px</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h3>Click-to-copy tokens</h3>
+              <div class="docs-swatches">
+                <button
+                  class="docs-token"
+                  type="button"
+                  data-token-copy="--lm-ink"
+                >
+                  <i class="docs-swatch" data-swatch="ink"></i>
+                  <span class="docs-token-meta">
+                    <span class="docs-token-name">--lm-ink</span>
+                    <span class="docs-token-value">#2b1b14</span>
+                  </span>
+                  <span class="docs-copy" data-idle="Copy">Copy</span>
+                </button>
+                <button
+                  class="docs-token"
+                  type="button"
+                  data-token-copy="--lm-paper"
+                >
+                  <i class="docs-swatch" data-swatch="paper"></i>
+                  <span class="docs-token-meta">
+                    <span class="docs-token-name">--lm-paper</span>
+                    <span class="docs-token-value">#fff6e4</span>
+                  </span>
+                  <span class="docs-copy" data-idle="Copy">Copy</span>
+                </button>
+                <button
+                  class="docs-token"
+                  type="button"
+                  data-token-copy="--lm-marigold"
+                >
+                  <i class="docs-swatch" data-swatch="marigold"></i>
+                  <span class="docs-token-meta">
+                    <span class="docs-token-name">--lm-marigold</span>
+                    <span class="docs-token-value">#f6b43c</span>
+                  </span>
+                  <span class="docs-copy" data-idle="Copy">Copy</span>
+                </button>
+                <button
+                  class="docs-token"
+                  type="button"
+                  data-token-copy="--lm-tomato"
+                >
+                  <i class="docs-swatch" data-swatch="tomato"></i>
+                  <span class="docs-token-meta">
+                    <span class="docs-token-name">--lm-tomato</span>
+                    <span class="docs-token-value">#e2492f</span>
+                  </span>
+                  <span class="docs-copy" data-idle="Copy">Copy</span>
+                </button>
+              </div>
+            </section>
+            <section id="a11y" class="docs-prose">
+              <h2>Accessibility</h2>
+              <div class="docs-callout" data-kind="note">
+                <span class="docs-callout-label">Note</span>
+                <p>
+                  The card is a grouping landmark only. Headings inside stay in
+                  the page outline. Do not put a second h1 on a docs page.
+                </p>
+              </div>
+              <div class="docs-callout" data-kind="warning">
+                <span class="docs-callout-label">Warning</span>
+                <p>
+                  Tomato on paper is 3.74:1. Use tomato-d
+                  <code>#a8321e</code> for small text and links.
+                </p>
+              </div>
+              <div class="docs-callout" data-kind="tip">
+                <span class="docs-callout-label">Tip</span>
+                <p>
+                  Reduced motion holds the first frame. The demo toggle sets
+                  <code>data-motion="reduce"</code> on the stage only.
+                </p>
+              </div>
+            </section>
+            <section id="code" class="docs-prose">
+              <h2>Code</h2>
+              <figure class="docs-code">
+                <figcaption>
+                  <span class="docs-code-name">card.html</span>
+                  <button class="docs-copy" type="button" data-copy data-idle="Copy">
+                    Copy
+                  </button>
+                </figcaption>
+                <pre><code id="snippet-html"><span class="token punctuation">&lt;</span><span class="token tag">lm-card</span> <span class="token attr-name">variant</span><span class="token punctuation">=</span><span class="token string">"pass"</span><span class="token punctuation">&gt;</span>
+  <span class="token punctuation">&lt;</span><span class="token tag">p</span> <span class="token attr-name">class</span><span class="token punctuation">=</span><span class="token string">"lm-kicker"</span><span class="token punctuation">&gt;</span>Boarding pass<span class="token punctuation">&lt;/</span><span class="token tag">p</span><span class="token punctuation">&gt;</span>
+  <span class="token punctuation">&lt;</span><span class="token tag">h1</span><span class="token punctuation">&gt;</span>Luis Matute<span class="token punctuation">&lt;/</span><span class="token tag">h1</span><span class="token punctuation">&gt;</span>
+<span class="token punctuation">&lt;/</span><span class="token tag">lm-card</span><span class="token punctuation">&gt;</span></code></pre>
+              </figure>
+              <figure class="docs-code">
+                <figcaption>
+                  <span class="docs-code-name">astro</span>
+                  <button class="docs-copy" type="button" data-copy data-idle="Copy">
+                    Copy
+                  </button>
+                </figcaption>
+                <pre><code><span class="token keyword">import</span> <span class="token string">'@luismatute/ui/tokens.css'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string">'@luismatute/ui/base.css'</span><span class="token punctuation">;</span></code></pre>
+              </figure>
+              <h3>Copy button states</h3>
+              <div class="docs-states" id="copy-states">
+                <div class="docs-state">
+                  <span>Idle</span>
+                  <button class="docs-copy" type="button">Copy</button>
+                </div>
+                <div class="docs-state">
+                  <span>Hover</span>
+                  <button class="docs-copy is-hover" type="button">Copy</button>
+                </div>
+                <div class="docs-state">
+                  <span>Focus</span>
+                  <button class="docs-copy" type="button" data-shot-focus>
+                    Copy
+                  </button>
+                </div>
+                <div class="docs-state">
+                  <span>Copied</span>
+                  <button class="docs-copy is-copied" type="button">
+                    Copied
+                  </button>
+                </div>
+                <div class="docs-state">
+                  <span>Error</span>
+                  <button class="docs-copy is-error" type="button">
+                    Could not copy
+                  </button>
+                </div>
+              </div>
+            </section>
+            <nav class="docs-pager" aria-label="Page">
+              <a href="./home.html">
+                <span>Previous</span>
+                <strong>Introduction</strong>
+              </a>
+              <a href="./index.html">
+                <span>Next</span>
+                <strong>lm-chip</strong>
+              </a>
+            </nav>
+          </main>
+        </div>
+        <aside class="docs-toc" aria-label="On this page">
+          <h2>On this page</h2>
+          <ol>
+            <li><a class="is-current" href="#demo">Live demo</a></li>
+            <li><a href="#props">Props</a></li>
+            <li><a href="#css">CSS variables</a></li>
+            <li><a href="#a11y">Accessibility</a></li>
+            <li><a href="#code">Code</a></li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+    <div
+      class="docs-search"
+      id="docs-search"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="docs-search-title"
+      hidden
+    >
+      <div class="docs-search-panel">
+        <p class="docs-search-kicker" id="docs-search-title">Search the docs</p>
+        <div class="docs-search-bar">
+          <input
+            class="docs-search-input"
+            type="search"
+            placeholder="Search pages"
+            aria-label="Search pages"
+            autocomplete="off"
+          />
+          <button
+            class="docs-search-close"
+            type="button"
+            data-search-close
+            aria-label="Close search"
+          >
+            ×
+          </button>
+        </div>
+        <div
+          class="docs-search-hits"
+          data-search-results
+          role="listbox"
+          hidden
+        ></div>
+        <div class="docs-search-empty" data-search-empty hidden>
+          <span class="docs-hand">no flights found</span>
+          <p>Try a component name, a token, or install.</p>
+        </div>
+      </div>
+    </div>
+    <div class="docs-live" id="docs-live" aria-live="polite"></div>
+    <script src="./mock.js"></script>
+    <script type="module" src="../../../dist/components/index.js"></script>
+  </body>
+</html>
