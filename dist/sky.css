@@ -506,9 +506,26 @@ html[data-mode="night"] .lm-cruise .lm-glare {
   .lm-sky-nav {
     min-height: 64px;
   }
-  .lm-sky-nav .lm-far,
-  .lm-sky-nav .lm-sky-controls {
+  .lm-sky-nav .lm-far {
     display: none;
+  }
+  /* phone controls: 44x44 icon pills after Blog (Muse #25) */
+  .lm-sky-nav .lm-theme-btn,
+  .lm-sky-nav .lm-sky-pause {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    border-width: 2.5px;
+    box-shadow: 3px 3px 0 var(--lm-ink-fixed);
+  }
+  .lm-sky-nav .lm-sky-pause .lm-pl {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .lm-pill {
     padding: 0 13px;

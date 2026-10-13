@@ -221,3 +221,21 @@ test('no horizontal overflow at 320px', async ({ page }) => {
     expect(over, mode).toBe(0);
   }
 });
+
+test('375: theme toggle is a 44x44 pill and the third tab stop', async ({
+  page,
+  browserName,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/fixtures/sky.html');
+  const btn = page.locator('lm-theme-toggle button');
+  const box = await btn.boundingBox();
+  expect(box?.width).toBeGreaterThanOrEqual(44);
+  expect(box?.height).toBeGreaterThanOrEqual(44);
+  const pause = await page.locator('.lm-sky-pause').boundingBox();
+  expect(pause?.width).toBeGreaterThanOrEqual(44);
+  await expect(page.locator('.lm-sky-pause')).toHaveAccessibleName(/Pause sky/);
+  const key = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+  for (let i = 0; i < 3; i++) await page.keyboard.press(key);
+  await expect(btn).toBeFocused();
+});
