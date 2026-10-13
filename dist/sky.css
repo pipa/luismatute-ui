@@ -1,0 +1,901 @@
+/*
+ * @luismatute/ui sky.css: the blog's Direction B pieces, shared with the main site.
+ * lm-sky-header (M1 Cruise), lm-theme-toggle, the ticket-stub card (.lm-ticket),
+ * the porthole cover (.lm-cover), and the F1 Wheels down footer (.lm-land).
+ * Needs tokens.css. Day/night through html[data-mode]. Only transform and
+ * opacity animate; durations and easings come from the --lm-dur-*, --lm-sky-*
+ * and --lm-ease-* tokens. Loops live in the header only and stop with
+ * html.paused (lm-pause), .lm-sky-off (off-screen) and prefers-reduced-motion.
+ */
+
+/* ---------- pills and controls ---------- */
+.lm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 2.5px solid var(--lm-pill-rim);
+  border-radius: 999px;
+  background: var(--lm-pill-bg);
+  box-shadow: 3px 3px 0 var(--lm-ink-fixed);
+  color: var(--lm-pill-ink);
+  font: 600 15px / 1 var(--lm-font-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--lm-dur-fast) var(--lm-ease-out);
+}
+html[data-mode="night"] .lm-pill {
+  box-shadow: 3px 3px 0 var(--lm-night);
+}
+.lm-pill[aria-current="page"] {
+  background: var(--lm-marigold);
+  color: var(--lm-ink-fixed);
+  border-color: var(--lm-ink-fixed);
+}
+.lm-pill:hover {
+  transform: translate3d(0, -2px, 0);
+}
+.lm-pill:active {
+  transform: translate3d(2px, 2px, 0);
+  transition-duration: 0ms;
+}
+.lm-pill:focus-visible {
+  outline: 2px solid var(--lm-link);
+  outline-offset: 3px;
+}
+.lm-pill--icon {
+  width: 44px;
+  padding: 0;
+  justify-content: center;
+}
+.lm-pill--mono {
+  font: 500 12px / 1 var(--lm-font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.lm-i-moon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: inset -5px -3px 0 0 currentColor;
+  transform: rotate(-20deg);
+}
+.lm-i-sun {
+  display: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  outline: 2px dotted currentColor;
+  outline-offset: 3px;
+}
+html[data-mode="night"] .lm-i-moon {
+  display: none;
+}
+html[data-mode="night"] .lm-i-sun {
+  display: block;
+}
+.lm-i-pause {
+  width: 11px;
+  height: 13px;
+  border-left: 4px solid currentColor;
+  border-right: 4px solid currentColor;
+}
+[aria-pressed="true"] > .lm-i-pause {
+  width: 0;
+  height: 0;
+  border-left: 12px solid currentColor;
+  border-right: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+}
+lm-theme-toggle,
+lm-sky-pause {
+  display: contents;
+}
+.lm-vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- sky header ---------- */
+lm-sky-header {
+  display: block;
+}
+.lm-sky-head {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 3px solid var(--lm-ink-fixed);
+  color: var(--lm-sky-text);
+}
+html[data-mode="night"] .lm-sky-head {
+  border-bottom-color: var(--lm-night);
+}
+.lm-sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.lm-sky > * {
+  position: absolute;
+}
+.lm-bands {
+  inset: 0;
+}
+.lm-bands--day {
+  background: linear-gradient(
+    var(--lm-sky-day-1) 0 24%,
+    var(--lm-sky-day-2) 24% 46%,
+    var(--lm-sky-day-3) 46% 67%,
+    var(--lm-sky-day-4) 67%
+  );
+}
+.lm-bands--night {
+  background: linear-gradient(
+    var(--lm-sky-night-1) 0 24%,
+    var(--lm-sky-night-2) 24% 46%,
+    var(--lm-sky-night-3) 46% 67%,
+    var(--lm-sky-night-4) 67%
+  );
+  opacity: 0;
+  transition: opacity var(--lm-dur-fade) var(--lm-ease-out);
+}
+html[data-mode="night"] .lm-bands--night {
+  opacity: 1;
+}
+
+.lm-stars {
+  inset: 0 0 auto;
+  width: 100%;
+  height: 72%;
+  opacity: 0;
+  transition: opacity var(--lm-dur-fade) var(--lm-ease-out) 300ms;
+}
+.lm-stars circle {
+  fill: var(--lm-star);
+}
+html[data-mode="night"] .lm-stars {
+  opacity: 1;
+}
+html[data-mode="night"] .lm-tw1 {
+  animation: lm-twinkle var(--lm-dur-twinkle-1) ease-in-out infinite alternate;
+}
+html[data-mode="night"] .lm-tw2 {
+  animation: lm-twinkle var(--lm-dur-twinkle-2) ease-in-out -1.6s infinite
+    alternate;
+}
+html[data-mode="night"] .lm-tw3 {
+  animation: lm-twinkle var(--lm-dur-twinkle-3) ease-in-out -3s infinite
+    alternate;
+}
+@keyframes lm-twinkle {
+  to {
+    opacity: 0.25;
+  }
+}
+
+.lm-orb {
+  right: clamp(140px, 22vw, 330px);
+  top: 26px;
+  width: 168px;
+  height: 168px;
+  transition:
+    transform var(--lm-dur-theme) var(--lm-ease-out),
+    opacity var(--lm-dur-theme) var(--lm-ease-out);
+}
+.lm-orb svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.lm-orb--moon {
+  opacity: 0;
+  transform: translate3d(0, 120px, 0);
+}
+html[data-mode="night"] .lm-orb--sun {
+  opacity: 0;
+  transform: translate3d(0, 140px, 0);
+}
+html[data-mode="night"] .lm-orb--moon {
+  opacity: 1;
+  transform: none;
+}
+.lm-moon-glow {
+  fill: var(--lm-moon);
+  opacity: 0.14;
+}
+.lm-moon-disc {
+  fill: var(--lm-moon);
+}
+.lm-moon-crater {
+  fill: var(--lm-moon-crater);
+}
+.lm-sun-1 {
+  fill: var(--lm-sun-3);
+}
+.lm-sun-2 {
+  fill: var(--lm-sun-2);
+}
+.lm-sun-3 {
+  fill: var(--lm-sun);
+}
+
+.lm-cl {
+  left: 0;
+  width: 4320px;
+  transition: opacity var(--lm-dur-fade) var(--lm-ease-out);
+}
+.lm-cl svg {
+  display: block;
+  width: 4320px;
+  height: auto;
+  overflow: visible;
+}
+.lm-cl--far {
+  top: 78px;
+  opacity: 0.75;
+}
+.lm-cl--mid {
+  top: 92px;
+}
+.lm-cl--near {
+  top: 30%;
+}
+html[data-mode="night"] .lm-cl--far {
+  opacity: 0.22;
+}
+html[data-mode="night"] .lm-cl--mid,
+html[data-mode="night"] .lm-cl--near {
+  opacity: 0.3;
+}
+.lm-cloud-rim {
+  fill: var(--lm-ink-fixed);
+}
+.lm-cloud-shade {
+  fill: var(--lm-cloud-shade);
+}
+.lm-cloud-face {
+  fill: var(--lm-cloud);
+}
+
+.lm-dune {
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 56px;
+}
+.lm-dune path {
+  stroke-width: 3;
+}
+.lm-dune--day path {
+  fill: var(--lm-dune-day);
+  stroke: var(--lm-ink-fixed);
+}
+.lm-dune--night {
+  opacity: 0;
+  transition: opacity var(--lm-dur-fade) var(--lm-ease-out);
+}
+.lm-dune--night path {
+  fill: var(--lm-dune-night);
+  stroke: var(--lm-night);
+}
+html[data-mode="night"] .lm-dune--night {
+  opacity: 1;
+}
+
+/* M1 Cruise: three parallax strips, one 1440px tile per loop */
+.lm-cruise .lm-cl--far {
+  animation: lm-drift var(--lm-sky-far) linear infinite;
+}
+.lm-cruise .lm-cl--mid {
+  animation: lm-drift var(--lm-sky-mid) linear infinite;
+}
+.lm-cruise .lm-cl--near {
+  animation: lm-drift var(--lm-sky-near) linear infinite;
+}
+@keyframes lm-drift {
+  to {
+    transform: translate3d(-1440px, 0, 0);
+  }
+}
+
+/* stop: Pause sky (html.paused), off-screen (.lm-sky-off) */
+html.paused .lm-sky-head *,
+.lm-sky-off * {
+  animation-play-state: paused !important;
+}
+
+/* foreground */
+.lm-sky-inner {
+  position: relative;
+}
+.lm-sky-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 76px;
+}
+.lm-sky-brand {
+  color: var(--lm-sky-text);
+  font: 700 20px / 1 var(--lm-font-display);
+  text-decoration: none;
+}
+.lm-sky-brand:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--lm-marigold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+.lm-sky-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lm-sky-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  padding: 4px 0 76px;
+}
+.lm-tag-kicker {
+  display: inline-block;
+  margin: 0;
+  padding: 5px 10px 4px;
+  border: 2px solid var(--lm-ink-fixed);
+  border-radius: 6px;
+  background: var(--lm-tag-paper);
+  color: var(--lm-tag-ink);
+  font: 500 12px / 1.2 var(--lm-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.lm-sky-title {
+  margin: 12px 0 14px;
+  color: var(--lm-sky-text);
+  font: 800 clamp(96px, 12vw, 168px) / 0.84 var(--lm-font-display);
+  font-stretch: 75%;
+  letter-spacing: -0.01em;
+  text-shadow: 0.045em 0.05em 0 var(--lm-tomato);
+}
+.lm-sky-tag {
+  margin: 0;
+  font: 700 20px / 1.3 var(--lm-font-text);
+}
+.lm-sky-window {
+  width: 156px;
+  margin-right: 24px;
+}
+
+/* porthole: two or three stacked stills; night sleeps, hover/focus reacts */
+.lm-porthole {
+  position: relative;
+  display: block;
+  aspect-ratio: 240 / 290;
+}
+.lm-porthole img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity var(--lm-dur-fast) var(--lm-ease-out);
+}
+.lm-porthole .lm-p-night,
+.lm-porthole .lm-p-react {
+  opacity: 0;
+}
+html[data-mode="night"] .lm-porthole .lm-p-rest {
+  opacity: 0;
+}
+html[data-mode="night"] .lm-porthole .lm-p-night {
+  opacity: 1;
+}
+.lm-reacts:is(:hover, :focus-within) .lm-porthole .lm-p-rest,
+.lm-reacts:is(:hover, :focus-within) .lm-porthole .lm-p-night {
+  opacity: 0;
+}
+.lm-reacts:is(:hover, :focus-within) .lm-porthole .lm-p-react {
+  opacity: 1;
+}
+.lm-porthole {
+  transform-origin: 50% 60%;
+  transition: transform var(--lm-dur-pop) var(--lm-ease-out);
+}
+.lm-reacts:is(:hover, :focus-within) .lm-porthole {
+  transform: translate3d(0, -2px, 0) rotate(-3deg);
+  transition-timing-function: var(--lm-ease-pop);
+}
+.lm-glass {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 11%;
+  bottom: 12%;
+  overflow: hidden;
+  border-radius: 50% / 42%;
+}
+.lm-glare {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 34%;
+  height: 140%;
+  background: #ffffff;
+  opacity: 0;
+  transform: translate3d(-160%, 0, 0) rotate(22deg);
+}
+.lm-cruise .lm-glare {
+  animation: lm-glare var(--lm-dur-glare) var(--lm-ease-glide)
+    var(--lm-dur-glare-delay) infinite;
+}
+html[data-mode="night"] .lm-cruise .lm-glare {
+  animation-name: lm-glare-night;
+}
+@keyframes lm-glare {
+  0% {
+    opacity: 0;
+    transform: translate3d(-160%, 0, 0) rotate(22deg);
+  }
+  3% {
+    opacity: 0.42;
+  }
+  11%,
+  100% {
+    opacity: 0;
+    transform: translate3d(330%, 0, 0) rotate(22deg);
+  }
+}
+@keyframes lm-glare-night {
+  0% {
+    opacity: 0;
+    transform: translate3d(-160%, 0, 0) rotate(22deg);
+  }
+  3% {
+    opacity: 0.18;
+  }
+  11%,
+  100% {
+    opacity: 0;
+    transform: translate3d(330%, 0, 0) rotate(22deg);
+  }
+}
+
+/* compact (posts): a still strip */
+.lm-sky-head--compact .lm-sky-hero,
+.lm-sky-head--compact .lm-cl,
+.lm-sky-head--compact .lm-orb,
+.lm-sky-head--compact .lm-sky-pause {
+  display: none;
+}
+.lm-sky-head--compact * {
+  animation: none !important;
+}
+.lm-sky-head--compact .lm-sky-nav {
+  min-height: 100px;
+  padding-right: 92px;
+}
+.lm-sky-head--compact .lm-sky-window {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  width: 66px;
+  margin: 0;
+}
+.lm-sky-head--compact .lm-dune {
+  height: 28px;
+}
+.lm-sky-controls {
+  display: contents;
+}
+
+@media (max-width: 640px) {
+  .lm-sky-nav {
+    min-height: 64px;
+  }
+  .lm-sky-nav .lm-far,
+  .lm-sky-nav .lm-sky-controls {
+    display: none;
+  }
+  .lm-pill {
+    padding: 0 13px;
+    font-size: 14px;
+  }
+  .lm-pill--icon {
+    padding: 0;
+  }
+  .lm-sky-hero {
+    grid-template-columns: 1fr 96px;
+    gap: 10px;
+    padding: 4px 0 60px;
+    align-items: start;
+  }
+  .lm-sky-title {
+    font-size: 96px;
+    margin-top: 14px;
+  }
+  .lm-sky-tag {
+    font-size: 17px;
+  }
+  .lm-sky-window {
+    width: 96px;
+    margin: 6px 0 0;
+  }
+  .lm-sky-hero .lm-sky-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .lm-orb {
+    right: 10px;
+    top: 150px;
+    width: 110px;
+    height: 110px;
+  }
+  .lm-cl--far {
+    top: 66px;
+  }
+  .lm-cl--mid {
+    top: 74px;
+  }
+  .lm-cl--near {
+    top: 34%;
+  }
+  .lm-sky-head--compact .lm-sky-nav {
+    padding-right: 64px;
+    min-height: 84px;
+  }
+  .lm-sky-head--compact .lm-sky-window {
+    width: 50px;
+    top: 10px;
+  }
+  .lm-sky-head--compact .lm-sky-nav .lm-sky-controls {
+    display: flex;
+  }
+  .lm-sky-head--compact .lm-rss {
+    display: none;
+  }
+}
+@media (min-width: 641px) {
+  .lm-sky-hero .lm-sky-controls {
+    display: none;
+  }
+}
+
+/* ---------- ticket-stub card ---------- */
+.lm-year {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 40px 0 18px;
+  color: var(--lm-ink-soft);
+  font: 500 13px / 1 var(--lm-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.lm-year b {
+  color: var(--lm-ink);
+  font: 800 32px / 1 var(--lm-font-display);
+  font-stretch: 75%;
+  letter-spacing: 0;
+}
+.lm-year::after {
+  content: "";
+  flex: 1;
+  border-top: 2px dashed var(--lm-rule-route);
+}
+.lm-stubs {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lm-stubs > li {
+  position: relative;
+}
+.lm-stubs > li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--lm-shadow-ink);
+  transform: translate3d(4px, 5px, 0);
+}
+.lm-ticket {
+  position: relative;
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  background: var(--lm-card);
+  color: var(--lm-ink);
+  border: 2.5px solid var(--lm-ink);
+  border-radius: 16px;
+  transition: transform var(--lm-dur-fast) var(--lm-ease-out);
+}
+.lm-ticket:hover,
+.lm-ticket:focus-within {
+  transform: translate3d(-2px, -2px, 0);
+}
+.lm-ticket:active {
+  transform: translate3d(2px, 2px, 0);
+  transition-duration: 0ms;
+}
+.lm-ticket:has(a:focus-visible) {
+  outline: 2px solid var(--lm-link);
+  outline-offset: 4px;
+}
+.lm-ticket a:focus-visible {
+  outline: 0;
+}
+.lm-ticket-cover {
+  padding: 10px;
+  border-right: 2px dashed var(--lm-rule-route);
+}
+.lm-ticket-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: 2px solid var(--lm-ink);
+  border-radius: 10px;
+}
+.lm-ticket-body {
+  padding: 14px 20px 16px 18px;
+  min-width: 0;
+}
+.lm-ticket-kicker {
+  margin: 0;
+  color: var(--lm-tomato-d);
+  font: 500 12px / 1.4 var(--lm-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.lm-ticket-title {
+  margin: 6px 0;
+  font: 700 26px / 1.12 var(--lm-font-display);
+  text-wrap: balance;
+}
+.lm-ticket-title a {
+  color: var(--lm-ink);
+  text-decoration: none;
+}
+.lm-ticket-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+}
+.lm-ticket-desc {
+  margin: 0;
+  color: var(--lm-ink-soft);
+  font-size: 16.5px;
+  line-height: 1.5;
+}
+.lm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.lm-chips li {
+  padding: 3px 10px 4px;
+  border: 2px solid var(--lm-ink);
+  border-radius: 999px;
+  background: var(--lm-white);
+  color: var(--lm-ink);
+  font: 600 13px / 1.25 var(--lm-font-text);
+}
+@media (max-width: 767px) {
+  .lm-ticket {
+    grid-template-columns: 1fr;
+  }
+  .lm-ticket-cover {
+    border-right: 0;
+    border-bottom: 2px dashed var(--lm-rule-route);
+  }
+  .lm-ticket-body {
+    padding: 12px 16px 16px;
+  }
+  .lm-ticket-title {
+    font-size: 23px;
+  }
+}
+
+/* ---------- porthole cover (post hero) ---------- */
+.lm-cover {
+  margin: 0 0 36px;
+  padding: 10px;
+  background: var(--lm-sand);
+  border: 3px solid var(--lm-ink);
+  border-radius: 20px;
+  box-shadow: 6px 7px 0 var(--lm-shadow-ink);
+}
+.lm-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 2px solid var(--lm-ink);
+  border-radius: 12px;
+}
+@media (max-width: 640px) {
+  .lm-cover {
+    padding: 6px;
+    border-radius: 14px;
+    box-shadow: 4px 5px 0 var(--lm-shadow-ink);
+  }
+  .lm-cover img {
+    aspect-ratio: 4 / 3;
+    border-radius: 9px;
+  }
+}
+
+/* ---------- F1 Wheels down footer ---------- */
+.lm-land {
+  position: relative;
+  margin-top: 96px;
+  color: var(--lm-ink);
+}
+.lm-land-edge {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin-bottom: -2px;
+}
+.lm-land-edge path {
+  fill: var(--lm-sand);
+  stroke: var(--lm-ink-fixed);
+  stroke-width: 3;
+}
+html[data-mode="night"] .lm-land-edge path {
+  stroke: var(--lm-night);
+}
+.lm-land-in {
+  position: relative;
+  background: var(--lm-sand);
+}
+.lm-land-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 32px;
+  align-items: end;
+  padding-block: 12px 40px;
+}
+.lm-land-title {
+  margin: 10px 0;
+  font: 800 clamp(64px, 9vw, 112px) / 0.86 var(--lm-font-display);
+  font-stretch: 75%;
+  text-shadow: 0.045em 0.05em 0 var(--lm-tomato);
+}
+.lm-land-bio {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--lm-ink-soft);
+  font: 600 18px / 1.45 var(--lm-font-text);
+}
+.lm-land-fine {
+  grid-column: 1 / -1;
+  margin: 18px 0 0;
+  padding-top: 14px;
+  border-top: 2px dashed var(--lm-rule-route);
+  color: var(--lm-ink-soft);
+  font: 500 13px / 1.5 var(--lm-font-mono);
+}
+.lm-parked {
+  display: block;
+  width: 220px;
+  height: auto;
+}
+.lm-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 0 18px 0 8px;
+  border: 2.5px solid var(--lm-ink-fixed);
+  border-radius: 999px;
+  background: var(--lm-marigold);
+  box-shadow: 3px 4px 0 var(--lm-shadow-ink);
+  color: var(--lm-ink-fixed);
+  font: 700 16px / 1 var(--lm-font-text);
+  text-decoration: none;
+  transition: transform var(--lm-dur-fast) var(--lm-ease-out);
+}
+.lm-to-top i {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid var(--lm-ink-fixed);
+  border-radius: 50%;
+  background: var(--lm-tag-paper);
+}
+.lm-to-top i::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-left: 2.5px solid var(--lm-ink-fixed);
+  border-top: 2.5px solid var(--lm-ink-fixed);
+  transform: translate3d(0, 2px, 0) rotate(45deg);
+  transition: transform var(--lm-dur-pop) var(--lm-ease-pop);
+}
+.lm-to-top:hover {
+  transform: translate3d(0, -2px, 0);
+}
+.lm-to-top:hover i::after {
+  transform: translate3d(0, -1px, 0) rotate(45deg);
+}
+.lm-to-top:active {
+  transform: translate3d(2px, 2px, 0);
+  transition-duration: 0ms;
+}
+.lm-to-top:focus-visible {
+  outline: 2px solid var(--lm-link);
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .lm-land-grid {
+    grid-template-columns: 1fr;
+    padding-block-end: 32px;
+  }
+  .lm-parked {
+    width: 150px;
+    grid-row: 1;
+    justify-self: end;
+    margin-bottom: -8px;
+  }
+  .lm-land-bio {
+    font-size: 17px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- reduced motion: static sky, still swaps only ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lm-sky-head *,
+  .lm-sky-head *::before,
+  .lm-sky-head *::after,
+  .lm-ticket,
+  .lm-pill,
+  .lm-to-top,
+  .lm-to-top i::after,
+  .lm-porthole,
+  .lm-porthole img {
+    animation: none !important;
+    transition: none !important;
+  }
+  .lm-reacts:is(:hover, :focus-within) .lm-porthole {
+    transform: none;
+  }
+  .lm-ticket:hover,
+  .lm-ticket:focus-within,
+  .lm-pill:hover,
+  .lm-to-top:hover {
+    transform: none;
+  }
+  .lm-sky-pause {
+    display: none !important;
+  }
+}

@@ -8,6 +8,8 @@ import { applyMotionPreference } from './motion.ts';
 import { defineLmMotionToggle } from './motion-toggle.ts';
 import { defineLmPause } from './pause.ts';
 import { defineLmShot } from './shot.ts';
+import { defineLmSkyHeader } from './sky-header.ts';
+import { defineLmThemeToggle } from './theme-toggle.ts';
 
 export { defineLmAvatar, LmAvatar } from './avatar.ts';
 export { defineLmCard, LmCard } from './card.ts';
@@ -29,6 +31,21 @@ export {
 export { defineLmMotionToggle, LmMotionToggle } from './motion-toggle.ts';
 export { defineLmPause, LmPause } from './pause.ts';
 export { defineLmShot, LmShot } from './shot.ts';
+export {
+  defineLmSkyHeader,
+  LmSkyHeader,
+  landEdge,
+  skyLayersHtml,
+} from './sky-header.ts';
+export type { ThemeMode } from './theme.ts';
+export {
+  applyTheme,
+  currentTheme,
+  readTheme,
+  setTheme,
+  THEME_KEY,
+} from './theme.ts';
+export { defineLmThemeToggle, LmThemeToggle } from './theme-toggle.ts';
 
 export function defineLmUi(): void {
   defineLmCard();
@@ -40,5 +57,7 @@ export function defineLmUi(): void {
   defineLmAvatar();
   defineLmGlobe();
   defineLmFlightPlan();
+  defineLmThemeToggle();
+  defineLmSkyHeader();
   if (typeof document !== 'undefined') applyMotionPreference();
 }

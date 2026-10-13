@@ -12,5 +12,9 @@ export { applyMotionPreference, bindMotionMedia, MOTION_KEY, readMotionPreferenc
 export { defineLmMotionToggle, LmMotionToggle } from './motion-toggle.js';
 export { defineLmPause, LmPause } from './pause.js';
 export { defineLmShot, LmShot } from './shot.js';
+export { defineLmSkyHeader, LmSkyHeader, landEdge, skyLayersHtml, } from './sky-header.js';
+export type { ThemeMode } from './theme.js';
+export { applyTheme, currentTheme, readTheme, setTheme, THEME_KEY, } from './theme.js';
+export { defineLmThemeToggle, LmThemeToggle } from './theme-toggle.js';
 export declare function defineLmUi(): void;
 //# sourceMappingURL=index.d.ts.map

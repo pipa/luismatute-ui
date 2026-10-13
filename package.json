@@ -1,6 +1,6 @@
 {
   "name": "@luismatute/ui",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Design system for Luis Matute's sites, extracted from the Wheels up design.",
   "license": "MIT",
   "type": "module",
@@ -41,6 +41,8 @@
     "./theme.css": "./dist/theme.css",
     "./base.css": "./dist/base.css",
     "./fonts.css": "./dist/fonts.css",
+    "./sky.css": "./dist/sky.css",
+    "./theme-init.js": "./dist/theme-init.js",
     "./components": {
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js"
@@ -80,6 +82,14 @@
     "./components/flight-plan": {
       "types": "./dist/components/flight-plan.d.ts",
       "import": "./dist/components/flight-plan.js"
+    },
+    "./components/theme-toggle": {
+      "types": "./dist/components/theme-toggle.d.ts",
+      "import": "./dist/components/theme-toggle.js"
+    },
+    "./components/sky-header": {
+      "types": "./dist/components/sky-header.d.ts",
+      "import": "./dist/components/sky-header.js"
     },
     "./illustrations": {
       "types": "./dist/illustrations/index.d.ts",

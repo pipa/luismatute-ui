@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sky fixture</title>
+    <script src="../ui/theme-init.js"></script>
+    <link rel="stylesheet" href="../ui/tokens.css" />
+    <link rel="stylesheet" href="../ui/base.css" />
+    <link rel="stylesheet" href="../ui/sky.css" />
+    <link rel="stylesheet" href="./sky-tall.css" />
+    <script type="module" src="./sky.js"></script>
+  </head>
+  <body>
+    <lm-sky-header concept="cruise">
+      <header class="lm-sky-head" id="top">
+        <div class="lm-sky-inner">
+          <nav class="lm-sky-nav" aria-label="Site">
+            <a class="lm-sky-brand" href="./sky.html">Luis Matute</a>
+            <ul>
+              <li><a class="lm-pill" href="./sky.html" aria-current="page">Blog</a></li>
+              <li class="lm-sky-controls">
+                <lm-theme-toggle></lm-theme-toggle>
+                <button type="button" class="lm-pill lm-pill--mono lm-sky-pause" aria-pressed="false"><span class="lm-i-pause" aria-hidden="true"></span><span class="lm-pl">Pause sky</span></button>
+              </li>
+            </ul>
+          </nav>
+          <div class="lm-sky-hero"><div><p class="lm-tag-kicker">In-flight notes</p><h1 class="lm-sky-title">Blog</h1><p class="lm-sky-tag">Notes from the window seat.</p></div></div>
+        </div>
+      </header>
+    </lm-sky-header>
+    <main class="tall"><p>Body</p></main>
+  </body>
+</html>

@@ -11,6 +11,8 @@ export {
   defineLmMotionToggle,
   defineLmPause,
   defineLmShot,
+  defineLmSkyHeader,
+  defineLmThemeToggle,
   defineLmUi,
   LmAvatar,
   LmCard,
@@ -21,6 +23,10 @@ export {
   LmMotionToggle,
   LmPause,
   LmShot,
+  LmSkyHeader,
+  LmThemeToggle,
+  landEdge,
+  skyLayersHtml,
 } from '../index.ts';
 export type { MotionMode } from '../motion.ts';
 export {
@@ -30,6 +36,14 @@ export {
   readMotionPreference,
   writeMotionPreference,
 } from '../motion.ts';
+export type { ThemeMode } from '../theme.ts';
+export {
+  applyTheme,
+  currentTheme,
+  readTheme,
+  setTheme,
+  THEME_KEY,
+} from '../theme.ts';
 
 import { defineLmUi } from '../index.ts';
 

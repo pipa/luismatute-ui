@@ -6,6 +6,20 @@ function decl(name: string, value: string): string {
   return `  --lm-${name}: ${value};\n`;
 }
 
+function kebab(key: string): string {
+  return key.replace(/[A-Z0-9]+/g, (m) => `-${m.toLowerCase()}`);
+}
+
+/** Night overrides: same names as day, so components don't branch. */
+export function renderNightCss(): string {
+  const lines = ['color-scheme: dark;'];
+  for (const [key, value] of Object.entries(tokens.night))
+    lines.push(`--lm-${kebab(key)}: ${value};`);
+  for (const [key, value] of Object.entries(tokens.code.night))
+    lines.push(`--lm-code-${key}: ${value};`);
+  return themeBlock('html[data-mode="night"]', lines);
+}
+
 function themeBlock(selector: string, lines: string[]): string {
   return `${selector} {\n${lines.map((line) => `  ${line}\n`).join('')}}\n`;
 }
@@ -186,7 +200,33 @@ export function renderTokensCss(): string {
   climb.forEach((hex, i) => {
     css += decl(`climb-${i + 1}`, hex);
   });
+  css += decl('ink-fixed', tokens.modeStable.inkFixed);
+  css += decl('moon', tokens.modeStable.moon);
+  css += decl('moon-crater', tokens.modeStable.moonCrater);
+  css += decl('star', tokens.modeStable.star);
+  css += decl('dune-day', tokens.modeStable.duneDay);
+  css += decl('dune-night', tokens.modeStable.duneNight);
+  css += decl('tag-paper', tokens.modeStable.tagPaper);
+  css += decl('tag-ink', tokens.modeStable.tagInk);
+  tokens.modeStable.skyDay.forEach((hex, i) => {
+    css += decl(`sky-day-${i + 1}`, hex);
+  });
+  tokens.modeStable.skyNight.forEach((hex, i) => {
+    css += decl(`sky-night-${i + 1}`, hex);
+  });
+  for (const [key, value] of Object.entries(tokens.day))
+    css += decl(kebab(key), value);
+  for (const [key, value] of Object.entries(tokens.code.day))
+    css += decl(`code-${key}`, value);
+  for (const [key, value] of Object.entries(tokens.motion))
+    css += decl(
+      key.startsWith('sky') || key.startsWith('dur')
+        ? kebab(key)
+        : `dur-${kebab(key)}`,
+      value,
+    );
   css += '}\n\n';
+  css += renderNightCss();
 
   for (const [name, theme] of Object.entries(themes)) {
     const lines = [
