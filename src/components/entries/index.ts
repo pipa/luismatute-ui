@@ -36,13 +36,24 @@ export {
   readMotionPreference,
   writeMotionPreference,
 } from '../motion.ts';
-export type { ThemeMode } from '../theme.ts';
+export type {
+  ThemeChoice,
+  ThemeCookieConfig,
+  ThemeMode,
+} from '../theme.ts';
 export {
   applyTheme,
   currentTheme,
   readTheme,
+  readThemeCookie,
+  saveTheme,
   setTheme,
+  THEME_COOKIE,
+  THEME_COOKIE_DOMAIN,
+  THEME_COOKIE_MAX_AGE,
   THEME_KEY,
+  themeCookieConfig,
+  themeCookieString,
 } from '../theme.ts';
 
 import { defineLmUi } from '../index.ts';
