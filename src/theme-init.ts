@@ -1,20 +1,14 @@
 /*
  * No-flash head script for @luismatute/ui day/night. Serve as an external
  * file in <head> before the stylesheets (CSP script-src 'self'), not deferred:
- *   <script src="/lm-theme-init.js"></script>
- * Order: ?mode=, localStorage['lm.ui.theme'], prefers-color-scheme.
+ *   <script src="/lm-theme-init.js" data-lm-theme></script>
+ * Order: ?mode=, cookie lm-mode, localStorage['lm.ui.theme'],
+ * prefers-color-scheme. Never throws; bad values fall through.
  */
-(() => {
-  const root = document.documentElement;
-  let mode: string | null = null;
-  try {
-    mode = new URLSearchParams(location.search).get('mode');
-    if (mode !== 'night' && mode !== 'day')
-      mode = localStorage.getItem('lm.ui.theme');
-  } catch {
-    mode = null;
-  }
-  if (mode !== 'night' && mode !== 'day')
-    mode = matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
-  root.dataset.mode = mode;
-})();
+import { readTheme } from './components/theme.ts';
+
+try {
+  document.documentElement.dataset.mode = readTheme();
+} catch {
+  document.documentElement.dataset.mode = 'day';
+}

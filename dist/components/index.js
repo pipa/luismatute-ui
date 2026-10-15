@@ -911,23 +911,72 @@ function defineLmSkyHeader() {
 
 // src/components/theme.ts
 var THEME_KEY = "lm.ui.theme";
+var THEME_COOKIE = "lm-mode";
+var THEME_COOKIE_DOMAIN = ".luismatute.me";
+var THEME_COOKIE_MAX_AGE = 31536e3;
 function parse(value) {
   if (value === "night" || value === "dark") return "night";
   if (value === "day" || value === "light") return "day";
   return null;
 }
+function parseChoice(value) {
+  return value === "auto" ? "auto" : parse(value);
+}
+function readThemeCookie(cookie = globalThis.document?.cookie ?? "") {
+  try {
+    for (const part of String(cookie).split(";")) {
+      const eq = part.indexOf("=");
+      if (eq < 0 || part.slice(0, eq).trim() !== THEME_COOKIE) continue;
+      const v = part.slice(eq + 1).trim();
+      if (v === "day" || v === "night" || v === "auto") return v;
+      return null;
+    }
+  } catch {
+  }
+  return null;
+}
+function hostMatches(host, domain) {
+  const bare = domain.replace(/^\./, "").toLowerCase();
+  const h = host.toLowerCase();
+  return bare !== "" && (h === bare || h.endsWith(`.${bare}`));
+}
+function themeCookieConfig(script = globalThis.document?.querySelector(
+  "script[data-lm-theme]"
+) ?? null, loc = globalThis.location) {
+  const host = loc?.hostname ?? "";
+  const wanted = script?.getAttribute("data-cookie-domain")?.trim() || THEME_COOKIE_DOMAIN;
+  const secureAttr = script?.getAttribute("data-cookie-secure") ?? "auto";
+  return {
+    domain: hostMatches(host, wanted) ? wanted : null,
+    secure: secureAttr === "true" || secureAttr !== "false" && loc?.protocol === "https:"
+  };
+}
+function themeCookieString(choice, config = themeCookieConfig()) {
+  let s = `${THEME_COOKIE}=${choice}; Path=/; Max-Age=${THEME_COOKIE_MAX_AGE}; SameSite=Lax`;
+  if (config.domain) s += `; Domain=${config.domain}`;
+  if (config.secure) s += "; Secure";
+  return s;
+}
+function system() {
+  return globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ? "night" : "day";
+}
 function readTheme(search = globalThis.location?.search ?? "") {
-  const query = parse(new URLSearchParams(search).get("mode"));
+  let query = null;
+  try {
+    query = parse(new URLSearchParams(search).get("mode"));
+  } catch {
+    query = null;
+  }
   if (query) return query;
+  const cookie = readThemeCookie();
+  if (cookie) return cookie === "auto" ? system() : cookie;
   let stored = null;
   try {
     stored = globalThis.localStorage?.getItem(THEME_KEY) ?? null;
   } catch {
     stored = null;
   }
-  const saved = parse(stored);
-  if (saved) return saved;
-  return globalThis.matchMedia?.("(prefers-color-scheme: dark)").matches ? "night" : "day";
+  return parse(stored) ?? system();
 }
 function currentTheme() {
   if (typeof document === "undefined") return "day";
@@ -939,11 +988,21 @@ function applyTheme(mode) {
   root.dataset.mode = mode;
   root.dispatchEvent(new CustomEvent("lm-theme", { detail: { mode } }));
 }
-function setTheme(mode) {
+function saveTheme(choice) {
+  if (!parseChoice(choice)) return;
   try {
-    globalThis.localStorage?.setItem(THEME_KEY, mode);
+    document.cookie = themeCookieString(choice);
   } catch {
   }
+  try {
+    if (choice === "auto") globalThis.localStorage?.removeItem(THEME_KEY);
+    else globalThis.localStorage?.setItem(THEME_KEY, choice);
+  } catch {
+  }
+}
+function setTheme(choice) {
+  saveTheme(choice);
+  const mode = choice === "auto" ? system() : choice;
   const reduce = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
   const doc = document;
   if (!reduce && typeof doc.startViewTransition === "function")
@@ -1008,6 +1067,6 @@ function defineLmUi() {
 // src/components/entries/index.ts
 defineLmUi();
 
-export { LmAvatar, LmCard, LmChip, LmFlightPlan, LmGlobe, LmMore, LmMotionToggle, LmPause, LmShot, LmSkyHeader, LmThemeToggle, MOTION_KEY, THEME_KEY, applyMotionPreference, applyTheme, bindMotionMedia, currentTheme, defaultRoute, defineLmAvatar, defineLmCard, defineLmChip, defineLmFlightPlan, defineLmGlobe, defineLmMore, defineLmMotionToggle, defineLmPause, defineLmShot, defineLmSkyHeader, defineLmThemeToggle, defineLmUi, landEdge, parseRoute, readMotionPreference, readTheme, setTheme, skyLayersHtml, writeMotionPreference };
+export { LmAvatar, LmCard, LmChip, LmFlightPlan, LmGlobe, LmMore, LmMotionToggle, LmPause, LmShot, LmSkyHeader, LmThemeToggle, MOTION_KEY, THEME_COOKIE, THEME_COOKIE_DOMAIN, THEME_COOKIE_MAX_AGE, THEME_KEY, applyMotionPreference, applyTheme, bindMotionMedia, currentTheme, defaultRoute, defineLmAvatar, defineLmCard, defineLmChip, defineLmFlightPlan, defineLmGlobe, defineLmMore, defineLmMotionToggle, defineLmPause, defineLmShot, defineLmSkyHeader, defineLmThemeToggle, defineLmUi, landEdge, parseRoute, readMotionPreference, readTheme, readThemeCookie, saveTheme, setTheme, skyLayersHtml, themeCookieConfig, themeCookieString, writeMotionPreference };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

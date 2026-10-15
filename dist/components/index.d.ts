@@ -13,8 +13,8 @@ export { defineLmMotionToggle, LmMotionToggle } from './motion-toggle.js';
 export { defineLmPause, LmPause } from './pause.js';
 export { defineLmShot, LmShot } from './shot.js';
 export { defineLmSkyHeader, LmSkyHeader, landEdge, skyLayersHtml, } from './sky-header.js';
-export type { ThemeMode } from './theme.js';
-export { applyTheme, currentTheme, readTheme, setTheme, THEME_KEY, } from './theme.js';
+export type { ThemeChoice, ThemeCookieConfig, ThemeMode, } from './theme.js';
+export { applyTheme, currentTheme, readTheme, readThemeCookie, saveTheme, setTheme, THEME_COOKIE, THEME_COOKIE_DOMAIN, THEME_COOKIE_MAX_AGE, THEME_KEY, themeCookieConfig, themeCookieString, } from './theme.js';
 export { defineLmThemeToggle, LmThemeToggle } from './theme-toggle.js';
 export declare function defineLmUi(): void;
 //# sourceMappingURL=index.d.ts.map
