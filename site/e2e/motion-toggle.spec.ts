@@ -70,6 +70,9 @@ for (const mode of ['day', 'night'] as const) {
       results.focus = await measure(page);
       await page.keyboard.press('Enter');
       await expect(button).toHaveAttribute('data-pressed', 'true');
+      await expect(page.locator('.demo-log')).toHaveText(
+        'lm-motion {"motion":"calm"}',
+      );
       results.pressed = await measure(page);
 
       for (const [state, r] of Object.entries(results)) {

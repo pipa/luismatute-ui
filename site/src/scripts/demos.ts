@@ -17,7 +17,8 @@ export function initDemos(): void {
   for (const log of document.querySelectorAll<HTMLElement>('[data-demo-log]')) {
     const type = log.dataset.demoLog ?? '';
     const target =
-      type === 'lm-pause'
+      // These two dispatch on <html>, not on the element.
+      type === 'lm-pause' || type === 'lm-motion'
         ? document.documentElement
         : log.closest('[data-demo-frame]');
     target?.addEventListener(type, (e) => {
