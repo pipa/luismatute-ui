@@ -210,6 +210,8 @@ export declare const radius: {
     readonly round: '50%';
 };
 export declare const border: {
+    /** Muse: 1px rules, e.g. the docs demo frame. */
+    readonly hairline: '1px';
     readonly hair: '2px';
     readonly line: '2.5px';
     readonly thick: '3px';
@@ -883,6 +885,8 @@ export declare const tokens: {
         readonly round: '50%';
     };
     readonly border: {
+        /** Muse: 1px rules, e.g. the docs demo frame. */
+        readonly hairline: '1px';
         readonly hair: '2px';
         readonly line: '2.5px';
         readonly thick: '3px';

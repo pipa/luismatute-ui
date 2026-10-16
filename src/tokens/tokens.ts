@@ -308,6 +308,8 @@ export const radius = {
 } as const;
 
 export const border = {
+  /** Muse: 1px rules, e.g. the docs demo frame. */
+  hairline: '1px',
   hair: '2px',
   line: '2.5px',
   thick: '3px',
