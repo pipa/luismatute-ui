@@ -7,9 +7,11 @@ const html = `<lm-card tone="marigold" tilt>
   <h3 slot="title">Lisbon, 06:40</h3>
   <p>Wheels up at dawn.</p>
 </lm-card>`;
-const astro = `---
+// Built from a constant: a literal triple dash inside frontmatter confuses parsers.
+const fence = '-'.repeat(3);
+const astro = `${fence}
 import '@luismatute/ui/components/card';
----
+${fence}
 <lm-card tone="marigold">
   <h3 slot="title">Lisbon, 06:40</h3>
 </lm-card>`;
