@@ -561,13 +561,13 @@ export declare const day: {
 };
 /** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
 export declare const night: {
-    readonly paper: '#1d1510';
-    readonly card: '#281d16';
-    readonly sand: '#33261c';
+    readonly paper: '#120d2c';
+    readonly card: '#1f1945';
+    readonly sand: '#2b2456';
     readonly ink: '#fff6e4';
     readonly inkSoft: '#d8c4a6';
     readonly tomatoD: '#ff9a7f';
-    readonly white: '#281d16';
+    readonly white: '#3a3270';
     readonly link: '#6fd0c6';
     readonly lagoon: '#6fd0c6';
     readonly ruleRoute: 'rgba(255, 246, 228, 0.3)';
@@ -576,8 +576,8 @@ export declare const night: {
     readonly pillBg: '#241d52';
     readonly pillInk: '#fff6e4';
     readonly pillRim: '#fff6e4';
-    /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
-    readonly togglePressed: '#1f1945';
+    /** Pressed lm-motion-toggle fill follows the night card (#39). */
+    readonly togglePressed: 'var(--lm-card)';
 };
 /**
  * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
@@ -624,47 +624,47 @@ export declare const modePairs: readonly [{
 }, {
     readonly name: 'night paper on page';
     readonly fg: "#fff6e4";
-    readonly bg: "#1d1510";
+    readonly bg: "#120d2c";
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on page';
     readonly fg: "#d8c4a6";
-    readonly bg: "#1d1510";
+    readonly bg: "#120d2c";
     readonly large: false;
 }, {
     readonly name: 'night kicker on page';
     readonly fg: "#ff9a7f";
-    readonly bg: "#1d1510";
+    readonly bg: "#120d2c";
     readonly large: false;
 }, {
     readonly name: 'night link on page';
     readonly fg: "#6fd0c6";
-    readonly bg: "#1d1510";
+    readonly bg: "#120d2c";
     readonly large: false;
 }, {
     readonly name: 'night paper on card';
     readonly fg: "#fff6e4";
-    readonly bg: "#281d16";
+    readonly bg: "#1f1945";
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on card';
     readonly fg: "#d8c4a6";
-    readonly bg: "#281d16";
+    readonly bg: "#1f1945";
     readonly large: false;
 }, {
     readonly name: 'night kicker on card';
     readonly fg: "#ff9a7f";
-    readonly bg: "#281d16";
+    readonly bg: "#1f1945";
     readonly large: false;
 }, {
     readonly name: 'night paper on sand';
     readonly fg: "#fff6e4";
-    readonly bg: "#33261c";
+    readonly bg: "#2b2456";
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on sand';
     readonly fg: "#d8c4a6";
-    readonly bg: "#33261c";
+    readonly bg: "#2b2456";
     readonly large: false;
 }, {
     readonly name: 'night paper on pill';
@@ -1222,13 +1222,13 @@ export declare const tokens: {
         readonly togglePressed: '#fff6e4';
     };
     readonly night: {
-        readonly paper: '#1d1510';
-        readonly card: '#281d16';
-        readonly sand: '#33261c';
+        readonly paper: '#120d2c';
+        readonly card: '#1f1945';
+        readonly sand: '#2b2456';
         readonly ink: '#fff6e4';
         readonly inkSoft: '#d8c4a6';
         readonly tomatoD: '#ff9a7f';
-        readonly white: '#281d16';
+        readonly white: '#3a3270';
         readonly link: '#6fd0c6';
         readonly lagoon: '#6fd0c6';
         readonly ruleRoute: 'rgba(255, 246, 228, 0.3)';
@@ -1237,8 +1237,8 @@ export declare const tokens: {
         readonly pillBg: '#241d52';
         readonly pillInk: '#fff6e4';
         readonly pillRim: '#fff6e4';
-        /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
-        readonly togglePressed: '#1f1945';
+        /** Pressed lm-motion-toggle fill follows the night card (#39). */
+        readonly togglePressed: 'var(--lm-card)';
     };
     readonly code: {
         readonly day: {
@@ -1279,47 +1279,47 @@ export declare const tokens: {
     }, {
         readonly name: 'night paper on page';
         readonly fg: "#fff6e4";
-        readonly bg: "#1d1510";
+        readonly bg: "#120d2c";
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on page';
         readonly fg: "#d8c4a6";
-        readonly bg: "#1d1510";
+        readonly bg: "#120d2c";
         readonly large: false;
     }, {
         readonly name: 'night kicker on page';
         readonly fg: "#ff9a7f";
-        readonly bg: "#1d1510";
+        readonly bg: "#120d2c";
         readonly large: false;
     }, {
         readonly name: 'night link on page';
         readonly fg: "#6fd0c6";
-        readonly bg: "#1d1510";
+        readonly bg: "#120d2c";
         readonly large: false;
     }, {
         readonly name: 'night paper on card';
         readonly fg: "#fff6e4";
-        readonly bg: "#281d16";
+        readonly bg: "#1f1945";
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on card';
         readonly fg: "#d8c4a6";
-        readonly bg: "#281d16";
+        readonly bg: "#1f1945";
         readonly large: false;
     }, {
         readonly name: 'night kicker on card';
         readonly fg: "#ff9a7f";
-        readonly bg: "#281d16";
+        readonly bg: "#1f1945";
         readonly large: false;
     }, {
         readonly name: 'night paper on sand';
         readonly fg: "#fff6e4";
-        readonly bg: "#33261c";
+        readonly bg: "#2b2456";
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on sand';
         readonly fg: "#d8c4a6";
-        readonly bg: "#33261c";
+        readonly bg: "#2b2456";
         readonly large: false;
     }, {
         readonly name: 'night paper on pill';
