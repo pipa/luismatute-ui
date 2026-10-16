@@ -745,7 +745,7 @@ button.tok-copy[data-copied]::after {
 .tok-table td {
   padding: 4px 6px;
   vertical-align: middle;
-  border-top: 1px solid var(--lm-docs-rule);
+  border-top: var(--lm-border-hairline) solid var(--lm-docs-rule);
 }
 .tok-table tr:first-child td {
   border-top: 0;
@@ -784,7 +784,7 @@ button.tok-copy[data-copied]::after {
   height: 28px;
   border-radius: 999px;
   background: var(--lm-docs-side);
-  border: 1px solid var(--lm-docs-rule);
+  border: var(--lm-border-hairline) solid var(--lm-docs-rule);
   cursor: pointer;
 }
 .pv-dot {
@@ -929,7 +929,7 @@ button.tok-copy[data-copied]::after {
     align-items: center;
     gap: 2px 8px;
     padding: 4px 2px;
-    border-top: 1px solid var(--lm-docs-rule);
+    border-top: var(--lm-border-hairline) solid var(--lm-docs-rule);
   }
   .tok-table tbody tr:first-child {
     border-top: 0;
@@ -978,7 +978,7 @@ button.tok-copy[data-copied]::after {
   --lm-docs-demo-bg: var(--lm-paper);
   --lm-docs-demo-focus: #1f7e7a;
   min-width: 0;
-  border: 1px solid var(--lm-ink);
+  border: var(--lm-border-hairline) solid var(--lm-ink);
   border-radius: var(--lm-radius-skip);
   background: var(--lm-docs-demo-bg);
   color: var(--lm-ink);
@@ -998,12 +998,12 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
   gap: 8px;
   min-height: 32px;
   padding: 0 4px 0 8px;
-  border-bottom: 1px solid var(--lm-ink);
+  border-bottom: var(--lm-border-hairline) solid var(--lm-ink);
 }
 .demo-name {
   font: 400 12px / 1 var(--lm-docs-f-mono);
   padding: 3px 6px;
-  border: 1px solid var(--lm-ink);
+  border: var(--lm-border-hairline) solid var(--lm-ink);
   border-radius: 5px;
   color: var(--lm-ink);
   background: transparent;
@@ -1015,7 +1015,7 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
   min-height: 24px;
   margin: 4px 0;
   padding: 0 10px;
-  border: 1px solid var(--lm-ink);
+  border: var(--lm-border-hairline) solid var(--lm-ink);
   border-radius: 999px;
   background: transparent;
   color: var(--lm-ink);
@@ -1029,7 +1029,7 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
 .demo-theme-i {
   width: 10px;
   height: 10px;
-  border: 1px solid currentColor;
+  border: var(--lm-border-hairline) solid currentColor;
   border-radius: 50%;
 }
 .demo-theme[aria-pressed="true"] .demo-theme-i {
@@ -1064,7 +1064,7 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
   align-items: baseline;
   margin: 0;
   padding: 8px 12px;
-  border-top: 1px solid var(--lm-ink);
+  border-top: var(--lm-border-hairline) solid var(--lm-ink);
   font: 400 13px / 1.4 var(--lm-docs-f-mono);
 }
 .demo-cap-k {
