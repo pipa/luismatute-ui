@@ -28,7 +28,7 @@ test('copy button works by keyboard and announces Copied', async ({
   if (browserName === 'chromium') {
     expect(text).toBe('Copied');
     const clip = await page.evaluate(() => navigator.clipboard.readText());
-    expect(clip).toContain('<lm-card tone="marigold" tilt>');
+    expect(clip).toContain('<lm-card variant="stop">');
   }
   await expect(button).toHaveText('Copy', { timeout: 4000 });
   // Space works too.
@@ -64,7 +64,7 @@ test.describe('with JS off', () => {
     await page.goto(page_);
     await expect(page.locator('button[data-copy]').first()).toBeHidden();
     await expect(page.locator('pre').first()).toContainText(
-      '<lm-card tone="marigold" tilt>',
+      '<lm-card variant="stop">',
     );
     await expect(page.locator('.toc a[aria-current]')).toHaveCount(0);
   });
@@ -73,13 +73,15 @@ test.describe('with JS off', () => {
 test('on this page marks the section being read', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto(page_);
-  await expect(page.locator('.toc a[aria-current="true"]')).toHaveText('Usage');
-  await page.locator('#custom-properties').scrollIntoViewIfNeeded();
+  await expect(page.locator('.toc a[aria-current="true"]')).toHaveText(
+    'Live demo',
+  );
+  await page.locator('#reduced-motion').scrollIntoViewIfNeeded();
   await page.evaluate(() =>
     window.scrollTo(0, document.documentElement.scrollHeight),
   );
   await expect(page.locator('.toc a[aria-current="true"]')).toHaveText(
-    'CSS custom properties',
+    'Reduced motion',
   );
   await expect(page.locator('.toc a[aria-current="true"]')).toHaveCount(1);
 });
