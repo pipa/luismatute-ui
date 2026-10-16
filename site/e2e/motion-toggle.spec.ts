@@ -31,6 +31,15 @@ async function measure(page: Page) {
     const frame = getComputedStyle(b.closest('.demo-frame') as Element);
     return {
       pressed: b.dataset.pressed,
+      bg: s.backgroundColor,
+      card: (() => {
+        const probe = document.createElement('span');
+        probe.style.backgroundColor = 'var(--lm-card)';
+        b.append(probe);
+        const v = getComputedStyle(probe).backgroundColor;
+        probe.remove();
+        return v;
+      })(),
       text: ratio(s.color, s.backgroundColor),
       icon: ratio(icon.borderTopColor, s.backgroundColor),
       focus:
@@ -83,6 +92,18 @@ for (const mode of ['day', 'night'] as const) {
         3,
       );
       expect(results.pressed?.pressed).toBe('true');
+      // Muse (#38): pressed sits on the card token. Day #fff6e4, night indigo #1f1945, never brown.
+      expect(
+        results.pressed?.bg,
+        `${mode} pressed background is --lm-card`,
+      ).toBe(results.pressed?.card);
+      expect(results.pressed?.bg).toBe(
+        mode === 'day' ? 'rgb(255, 246, 228)' : 'rgb(31, 25, 69)',
+      );
+      expect(
+        results.pressed?.text,
+        `${mode} pressed text`,
+      ).toBeGreaterThanOrEqual(4.5);
     });
 
     for (const pressed of [false, true]) {
