@@ -1,7 +1,8 @@
 import { defineConfig, devices } from 'playwright/test';
 
-// Docs site e2e. Pixel's port range 3100-3109; run `pnpm build:site` first.
-const port = 3102;
+// Docs site e2e; run `pnpm build:site` first. E2E_PORT picks the port; the
+// default (4174) differs from the root suites' 4173 so they never collide.
+const port = Number(process.env.E2E_PORT ?? 4174);
 export default defineConfig({
   testDir: 'e2e',
   timeout: 30_000,
