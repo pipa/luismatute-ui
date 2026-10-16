@@ -4,10 +4,13 @@ import Docs from '../layouts/Docs.astro';
 import { allItems } from '../lib/nav';
 
 export const getStaticPaths = (() =>
-  allItems.map((item) => ({
-    params: { slug: item.slug },
-    props: { label: item.label },
-  }))) satisfies GetStaticPaths;
+  allItems
+    // Pages with their own .astro file (getStaticPaths cannot see outer consts).
+    .filter((item) => !['components/lm-card'].includes(item.slug))
+    .map((item) => ({
+      params: { slug: item.slug },
+      props: { label: item.label },
+    }))) satisfies GetStaticPaths;
 
 const { slug } = Astro.params;
 const { label } = Astro.props;

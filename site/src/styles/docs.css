@@ -449,3 +449,204 @@ code {
     grid-template-columns: var(--lm-docs-side-w) minmax(0, 1fr) 260px;
   }
 }
+
+/* ---- code blocks (Muse SPEC "Code block", "Code theme", "Copy button") ---- */
+:root {
+  --lm-docs-c-bg: var(--lm-sky-night-2);
+  --lm-docs-c-bar: var(--lm-sky-night-3);
+  --lm-docs-c-rule: #3d3478;
+  --lm-docs-c-border: var(--lm-ink);
+  --lm-docs-c-text: var(--lm-moon);
+  --lm-docs-c-comment: #b8acdf;
+  --lm-docs-c-keyword: #ffb59f;
+  --lm-docs-c-string: #8fe0d4;
+  --lm-docs-c-fn: #ffd27a;
+  --lm-docs-c-tag: var(--lm-marigold);
+  --lm-docs-c-attr: #e6c9ff;
+  --lm-docs-c-punct: #d9cfee;
+  --lm-docs-copied-bg: var(--lm-marigold);
+  --lm-docs-copied-ink: var(--lm-ink);
+  --lm-docs-pop: var(--lm-duration-copy-pop);
+}
+html[data-mode="night"] {
+  --lm-docs-c-bg: #0b0820;
+  --lm-docs-c-bar: var(--lm-sky-night-2);
+  --lm-docs-c-border: #3d3478;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lm-docs-pop: 0s;
+  }
+}
+.code {
+  margin: 24px 0 32px;
+  border: var(--lm-docs-border) solid var(--lm-docs-c-border);
+  border-radius: var(--lm-docs-radius-card);
+  background: var(--lm-docs-c-bg);
+  box-shadow: 6px 7px 0 var(--lm-docs-shadow);
+  overflow: hidden;
+}
+.code-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  padding: 0 6px 0 16px;
+  background: var(--lm-docs-c-bar);
+  border-bottom: var(--lm-docs-border-hair) solid var(--lm-docs-c-rule);
+}
+.code-lang {
+  font: 500 var(--lm-docs-t-kicker) / 1 var(--lm-docs-f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lm-docs-c-fn);
+}
+.code-file {
+  font: 400 13px / 1 var(--lm-docs-f-mono);
+  color: var(--lm-docs-c-comment);
+}
+.code pre {
+  margin: 0;
+  padding: 18px 20px 20px;
+  overflow-x: auto;
+  font: 400 14.5px / 1.65 var(--lm-docs-f-mono);
+  color: var(--lm-docs-c-text);
+  tab-size: 2;
+}
+.code pre:focus-visible {
+  outline-color: var(--lm-docs-c-fn);
+  outline-offset: -4px;
+}
+.code pre code {
+  white-space: pre;
+  font: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+/* Prism tokens mapped to Muse's code palette */
+.token.comment,
+.token.prolog,
+.token.doctype {
+  color: var(--lm-docs-c-comment);
+  font-style: italic;
+}
+.token.keyword,
+.token.atrule .token.rule,
+.token.important {
+  color: var(--lm-docs-c-keyword);
+}
+.token.string,
+.token.attr-value,
+.token.url {
+  color: var(--lm-docs-c-string);
+}
+.token.function {
+  color: var(--lm-docs-c-fn);
+}
+.token.tag,
+.token.selector {
+  color: var(--lm-docs-c-tag);
+}
+.token.attr-name,
+.token.property,
+.token.variable {
+  color: var(--lm-docs-c-attr);
+}
+.token.punctuation,
+.token.operator,
+.token.attr-value .token.punctuation,
+.token.tag .token.punctuation {
+  color: var(--lm-docs-c-punct);
+}
+
+.copy {
+  margin-left: auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  min-width: 88px;
+  padding: 0 12px;
+  border: var(--lm-docs-border-hair) solid var(--lm-docs-c-text);
+  border-radius: var(--lm-docs-radius-btn);
+  background: transparent;
+  color: var(--lm-docs-c-text);
+  font: 500 13px / 1 var(--lm-docs-f-mono);
+  cursor: pointer;
+  transition: transform var(--lm-docs-feedback) var(--lm-docs-ease-in);
+}
+.copy[hidden] {
+  display: none;
+}
+/* 44px hit target over the 36px button */
+.copy::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+.copy svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.copy .ok {
+  display: none;
+}
+@media (hover: hover) {
+  .copy:hover {
+    background: var(--lm-docs-c-text);
+    color: var(--lm-docs-c-bg);
+  }
+}
+.copy:active {
+  transform: scale(0.96);
+}
+.copy:focus-visible {
+  outline: 3px solid var(--lm-docs-c-fn);
+  outline-offset: 2px;
+}
+.copy[data-copied] {
+  background: var(--lm-docs-copied-bg);
+  border-color: var(--lm-docs-copied-bg);
+  color: var(--lm-docs-copied-ink);
+}
+.copy[data-copied] .idle {
+  display: none;
+}
+.copy[data-copied] .ok {
+  display: inline-block;
+  animation: lm-docs-pop var(--lm-docs-pop) var(--lm-ease-pop) both;
+}
+@keyframes lm-docs-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.toc a[aria-current="true"] {
+  color: var(--lm-docs-ink);
+  font-weight: 700;
+}
+/* Headings jumped to via an anchor clear the sticky header. */
+h2[id],
+h3[id] {
+  scroll-margin-top: calc(var(--lm-docs-head-h) + 16px);
+}

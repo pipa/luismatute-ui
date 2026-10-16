@@ -1,0 +1,27 @@
+---
+import { type CodeLang, highlight, langLabel } from '../lib/highlight';
+
+interface Props {
+  code: string;
+  lang: CodeLang;
+  filename?: string;
+}
+const { code, lang, filename } = Astro.props;
+const source = code.replace(/^\n+|\s+$/g, '');
+const html = highlight(source, lang);
+const label = langLabel[lang];
+---
+
+<figure class="code">
+  <figcaption class="code-bar">
+    <span class="code-lang">{label}</span>
+    {filename && <span class="code-file">{filename}</span>}
+    <!-- Hidden until copy.ts runs: with JS off the code stays selectable and no dead button shows. -->
+    <button class="copy" type="button" data-copy aria-label={`Copy ${label} snippet`} hidden>
+      <svg class="idle" viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg>
+      <svg class="ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span class="copy-t">Copy</span>
+    </button>
+  </figcaption>
+  <pre tabindex="0" aria-label={`${label} example${filename ? `, ${filename}` : ''}`}><code class={`language-${lang}`} set:html={html} /></pre>
+</figure>

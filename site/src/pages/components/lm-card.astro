@@ -1,0 +1,49 @@
+---
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const html = `<lm-card tone="marigold" tilt>
+  <h3 slot="title">Lisbon, 06:40</h3>
+  <p>Wheels up at dawn.</p>
+</lm-card>`;
+// Built from a constant: a literal triple dash inside frontmatter confuses parsers.
+const fence = '-'.repeat(3);
+const astro = `${fence}
+import '@luismatute/ui/components/card';
+${fence}
+<lm-card tone="marigold">
+  <h3 slot="title">Lisbon, 06:40</h3>
+</lm-card>`;
+const css = `/* override per card, both modes */
+lm-card {
+  --lm-card-tilt: -1.5deg;
+  --lm-card-shadow: var(--lm-shadow-card);
+}`;
+const toc = [
+  { id: 'usage', label: 'Usage' },
+  { id: 'in-astro', label: 'In Astro' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+];
+---
+
+<Docs
+  slug="components/lm-card"
+  title="lm-card"
+  description="A paper ticket with a hard ink shadow. Holds a title slot, body copy and an optional stamp."
+  toc={toc}
+>
+  <Heading id="usage">Usage</Heading>
+  <p>
+    Import once from the pinned tag, then drop the element in any page. It inherits
+    <code>--lm-ink</code> and <code>--lm-paper</code> from the mode.
+  </p>
+  <CodeBlock lang="html" filename="card.html" code={html} />
+  <Heading id="in-astro" level={3}>In Astro</Heading>
+  <p>The component subpath registers the element as a side effect.</p>
+  <CodeBlock lang="astro" filename="Card.astro" code={astro} />
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <p>Override per card. Both modes read the same properties.</p>
+  <CodeBlock lang="css" filename="site.css" code={css} />
+  <p>Props, events and a live demo land in a later slice.</p>
+</Docs>
