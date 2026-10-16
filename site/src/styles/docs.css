@@ -821,14 +821,24 @@ button.tok-copy[data-copied]::after {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 12px;
 }
+.swatch-base {
+  border: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
+  border-radius: var(--lm-docs-radius-btn);
+  overflow: hidden;
+}
+.base-day {
+  background-color: #fff6e4;
+}
+.base-night {
+  background-color: #120d2c;
+}
 .swatch {
   display: grid;
   align-content: end;
   gap: 2px;
+  height: 100%;
   min-height: 96px;
   padding: 8px 6px 8px;
-  border: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
-  border-radius: var(--lm-docs-radius-btn);
 }
 .swatch .tok {
   justify-self: start;
@@ -874,12 +884,38 @@ button.tok-copy[data-copied]::after {
   gap: 16px;
 }
 .specimen {
+  min-width: 0;
   padding: 16px;
   border: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
   border-radius: var(--lm-docs-radius-card);
 }
 .specimen-sample {
   margin: 0 0 8px;
+  /* Muse: specimen lines wrap at narrow widths; type never shrinks below its size. */
+  overflow-wrap: break-word;
   font-size: 28px;
   line-height: 1.15;
+}
+
+/* Font-family values are long; let them wrap anywhere instead of overflowing (Muse). */
+.specimen .tok {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.specimen button.tok-copy {
+  max-width: 100%;
+}
+/* Narrow screens: token tables fit by wrapping long names and values (only code panels scroll). */
+@media (max-width: 640px) {
+  .tok-table .tok {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .tok-table button.tok-copy {
+    max-width: 100%;
+  }
+  .tok-table td,
+  .tok-table th {
+    padding-inline: 4px;
+  }
 }

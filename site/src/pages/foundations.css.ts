@@ -15,20 +15,16 @@ import {
 /**
  * Per-token classes for the Foundations pages, served as an external
  * stylesheet so no page needs a style attribute (CSP style-src-attr 'none').
- * Swatches use the literal value painted over a fixed base (day paper or
- * night sky), so alpha colours look the same in both modes and the label
- * contrast computed at build time holds.
+ * Swatches paint their literal value as background-color on top of a fixed
+ * base (day paper or night sky) from docs.css, so alpha colours look the same
+ * in both modes, the build-time label contrast holds, and axe can read it.
  */
 export const GET: APIRoute = () => {
   const rules: string[] = [];
   for (const t of colours)
-    rules.push(
-      `.sw-${slug(t.name)}{background-color:#fff6e4;box-shadow:inset 0 0 0 100vmax ${t.value}}`,
-    );
+    rules.push(`.sw-${slug(t.name)}{background-color:${t.value}}`);
   for (const t of nightColours)
-    rules.push(
-      `.sw-night-${slug(t.name)}{background-color:#120d2c;box-shadow:inset 0 0 0 100vmax ${t.value}}`,
-    );
+    rules.push(`.sw-night-${slug(t.name)}{background-color:${t.value}}`);
   for (const t of families)
     rules.push(`.ff-${slug(t.name)}{font-family:var(${t.name})}`);
   for (const t of fontSizes)
