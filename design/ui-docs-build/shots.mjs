@@ -1,7 +1,10 @@
 import { chromium } from 'playwright';
+import { stillsDir } from './out-dir.mjs';
 
-const out = '/workspace/team/luismatute/stills/ui-18-shell';
-const base = 'http://127.0.0.1:3101/ui/';
+const out = stillsDir(
+  process.argv[2] ?? '/workspace/team/luismatute/stills/ui-18-shell',
+);
+const base = `http://127.0.0.1:${process.env.E2E_PORT ?? 4174}/ui/`;
 const b = await chromium.launch();
 async function page(mode, width, opts = {}) {
   const ctx = await b.newContext({
