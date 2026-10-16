@@ -905,8 +905,46 @@ button.tok-copy[data-copied]::after {
 .specimen button.tok-copy {
   max-width: 100%;
 }
-/* Narrow screens: token tables fit by wrapping long names and values (only code panels scroll). */
+/* Narrow screens (Muse #33): each token row is two lines. Line 1 is the full
+   name across the row; line 2 is value and preview side by side. Names only
+   wrap when they can't fit the row. Roles in TokenTable keep table semantics
+   when display changes; the header row is visually hidden, not removed. */
 @media (max-width: 640px) {
+  .tok-table,
+  .tok-table tbody {
+    display: block;
+  }
+  .tok-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .tok-table tr {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 8px;
+    padding: 4px 2px;
+    border-top: 1px solid var(--lm-docs-rule);
+  }
+  .tok-table tbody tr:first-child {
+    border-top: 0;
+  }
+  .tok-table td {
+    display: block;
+    padding: 0;
+    border-top: 0;
+    min-width: 0;
+  }
+  .tok-table td:first-child {
+    grid-column: 1 / -1;
+  }
+  .tok-table td:nth-child(2):last-child {
+    grid-column: 1 / -1;
+  }
   .tok-table .tok {
     white-space: normal;
     overflow-wrap: anywhere;
@@ -914,8 +952,7 @@ button.tok-copy[data-copied]::after {
   .tok-table button.tok-copy {
     max-width: 100%;
   }
-  .tok-table td,
-  .tok-table th {
-    padding-inline: 4px;
+  .tok-preview {
+    width: auto;
   }
 }

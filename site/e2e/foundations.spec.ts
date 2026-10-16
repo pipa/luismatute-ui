@@ -258,3 +258,67 @@ for (const mode of ['day', 'night']) {
     });
   });
 }
+
+test.describe('token tables at 375 (two-line rows)', () => {
+  test.use({ viewport: { width: 375, height: 900 } });
+  for (const p of ['type', 'spacing', 'radius', 'motion-tokens', 'colour']) {
+    test(`${p}: names on one line when they fit, value and preview share a line`, async ({
+      page,
+    }) => {
+      await page.goto(`/ui/foundations/${p}/`);
+      const problems = await page.evaluate(() => {
+        const out: string[] = [];
+        for (const tr of document.querySelectorAll<HTMLElement>(
+          '.tok-table tbody tr',
+        )) {
+          const cells = tr.querySelectorAll<HTMLElement>('td');
+          const nameCell = cells[0] as HTMLElement;
+          const name = nameCell.querySelector<HTMLElement>(
+            '.tok',
+          ) as HTMLElement;
+          const label = name.textContent ?? '';
+          // Would the name fit on one line in the row? Measure it unwrapped.
+          const probe = name.cloneNode(true) as HTMLElement;
+          probe.style.cssText =
+            'position:absolute;visibility:hidden;white-space:nowrap;width:auto;max-width:none';
+          name.parentElement?.append(probe);
+          const natural = probe.getBoundingClientRect().width;
+          probe.remove();
+          const lh = Number.parseFloat(getComputedStyle(name).lineHeight);
+          const textH =
+            name.getBoundingClientRect().height -
+            Number.parseFloat(getComputedStyle(name).paddingTop) -
+            Number.parseFloat(getComputedStyle(name).paddingBottom);
+          if (natural <= tr.clientWidth && textH > lh * 1.5)
+            out.push(`${label} wraps (${Math.round(textH)}px, lh ${lh})`);
+          // Name spans the row, on its own line above the rest.
+          const n = nameCell.getBoundingClientRect();
+          const rest = [...cells]
+            .slice(1)
+            .map((c) => c.getBoundingClientRect());
+          if (rest.some((r) => r.top < n.bottom - 1))
+            out.push(`${label} not on its own line`);
+          // Value and preview share line 2.
+          if (rest.length === 2) {
+            const [v, pv] = rest as [DOMRect, DOMRect];
+            if (
+              Math.abs(v.top + v.height / 2 - (pv.top + pv.height / 2)) >
+              Math.max(v.height, pv.height) / 2
+            )
+              out.push(`${label} value/preview on different lines`);
+          }
+        }
+        return out.slice(0, 10);
+      });
+      expect(problems).toEqual([]);
+    });
+  }
+  test('tables keep table semantics for assistive tech', async ({ page }) => {
+    await page.goto('/ui/foundations/spacing/');
+    const table = page.getByRole('table', { name: 'Spacing scale' });
+    await expect(table.getByRole('columnheader')).toHaveCount(3);
+    await expect(table.getByRole('row').nth(1).getByRole('cell')).toHaveCount(
+      3,
+    );
+  });
+});
