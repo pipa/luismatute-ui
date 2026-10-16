@@ -1,6 +1,6 @@
 import { defineConfig, devices } from 'playwright/test';
 
-// E2E_PORT picks the static server port (default 4173); see README > Develop.
+// E2E_PORT picks the static server port (default 4173); see README > "Ports (E2E_PORT)".
 const port = Number(process.env.E2E_PORT ?? 4173);
 
 export default defineConfig({
