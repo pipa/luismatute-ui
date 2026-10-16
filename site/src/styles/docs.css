@@ -467,6 +467,7 @@ code {
   --lm-docs-copied-bg: var(--lm-marigold);
   --lm-docs-copied-ink: var(--lm-ink);
   --lm-docs-pop: var(--lm-duration-copy-pop);
+  --lm-docs-copy-fade: var(--lm-duration-copy-fade);
 }
 html[data-mode="night"] {
   --lm-docs-c-bg: #0b0820;
@@ -476,6 +477,7 @@ html[data-mode="night"] {
 @media (prefers-reduced-motion: reduce) {
   :root {
     --lm-docs-pop: 0s;
+    --lm-docs-copy-fade: 0s;
   }
 }
 .code {
@@ -575,7 +577,24 @@ html[data-mode="night"] {
   color: var(--lm-docs-c-text);
   font: 500 13px / 1 var(--lm-docs-f-mono);
   cursor: pointer;
+  isolation: isolate;
   transition: transform var(--lm-docs-feedback) var(--lm-docs-ease-in);
+}
+/* Copied fill: an overlay that fades only its opacity (#30). Colours never
+   transition; the overlay carries the marigold in. */
+.copy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--lm-docs-copied-bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--lm-docs-copy-fade) var(--lm-ease-out);
+}
+.copy[data-copied]::after {
+  opacity: 1;
 }
 .copy[hidden] {
   display: none;
@@ -608,7 +627,7 @@ html[data-mode="night"] {
   outline-offset: 2px;
 }
 .copy[data-copied] {
-  background: var(--lm-docs-copied-bg);
+  background: transparent;
   border-color: var(--lm-docs-copied-bg);
   color: var(--lm-docs-copied-ink);
 }

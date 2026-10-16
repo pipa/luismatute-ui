@@ -108,6 +108,10 @@ Node 22 and pnpm 10.33.4. `pnpm install`, then `pnpm lint`, `pnpm typecheck`, `p
 
 `pnpm check` runs the whole local gate: lint, typecheck, unit tests, both builds, `check:site` (the `/ui` docs site in `site/`: types, tests, build, e2e) and `pnpm test:e2e`. GitHub Actions is off on this repo, so run it before asking for review.
 
+### Stills
+
+Design stills (render-look-fix screenshots) live outside the repo in `/workspace/team/luismatute/stills/<name>/`. The scripts in `design/ui-docs-build/` refuse to write inside the repo, and `design/ui-docs-build/stills*/` is git-ignored.
+
 ### Ports (`E2E_PORT`)
 
 Every Playwright config starts its own static server and never reuses one that is already running (`reuseExistingServer: false`), so a stray server on the port fails fast instead of serving the wrong files. `E2E_PORT` sets the port:

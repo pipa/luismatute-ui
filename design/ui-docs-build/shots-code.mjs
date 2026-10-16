@@ -1,7 +1,10 @@
 // Stills for #18 slice 2 (code blocks). Needs `node site/e2e/serve.mjs <port>` running.
 import { chromium } from 'playwright';
+import { stillsDir } from './out-dir.mjs';
 
-const out = process.argv[2] ?? '/workspace/team/luismatute/stills/ui-18-code';
+const out = stillsDir(
+  process.argv[2] ?? '/workspace/team/luismatute/stills/ui-18-code',
+);
 const base = `http://127.0.0.1:${process.env.E2E_PORT ?? 4174}/ui/components/lm-card/`;
 const b = await chromium.launch();
 const report = [];

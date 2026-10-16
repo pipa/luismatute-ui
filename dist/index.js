@@ -1494,6 +1494,8 @@ var duration = {
   chevron: "0.2s",
   letter: "0.22s",
   copy: "0.28s",
+  // Copy button copied-state overlay fade (opacity only), docs #30.
+  copyFade: "0.28s",
   note: "0.35s",
   brow: "0.35s",
   turbHud: "0.38s",

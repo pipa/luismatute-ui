@@ -265,6 +265,7 @@ export declare const duration: {
     readonly chevron: '0.2s';
     readonly letter: '0.22s';
     readonly copy: '0.28s';
+    readonly copyFade: '0.28s';
     readonly note: '0.35s';
     readonly brow: '0.35s';
     readonly turbHud: '0.38s';
@@ -936,6 +937,7 @@ export declare const tokens: {
         readonly chevron: '0.2s';
         readonly letter: '0.22s';
         readonly copy: '0.28s';
+        readonly copyFade: '0.28s';
         readonly note: '0.35s';
         readonly brow: '0.35s';
         readonly turbHud: '0.38s';

@@ -4,7 +4,17 @@
  */
 export const COPIED_MS = 2000;
 
+/** "⌘C" on Apple platforms, "Ctrl+C" elsewhere. */
+export function copyShortcut(platform?: string): string {
+  const nav = globalThis.navigator as
+    | (Navigator & { userAgentData?: { platform?: string } })
+    | undefined;
+  const p = platform ?? nav?.userAgentData?.platform ?? nav?.platform ?? '';
+  return /mac|iphone|ipad|ipod/i.test(p) ? '⌘C' : 'Ctrl+C';
+}
+
 export interface CopyDeps {
+  platform?: string;
   writeText?: (text: string) => Promise<void>;
   live?: HTMLElement | null;
 }
@@ -39,8 +49,9 @@ export async function copyFrom(
   } catch {
     ok = false;
     selectCode(pre);
-    label.textContent = 'Press Ctrl+C';
-    if (live) live.textContent = 'Copy failed. Code selected, press Ctrl+C.';
+    const keys = copyShortcut(deps.platform);
+    label.textContent = `Press ${keys}`;
+    if (live) live.textContent = `Copy failed. Code selected, press ${keys}.`;
   }
   button.dataset.timer = String(
     window.setTimeout(() => {

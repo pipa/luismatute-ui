@@ -113,7 +113,7 @@
     "dev:site": "astro dev --root site",
     "build:site": "astro build --root site",
     "test:site": "vitest run --config site/vitest.config.ts",
-    "check:site": "astro sync --root site && tsc --noEmit -p site && vitest run --config site/vitest.config.ts && astro build --root site && playwright test -c site/playwright.config.ts",
+    "check:site": "astro sync --root site && tsc --noEmit -p site && vitest run --config site/vitest.config.ts && astro build --root site && node site/scripts/check-csp.mjs site-dist && playwright test -c site/playwright.config.ts",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm build:docs && pnpm check:site && pnpm test:e2e",
     "test:site:e2e": "playwright test -c site/playwright.config.ts"
   },

@@ -1,10 +1,11 @@
-// Static server for site-dist mounted at /ui/ (as on luismatute.me). Port from argv.
+// Static server for site-dist mounted at /ui/ (as on luismatute.me).
+// Port: argv[2], else E2E_PORT, else 4174 (the site suite's default).
 import { createReadStream, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize } from 'node:path';
 
 const root = new URL('../../site-dist/', import.meta.url).pathname;
-const port = Number(process.argv[2] ?? 3102);
+const port = Number(process.argv[2] ?? process.env.E2E_PORT ?? 4174);
 const types = {
   '.html': 'text/html',
   '.css': 'text/css',

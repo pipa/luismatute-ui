@@ -8,3 +8,6 @@ test-results
 coverage
 site-dist/
 .astro/
+
+# Design stills live in /workspace/team/luismatute/stills/, never in git (#30)
+design/ui-docs-build/stills*/

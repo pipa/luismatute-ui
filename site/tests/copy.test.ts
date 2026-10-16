@@ -1,6 +1,11 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { COPIED_MS, copyFrom, initCopy } from '../src/scripts/copy';
+import {
+  COPIED_MS,
+  copyFrom,
+  copyShortcut,
+  initCopy,
+} from '../src/scripts/copy';
 import { pickCurrent } from '../src/scripts/toc';
 
 const markup = `
@@ -45,6 +50,7 @@ describe('copy button', () => {
   });
   it('on clipboard failure selects the code and says Press Ctrl+C', async () => {
     const ok = await copyFrom(btn(), {
+      platform: 'Linux x86_64',
       writeText: async () => {
         throw new Error('denied');
       },
@@ -53,6 +59,32 @@ describe('copy button', () => {
     expect(btn().hasAttribute('data-copied')).toBe(false);
     expect(btn().textContent?.trim()).toBe('Press Ctrl+C');
     expect(window.getSelection()?.toString()).toContain('<lm-card>');
+  });
+});
+
+describe('copy shortcut', () => {
+  it('says ⌘C on Apple platforms and Ctrl+C elsewhere', () => {
+    expect(copyShortcut('MacIntel')).toBe('⌘C');
+    expect(copyShortcut('macOS')).toBe('⌘C');
+    expect(copyShortcut('iPhone')).toBe('⌘C');
+    expect(copyShortcut('Win32')).toBe('Ctrl+C');
+    expect(copyShortcut('Linux x86_64')).toBe('Ctrl+C');
+  });
+  it('uses ⌘C in the fallback label and announcement on Mac', async () => {
+    document.body.innerHTML = markup;
+    const b = document.querySelector<HTMLButtonElement>(
+      'button[data-copy]',
+    ) as HTMLButtonElement;
+    await copyFrom(b, {
+      platform: 'MacIntel',
+      writeText: async () => {
+        throw new Error('denied');
+      },
+    });
+    expect(b.textContent?.trim()).toBe('Press ⌘C');
+    expect(document.getElementById('copy-live')?.textContent).toBe(
+      'Copy failed. Code selected, press ⌘C.',
+    );
   });
 });
 
