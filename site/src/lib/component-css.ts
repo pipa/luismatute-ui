@@ -5,7 +5,8 @@
  */
 import base from '../../../dist/base.css?raw';
 
-export const DEMO_MATCH = /lm-(card|chip|more|pause)\b|\.lm-(kicker|chips)\b/;
+export const DEMO_MATCH =
+  /lm-(card|chip|more|pause|motion-toggle)\b|\.lm-(kicker|chips)\b/;
 
 interface Block {
   prelude: string;
