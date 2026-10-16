@@ -1,0 +1,28 @@
+---
+import { slug, swatchText, type Token } from '../lib/tokens';
+
+interface Props {
+  tokens: Token[];
+  label: string;
+  night?: boolean;
+}
+const { tokens, label, night = false } = Astro.props;
+// Night swatches are judged over the night page (#120d2c) for alpha values.
+const over: [number, number, number] = night ? [18, 13, 44] : [255, 246, 228];
+---
+
+<ul class="swatches" aria-label={label}>
+  {
+    tokens.map((t) => {
+      const { tone } = swatchText(t.value, over);
+      return (
+        <li class={`swatch-base base-${night ? 'night' : 'day'}`}>
+          <div class={`swatch ${night ? 'sw-night-' : 'sw-'}${slug(t.name)} on-${tone}`}>
+          <code class="tok" data-copy-text={`var(${t.name})`} data-copy-label={`Copy var(${t.name})`}>{t.name}</code>
+          <code class="tok" data-copy-text={t.value} data-copy-label={`Copy value of ${t.name}`}>{t.value}</code>
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>

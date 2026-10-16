@@ -6,7 +6,17 @@ import { allItems } from '../lib/nav';
 export const getStaticPaths = (() =>
   allItems
     // Pages with their own .astro file (getStaticPaths cannot see outer consts).
-    .filter((item) => !['components/lm-card'].includes(item.slug))
+    .filter(
+      (item) =>
+        ![
+          'components/lm-card',
+          'foundations/colour',
+          'foundations/type',
+          'foundations/spacing',
+          'foundations/radius',
+          'foundations/motion-tokens',
+        ].includes(item.slug),
+    )
     .map((item) => ({
       params: { slug: item.slug },
       props: { label: item.label },

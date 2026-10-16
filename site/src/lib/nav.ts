@@ -29,6 +29,7 @@ export const nav: NavGroup[] = [
       { slug: 'foundations/colour', label: 'Colour' },
       { slug: 'foundations/type', label: 'Type' },
       { slug: 'foundations/spacing', label: 'Spacing' },
+      { slug: 'foundations/radius', label: 'Radius and borders' },
       { slug: 'foundations/motion-tokens', label: 'Motion tokens' },
     ],
   },

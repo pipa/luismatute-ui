@@ -1,0 +1,28 @@
+---
+import Heading from '../../components/Heading.astro';
+import TokenTable from '../../components/TokenTable.astro';
+import Docs from '../../layouts/Docs.astro';
+import { durations, easings } from '../../lib/tokens';
+
+const toc = [
+  { id: 'easing', label: 'Easing' },
+  { id: 'durations', label: 'Durations' },
+];
+---
+
+<Docs
+  slug="foundations/motion-tokens"
+  title="Motion tokens"
+  description="Easing curves and durations. Hover or focus a demo track to play it. Click a name or value to copy it."
+  toc={toc}
+  extraCss="foundations.css"
+>
+  <Heading id="easing">Easing</Heading>
+  <p>
+    Each demo moves a dot with <code>transform</code> only, over 0.7s. With reduced motion on, the dot jumps
+    straight to the end.
+  </p>
+  <TokenTable tokens={easings} caption="Easing curves" preview="ease" />
+  <Heading id="durations">Durations</Heading>
+  <TokenTable tokens={durations} caption="Durations" />
+</Docs>
