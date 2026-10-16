@@ -90,6 +90,8 @@ const canonical = new URL(
 
       initCopy();
       initTokenCopy();
+      // Live demos only load the component code on pages that have one.
+      if (document.querySelector('.demo')) void import('../scripts/demos').then((m) => m.initDemos());
       initToc();
     </script>
   </body>

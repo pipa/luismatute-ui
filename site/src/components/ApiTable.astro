@@ -1,0 +1,36 @@
+---
+interface Row {
+  name: string;
+  detail: string;
+}
+interface Props {
+  caption: string;
+  head: [string, string];
+  rows: Row[];
+}
+const { caption, head, rows } = Astro.props;
+---
+
+<div class="tok-wrap">
+  <table class="tok-table api-table" role="table">
+    <caption class="sr">{caption}</caption>
+    <thead role="rowgroup">
+      <tr role="row">
+        <th scope="col" role="columnheader">{head[0]}</th>
+        <th scope="col" role="columnheader">{head[1]}</th>
+      </tr>
+    </thead>
+    <tbody role="rowgroup">
+      {
+        rows.map((r) => (
+          <tr role="row">
+            <td role="cell">
+              <code class="tok" data-copy-text={r.name} data-copy-label={`Copy ${r.name}`}>{r.name}</code>
+            </td>
+            <td role="cell" class="api-detail" set:html={r.detail} />
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
