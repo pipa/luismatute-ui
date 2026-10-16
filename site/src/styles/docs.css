@@ -951,6 +951,8 @@ button.tok-copy[data-copied]::after {
   .tok-table td.tok-preview {
     flex: 0 0 auto;
     max-width: 100%;
+    /* Lines up with the text inside the name and value buttons when it drops to line 3. */
+    padding-inline: 8px;
   }
   .tok-table .tok {
     white-space: normal;
