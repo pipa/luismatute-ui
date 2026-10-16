@@ -379,7 +379,8 @@ lm-motion-toggle button:active {
 }
 
 lm-motion-toggle button[data-pressed="true"] {
-  background: var(--lm-paper);
+  /* Card token: paper by day (#fff6e4), indigo #1f1945 at night (no brown). */
+  background: var(--lm-card);
   color: var(--lm-ink);
   font-weight: var(--lm-weight-semibold);
 }

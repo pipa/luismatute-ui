@@ -579,7 +579,8 @@ var day = {
 };
 var night = {
   paper: "#1d1510",
-  card: "#281d16",
+  /** Muse (#38): indigo night card, no brown at night. */
+  card: "#1f1945",
   sand: "#33261c",
   ink: "#fff6e4",
   inkSoft: "#d8c4a6",

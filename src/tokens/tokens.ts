@@ -640,7 +640,8 @@ export const day = {
 /** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
 export const night = {
   paper: '#1d1510',
-  card: '#281d16',
+  /** Muse (#38): indigo night card, no brown at night. */
+  card: '#1f1945',
   sand: '#33261c',
   ink: '#fff6e4',
   inkSoft: '#d8c4a6',
