@@ -1,0 +1,18 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Docs from '../layouts/Docs.astro';
+import { allItems } from '../lib/nav';
+
+export const getStaticPaths = (() =>
+  allItems.map((item) => ({
+    params: { slug: item.slug },
+    props: { label: item.label },
+  }))) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const { label } = Astro.props;
+---
+
+<Docs slug={slug ?? ''} title={label} description="This page is being written. It lands in a later slice of the docs site.">
+  <p>Coming soon.</p>
+</Docs>

@@ -109,7 +109,13 @@
     "test": "vitest run",
     "test:e2e": "playwright test -c playwright.qa.config.ts",
     "visual": "playwright test",
-    "gen:illustrations": "node scripts/gen-illustrations.mjs"
+    "gen:illustrations": "node scripts/gen-illustrations.mjs",
+    "dev:site": "astro dev --root site",
+    "build:site": "astro build --root site",
+    "test:site": "vitest run --config site/vitest.config.ts",
+    "check:site": "astro sync --root site && tsc --noEmit -p site && vitest run --config site/vitest.config.ts && astro build --root site && playwright test -c site/playwright.config.ts",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm build:docs && pnpm check:site && pnpm test:e2e",
+    "test:site:e2e": "playwright test -c site/playwright.config.ts"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -120,6 +126,7 @@
     "@axe-core/playwright": "4.13.0",
     "@biomejs/biome": "2.5.15",
     "@types/node": "26.6.5",
+    "astro": "7.4.0",
     "happy-dom": "20.14.6",
     "playwright": "1.64.0",
     "svgo": "4.1.0",

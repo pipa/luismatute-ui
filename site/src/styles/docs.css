@@ -1,0 +1,451 @@
+/* luismatute.me/ui docs shell. Built from Muse's design/ui-docs SPEC.md and
+   docs-shell.css (#18). Package tokens first; docs-only tokens are --lm-docs-*.
+   External file only (CSP: no inline styles, no style attributes). */
+@import "../../../dist/fonts.css";
+@import "../../../dist/tokens.css";
+
+:root {
+  /* colour, day (package tokens) */
+  --lm-docs-page: var(--lm-paper);
+  --lm-docs-ink: var(--lm-ink);
+  --lm-docs-ink-soft: var(--lm-ink-soft);
+  --lm-docs-rule: var(--lm-ink);
+  --lm-docs-side: var(--lm-sand);
+  --lm-docs-head: var(--lm-stage);
+  --lm-docs-link: #1f7e7a;
+  --lm-docs-active-bg: var(--lm-marigold);
+  --lm-docs-active-ink: var(--lm-ink);
+  --lm-docs-focus: #1f7e7a;
+  --lm-docs-shadow: var(--lm-ink);
+  --lm-docs-backdrop: rgb(18 13 44 / 0.55);
+
+  /* type */
+  --lm-docs-f-display: "Bricolage Display", "Bricolage", system-ui, sans-serif;
+  --lm-docs-f-text: "Bricolage", system-ui, sans-serif;
+  --lm-docs-f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --lm-docs-t-h1: clamp(36px, 2.2vw + 28px, 56px);
+  --lm-docs-t-h2: 28px;
+  --lm-docs-t-h3: 20px;
+  --lm-docs-t-body: 17px;
+  --lm-docs-t-small: 14px;
+  --lm-docs-t-kicker: 12px;
+
+  /* space + shape */
+  --lm-docs-head-h: 64px;
+  --lm-docs-side-w: 272px;
+  --lm-docs-toc-w: 216px;
+  --lm-docs-measure: 720px;
+  --lm-docs-gutter: 24px;
+  --lm-docs-gutter-lg: 48px;
+  --lm-docs-radius-btn: 10px;
+  --lm-docs-radius-nav: var(--lm-radius-plan);
+  --lm-docs-radius-card: var(--lm-radius-shot);
+  --lm-docs-border: var(--lm-border-line);
+  --lm-docs-border-hair: var(--lm-border-hair);
+  --lm-docs-shadow-btn: 3px 3px 0 var(--lm-docs-shadow);
+  --lm-docs-tap: 44px;
+
+  /* motion: package tokens plus docs-only drawer timings */
+  --lm-docs-ease-in: var(--lm-ease-out);
+  --lm-docs-ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --lm-docs-drawer-in: 320ms;
+  --lm-docs-drawer-out: 180ms;
+  --lm-docs-feedback: 140ms;
+}
+
+/* Night is the site's indigo sky, never the package's brown paper. */
+html[data-mode="night"] {
+  --lm-docs-page: var(--lm-sky-night-1);
+  --lm-docs-ink: var(--lm-moon);
+  --lm-docs-ink-soft: #d9cfee;
+  --lm-docs-rule: #7466bd;
+  --lm-docs-side: var(--lm-sky-night-2);
+  --lm-docs-head: var(--lm-sky-night-3);
+  --lm-docs-link: #ffd27a;
+  --lm-docs-active-bg: var(--lm-sky-night-4);
+  --lm-docs-active-ink: #ffd27a;
+  --lm-docs-focus: #ffd27a;
+  --lm-docs-shadow: #05030f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lm-docs-drawer-in: 0s;
+    --lm-docs-drawer-out: 0s;
+    --lm-docs-feedback: 0s;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--lm-docs-page);
+  color: var(--lm-docs-ink);
+  font: 400 var(--lm-docs-t-body) / 1.6 var(--lm-docs-f-text);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+a {
+  color: var(--lm-docs-link);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+:focus-visible {
+  outline: 3px solid var(--lm-docs-focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.main:focus {
+  outline: none;
+}
+.skip {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 10;
+  padding: 10px 14px;
+  background: var(--lm-docs-page);
+  color: var(--lm-docs-ink);
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-docs-radius-btn);
+  font-weight: 700;
+  transform: translateY(-80px);
+}
+.skip:focus {
+  transform: none;
+}
+
+/* header */
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: var(--lm-docs-head-h);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 var(--lm-docs-gutter);
+  background: var(--lm-docs-head);
+  border-bottom: var(--lm-docs-border) solid var(--lm-docs-rule);
+}
+.brand {
+  color: var(--lm-docs-ink);
+  text-decoration: none;
+  font: 800 22px / 1 var(--lm-docs-f-display);
+  letter-spacing: -0.01em;
+}
+.ver {
+  font: 500 var(--lm-docs-t-kicker) / 1 var(--lm-docs-f-mono);
+  padding: 5px 8px;
+  border: var(--lm-docs-border-hair) solid var(--lm-docs-ink);
+  border-radius: var(--lm-radius-pill);
+}
+.menu {
+  display: none;
+  width: var(--lm-docs-tap);
+  height: var(--lm-docs-tap);
+  padding: 0;
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-docs-radius-btn);
+  background: var(--lm-docs-page);
+  color: var(--lm-docs-ink);
+  box-shadow: var(--lm-docs-shadow-btn);
+  font: inherit;
+  cursor: pointer;
+}
+.menu svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* layout */
+.shell {
+  display: grid;
+  grid-template-columns: var(--lm-docs-side-w) minmax(0, 1fr) var(
+      --lm-docs-toc-w
+    );
+  min-height: calc(100vh - var(--lm-docs-head-h));
+}
+.side {
+  padding: 0 16px;
+  background: var(--lm-docs-side);
+  border-right: var(--lm-docs-border) solid var(--lm-docs-rule);
+}
+.side > nav {
+  position: sticky;
+  top: var(--lm-docs-head-h);
+  max-height: calc(100vh - var(--lm-docs-head-h));
+  overflow: auto;
+  /* 4px inline room so the 3px+3px focus ring is not clipped by the
+     scroller (WCAG 2.4.11); the negative margin keeps pills aligned. */
+  padding: 24px 6px 40px;
+  margin-inline: -6px;
+}
+
+/* nav */
+.nav-group {
+  margin: 0 0 22px;
+}
+.nav-label {
+  margin: 0 0 6px;
+  padding: 0 12px;
+  font: 500 var(--lm-docs-t-kicker) / 1.4 var(--lm-docs-f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lm-docs-ink-soft);
+}
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-list a {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: var(--lm-docs-radius-nav);
+  border: var(--lm-docs-border-hair) solid transparent;
+  color: var(--lm-docs-ink);
+  text-decoration: none;
+  font: 500 15px / 1.3 var(--lm-docs-f-text);
+}
+.nav-list a:hover {
+  border-color: var(--lm-docs-ink);
+}
+.nav-list a[aria-current="page"] {
+  background: var(--lm-docs-active-bg);
+  color: var(--lm-docs-active-ink);
+  font-weight: 700;
+  border-color: var(--lm-docs-ink);
+  box-shadow: var(--lm-docs-shadow-btn);
+}
+/* Forced colours: the current page keeps a visible marker without the fill. */
+@media (forced-colors: active) {
+  .nav-list a[aria-current="page"] {
+    border-color: Highlight;
+  }
+}
+
+/* content */
+.main {
+  padding: 48px var(--lm-docs-gutter-lg) 96px;
+  min-width: 0;
+}
+.prose {
+  max-width: var(--lm-docs-measure);
+}
+.crumb {
+  font: 500 var(--lm-docs-t-kicker) / 1.4 var(--lm-docs-f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lm-docs-ink-soft);
+  margin: 0 0 12px;
+}
+h1 {
+  font: 800 var(--lm-docs-t-h1) / 1.02 var(--lm-docs-f-display);
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+}
+.lede {
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--lm-docs-ink-soft);
+  margin: 0 0 40px;
+}
+h2 {
+  font: 700 var(--lm-docs-t-h2) / 1.15 var(--lm-docs-f-display);
+  letter-spacing: -0.01em;
+  margin: 56px 0 16px;
+  padding-top: 16px;
+  border-top: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
+}
+h3 {
+  font: 700 var(--lm-docs-t-h3) / 1.3 var(--lm-docs-f-text);
+  margin: 32px 0 10px;
+}
+.anchor {
+  margin-left: 8px;
+  color: var(--lm-docs-ink-soft);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity var(--lm-docs-feedback) linear;
+}
+h2:hover .anchor,
+h3:hover .anchor,
+.anchor:focus-visible {
+  opacity: 1;
+}
+p {
+  margin: 0 0 16px;
+}
+code {
+  white-space: nowrap;
+  font: 400 0.88em / 1 var(--lm-docs-f-mono);
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--lm-docs-side);
+  border: 1.5px solid var(--lm-docs-rule);
+}
+
+/* on this page */
+.toc {
+  position: sticky;
+  top: var(--lm-docs-head-h);
+  align-self: start;
+  padding: 48px 24px 0 0;
+}
+.toc p {
+  font: 500 var(--lm-docs-t-kicker) / 1.4 var(--lm-docs-f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lm-docs-ink-soft);
+  margin: 0 0 10px;
+}
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 12px;
+  border-left: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
+}
+.toc a {
+  display: block;
+  padding: 5px 0;
+  font-size: var(--lm-docs-t-small);
+  color: var(--lm-docs-ink-soft);
+  text-decoration: none;
+}
+
+/* pager */
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 64px;
+}
+.pager a {
+  display: block;
+  padding: 16px 18px;
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-docs-radius-card);
+  color: var(--lm-docs-ink);
+  text-decoration: none;
+  box-shadow: var(--lm-docs-shadow-btn);
+}
+.pager small {
+  display: block;
+  font: 500 var(--lm-docs-t-kicker) / 1.4 var(--lm-docs-f-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lm-docs-ink-soft);
+}
+.pager strong {
+  font: 700 18px / 1.3 var(--lm-docs-f-text);
+}
+.pager .next {
+  grid-column: 2;
+  text-align: right;
+}
+
+/* drawer: Popover API, opens and closes with no JS; Esc and light dismiss are native */
+.drawer:not(:popover-open) {
+  display: none;
+}
+@media (max-width: 1180px) {
+  .shell {
+    grid-template-columns: var(--lm-docs-side-w) minmax(0, 1fr);
+  }
+  .toc {
+    display: none;
+  }
+}
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    display: none;
+  }
+  .menu {
+    display: inline-grid;
+    place-items: center;
+  }
+  .main {
+    padding: 32px 20px 72px;
+  }
+  .pager {
+    grid-template-columns: 1fr;
+  }
+  .pager .next {
+    grid-column: 1;
+  }
+  .drawer:popover-open {
+    position: fixed;
+    inset: 0 auto 0 0;
+    margin: 0;
+    width: min(320px, 86vw);
+    height: 100%;
+    max-height: none;
+    padding: 16px 16px 40px;
+    background: var(--lm-docs-side);
+    color: var(--lm-docs-ink);
+    border: 0;
+    border-right: var(--lm-docs-border) solid var(--lm-docs-rule);
+    box-shadow: 8px 0 0 var(--lm-docs-shadow);
+    overflow: auto;
+    transform: translateX(0);
+    transition:
+      transform var(--lm-docs-drawer-in) var(--lm-docs-ease-in),
+      overlay var(--lm-docs-drawer-in) allow-discrete,
+      display var(--lm-docs-drawer-in) allow-discrete;
+  }
+  @starting-style {
+    .drawer:popover-open {
+      transform: translateX(-100%);
+    }
+  }
+  .drawer {
+    transform: translateX(-100%);
+    transition:
+      transform var(--lm-docs-drawer-out) var(--lm-docs-ease-exit),
+      overlay var(--lm-docs-drawer-out) allow-discrete,
+      display var(--lm-docs-drawer-out) allow-discrete;
+  }
+  .drawer::backdrop {
+    background: var(--lm-docs-backdrop);
+  }
+  .drawer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+}
+/* Drawer only exists on phones; above 860 the sidebar is always there. */
+@media (min-width: 861px) {
+  .drawer {
+    display: none !important;
+  }
+}
+@media (max-width: 400px) {
+  .ver {
+    display: none;
+  }
+  .brand {
+    font-size: 20px;
+  }
+}
+@media (min-width: 1600px) {
+  .main {
+    padding-left: 72px;
+  }
+  .shell {
+    grid-template-columns: var(--lm-docs-side-w) minmax(0, 1fr) 260px;
+  }
+}
