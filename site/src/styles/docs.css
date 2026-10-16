@@ -826,12 +826,29 @@ button.tok-copy[data-copied]::after {
   align-content: end;
   gap: 2px;
   min-height: 96px;
-  padding: 8px 6px 6px;
+  padding: 8px 6px 8px;
   border: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
   border-radius: var(--lm-docs-radius-btn);
 }
 .swatch .tok {
   justify-self: start;
+}
+/* Muse #33: the whole name and value use the swatch label colour (no code
+   pill colour or ligature/punctuation styling leaking in), and the line box
+   is tall enough that descenders are never clipped. */
+.swatch .tok,
+.swatch .tok * {
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
+  font-variant-ligatures: none;
+}
+.swatch code.tok,
+.swatch button.tok-copy {
+  background-color: transparent;
+  border-color: transparent;
+  line-height: 1.5;
+  padding-block: 4px;
+  overflow: visible;
 }
 .swatch.on-ink {
   color: #2b1b14;

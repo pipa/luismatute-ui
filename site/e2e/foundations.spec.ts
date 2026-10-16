@@ -99,3 +99,55 @@ test.describe('with JS off', () => {
     await expect(page.locator('button.tok-copy')).toHaveCount(0);
   });
 });
+
+for (const mode of ['day', 'night']) {
+  test(`swatch names use the label colour and values aren't clipped (${mode})`, async ({
+    page,
+    context,
+  }) => {
+    await context.addCookies([
+      { name: 'lm-mode', value: mode, domain: '127.0.0.1', path: '/' },
+    ]);
+    for (const js of [true, false]) {
+      if (!js) await page.route('**/*.js', (r) => r.abort());
+      await page.goto('/ui/foundations/colour/');
+      const problems = await page.evaluate(() =>
+        [...document.querySelectorAll<HTMLElement>('.swatch')].flatMap((li) => {
+          const [name, value] = li.querySelectorAll<HTMLElement>('.tok');
+          if (!name || !value) return ['missing tokens'];
+          const out: string[] = [];
+          const label = getComputedStyle(li).color;
+          for (const el of [
+            name,
+            value,
+            ...name.querySelectorAll<HTMLElement>('*'),
+          ]) {
+            const c = getComputedStyle(el);
+            if (c.color !== label || c.webkitTextFillColor !== label)
+              out.push(
+                `${name.textContent} colour ${c.color}/${c.webkitTextFillColor} != ${label}`,
+              );
+          }
+          const L = li.getBoundingClientRect();
+          const V = value.getBoundingClientRect();
+          if (
+            value.scrollHeight > value.clientHeight ||
+            V.bottom > L.bottom ||
+            V.top < L.top
+          )
+            out.push(
+              `${name.textContent} value clipped ${value.scrollHeight}/${value.clientHeight}`,
+            );
+          // The line box (line-height) must fit inside the value element's content.
+          const lh = Number.parseFloat(getComputedStyle(value).lineHeight);
+          if (lh > value.clientHeight)
+            out.push(
+              `${name.textContent} line box ${lh} > ${value.clientHeight}`,
+            );
+          return out;
+        }),
+      );
+      expect(problems, js ? 'with JS' : 'without JS').toEqual([]);
+    }
+  });
+}

@@ -115,3 +115,14 @@ describe('foundations CSS', () => {
     );
   });
 });
+
+describe('swatch label CSS (Muse #33)', () => {
+  it('name and value inherit the label colour, no ligatures, room for descenders', () => {
+    expect(docs).toMatch(
+      /\.swatch \.tok,\s*\.swatch \.tok \* \{\s*color: inherit;\s*-webkit-text-fill-color: currentColor;\s*font-variant-ligatures: none;/,
+    );
+    expect(docs).toMatch(
+      /\.swatch code\.tok,\s*\.swatch button\.tok-copy \{[^}]*line-height: 1\.5;[^}]*padding-block: 4px;/,
+    );
+  });
+});
