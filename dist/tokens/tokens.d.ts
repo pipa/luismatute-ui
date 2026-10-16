@@ -556,12 +556,13 @@ export declare const day: {
     readonly pillBg: '#fff6e4';
     readonly pillInk: '#2b1b14';
     readonly pillRim: '#2b1b14';
+    /** Pressed lm-motion-toggle fill: paper by day. */
+    readonly togglePressed: '#fff6e4';
 };
 /** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
 export declare const night: {
     readonly paper: '#1d1510';
-    /** Muse (#38): indigo night card, no brown at night. */
-    readonly card: '#1f1945';
+    readonly card: '#281d16';
     readonly sand: '#33261c';
     readonly ink: '#fff6e4';
     readonly inkSoft: '#d8c4a6';
@@ -575,6 +576,8 @@ export declare const night: {
     readonly pillBg: '#241d52';
     readonly pillInk: '#fff6e4';
     readonly pillRim: '#fff6e4';
+    /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
+    readonly togglePressed: '#1f1945';
 };
 /**
  * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
@@ -641,17 +644,17 @@ export declare const modePairs: readonly [{
 }, {
     readonly name: 'night paper on card';
     readonly fg: "#fff6e4";
-    readonly bg: "#1f1945";
+    readonly bg: "#281d16";
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on card';
     readonly fg: "#d8c4a6";
-    readonly bg: "#1f1945";
+    readonly bg: "#281d16";
     readonly large: false;
 }, {
     readonly name: 'night kicker on card';
     readonly fg: "#ff9a7f";
-    readonly bg: "#1f1945";
+    readonly bg: "#281d16";
     readonly large: false;
 }, {
     readonly name: 'night paper on sand';
@@ -1215,11 +1218,12 @@ export declare const tokens: {
         readonly pillBg: '#fff6e4';
         readonly pillInk: '#2b1b14';
         readonly pillRim: '#2b1b14';
+        /** Pressed lm-motion-toggle fill: paper by day. */
+        readonly togglePressed: '#fff6e4';
     };
     readonly night: {
         readonly paper: '#1d1510';
-        /** Muse (#38): indigo night card, no brown at night. */
-        readonly card: '#1f1945';
+        readonly card: '#281d16';
         readonly sand: '#33261c';
         readonly ink: '#fff6e4';
         readonly inkSoft: '#d8c4a6';
@@ -1233,6 +1237,8 @@ export declare const tokens: {
         readonly pillBg: '#241d52';
         readonly pillInk: '#fff6e4';
         readonly pillRim: '#fff6e4';
+        /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
+        readonly togglePressed: '#1f1945';
     };
     readonly code: {
         readonly day: {
@@ -1293,17 +1299,17 @@ export declare const tokens: {
     }, {
         readonly name: 'night paper on card';
         readonly fg: "#fff6e4";
-        readonly bg: "#1f1945";
+        readonly bg: "#281d16";
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on card';
         readonly fg: "#d8c4a6";
-        readonly bg: "#1f1945";
+        readonly bg: "#281d16";
         readonly large: false;
     }, {
         readonly name: 'night kicker on card';
         readonly fg: "#ff9a7f";
-        readonly bg: "#1f1945";
+        readonly bg: "#281d16";
         readonly large: false;
     }, {
         readonly name: 'night paper on sand';

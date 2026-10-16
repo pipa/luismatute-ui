@@ -46,7 +46,7 @@ describe('frame theme stylesheet', () => {
       /\.demo-frame\[data-theme="night"\] \{[^}]*--lm-ink: #fff6e4;/,
     );
     expect(css).toMatch(
-      /\.demo-frame\[data-theme="night"\] \{[^}]*--lm-card: #1f1945;/,
+      /\.demo-frame\[data-theme="night"\] \{[^}]*--lm-card: #281d16;/,
     );
   });
 });

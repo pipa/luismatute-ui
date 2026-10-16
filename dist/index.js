@@ -1735,12 +1735,13 @@ var day = {
   skyText: "#2b1b14",
   pillBg: "#fff6e4",
   pillInk: "#2b1b14",
-  pillRim: "#2b1b14"
+  pillRim: "#2b1b14",
+  /** Pressed lm-motion-toggle fill: paper by day. */
+  togglePressed: "#fff6e4"
 };
 var night = {
   paper: "#1d1510",
-  /** Muse (#38): indigo night card, no brown at night. */
-  card: "#1f1945",
+  card: "#281d16",
   sand: "#33261c",
   ink: "#fff6e4",
   inkSoft: "#d8c4a6",
@@ -1753,7 +1754,9 @@ var night = {
   skyText: "#fff6e4",
   pillBg: "#241d52",
   pillInk: "#fff6e4",
-  pillRim: "#fff6e4"
+  pillRim: "#fff6e4",
+  /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
+  togglePressed: "#1f1945"
 };
 var code = {
   day: {

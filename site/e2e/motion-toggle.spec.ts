@@ -32,9 +32,9 @@ async function measure(page: Page) {
     return {
       pressed: b.dataset.pressed,
       bg: s.backgroundColor,
-      card: (() => {
+      token: (() => {
         const probe = document.createElement('span');
-        probe.style.backgroundColor = 'var(--lm-card)';
+        probe.style.backgroundColor = 'var(--lm-toggle-pressed)';
         b.append(probe);
         const v = getComputedStyle(probe).backgroundColor;
         probe.remove();
@@ -92,7 +92,7 @@ for (const mode of ['day', 'night'] as const) {
         3,
       );
       expect(results.pressed?.pressed).toBe('true');
-      // Muse (#38): pressed sits on the card token. Day #fff6e4, night indigo #1f1945, never brown.
+      // Muse/Eddie (#38): pressed sits on the toggle-only --lm-toggle-pressed token. Day #fff6e4, night indigo #1f1945, never brown.
       expect(
         results.pressed?.bg,
         `${mode} pressed background is --lm-card`,

@@ -379,8 +379,8 @@ lm-motion-toggle button:active {
 }
 
 lm-motion-toggle button[data-pressed="true"] {
-  /* Card token: paper by day (#fff6e4), indigo #1f1945 at night (no brown). */
-  background: var(--lm-card);
+  /* Toggle-only token: paper by day (#fff6e4), indigo #1f1945 at night (no brown). */
+  background: var(--lm-toggle-pressed);
   color: var(--lm-ink);
   font-weight: var(--lm-weight-semibold);
 }
