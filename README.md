@@ -110,7 +110,7 @@ Node 22 and pnpm 10.33.4. `pnpm install`, then `pnpm lint`, `pnpm typecheck`, `p
 
 ### Stills
 
-Design stills (render-look-fix screenshots) live outside the repo in `/workspace/team/luismatute/stills/<name>/`. The scripts in `design/ui-docs-build/` refuse to write inside the repo; the stills already committed under `design/ui-docs-build/stills*` stay as history.
+Design stills (render-look-fix screenshots) live outside the repo in `/workspace/team/luismatute/stills/<name>/`. The scripts in `design/ui-docs-build/` refuse to write inside the repo, and `design/ui-docs-build/stills*/` is git-ignored.
 
 ### Ports (`E2E_PORT`)
 
