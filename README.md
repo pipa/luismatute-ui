@@ -106,4 +106,18 @@ Consumers install `github:pipa/luismatute-ui#vX.Y.Z`.
 
 Node 22 and pnpm 10.33.4. `pnpm install`, then `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `pnpm build:docs`, `pnpm test:e2e`. The playground is `docs-dist/index.html` and the stop demo is `docs-dist/demo.html`. `pnpm test:e2e` runs the QA specs in Chromium, Firefox and WebKit against `docs-dist`. `pnpm visual` screenshots the demo and https://luismatute.me at 390 and 1280 and stays out of CI. The docs script is `build:docs` because `pnpm docs` is the package-homepage command.
 
+`pnpm check` runs the whole local gate: lint, typecheck, unit tests, both builds, `check:site` (the `/ui` docs site in `site/`: types, tests, build, e2e) and `pnpm test:e2e`. GitHub Actions is off on this repo, so run it before asking for review.
+
+### Ports (`E2E_PORT`)
+
+Every Playwright config starts its own static server and never reuses one that is already running (`reuseExistingServer: false`), so a stray server on the port fails fast instead of serving the wrong files. `E2E_PORT` sets the port:
+
+| Suite | Config | Default |
+|---|---|---|
+| `pnpm test:e2e` (QA) | `playwright.qa.config.ts` | 4173 |
+| `pnpm visual` | `playwright.config.ts` | 4173 |
+| `pnpm test:site:e2e` (docs site, also in `check:site`) | `site/playwright.config.ts` | 4174 |
+
+The suites run one after another, so one `E2E_PORT` serves them all. The box is shared by Luis's bots, so use a port from your own range: Pixel 3100-3109, Kernel 3200-3209, Sentinel 3300-3309 (Eddie 3000s, Muse 3400s). For example `E2E_PORT=3104 pnpm check`.
+
 Shipped components and illustration SVGs do not use inline `style` attributes. A few components still set transform origins through the CSSOM (`element.style`), which a strict `style-src-attr` policy allows. The docs pages still load with inline module scripts. `scripts/gen-illustrations.mjs` does not yet emit the hashed `lm-ix-*` motion classes; the files in `src/illustrations/` are the source of truth until that generator is extended.
