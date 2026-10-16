@@ -80,10 +80,13 @@ for (const mode of ['day', 'night']) {
       const n = a.closest('nav').getBoundingClientRect();
       const r = a.getBoundingClientRect();
       const s = getComputedStyle(a);
-      const o = Number.parseFloat(s.outlineWidth) + Number.parseFloat(s.outlineOffset);
+      const o =
+        Number.parseFloat(s.outlineWidth) + Number.parseFloat(s.outlineOffset);
       return r.left - o >= n.left && r.right + o <= n.right;
     });
-    report.push(`${mode}-1280-focus on=${label} ring=${ring} ringInsideScroller=${fits}`);
+    report.push(
+      `${mode}-1280-focus on=${label} ring=${ring} ringInsideScroller=${fits}`,
+    );
     await ctx.close();
   }
 }

@@ -136,7 +136,9 @@ describe('docs.css', () => {
     }
   });
   it('leaves room in the sidebar scroller for the whole focus ring (WCAG 2.4.11)', () => {
-    const ring = css.match(/:focus-visible \{[^}]*outline: (\d+)px[^}]*outline-offset: (\d+)px/);
+    const ring = css.match(
+      /:focus-visible \{[^}]*outline: (\d+)px[^}]*outline-offset: (\d+)px/,
+    );
     const need = Number(ring?.[1]) + Number(ring?.[2]);
     const nav = css.match(/\.side > nav \{([^}]*)\}/)?.[1] ?? '';
     const pad = Number(nav.match(/padding: \d+px (\d+)px/)?.[1]);
