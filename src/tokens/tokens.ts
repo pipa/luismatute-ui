@@ -641,13 +641,14 @@ export const day = {
 
 /** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
 export const night = {
-  paper: '#1d1510',
-  card: '#281d16',
-  sand: '#33261c',
+  // Muse's final indigo night palette (#39): no brown at night.
+  paper: '#120d2c',
+  card: '#1f1945',
+  sand: '#2b2456',
   ink: '#fff6e4',
   inkSoft: '#d8c4a6',
   tomatoD: '#ff9a7f',
-  white: '#281d16',
+  white: '#3a3270',
   link: '#6fd0c6',
   lagoon: '#6fd0c6',
   ruleRoute: 'rgba(255, 246, 228, 0.3)',
@@ -656,8 +657,8 @@ export const night = {
   pillBg: '#241d52',
   pillInk: '#fff6e4',
   pillRim: '#fff6e4',
-  /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
-  togglePressed: '#1f1945',
+  /** Pressed lm-motion-toggle fill follows the night card (#39). */
+  togglePressed: 'var(--lm-card)',
 } as const;
 
 /**
