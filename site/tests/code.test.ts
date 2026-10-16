@@ -71,6 +71,24 @@ describe('code CSS', () => {
       /prefers-reduced-motion: reduce\)\s*\{\s*:root\s*\{\s*--lm-docs-pop: 0s/,
     );
   });
+  it('copied fill is an opacity-only overlay on the fade token, instant under reduced motion', () => {
+    const after = css.match(/\n\.copy::after \{([^}]*)\}/)?.[1] ?? '';
+    expect(after).toMatch(
+      /transition: opacity var\(--lm-docs-copy-fade\) var\(--lm-ease-out\);/,
+    );
+    expect(css).toMatch(/--lm-docs-copy-fade: var\(--lm-duration-copy-fade\)/);
+    expect(css).toMatch(
+      /prefers-reduced-motion: reduce\)\s*\{\s*:root\s*\{[^}]*--lm-docs-copy-fade: 0s/,
+    );
+    // No colour transitions anywhere on the copy button.
+    const copy = css.match(/\n\.copy \{([^}]*)\}/)?.[1] ?? '';
+    expect(copy).not.toMatch(/transition:[^;]*(color|background|border)/);
+    const tokens = readFileSync(
+      new URL('../../dist/tokens.css', import.meta.url),
+      'utf8',
+    );
+    expect(tokens).toMatch(/--lm-duration-copy-fade: 0\.28s;/);
+  });
   it('keyframes only touch transform and opacity', () => {
     const kf = css.match(/@keyframes lm-docs-pop \{([\s\S]*?)\n\}/)?.[1] ?? '';
     const props = [...kf.matchAll(/([a-z-]+):/g)].map((m) => m[1]);
