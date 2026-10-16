@@ -923,10 +923,10 @@ button.tok-copy[data-copied]::after {
     white-space: nowrap;
   }
   .tok-table tr {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    column-gap: 8px;
+    gap: 2px 8px;
     padding: 4px 2px;
     border-top: 1px solid var(--lm-docs-rule);
   }
@@ -939,11 +939,18 @@ button.tok-copy[data-copied]::after {
     border-top: 0;
     min-width: 0;
   }
+  /* Line 1: the name. Line 2: value, then the preview; if both don't fit,
+     the preview drops to its own line at full token size (never shrunk or clipped). */
   .tok-table td:first-child {
-    grid-column: 1 / -1;
+    flex: 0 0 100%;
   }
-  .tok-table td:nth-child(2):last-child {
-    grid-column: 1 / -1;
+  .tok-table td:nth-child(2) {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
+  .tok-table td.tok-preview {
+    flex: 0 0 auto;
+    max-width: 100%;
   }
   .tok-table .tok {
     white-space: normal;

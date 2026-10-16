@@ -300,12 +300,17 @@ test.describe('token tables at 375 (two-line rows)', () => {
             out.push(`${label} not on its own line`);
           // Value and preview share line 2.
           if (rest.length === 2) {
+            // Muse: they share line 2 when they fit; otherwise the preview drops
+            // to line 3 at full size (checked by the 375 table fit spec).
             const [v, pv] = rest as [DOMRect, DOMRect];
-            if (
-              Math.abs(v.top + v.height / 2 - (pv.top + pv.height / 2)) >
-              Math.max(v.height, pv.height) / 2
-            )
+            const fits = v.width + 8 + pv.width <= tr.clientWidth;
+            const sameLine =
+              Math.abs(v.top + v.height / 2 - (pv.top + pv.height / 2)) <=
+              Math.max(v.height, pv.height) / 2;
+            if (fits && !sameLine)
               out.push(`${label} value/preview on different lines`);
+            if (!fits && pv.top < v.bottom - 1)
+              out.push(`${label} preview should drop below value`);
           }
         }
         return out.slice(0, 10);
@@ -322,3 +327,63 @@ test.describe('token tables at 375 (two-line rows)', () => {
     );
   });
 });
+
+for (const mode of ['day', 'night']) {
+  for (const js of [true, false]) {
+    test.describe(`375 table fit (${mode}, JS ${js ? 'on' : 'off: day-only, theme-init needs JS'})`, () => {
+      test.use({
+        viewport: { width: 375, height: 900 },
+        javaScriptEnabled: js,
+      });
+      test.beforeEach(async ({ context }) => {
+        await context.addCookies([
+          { name: 'lm-mode', value: mode, domain: '127.0.0.1', path: '/' },
+        ]);
+      });
+      test('no .tok-wrap scrolls sideways; previews keep full token size, unclipped', async ({
+        page,
+      }) => {
+        for (const p of pages) {
+          await page.goto(`/ui/foundations/${p}/`);
+          const bad = await page.evaluate(() => {
+            const out: string[] = [];
+            for (const w of document.querySelectorAll<HTMLElement>('.tok-wrap'))
+              if (w.scrollWidth > w.clientWidth)
+                out.push(`.tok-wrap ${w.scrollWidth}>${w.clientWidth}`);
+            for (const pv of document.querySelectorAll<HTMLElement>(
+              '.pv-type',
+            )) {
+              const name = pv.className.match(/fs-(lm-font-size-[\w-]+)/)?.[1];
+              const probe = document.createElement('span');
+              probe.style.fontSize = `var(--${name})`;
+              pv.parentElement?.append(probe);
+              const want = getComputedStyle(probe).fontSize;
+              probe.remove();
+              const got = getComputedStyle(pv).fontSize;
+              if (got !== want)
+                out.push(`${name} preview ${got} != token ${want}`);
+              const cell = pv.closest('td') as HTMLElement;
+              for (const el of [pv, cell]) {
+                const cs = getComputedStyle(el);
+                if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible')
+                  out.push(`${name} overflow ${cs.overflow}`);
+              }
+              if (cell.scrollWidth > cell.clientWidth)
+                out.push(
+                  `${name} cell clipped ${cell.scrollWidth}>${cell.clientWidth}`,
+                );
+              const r = pv.getBoundingClientRect();
+              const wrap = (
+                pv.closest('.tok-wrap') as HTMLElement
+              ).getBoundingClientRect();
+              if (r.right > wrap.right || r.left < wrap.left)
+                out.push(`${name} preview outside wrapper`);
+            }
+            return out.slice(0, 10);
+          });
+          expect(bad, p).toEqual([]);
+        }
+      });
+    });
+  }
+}
