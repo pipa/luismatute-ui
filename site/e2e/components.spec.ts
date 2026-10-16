@@ -275,6 +275,8 @@ for (const mode of ['day', 'night'] as const) {
               .getByRole('button', { name: /Night preview for this demo/ })
               .click();
           const controls = page.locator('.demo-frame button:visible');
+          // Wait for the demo to render before counting (WebKit flake, #39).
+          await expect(controls.nth(1)).toBeVisible();
           const n = await controls.count();
           expect(n, p).toBeGreaterThanOrEqual(2);
           await page
