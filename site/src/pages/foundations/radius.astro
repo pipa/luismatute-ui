@@ -1,0 +1,24 @@
+---
+import Heading from '../../components/Heading.astro';
+import TokenTable from '../../components/TokenTable.astro';
+import Docs from '../../layouts/Docs.astro';
+import { borders, radii } from '../../lib/tokens';
+
+const toc = [
+  { id: 'radius', label: 'Radius' },
+  { id: 'borders', label: 'Borders' },
+];
+---
+
+<Docs
+  slug="foundations/radius"
+  title="Radius and borders"
+  description="Corner radii and border widths. Click a name or value to copy it."
+  toc={toc}
+  extraCss="foundations.css"
+>
+  <Heading id="radius">Radius</Heading>
+  <TokenTable tokens={radii} caption="Radii" preview="radius" />
+  <Heading id="borders">Borders</Heading>
+  <TokenTable tokens={borders} caption="Border widths" preview="border" />
+</Docs>

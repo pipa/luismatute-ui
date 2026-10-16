@@ -1,0 +1,56 @@
+---
+import { slug, type Token } from '../lib/tokens';
+
+export type Preview =
+  | 'none'
+  | 'font-size'
+  | 'space'
+  | 'radius'
+  | 'border'
+  | 'ease'
+  | 'duration';
+interface Props {
+  tokens: Token[];
+  caption: string;
+  preview?: Preview;
+}
+const { tokens, caption, preview = 'none' } = Astro.props;
+---
+
+<div class="tok-wrap">
+  <table class="tok-table">
+    <caption class="sr">{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Token</th>
+        <th scope="col">Value</th>
+        {preview !== 'none' && <th scope="col">Preview</th>}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        tokens.map((t) => (
+          <tr>
+            <td>
+              <code class="tok" data-copy-text={`var(${t.name})`} data-copy-label={`Copy var(${t.name})`}>{t.name}</code>
+            </td>
+            <td>
+              <code class="tok" data-copy-text={t.value} data-copy-label={`Copy value of ${t.name}`}>{t.value}</code>
+            </td>
+            {preview === 'font-size' && <td class="tok-preview"><span class={`pv-type fs-${slug(t.name)}`} aria-hidden="true">Ag</span></td>}
+            {preview === 'space' && <td class="tok-preview"><span class={`pv-space sp-${slug(t.name)}`} aria-hidden="true" /></td>}
+            {preview === 'radius' && <td class="tok-preview"><span class={`pv-radius rd-${slug(t.name)}`} aria-hidden="true" /></td>}
+            {preview === 'border' && <td class="tok-preview"><span class={`pv-border bd-${slug(t.name)}`} aria-hidden="true" /></td>}
+            {preview === 'ease' && (
+              <td class="tok-preview">
+                <span class={`pv-ease ez-${slug(t.name)}`} tabindex="0" role="img" aria-label={`Easing demo for ${t.name}. Hover or focus to play.`}>
+                  <span class="pv-dot" />
+                </span>
+              </td>
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

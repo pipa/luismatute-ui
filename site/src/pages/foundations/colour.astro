@@ -1,0 +1,34 @@
+---
+import Heading from '../../components/Heading.astro';
+import Swatches from '../../components/Swatches.astro';
+import TokenTable from '../../components/TokenTable.astro';
+import Docs from '../../layouts/Docs.astro';
+import { colourAliases, colours, nightColours } from '../../lib/tokens';
+
+const toc = [
+  { id: 'palette', label: 'Palette' },
+  { id: 'night', label: 'Night overrides' },
+  { id: 'aliases', label: 'Aliases' },
+];
+---
+
+<Docs
+  slug="foundations/colour"
+  title="Colour"
+  description={`Every colour token in @luismatute/ui, ${colours.length} in all. Click a name to copy its var(), or a value to copy the value.`}
+  toc={toc}
+  extraCss="foundations.css"
+>
+  <Heading id="palette">Palette</Heading>
+  <p>Day values from <code>:root</code>. Each label uses ink or paper text, whichever passes AA on that swatch.</p>
+  <Swatches tokens={colours} label="Day palette" />
+  <Heading id="night">Night overrides</Heading>
+  <p>
+    Tokens that change under <code>html[data-mode="night"]</code>. The docs pages themselves use the indigo night
+    sky, not the brown paper below.
+  </p>
+  <Swatches tokens={nightColours} label="Night overrides" night />
+  <Heading id="aliases">Aliases</Heading>
+  <p>Tokens that point at another token.</p>
+  <TokenTable tokens={colourAliases} caption="Colour aliases" />
+</Docs>

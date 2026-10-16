@@ -1,0 +1,14 @@
+---
+import TokenTable from '../../components/TokenTable.astro';
+import Docs from '../../layouts/Docs.astro';
+import { spaces } from '../../lib/tokens';
+---
+
+<Docs
+  slug="foundations/spacing"
+  title="Spacing"
+  description="The spacing scale in pixels, as it appears in the pages. Click a name or value to copy it."
+  extraCss="foundations.css"
+>
+  <TokenTable tokens={spaces} caption="Spacing scale" preview="space" />
+</Docs>

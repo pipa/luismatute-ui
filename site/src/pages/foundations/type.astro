@@ -1,0 +1,50 @@
+---
+import Heading from '../../components/Heading.astro';
+import TokenTable from '../../components/TokenTable.astro';
+import Docs from '../../layouts/Docs.astro';
+import {
+  families,
+  fontSizes,
+  leading,
+  slug,
+  tracking,
+  weights,
+} from '../../lib/tokens';
+
+const toc = [
+  { id: 'families', label: 'Families' },
+  { id: 'sizes', label: 'Sizes' },
+  { id: 'leading', label: 'Line height' },
+  { id: 'tracking', label: 'Tracking' },
+  { id: 'weights', label: 'Weights' },
+];
+---
+
+<Docs
+  slug="foundations/type"
+  title="Type"
+  description="Font families, sizes, line heights, tracking and weights. Click a name or value to copy it."
+  toc={toc}
+  extraCss="foundations.css"
+>
+  <Heading id="families">Families</Heading>
+  <ul class="specimens">
+    {
+      families.map((f) => (
+        <li class="specimen">
+          <p class={`specimen-sample ff-${slug(f.name)}`} aria-hidden="true">Wheels up, Lisbon 06:40</p>
+          <code class="tok" data-copy-text={`var(${f.name})`} data-copy-label={`Copy var(${f.name})`}>{f.name}</code>
+          <code class="tok" data-copy-text={f.value} data-copy-label={`Copy value of ${f.name}`}>{f.value}</code>
+        </li>
+      ))
+    }
+  </ul>
+  <Heading id="sizes">Sizes</Heading>
+  <TokenTable tokens={fontSizes} caption="Font sizes" preview="font-size" />
+  <Heading id="leading">Line height</Heading>
+  <TokenTable tokens={leading} caption="Line heights" />
+  <Heading id="tracking">Tracking</Heading>
+  <TokenTable tokens={tracking} caption="Letter spacing" />
+  <Heading id="weights">Weights</Heading>
+  <TokenTable tokens={weights} caption="Font weights" />
+</Docs>
