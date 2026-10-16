@@ -10,7 +10,7 @@ export function copyShortcut(platform?: string): string {
     | (Navigator & { userAgentData?: { platform?: string } })
     | undefined;
   const p = platform ?? nav?.userAgentData?.platform ?? nav?.platform ?? '';
-  return /mac|iphone|ipad|ipod/i.test(p) ? '⌘C' : 'Ctrl+C';
+  return /mac|iphone|ipad|ipod|ios/i.test(p) ? '⌘C' : 'Ctrl+C';
 }
 
 export interface CopyDeps {
