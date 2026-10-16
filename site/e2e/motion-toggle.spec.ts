@@ -95,8 +95,8 @@ for (const mode of ['day', 'night'] as const) {
       // Muse/Eddie (#38): pressed sits on the toggle-only --lm-toggle-pressed token. Day #fff6e4, night indigo #1f1945, never brown.
       expect(
         results.pressed?.bg,
-        `${mode} pressed background is --lm-card`,
-      ).toBe(results.pressed?.card);
+        `${mode} pressed background is --lm-toggle-pressed`,
+      ).toBe(results.pressed?.token);
       expect(results.pressed?.bg).toBe(
         mode === 'day' ? 'rgb(255, 246, 228)' : 'rgb(31, 25, 69)',
       );
