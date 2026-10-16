@@ -1,5 +1,8 @@
 import { defineConfig, devices } from 'playwright/test';
 
+// E2E_PORT picks the static server port (default 4173); see README > Develop.
+const port = Number(process.env.E2E_PORT ?? 4173);
+
 export default defineConfig({
   testDir: 'tests/qa',
   timeout: 60_000,
@@ -10,12 +13,12 @@ export default defineConfig({
     { name: 'webkit', use: { ...devices['Desktop Safari'] } },
   ],
   use: {
-    baseURL: 'http://127.0.0.1:4173',
+    baseURL: `http://127.0.0.1:${port}`,
   },
   webServer: {
-    command: 'python3 -m http.server 4173',
+    command: `python3 -m http.server ${port} --bind 127.0.0.1`,
     cwd: 'docs-dist',
-    port: 4173,
-    reuseExistingServer: !process.env.CI,
+    port,
+    reuseExistingServer: false,
   },
 });
