@@ -1,0 +1,81 @@
+---
+import themeInit from '../../../dist/theme-init.js?url';
+import pkg from '../../../package.json';
+import SideNav from '../components/SideNav.astro';
+import { groupOf, hrefFor, neighbours } from '../lib/nav';
+import '../styles/docs.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Current page slug under /ui/ ('' for the index). */
+  slug: string;
+  toc?: { id: string; label: string }[];
+}
+const { title, description, slug, toc = [] } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const crumb = slug ? `${groupOf(slug)?.label ?? 'Docs'} / ${title}` : 'Docs';
+const { prev, next } = neighbours(slug);
+const canonical = new URL(
+  hrefFor(base, slug),
+  Astro.site ?? 'https://luismatute.me',
+).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Blocking and external (CSP script-src 'self'): sets html[data-mode] from the shared lm-mode cookie before first paint. -->
+    <script is:inline src={themeInit} data-lm-theme data-cookie-domain=".luismatute.me"></script>
+    <meta name="color-scheme" content="light dark" />
+    <title>{slug ? `${title} · @luismatute/ui` : '@luismatute/ui docs'}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="head">
+      <button class="menu" type="button" popovertarget="drawer" aria-label="Open navigation">
+        <svg viewBox="0 0 22 22" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path></svg>
+      </button>
+      <a class="brand" href={base}>luismatute<b>/ui</b></a>
+      <span class="ver" title="@luismatute/ui version">v{pkg.version}</span>
+    </header>
+    <div id="drawer" class="drawer" popover>
+      <div class="drawer-top">
+        <span class="brand" aria-hidden="true">luismatute<b>/ui</b></span>
+        <button class="menu" type="button" popovertarget="drawer" popovertargetaction="hide" aria-label="Close navigation">
+          <svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path></svg>
+        </button>
+      </div>
+      <SideNav current={slug} label="Docs (drawer)" />
+    </div>
+    <div class="shell">
+      <aside class="side">
+        <SideNav current={slug} label="Docs" />
+      </aside>
+      <main id="main" class="main" tabindex="-1">
+        <article class="prose">
+          <p class="crumb">{crumb}</p>
+          <h1>{title}</h1>
+          <p class="lede">{description}</p>
+          <slot />
+          <nav class="pager" aria-label="Previous and next page">
+            {prev ? <a class="prev" href={hrefFor(base, prev.slug)}><small>Previous</small><strong>{prev.label}</strong></a> : <span></span>}
+            {next && <a class="next" href={hrefFor(base, next.slug)}><small>Next</small><strong>{next.label}</strong></a>}
+          </nav>
+        </article>
+      </main>
+      <aside class="toc" aria-label="On this page">
+        {toc.length > 0 && (
+          <>
+            <p>On this page</p>
+            <ul>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ul>
+          </>
+        )}
+      </aside>
+    </div>
+  </body>
+</html>

@@ -6,3 +6,5 @@ test-results
 *.log
 .biome
 coverage
+site-dist/
+.astro/

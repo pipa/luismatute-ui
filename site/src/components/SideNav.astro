@@ -1,0 +1,41 @@
+---
+import { hrefFor, nav } from '../lib/nav';
+
+interface Props {
+  /** Current page slug ('' for the index). */
+  current: string;
+  /** Accessible name; the drawer copy gets its own so landmarks stay unique. */
+  label: string;
+  base?: string;
+}
+const { current, label, base = import.meta.env.BASE_URL } = Astro.props;
+const idFor = (group: string) =>
+  `nav-${label}-${group}`.replace(/\W+/g, '-').toLowerCase();
+---
+
+<nav aria-label={label}>
+  {
+    nav.map((group) => (
+      <div class="nav-group">
+        <p class="nav-label" id={idFor(group.label)}>
+          {group.label}
+        </p>
+        <ul
+          class="nav-list"
+          aria-labelledby={idFor(group.label)}
+        >
+          {group.items.map((item) => (
+            <li>
+              <a
+                href={hrefFor(base, item.slug)}
+                aria-current={item.slug === current ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</nav>

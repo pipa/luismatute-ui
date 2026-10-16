@@ -15,7 +15,9 @@
       "!src/illustrations/files",
       "!fonts",
       "!scripts/illustration-extras.js",
-      "!scripts/illustration-source.html"
+      "!scripts/illustration-source.html",
+      "!site-dist",
+      "!site/.astro"
     ]
   },
   "formatter": {
@@ -47,5 +49,18 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.astro"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off",
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    }
+  ]
 }
