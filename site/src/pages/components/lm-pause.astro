@@ -1,0 +1,69 @@
+---
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const html = `<lm-pause></lm-pause>`;
+const js = `document.documentElement.addEventListener('lm-pause', (e) => {
+  console.log(e.detail.paused);
+});`;
+const css = `/* stop your own loops while paused */
+html.paused .my-loop {
+  animation-play-state: paused;
+}`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-pause"
+  title="lm-pause"
+  description="A Pause animation toggle. It marks the page as paused so looping illustrations can stop."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-pause" label="lm-pause toggle" log="lm-pause" code={html}>
+    <lm-pause></lm-pause>
+    <p class="demo-note">With motion off, the button is hidden: there's nothing to pause.</p>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <CodeBlock lang="html" filename="pause.html" code={html} />
+  <p>Pausing toggles <code>html.paused</code> and <code>html[data-paused]</code>. Hook your own animations to them.</p>
+  <CodeBlock lang="css" filename="site.css" code={css} />
+  <Heading id="attributes">Attributes</Heading>
+  <p>None. The button's <code>aria-pressed</code> holds the state.</p>
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <ApiTable
+    caption="lm-pause custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-shadow-pause', detail: 'Button shadow; <code>--lm-shadow-pause-press</code> while pressed.' },
+      { name: '--lm-target', detail: 'Minimum target size (height and width).' },
+      { name: '--lm-font-size-pause', detail: 'Label size.' },
+    ]}
+  />
+  <Heading id="events">Events</Heading>
+  <ApiTable
+    caption="lm-pause events"
+    head={['Event', 'Detail']}
+    rows={[{ name: 'lm-pause', detail: '<code>{ paused: boolean }</code>, dispatched on <code>document.documentElement</code>.' }]}
+  />
+  <CodeBlock lang="js" filename="pause.js" code={js} />
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>A real toggle <code>&lt;button aria-pressed&gt;</code> labelled "Pause animation"; Enter and Space work.</li>
+    <li>Meets the 44px target size. Covers WCAG 2.2.2 Pause, Stop, Hide for looping art.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>Shown only when motion is on (<code>data-motion</code> <code>full</code> or <code>calm</code>). With motion off, it's hidden.</p>
+</Docs>

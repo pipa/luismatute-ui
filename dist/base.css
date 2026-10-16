@@ -249,6 +249,8 @@ lm-chip {
 
 lm-chip[variant="featured"] {
   background: var(--lm-highlight);
+  /* Marigold stays light at night, so the text keeps the fixed ink (AA). */
+  color: var(--lm-ink-fixed);
 }
 
 lm-chip b {

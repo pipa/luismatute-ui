@@ -1,0 +1,81 @@
+---
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const html = `<lm-more label="More" panel="more-sandals">
+  <p>Led several full redesigns and re-engineering efforts.</p>
+</lm-more>`;
+const demo = `<lm-more label="More" panel="demo-more">
+  <p>Led several full redesigns and re-engineering efforts, and brought in Sass and frontend tooling.</p>
+</lm-more>`;
+const js = `document.querySelector('lm-more')
+  ?.addEventListener('lm-toggle', (e) => console.log(e.detail.open));`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-more"
+  title="lm-more"
+  description="A disclosure: a pill button that shows and hides the content inside it."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-more" label="lm-more disclosure" log="lm-toggle" code={demo}>
+    <lm-more label="More" panel="demo-more">
+      <p>Led several full redesigns and re-engineering efforts, and brought in Sass and frontend tooling.</p>
+    </lm-more>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>Children move into the panel on connect. Without JS they simply show.</p>
+  <CodeBlock lang="html" filename="more.html" code={html} />
+  <Heading id="attributes">Attributes</Heading>
+  <ApiTable
+    caption="lm-more attributes"
+    head={['Attribute', 'Description']}
+    rows={[
+      { name: 'label', detail: 'Button text. Default <code>More</code>.' },
+      { name: 'panel', detail: 'Id for the panel, used by <code>aria-controls</code>. Generated when omitted.' },
+    ]}
+  />
+  <p>The element also has <code>toggle(force?)</code> and a read-only <code>open</code> property.</p>
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <ApiTable
+    caption="lm-more custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-shadow-more', detail: 'Button shadow; <code>--lm-shadow-more-press</code> while pressed.' },
+      { name: '--lm-duration-chevron', detail: 'Chevron turn, with <code>--lm-ease-out</code>.' },
+      { name: '--lm-rule', detail: 'Dashed rule above the open panel.' },
+    ]}
+  />
+  <Heading id="events">Events</Heading>
+  <ApiTable
+    caption="lm-more events"
+    head={['Event', 'Detail']}
+    rows={[{ name: 'lm-toggle', detail: '<code>{ open: boolean }</code>. Bubbles. Fires on every toggle.' }]}
+  />
+  <CodeBlock lang="js" filename="more.js" code={js} />
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>A real <code>&lt;button&gt;</code> with <code>aria-expanded</code> and <code>aria-controls</code>; Enter and Space toggle it.</li>
+    <li>The panel uses <code>hidden</code>, so closed content is out of the reading order.</li>
+    <li>A larger invisible hit area surrounds the pill for touch.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>
+    When motion is off (<code>html[data-motion="reduce"]</code> or <code>.is-static</code>), the button is hidden
+    and the panel is always open, so nothing is tucked away.
+  </p>
+</Docs>

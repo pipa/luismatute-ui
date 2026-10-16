@@ -1,0 +1,37 @@
+---
+import type { CodeLang } from '../lib/highlight';
+import CodeBlock from './CodeBlock.astro';
+
+interface Props {
+  /** Demo name shown in the label strip, e.g. "lm-card". */
+  name: string;
+  label: string;
+  /** Event name to echo into a polite log under the demo. */
+  log?: string;
+  /** The demo's markup, shown in a code panel underneath. */
+  code?: string;
+  lang?: CodeLang;
+}
+const { name, label, log, code, lang = 'html' } = Astro.props;
+---
+
+<figure class="demo" aria-label={`Live demo: ${label}`}>
+  <div class="demo-frame" data-demo-frame>
+    <div class="demo-bar">
+      <code class="demo-name">{name}</code>
+      <button type="button" class="demo-theme" aria-pressed="false" hidden data-demo-theme>
+        <span class="demo-theme-i" aria-hidden="true"></span>Night<span class="sr"> preview for this demo</span>
+      </button>
+    </div>
+    <div class="demo-stage"><slot /></div>
+    {
+      log && (
+        <p class="demo-cap">
+          <span class="demo-cap-k">Last event</span>
+          <output class="demo-log" data-demo-log={log} aria-live="polite">none yet</output>
+        </p>
+      )
+    }
+  </div>
+  {code && <CodeBlock lang={lang} filename={`${name}.${lang}`} code={code} />}
+</figure>

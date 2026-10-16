@@ -1,49 +1,100 @@
 ---
+import ApiTable from '../../components/ApiTable.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
 import Heading from '../../components/Heading.astro';
 import Docs from '../../layouts/Docs.astro';
 
-const html = `<lm-card tone="marigold" tilt>
-  <h3 slot="title">Lisbon, 06:40</h3>
-  <p>Wheels up at dawn.</p>
+const demo = `<lm-card variant="stop">
+  <p class="lm-kicker">Stop 2 of 6 · 2011 to 2017</p>
+  <h2>Front-end developer, Sandals Resorts</h2>
+  <p>Frontend with some backend on sandals.com and beaches.com.</p>
+</lm-card>
+<lm-card variant="pass">
+  <p class="lm-kicker">Boarding pass</p>
+  <h2>Wheels up</h2>
+  <p>Pass variant: tighter padding for a display title.</p>
 </lm-card>`;
 // Built from a constant: a literal triple dash inside frontmatter confuses parsers.
 const fence = '-'.repeat(3);
 const astro = `${fence}
 import '@luismatute/ui/components/card';
+import '@luismatute/ui/base.css';
 ${fence}
-<lm-card tone="marigold">
-  <h3 slot="title">Lisbon, 06:40</h3>
+<lm-card variant="pass">
+  <h1>Wheels up</h1>
 </lm-card>`;
-const css = `/* override per card, both modes */
+const css = `/* lm-card reads these tokens; override them on the element */
 lm-card {
-  --lm-card-tilt: -1.5deg;
-  --lm-card-shadow: var(--lm-shadow-card);
+  --lm-card: var(--lm-cream);
+  --lm-shadow-card: none;
 }`;
 const toc = [
+  { id: 'demo', label: 'Live demo' },
   { id: 'usage', label: 'Usage' },
   { id: 'in-astro', label: 'In Astro' },
+  { id: 'attributes', label: 'Attributes' },
   { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
 ];
 ---
 
 <Docs
   slug="components/lm-card"
   title="lm-card"
-  description="A paper ticket with a hard ink shadow. Holds a title slot, body copy and an optional stamp."
+  description="A paper ticket with a hard ink shadow. A plain container: put any heading and copy inside."
   toc={toc}
+  extraCss="components.css"
 >
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-card" label="lm-card, stop and pass variants" code={demo}>
+    <div class="demo-row">
+      <lm-card variant="stop">
+        <p class="lm-kicker">Stop 2 of 6 · 2011 to 2017</p>
+        <h2>Front-end developer, Sandals Resorts</h2>
+        <p>Frontend with some backend on sandals.com and beaches.com.</p>
+      </lm-card>
+      <lm-card variant="pass">
+        <p class="lm-kicker">Boarding pass</p>
+        <h2>Wheels up</h2>
+        <p>Pass variant: tighter padding for a display title.</p>
+      </lm-card>
+    </div>
+  </Demo>
   <Heading id="usage">Usage</Heading>
-  <p>
-    Import once from the pinned tag, then drop the element in any page. It inherits
-    <code>--lm-ink</code> and <code>--lm-paper</code> from the mode.
-  </p>
-  <CodeBlock lang="html" filename="card.html" code={html} />
+  <p>Import the element and <code>base.css</code> once, then use it anywhere. It follows day and night through the tokens. The demo's markup is above.</p>
   <Heading id="in-astro" level={3}>In Astro</Heading>
   <p>The component subpath registers the element as a side effect.</p>
   <CodeBlock lang="astro" filename="Card.astro" code={astro} />
+  <Heading id="attributes">Attributes</Heading>
+  <ApiTable
+    caption="lm-card attributes"
+    head={['Attribute', 'Description']}
+    rows={[{ name: 'variant', detail: '<code>stop</code> (default, set on connect) or <code>pass</code>, which tightens the padding and styles an <code>h1</code> as the display title.' }]}
+  />
   <Heading id="custom-properties">CSS custom properties</Heading>
-  <p>Override per card. Both modes read the same properties.</p>
+  <p>The card reads these tokens. Override them on the element or a parent.</p>
+  <ApiTable
+    caption="lm-card custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-card', detail: 'Background. Paper by day, deep brown at night.' },
+      { name: '--lm-ink', detail: 'Text and the thick border.' },
+      { name: '--lm-shadow-card', detail: 'The hard offset shadow.' },
+      { name: '--lm-radius-card', detail: 'Corner radius (20px).' },
+      { name: '--lm-rule-route', detail: 'Dashed rules around a <code>.lm-route</code> list.' },
+    ]}
+  />
   <CodeBlock lang="css" filename="site.css" code={css} />
-  <p>Props, events and a live demo land in a later slice.</p>
+  <Heading id="events">Events</Heading>
+  <p>None. <code>lm-card</code> is a styled container.</p>
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>No role is added: use a real heading inside so the card shows up in the page outline.</li>
+    <li>Ink on card colour is over 12:1 in both modes.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>The card doesn't animate.</p>
 </Docs>

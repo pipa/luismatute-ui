@@ -45,7 +45,7 @@ test('blocked clipboard falls back to selecting the code', async ({ page }) => {
   const selected = await page.evaluate(
     () => window.getSelection()?.toString() ?? '',
   );
-  expect(selected).toContain('<lm-card tone="marigold" tilt>');
+  expect(selected).toContain('<lm-card variant="stop">');
   await expect(page.locator('#copy-live')).toHaveText(
     /Code selected, press (⌘C|Ctrl\+C)\./,
   );

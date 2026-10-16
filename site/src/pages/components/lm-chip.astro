@@ -1,0 +1,78 @@
+---
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const demo = `<ul class="lm-chips">
+  <li><lm-chip>sandals.com</lm-chip></li>
+  <li><lm-chip>beaches.com</lm-chip></li>
+  <li><lm-chip variant="featured">luismatute.me</lm-chip></li>
+</ul>`;
+const html = `<ul class="lm-chips">
+  <li><lm-chip>sandals.com</lm-chip></li>
+  <li><lm-chip variant="featured">luismatute.me</lm-chip></li>
+</ul>`;
+const fence = '-'.repeat(3);
+const astro = `${fence}
+import '@luismatute/ui/components/chip';
+${fence}
+<lm-chip variant="featured">Astro</lm-chip>`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-chip"
+  title="lm-chip"
+  description="A small pill label. The featured variant gets the highlight fill and a Featured badge."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-chip" label="lm-chip, default and featured" code={demo}>
+    <ul class="lm-chips">
+      <li><lm-chip>sandals.com</lm-chip></li>
+      <li><lm-chip>beaches.com</lm-chip></li>
+      <li><lm-chip variant="featured">luismatute.me</lm-chip></li>
+    </ul>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>Group chips in a <code>ul.lm-chips</code> list so screen readers announce the count.</p>
+  <CodeBlock lang="html" filename="chips.html" code={html} />
+  <CodeBlock lang="astro" filename="Chip.astro" code={astro} />
+  <Heading id="attributes">Attributes</Heading>
+  <ApiTable
+    caption="lm-chip attributes"
+    head={['Attribute', 'Description']}
+    rows={[{ name: 'variant', detail: 'Omit for the plain chip. <code>featured</code> fills with <code>--lm-highlight</code> and appends a <code>&lt;b&gt;Featured&lt;/b&gt;</code> badge. Removing the attribute removes the badge.' }]}
+  />
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <ApiTable
+    caption="lm-chip custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-white', detail: 'Plain chip fill.' },
+      { name: '--lm-highlight', detail: 'Featured fill (marigold).' },
+      { name: '--lm-ink', detail: 'Text and border.' },
+      { name: '--lm-radius-pill', detail: 'Pill shape.' },
+    ]}
+  />
+  <Heading id="events">Events</Heading>
+  <p>None.</p>
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>Chips aren't interactive. If one needs to link, put an <code>&lt;a&gt;</code> inside it.</li>
+    <li>The Featured badge is real text, so it's read out ("luismatute.me Featured").</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>The chip doesn't animate.</p>
+</Docs>
