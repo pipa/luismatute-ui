@@ -77,5 +77,15 @@ const canonical = new URL(
         )}
       </aside>
     </div>
+    <p id="copy-live" class="sr" aria-live="polite"></p>
+    <script>
+      // Called here, not as a side-effect import: package.json "sideEffects"
+      // would let the bundler drop a bare import.
+      import { initCopy } from '../scripts/copy';
+      import { initToc } from '../scripts/toc';
+
+      initCopy();
+      initToc();
+    </script>
   </body>
 </html>
