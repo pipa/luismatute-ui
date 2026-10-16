@@ -201,6 +201,7 @@ export function renderTokensCss(): string {
     css += decl(`climb-${i + 1}`, hex);
   });
   css += decl('ink-fixed', tokens.modeStable.inkFixed);
+  css += decl('glint', tokens.modeStable.glint);
   css += decl('moon', tokens.modeStable.moon);
   css += decl('moon-crater', tokens.modeStable.moonCrater);
   css += decl('star', tokens.modeStable.star);

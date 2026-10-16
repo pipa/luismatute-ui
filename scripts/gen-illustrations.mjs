@@ -244,13 +244,26 @@ const art = {
   foam: ['foam', wrap(api.foam(0, 640, 24), '-10 0 700 50')],
   avatar: [
     'avatar',
-    wrapRaw(
-      api.luisSVG('__id__'),
-      '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="lu lm-art" viewBox="0 0 200 240">',
+    glints(
+      wrapRaw(
+        api.luisSVG('__id__'),
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="lu lm-art" viewBox="0 0 200 240">',
+      ),
     ),
   ],
   globe: ['globe', globe],
 };
+
+/**
+ * Muse (#39): the avatar's glints, eye highlights and lens glare use
+ * --lm-glint (cream in both modes). --lm-white stays a surface colour, so
+ * filled shapes like the book keep it; only circles and paths are glints.
+ */
+function glints(svg) {
+  return svg.replace(/<(circle|path)\b[^>]*>/g, (tag) =>
+    tag.replace(/(fill|stroke)="var\(--lm-white\)"/g, '$1="var(--lm-glint)"'),
+  );
+}
 
 const svgDir = resolve(outRoot, 'src/illustrations/svg');
 const fileDir = resolve(outRoot, 'src/illustrations/files');

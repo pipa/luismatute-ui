@@ -537,6 +537,8 @@ export declare const motion: {
 /** Colours that do not change between day and night. */
 export declare const modeStable: {
     readonly inkFixed: '#2b1b14';
+    /** Muse (#39): avatar glints and eye highlights, cream in both modes. */
+    readonly glint: '#fff6e4';
     readonly skyDay: readonly ['#fde7b0', '#fcde98', '#fbd682', '#f9cc70'];
     readonly skyNight: readonly ['#120d2c', '#1b1640', '#241d52', '#2e2563'];
     readonly moon: '#fff1cf';
@@ -565,13 +567,13 @@ export declare const night: {
     readonly card: '#1f1945';
     readonly sand: '#2b2456';
     readonly ink: '#fff6e4';
-    readonly inkSoft: '#d8c4a6';
+    readonly inkSoft: '#cfc6ea';
     readonly tomatoD: '#ff9a7f';
     readonly white: '#3a3270';
     readonly link: '#6fd0c6';
     readonly lagoon: '#6fd0c6';
     readonly ruleRoute: 'rgba(255, 246, 228, 0.3)';
-    readonly shadowInk: '#5b4536';
+    readonly shadowInk: '#0b0820';
     readonly skyText: '#fff6e4';
     readonly pillBg: '#241d52';
     readonly pillInk: '#fff6e4';
@@ -598,7 +600,7 @@ export declare const code: {
         readonly punct: '#5b4536';
     };
     readonly night: {
-        readonly bg: '#33261c';
+        readonly bg: '#191338';
         readonly text: '#f3e2c0';
         readonly keyword: '#ff8f73';
         readonly string: '#7fd3c6';
@@ -628,7 +630,7 @@ export declare const modePairs: readonly [{
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on page';
-    readonly fg: "#d8c4a6";
+    readonly fg: "#cfc6ea";
     readonly bg: "#120d2c";
     readonly large: false;
 }, {
@@ -648,7 +650,7 @@ export declare const modePairs: readonly [{
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on card';
-    readonly fg: "#d8c4a6";
+    readonly fg: "#cfc6ea";
     readonly bg: "#1f1945";
     readonly large: false;
 }, {
@@ -663,7 +665,7 @@ export declare const modePairs: readonly [{
     readonly large: false;
 }, {
     readonly name: 'night ink-soft on sand';
-    readonly fg: "#d8c4a6";
+    readonly fg: "#cfc6ea";
     readonly bg: "#2b2456";
     readonly large: false;
 }, {
@@ -688,8 +690,8 @@ export declare const modePairs: readonly [{
     large: boolean;
 } | {
     name: string;
-    fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
-    bg: "#33261c";
+    fg: "#191338" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+    bg: "#191338";
     large: boolean;
 })[]];
 export declare const tokens: {
@@ -1200,6 +1202,8 @@ export declare const tokens: {
     };
     readonly modeStable: {
         readonly inkFixed: '#2b1b14';
+        /** Muse (#39): avatar glints and eye highlights, cream in both modes. */
+        readonly glint: '#fff6e4';
         readonly skyDay: readonly ['#fde7b0', '#fcde98', '#fbd682', '#f9cc70'];
         readonly skyNight: readonly ['#120d2c', '#1b1640', '#241d52', '#2e2563'];
         readonly moon: '#fff1cf';
@@ -1226,13 +1230,13 @@ export declare const tokens: {
         readonly card: '#1f1945';
         readonly sand: '#2b2456';
         readonly ink: '#fff6e4';
-        readonly inkSoft: '#d8c4a6';
+        readonly inkSoft: '#cfc6ea';
         readonly tomatoD: '#ff9a7f';
         readonly white: '#3a3270';
         readonly link: '#6fd0c6';
         readonly lagoon: '#6fd0c6';
         readonly ruleRoute: 'rgba(255, 246, 228, 0.3)';
-        readonly shadowInk: '#5b4536';
+        readonly shadowInk: '#0b0820';
         readonly skyText: '#fff6e4';
         readonly pillBg: '#241d52';
         readonly pillInk: '#fff6e4';
@@ -1254,7 +1258,7 @@ export declare const tokens: {
             readonly punct: '#5b4536';
         };
         readonly night: {
-            readonly bg: '#33261c';
+            readonly bg: '#191338';
             readonly text: '#f3e2c0';
             readonly keyword: '#ff8f73';
             readonly string: '#7fd3c6';
@@ -1283,7 +1287,7 @@ export declare const tokens: {
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on page';
-        readonly fg: "#d8c4a6";
+        readonly fg: "#cfc6ea";
         readonly bg: "#120d2c";
         readonly large: false;
     }, {
@@ -1303,7 +1307,7 @@ export declare const tokens: {
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on card';
-        readonly fg: "#d8c4a6";
+        readonly fg: "#cfc6ea";
         readonly bg: "#1f1945";
         readonly large: false;
     }, {
@@ -1318,7 +1322,7 @@ export declare const tokens: {
         readonly large: false;
     }, {
         readonly name: 'night ink-soft on sand';
-        readonly fg: "#d8c4a6";
+        readonly fg: "#cfc6ea";
         readonly bg: "#2b2456";
         readonly large: false;
     }, {
@@ -1343,8 +1347,8 @@ export declare const tokens: {
         large: boolean;
     } | {
         name: string;
-        fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
-        bg: "#33261c";
+        fg: "#191338" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+        bg: "#191338";
         large: boolean;
     })[]];
 };

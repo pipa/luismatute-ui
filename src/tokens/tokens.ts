@@ -615,6 +615,8 @@ export const motion = {
 /** Colours that do not change between day and night. */
 export const modeStable = {
   inkFixed: '#2b1b14',
+  /** Muse (#39): avatar glints and eye highlights, cream in both modes. */
+  glint: '#fff6e4',
   skyDay: ['#fde7b0', '#fcde98', '#fbd682', '#f9cc70'],
   skyNight: ['#120d2c', '#1b1640', '#241d52', '#2e2563'],
   moon: '#fff1cf',
@@ -646,13 +648,13 @@ export const night = {
   card: '#1f1945',
   sand: '#2b2456',
   ink: '#fff6e4',
-  inkSoft: '#d8c4a6',
+  inkSoft: '#cfc6ea',
   tomatoD: '#ff9a7f',
   white: '#3a3270',
   link: '#6fd0c6',
   lagoon: '#6fd0c6',
   ruleRoute: 'rgba(255, 246, 228, 0.3)',
-  shadowInk: '#5b4536',
+  shadowInk: '#0b0820',
   skyText: '#fff6e4',
   pillBg: '#241d52',
   pillInk: '#fff6e4',
@@ -680,7 +682,7 @@ export const code = {
     punct: '#5b4536',
   },
   night: {
-    bg: '#33261c',
+    bg: '#191338',
     text: '#f3e2c0',
     keyword: '#ff8f73',
     string: '#7fd3c6',
