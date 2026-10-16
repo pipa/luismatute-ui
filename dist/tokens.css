@@ -172,6 +172,7 @@
   --lm-radius-panel: 22px;
   --lm-radius-pill: 999px;
   --lm-radius-round: 50%;
+  --lm-border-hairline: 1px;
   --lm-border-hair: 2px;
   --lm-border-line: 2.5px;
   --lm-border-thick: 3px;
@@ -310,6 +311,7 @@
   --lm-pill-bg: #fff6e4;
   --lm-pill-ink: #2b1b14;
   --lm-pill-rim: #2b1b14;
+  --lm-toggle-pressed: #fff6e4;
   --lm-code-bg: #f3e2c0;
   --lm-code-text: #2b1b14;
   --lm-code-keyword: #a3240f;
@@ -351,6 +353,7 @@ html[data-mode="night"] {
   --lm-pill-bg: #241d52;
   --lm-pill-ink: #fff6e4;
   --lm-pill-rim: #fff6e4;
+  --lm-toggle-pressed: #1f1945;
   --lm-code-bg: #33261c;
   --lm-code-text: #f3e2c0;
   --lm-code-keyword: #ff8f73;

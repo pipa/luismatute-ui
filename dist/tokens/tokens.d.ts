@@ -210,6 +210,8 @@ export declare const radius: {
     readonly round: '50%';
 };
 export declare const border: {
+    /** Muse: 1px rules, e.g. the docs demo frame. */
+    readonly hairline: '1px';
     readonly hair: '2px';
     readonly line: '2.5px';
     readonly thick: '3px';
@@ -554,6 +556,8 @@ export declare const day: {
     readonly pillBg: '#fff6e4';
     readonly pillInk: '#2b1b14';
     readonly pillRim: '#2b1b14';
+    /** Pressed lm-motion-toggle fill: paper by day. */
+    readonly togglePressed: '#fff6e4';
 };
 /** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
 export declare const night: {
@@ -572,6 +576,8 @@ export declare const night: {
     readonly pillBg: '#241d52';
     readonly pillInk: '#fff6e4';
     readonly pillRim: '#fff6e4';
+    /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
+    readonly togglePressed: '#1f1945';
 };
 /**
  * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
@@ -883,6 +889,8 @@ export declare const tokens: {
         readonly round: '50%';
     };
     readonly border: {
+        /** Muse: 1px rules, e.g. the docs demo frame. */
+        readonly hairline: '1px';
         readonly hair: '2px';
         readonly line: '2.5px';
         readonly thick: '3px';
@@ -1210,6 +1218,8 @@ export declare const tokens: {
         readonly pillBg: '#fff6e4';
         readonly pillInk: '#2b1b14';
         readonly pillRim: '#2b1b14';
+        /** Pressed lm-motion-toggle fill: paper by day. */
+        readonly togglePressed: '#fff6e4';
     };
     readonly night: {
         readonly paper: '#1d1510';
@@ -1227,6 +1237,8 @@ export declare const tokens: {
         readonly pillBg: '#241d52';
         readonly pillInk: '#fff6e4';
         readonly pillRim: '#fff6e4';
+        /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
+        readonly togglePressed: '#1f1945';
     };
     readonly code: {
         readonly day: {

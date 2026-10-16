@@ -308,6 +308,8 @@ export const radius = {
 } as const;
 
 export const border = {
+  /** Muse: 1px rules, e.g. the docs demo frame. */
+  hairline: '1px',
   hair: '2px',
   line: '2.5px',
   thick: '3px',
@@ -633,6 +635,8 @@ export const day = {
   pillBg: '#fff6e4',
   pillInk: '#2b1b14',
   pillRim: '#2b1b14',
+  /** Pressed lm-motion-toggle fill: paper by day. */
+  togglePressed: '#fff6e4',
 } as const;
 
 /** html[data-mode="night"]: dark sand page, indigo sky (CONTRAST.md § Night). */
@@ -652,6 +656,8 @@ export const night = {
   pillBg: '#241d52',
   pillInk: '#fff6e4',
   pillRim: '#fff6e4',
+  /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
+  togglePressed: '#1f1945',
 } as const;
 
 /**

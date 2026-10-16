@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, type Page, test } from 'playwright/test';
 
-const pages = ['lm-card', 'lm-chip', 'lm-more', 'lm-pause'];
+const pages = ['lm-card', 'lm-chip', 'lm-more', 'lm-pause', 'lm-motion-toggle'];
 const at = (p: string, q = '') => `/ui/components/${p}/${q}`;
 
 test('each component page has a live demo with the real component styles', async ({

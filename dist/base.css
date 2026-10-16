@@ -362,7 +362,9 @@ lm-motion-toggle button {
   border: var(--lm-border-thick) solid var(--lm-ink);
   border-radius: var(--lm-radius-pill);
   background: var(--lm-highlight);
-  color: var(--lm-ink);
+  /* Marigold stays light at night, so unpressed text keeps the fixed ink (AA),
+     like the featured lm-chip. */
+  color: var(--lm-ink-fixed);
   font:
     var(--lm-weight-bold) var(--lm-font-size-small) / var(--lm-leading-tight)
     var(--lm-font-text);
@@ -377,7 +379,9 @@ lm-motion-toggle button:active {
 }
 
 lm-motion-toggle button[data-pressed="true"] {
-  background: var(--lm-paper);
+  /* Toggle-only token: paper by day (#fff6e4), indigo #1f1945 at night (no brown). */
+  background: var(--lm-toggle-pressed);
+  color: var(--lm-ink);
   font-weight: var(--lm-weight-semibold);
 }
 
@@ -385,7 +389,8 @@ lm-motion-toggle .lm-mt-i {
   flex: none;
   width: 22px;
   height: 22px;
-  border: var(--lm-border-line) solid var(--lm-ink);
+  /* currentColor: fixed ink on marigold, theme ink when pressed. */
+  border: var(--lm-border-line) solid currentColor;
   border-radius: var(--lm-radius-round);
   background: var(--lm-white);
   box-shadow: var(--lm-shadow-inset);

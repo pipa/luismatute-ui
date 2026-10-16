@@ -1,0 +1,68 @@
+---
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const html = `<lm-motion-toggle></lm-motion-toggle>`;
+const js = `document.documentElement.addEventListener('lm-motion', (e) => {
+  console.log(e.detail.motion); // 'full' | 'calm' | 'reduce'
+});`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-motion-toggle"
+  title="lm-motion-toggle"
+  description="Switches between Full flight (illustrations move) and Just the info (the still layout). The choice is saved."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-motion-toggle" label="lm-motion-toggle" log="lm-motion" code={html}>
+    <lm-motion-toggle></lm-motion-toggle>
+    <p class="demo-note">Pressing it changes the motion mode for this whole page, and the choice is saved.</p>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>
+    It reads <code>?motion=</code>, then the saved choice, then <code>prefers-reduced-motion</code>, and sets
+    <code>html[data-motion]</code> plus the <code>is-motion</code>, <code>is-calm</code> and <code>is-static</code> classes.
+  </p>
+  <Heading id="attributes">Attributes</Heading>
+  <p>None. The inner button's <code>data-pressed</code> is <code>true</code> in Just the info.</p>
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <ApiTable
+    caption="lm-motion-toggle custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-highlight', detail: 'Unpressed fill (marigold).' },
+      { name: '--lm-ink-fixed', detail: 'Unpressed text and icon ring. Stays dark in both modes so it passes AA on marigold.' },
+      { name: '--lm-paper', detail: 'Pressed fill, with <code>--lm-ink</code> text.' },
+      { name: '--lm-shadow-toggle', detail: 'Button shadow; <code>--lm-shadow-toggle-press</code> while pressed.' },
+      { name: '--lm-target', detail: 'Minimum height.' },
+    ]}
+  />
+  <Heading id="events">Events</Heading>
+  <ApiTable
+    caption="lm-motion-toggle events"
+    head={['Event', 'Detail']}
+    rows={[{ name: 'lm-motion', detail: '<code>{ motion }</code>, dispatched on <code>document.documentElement</code> whenever the mode is applied.' }]}
+  />
+  <CodeBlock lang="js" filename="motion.js" code={js} />
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>A real <code>&lt;button&gt;</code>; Enter and Space work. Its label names the mode it switches to.</li>
+    <li>Text is at least 4.5:1 in both states and both modes (unpressed uses the fixed ink on marigold).</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>Just the info is the still layout. An explicit choice is saved and wins over the OS setting.</p>
+</Docs>
