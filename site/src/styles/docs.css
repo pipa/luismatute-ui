@@ -182,7 +182,10 @@ a {
   top: var(--lm-docs-head-h);
   max-height: calc(100vh - var(--lm-docs-head-h));
   overflow: auto;
-  padding: 24px 0 40px;
+  /* 4px inline room so the 3px+3px focus ring is not clipped by the
+     scroller (WCAG 2.4.11); the negative margin keeps pills aligned. */
+  padding: 24px 6px 40px;
+  margin-inline: -6px;
 }
 
 /* nav */

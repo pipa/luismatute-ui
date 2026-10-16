@@ -135,6 +135,15 @@ describe('docs.css', () => {
         expect(['transform', 'opacity', 'overlay', 'display']).toContain(p);
     }
   });
+  it('leaves room in the sidebar scroller for the whole focus ring (WCAG 2.4.11)', () => {
+    const ring = css.match(/:focus-visible \{[^}]*outline: (\d+)px[^}]*outline-offset: (\d+)px/);
+    const need = Number(ring?.[1]) + Number(ring?.[2]);
+    const nav = css.match(/\.side > nav \{([^}]*)\}/)?.[1] ?? '';
+    const pad = Number(nav.match(/padding: \d+px (\d+)px/)?.[1]);
+    expect(need).toBeGreaterThan(0);
+    expect(pad).toBeGreaterThanOrEqual(need);
+    expect(nav).toMatch(new RegExp(`margin-inline: -${pad}px`));
+  });
   it('zeroes the motion under prefers-reduced-motion', () => {
     const block =
       css.match(/prefers-reduced-motion: reduce\)\s*\{([\s\S]*?)\n\}/)?.[1] ??

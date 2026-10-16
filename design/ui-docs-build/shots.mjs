@@ -75,7 +75,15 @@ for (const mode of ['day', 'night']) {
       return `${s.outlineStyle} ${s.outlineWidth} ${s.outlineColor}`;
     });
     await p.screenshot({ path: `${out}/${mode}-1280-focus.png` });
-    report.push(`${mode}-1280-focus on=${label} ring=${ring}`);
+    const fits = await p.evaluate(() => {
+      const a = document.activeElement;
+      const n = a.closest('nav').getBoundingClientRect();
+      const r = a.getBoundingClientRect();
+      const s = getComputedStyle(a);
+      const o = Number.parseFloat(s.outlineWidth) + Number.parseFloat(s.outlineOffset);
+      return r.left - o >= n.left && r.right + o <= n.right;
+    });
+    report.push(`${mode}-1280-focus on=${label} ring=${ring} ringInsideScroller=${fits}`);
     await ctx.close();
   }
 }
