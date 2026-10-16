@@ -51,3 +51,39 @@ describe('night palette (#39)', () => {
     expect(r(rim, '#3a3270')).toBeCloseTo(5.11, 1);
   });
 });
+
+// Muse's #39 follow-up: glint, shadow ink, code background and soft ink.
+describe('night palette follow-up (#39)', () => {
+  const r = (fg: string, bg: string) => contrast(rgb(fg), rgb(bg));
+  it('pins the new values; day is unchanged', () => {
+    expect(day['--lm-glint']).toBe('#fff6e4');
+    expect(night['--lm-glint']).toBeUndefined(); // same in both modes
+    expect(night['--lm-shadow-ink']).toBe('#0b0820');
+    expect(night['--lm-code-bg']).toBe('#191338');
+    expect(night['--lm-ink-soft']).toBe('#cfc6ea');
+    expect(day['--lm-shadow-ink']).toBe('#2b1b14');
+    expect(day['--lm-code-bg']).toBe('#f3e2c0');
+    expect(day['--lm-ink-soft']).toBe('#5b4536');
+  });
+  it('code background: cream 15.72, marigold 12.38, ink 16.41', () => {
+    const bg = night['--lm-code-bg'] as string;
+    expect(r('#fff1cf', bg)).toBeCloseTo(15.72, 1);
+    expect(r('#ffd27a', bg)).toBeCloseTo(12.38, 1);
+    expect(r('#fff6e4', bg)).toBeCloseTo(16.41, 1);
+  });
+  it('soft ink is 4.5:1+ on all five night surfaces', () => {
+    const soft = night['--lm-ink-soft'] as string;
+    const five = [
+      '--lm-paper',
+      '--lm-card',
+      '--lm-sand',
+      '--lm-white',
+      '--lm-code-bg',
+    ];
+    const ratios = five.map((s) => r(soft, night[s] as string));
+    for (const [i, ratio] of ratios.entries())
+      expect(ratio, five[i]).toBeGreaterThanOrEqual(4.5);
+    expect(Math.min(...ratios)).toBeCloseTo(6.91, 1);
+    expect(Math.max(...ratios)).toBeCloseTo(11.54, 1);
+  });
+});
