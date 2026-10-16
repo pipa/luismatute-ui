@@ -15,9 +15,10 @@ describe('avatar glints (#39)', () => {
     );
     expect(avatar).not.toMatch(/<(circle|path)\b[^>]*var\(--lm-white\)/);
   });
-  it('keeps --lm-white for surfaces (the book)', () => {
+  it('the lu-book rect uses --lm-glint so it stays paper at night', () => {
     expect(avatar).toMatch(
-      /<rect width="34" height="26" x="118" y="168" fill="var\(--lm-white\)"/,
+      /<g class="lu-book"><rect\b[^>]*fill="var\(--lm-glint\)"/,
     );
+    expect(avatar).not.toContain('var(--lm-white)');
   });
 });

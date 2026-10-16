@@ -256,13 +256,18 @@ const art = {
 
 /**
  * Muse (#39): the avatar's glints, eye highlights and lens glare use
- * --lm-glint (cream in both modes). --lm-white stays a surface colour, so
- * filled shapes like the book keep it; only circles and paths are glints.
+ * --lm-glint (cream in both modes). The lu-book rect uses it too, so the
+ * book stays paper at night. --lm-white stays a surface colour elsewhere.
  */
 function glints(svg) {
-  return svg.replace(/<(circle|path)\b[^>]*>/g, (tag) =>
-    tag.replace(/(fill|stroke)="var\(--lm-white\)"/g, '$1="var(--lm-glint)"'),
-  );
+  return svg
+    .replace(/<(circle|path)\b[^>]*>/g, (tag) =>
+      tag.replace(/(fill|stroke)="var\(--lm-white\)"/g, '$1="var(--lm-glint)"'),
+    )
+    .replace(
+      /(<g class="lu-book"><rect\b[^>]*?)fill="var\(--lm-white\)"/,
+      '$1fill="var(--lm-glint)"',
+    );
 }
 
 const svgDir = resolve(outRoot, 'src/illustrations/svg');
