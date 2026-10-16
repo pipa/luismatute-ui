@@ -3,18 +3,26 @@ import { expect, test } from 'playwright/test';
 const url = '/ui/components/lm-card/';
 
 test('anchor jump clears the sticky header', async ({ page }) => {
+  // #usage is high on the page, so the jump is never capped by the end of the
+  // document (#custom-properties is, at 1280, which hid a missing scroll-margin).
   for (const width of [1280, 375]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto(`${url}#custom-properties`);
+    await page.goto(`${url}#usage`);
     await page.waitForFunction(() => window.scrollY > 0);
-    const gap = await page.evaluate(() => {
+    const m = await page.evaluate(() => {
       const head = document.querySelector('.head')?.getBoundingClientRect();
-      const h = document
-        .getElementById('custom-properties')
-        ?.getBoundingClientRect();
-      return h && head ? h.top - head.bottom : -999;
+      const h = document.getElementById('usage')?.getBoundingClientRect();
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      return {
+        gap: h && head ? h.top - head.bottom : -999,
+        capped: window.scrollY >= max - 1,
+      };
     });
-    expect(gap, `heading below header at ${width}`).toBeGreaterThanOrEqual(0);
+    expect(m.capped, `jump not capped by page end at ${width}`).toBe(false);
+    // The heading lands below the header with breathing room (scroll-margin adds 16px).
+    expect(m.gap, `heading clears header at ${width}`).toBeGreaterThanOrEqual(
+      8,
+    );
   }
 });
 
