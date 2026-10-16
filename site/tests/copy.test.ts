@@ -70,6 +70,12 @@ describe('copy shortcut', () => {
     expect(copyShortcut('Win32')).toBe('Ctrl+C');
     expect(copyShortcut('Linux x86_64')).toBe('Ctrl+C');
   });
+  it('treats iOS like Mac (userAgentData.platform reports "iOS")', () => {
+    expect(copyShortcut('iOS')).toBe('⌘C');
+    expect(copyShortcut('ios')).toBe('⌘C');
+    expect(copyShortcut('Android')).toBe('Ctrl+C');
+    expect(copyShortcut('Chrome OS')).toBe('Ctrl+C');
+  });
   it('uses ⌘C in the fallback label and announcement on Mac', async () => {
     document.body.innerHTML = markup;
     const b = document.querySelector<HTMLButtonElement>(
