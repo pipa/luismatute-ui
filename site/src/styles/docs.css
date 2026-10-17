@@ -1054,7 +1054,8 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
   gap: 20px;
   align-items: start;
 }
-.demo-stage .lm-chips {
+.demo-stage .lm-chips,
+.demo-stage .lm-shots {
   margin: 0;
 }
 .demo-note {
@@ -1083,4 +1084,80 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
 .api-detail {
   font-size: 15px;
   line-height: 1.5;
+}
+
+/* ---- lm-avatar demo: portrait plus a pose picker (slice 5) ---- */
+.demo-avatars {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  align-items: start;
+}
+/* Bottom room for the note: it's rotated -7deg, and transforms don't take space. */
+.demo-avatar {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding-bottom: 20px;
+}
+.demo-poses {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.demo-poses[hidden] {
+  display: none;
+}
+.demo-pose {
+  min-width: var(--lm-docs-tap);
+  min-height: var(--lm-docs-tap);
+  padding: 0 12px;
+  border: var(--lm-border-hairline) solid var(--lm-ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lm-ink);
+  font: 500 13px / 1 var(--lm-docs-f-mono);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .demo-pose:hover {
+    background: var(--lm-hover);
+  }
+}
+.demo-pose[aria-pressed="true"] {
+  background: var(--lm-marigold);
+  color: var(--lm-ink-fixed);
+  font-weight: 700;
+}
+/* The package's page-wide motion holds (base.css), scoped to the demos so the
+   docs shell keeps its own rules. Info (calm) leaves the avatar idle running. */
+html.paused .demo-stage *,
+html.paused .demo-stage *::before,
+html.paused .demo-stage *::after {
+  animation-play-state: paused !important;
+}
+html[data-motion="reduce"] .demo-stage *,
+html[data-motion="reduce"] .demo-stage *::before,
+html[data-motion="reduce"] .demo-stage *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0s !important;
+}
+html[data-motion="calm"] .demo-stage :where(:not(lm-avatar, lm-avatar *)),
+html[data-motion="calm"]
+  .demo-stage
+  :where(:not(lm-avatar, lm-avatar *))::before,
+html[data-motion="calm"]
+  .demo-stage
+  :where(:not(lm-avatar, lm-avatar *))::after {
+  animation-play-state: paused !important;
+  transition-duration: 0s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) .demo-stage *,
+  html:not([data-motion="full"]) .demo-stage *::before,
+  html:not([data-motion="full"]) .demo-stage *::after {
+    animation-play-state: paused !important;
+    transition-duration: 0s !important;
+  }
 }

@@ -1,9 +1,12 @@
 /** Registers the demoed elements. Without JS the demos show their static markup. */
+import { defineLmAvatar } from '../../../dist/components/avatar.js';
 import { defineLmCard } from '../../../dist/components/card.js';
 import { defineLmChip } from '../../../dist/components/chip.js';
 import { defineLmMore } from '../../../dist/components/more.js';
 import { defineLmMotionToggle } from '../../../dist/components/motion-toggle.js';
 import { defineLmPause } from '../../../dist/components/pause.js';
+import { defineLmShot } from '../../../dist/components/shot.js';
+import { initAvatarPoses } from './avatar-poses';
 import { initDemoThemes } from './demo-theme';
 
 export function initDemos(): void {
@@ -12,7 +15,10 @@ export function initDemos(): void {
   defineLmMore();
   defineLmMotionToggle();
   defineLmPause();
+  defineLmShot();
+  defineLmAvatar();
   initDemoThemes();
+  initAvatarPoses();
   // Echo component events into the demo's log so they're visible and announced.
   for (const log of document.querySelectorAll<HTMLElement>('[data-demo-log]')) {
     const type = log.dataset.demoLog ?? '';
