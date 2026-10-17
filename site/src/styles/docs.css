@@ -471,7 +471,8 @@ code:where(:not(.demo-frame *)) {
   --lm-docs-copy-fade: var(--lm-duration-copy-fade);
 }
 html[data-mode="night"] {
-  --lm-docs-c-bg: #0b0820;
+  /* One source (#39): the night code panel is the library code background. */
+  --lm-docs-c-bg: var(--lm-code-bg);
   --lm-docs-c-bar: var(--lm-sky-night-2);
   --lm-docs-c-border: #3d3478;
   /* Night syntax text, comment and punctuation (#41). */

@@ -290,6 +290,7 @@
   --lm-climb-11: #f5c98a;
   --lm-climb-12: #f4b46a;
   --lm-ink-fixed: #2b1b14;
+  --lm-glint: #fff6e4;
   --lm-moon: #fff1cf;
   --lm-moon-crater: #e9d9b4;
   --lm-star: #fff6dc;
@@ -338,24 +339,24 @@
 
 html[data-mode="night"] {
   color-scheme: dark;
-  --lm-paper: #1d1510;
-  --lm-card: #281d16;
-  --lm-sand: #33261c;
+  --lm-paper: #120d2c;
+  --lm-card: #1f1945;
+  --lm-sand: #2b2456;
   --lm-ink: #fff6e4;
-  --lm-ink-soft: #d8c4a6;
+  --lm-ink-soft: #cfc6ea;
   --lm-tomato-d: #ff9a7f;
-  --lm-white: #281d16;
+  --lm-white: #3a3270;
   --lm-link: #6fd0c6;
   --lm-lagoon: #6fd0c6;
   --lm-rule-route: rgba(255, 246, 228, 0.3);
-  --lm-shadow-ink: #5b4536;
+  --lm-shadow-ink: #0b0820;
   --lm-sky-text: #fff6e4;
   --lm-pill-bg: #241d52;
   --lm-pill-ink: #fff6e4;
   --lm-pill-rim: #fff6e4;
-  --lm-toggle-pressed: #1f1945;
+  --lm-toggle-pressed: var(--lm-card);
   --lm-dune-night: #2b2456;
-  --lm-code-bg: #33261c;
+  --lm-code-bg: #191338;
   --lm-code-text: #fff1cf;
   --lm-code-keyword: #ff8f73;
   --lm-code-string: #7fd3c6;

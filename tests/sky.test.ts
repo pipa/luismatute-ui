@@ -32,7 +32,7 @@ describe('day and night tokens', () => {
     const css = renderTokensCss();
     const night = css.slice(css.indexOf('html[data-mode="night"]'));
     expect(night).toContain('color-scheme: dark;');
-    expect(night).toContain('--lm-paper: #1d1510;');
+    expect(night).toContain('--lm-paper: #120d2c;');
     expect(night).toContain('--lm-code-keyword: #ff8f73;');
     expect(css).toContain('--lm-sky-far: 180s;');
     expect(css).toContain('--lm-ease-glide:');

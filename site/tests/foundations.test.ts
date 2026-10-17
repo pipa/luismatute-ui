@@ -28,7 +28,7 @@ describe('token data comes from dist/tokens.css', () => {
     ]);
     expect(colours.find((t) => t.name === '--lm-ink')?.value).toBe('#2b1b14');
     expect(nightColours.find((t) => t.name === '--lm-paper')?.value).toBe(
-      '#1d1510',
+      '#120d2c',
     );
     for (const t of [...spaces, ...radii, ...easings, ...durations])
       expect(css).toContain(`${t.name}: ${t.value};`);
