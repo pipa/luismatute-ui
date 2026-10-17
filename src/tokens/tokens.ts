@@ -621,7 +621,7 @@ export const modeStable = {
   moonCrater: '#e9d9b4',
   star: '#fff6dc',
   duneDay: '#f3e2c0',
-  duneNight: '#3a2c22',
+  duneNight: '#2b2456',
   /** The paper tag behind kickers on the sky, both modes. */
   tagPaper: '#fff6e4',
   tagInk: '#a8321e',
@@ -680,15 +680,15 @@ export const code = {
   },
   night: {
     bg: '#33261c',
-    text: '#f3e2c0',
+    text: '#fff1cf',
     keyword: '#ff8f73',
     string: '#7fd3c6',
     function: '#9cc0ff',
     tag: '#f2a7d6',
     attr: '#f6c66b',
     number: '#c9dc7a',
-    comment: '#b9a48c',
-    punct: '#d8c4a6',
+    comment: '#b3a8dc',
+    punct: '#cfc6ea',
   },
 } as const;
 

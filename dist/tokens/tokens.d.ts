@@ -543,7 +543,7 @@ export declare const modeStable: {
     readonly moonCrater: '#e9d9b4';
     readonly star: '#fff6dc';
     readonly duneDay: '#f3e2c0';
-    readonly duneNight: '#3a2c22';
+    readonly duneNight: '#2b2456';
     /** The paper tag behind kickers on the sky, both modes. */
     readonly tagPaper: '#fff6e4';
     readonly tagInk: '#a8321e';
@@ -599,15 +599,15 @@ export declare const code: {
     };
     readonly night: {
         readonly bg: '#33261c';
-        readonly text: '#f3e2c0';
+        readonly text: '#fff1cf';
         readonly keyword: '#ff8f73';
         readonly string: '#7fd3c6';
         readonly function: '#9cc0ff';
         readonly tag: '#f2a7d6';
         readonly attr: '#f6c66b';
         readonly number: '#c9dc7a';
-        readonly comment: '#b9a48c';
-        readonly punct: '#d8c4a6';
+        readonly comment: '#b3a8dc';
+        readonly punct: '#cfc6ea';
     };
 };
 /** Text pairs for both modes of the blog sky, cards and code (CONTRAST.md). */
@@ -688,7 +688,7 @@ export declare const modePairs: readonly [{
     large: boolean;
 } | {
     name: string;
-    fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+    fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b3a8dc" | "#c9dc7a" | "#cfc6ea" | "#f2a7d6" | "#f6c66b" | "#ff8f73" | "#fff1cf";
     bg: "#33261c";
     large: boolean;
 })[]];
@@ -1206,7 +1206,7 @@ export declare const tokens: {
         readonly moonCrater: '#e9d9b4';
         readonly star: '#fff6dc';
         readonly duneDay: '#f3e2c0';
-        readonly duneNight: '#3a2c22';
+        readonly duneNight: '#2b2456';
         /** The paper tag behind kickers on the sky, both modes. */
         readonly tagPaper: '#fff6e4';
         readonly tagInk: '#a8321e';
@@ -1255,15 +1255,15 @@ export declare const tokens: {
         };
         readonly night: {
             readonly bg: '#33261c';
-            readonly text: '#f3e2c0';
+            readonly text: '#fff1cf';
             readonly keyword: '#ff8f73';
             readonly string: '#7fd3c6';
             readonly function: '#9cc0ff';
             readonly tag: '#f2a7d6';
             readonly attr: '#f6c66b';
             readonly number: '#c9dc7a';
-            readonly comment: '#b9a48c';
-            readonly punct: '#d8c4a6';
+            readonly comment: '#b3a8dc';
+            readonly punct: '#cfc6ea';
         };
     };
     readonly modePairs: readonly [{
@@ -1343,7 +1343,7 @@ export declare const tokens: {
         large: boolean;
     } | {
         name: string;
-        fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+        fg: "#33261c" | "#7fd3c6" | "#9cc0ff" | "#b3a8dc" | "#c9dc7a" | "#cfc6ea" | "#f2a7d6" | "#f6c66b" | "#ff8f73" | "#fff1cf";
         bg: "#33261c";
         large: boolean;
     })[]];

@@ -294,7 +294,7 @@
   --lm-moon-crater: #e9d9b4;
   --lm-star: #fff6dc;
   --lm-dune-day: #f3e2c0;
-  --lm-dune-night: #3a2c22;
+  --lm-dune-night: #2b2456;
   --lm-tag-paper: #fff6e4;
   --lm-tag-ink: #a8321e;
   --lm-sky-day-1: #fde7b0;
@@ -355,15 +355,15 @@ html[data-mode="night"] {
   --lm-pill-rim: #fff6e4;
   --lm-toggle-pressed: #1f1945;
   --lm-code-bg: #33261c;
-  --lm-code-text: #f3e2c0;
+  --lm-code-text: #fff1cf;
   --lm-code-keyword: #ff8f73;
   --lm-code-string: #7fd3c6;
   --lm-code-function: #9cc0ff;
   --lm-code-tag: #f2a7d6;
   --lm-code-attr: #f6c66b;
   --lm-code-number: #c9dc7a;
-  --lm-code-comment: #b9a48c;
-  --lm-code-punct: #d8c4a6;
+  --lm-code-comment: #b3a8dc;
+  --lm-code-punct: #cfc6ea;
 }
 [data-theme="hero"] {
   --lm-sky-1: #f29a3a;
