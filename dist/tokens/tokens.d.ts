@@ -580,6 +580,8 @@ export declare const night: {
     readonly pillRim: '#fff6e4';
     /** Pressed lm-motion-toggle fill follows the night card (#39). */
     readonly togglePressed: 'var(--lm-card)';
+    /** Sky dune at night only (#41); day keeps #3a2c22. */
+    readonly duneNight: '#2b2456';
 };
 /**
  * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
@@ -601,15 +603,15 @@ export declare const code: {
     };
     readonly night: {
         readonly bg: '#191338';
-        readonly text: '#f3e2c0';
+        readonly text: '#fff1cf';
         readonly keyword: '#ff8f73';
         readonly string: '#7fd3c6';
         readonly function: '#9cc0ff';
         readonly tag: '#f2a7d6';
         readonly attr: '#f6c66b';
         readonly number: '#c9dc7a';
-        readonly comment: '#b9a48c';
-        readonly punct: '#d8c4a6';
+        readonly comment: '#b3a8dc';
+        readonly punct: '#cfc6ea';
     };
 };
 /** Text pairs for both modes of the blog sky, cards and code (CONTRAST.md). */
@@ -690,7 +692,7 @@ export declare const modePairs: readonly [{
     large: boolean;
 } | {
     name: string;
-    fg: "#191338" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+    fg: "#191338" | "#7fd3c6" | "#9cc0ff" | "#b3a8dc" | "#c9dc7a" | "#cfc6ea" | "#f2a7d6" | "#f6c66b" | "#ff8f73" | "#fff1cf";
     bg: "#191338";
     large: boolean;
 })[]];
@@ -1243,6 +1245,8 @@ export declare const tokens: {
         readonly pillRim: '#fff6e4';
         /** Pressed lm-motion-toggle fill follows the night card (#39). */
         readonly togglePressed: 'var(--lm-card)';
+        /** Sky dune at night only (#41); day keeps #3a2c22. */
+        readonly duneNight: '#2b2456';
     };
     readonly code: {
         readonly day: {
@@ -1259,15 +1263,15 @@ export declare const tokens: {
         };
         readonly night: {
             readonly bg: '#191338';
-            readonly text: '#f3e2c0';
+            readonly text: '#fff1cf';
             readonly keyword: '#ff8f73';
             readonly string: '#7fd3c6';
             readonly function: '#9cc0ff';
             readonly tag: '#f2a7d6';
             readonly attr: '#f6c66b';
             readonly number: '#c9dc7a';
-            readonly comment: '#b9a48c';
-            readonly punct: '#d8c4a6';
+            readonly comment: '#b3a8dc';
+            readonly punct: '#cfc6ea';
         };
     };
     readonly modePairs: readonly [{
@@ -1347,7 +1351,7 @@ export declare const tokens: {
         large: boolean;
     } | {
         name: string;
-        fg: "#191338" | "#7fd3c6" | "#9cc0ff" | "#b9a48c" | "#c9dc7a" | "#d8c4a6" | "#f2a7d6" | "#f3e2c0" | "#f6c66b" | "#ff8f73";
+        fg: "#191338" | "#7fd3c6" | "#9cc0ff" | "#b3a8dc" | "#c9dc7a" | "#cfc6ea" | "#f2a7d6" | "#f6c66b" | "#ff8f73" | "#fff1cf";
         bg: "#191338";
         large: boolean;
     })[]];

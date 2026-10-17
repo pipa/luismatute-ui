@@ -661,6 +661,8 @@ export const night = {
   pillRim: '#fff6e4',
   /** Pressed lm-motion-toggle fill follows the night card (#39). */
   togglePressed: 'var(--lm-card)',
+  /** Sky dune at night only (#41); day keeps #3a2c22. */
+  duneNight: '#2b2456',
 } as const;
 
 /**
@@ -683,15 +685,15 @@ export const code = {
   },
   night: {
     bg: '#191338',
-    text: '#f3e2c0',
+    text: '#fff1cf',
     keyword: '#ff8f73',
     string: '#7fd3c6',
     function: '#9cc0ff',
     tag: '#f2a7d6',
     attr: '#f6c66b',
     number: '#c9dc7a',
-    comment: '#b9a48c',
-    punct: '#d8c4a6',
+    comment: '#b3a8dc',
+    punct: '#cfc6ea',
   },
 } as const;
 

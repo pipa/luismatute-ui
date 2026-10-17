@@ -475,6 +475,10 @@ html[data-mode="night"] {
   --lm-docs-c-bg: var(--lm-code-bg);
   --lm-docs-c-bar: var(--lm-sky-night-2);
   --lm-docs-c-border: #3d3478;
+  /* Night syntax text, comment and punctuation (#41). */
+  --lm-docs-c-text: #fff1cf;
+  --lm-docs-c-comment: #b3a8dc;
+  --lm-docs-c-punct: #cfc6ea;
 }
 @media (prefers-reduced-motion: reduce) {
   :root {

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { avatar } from '../../src/illustrations/svg/avatar.ts';
+import { islandAa } from '../../src/illustrations/svg/island-aa.ts';
+import { islandSandals } from '../../src/illustrations/svg/island-sandals.ts';
+import { plane } from '../../src/illustrations/svg/plane.ts';
 
 describe('avatar glints (#39)', () => {
   it('eye highlights, glints and lens glare use --lm-glint, not --lm-white', () => {
@@ -21,4 +24,19 @@ describe('avatar glints (#39)', () => {
     );
     expect(avatar).not.toContain('var(--lm-white)');
   });
+});
+
+describe('plane and island highlights (#41)', () => {
+  it.each([
+    ['plane', plane, 11],
+    ['island-aa', islandAa, 5],
+    ['island-sandals', islandSandals, 2],
+  ])(
+    '%s: highlights use --lm-glint, no --lm-white stroke or fill',
+    (_n, svg, count) => {
+      expect(svg).not.toMatch(/stroke="var\(--lm-white\)"/);
+      expect(svg).not.toContain('var(--lm-white)');
+      expect(svg.match(/var\(--lm-glint\)/g)?.length).toBe(count);
+    },
+  );
 });
