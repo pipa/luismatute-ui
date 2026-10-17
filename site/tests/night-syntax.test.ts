@@ -75,19 +75,19 @@ describe('night syntax colours (#41)', () => {
       expect(docsDay['--lm-docs-c-keyword']).toBe('#ffb59f');
       expect(docsDay['--lm-docs-c-attr']).toBe('#e6c9ff');
     });
+    it('night docs panel background is the night --lm-code-bg (#191338)', () => {
+      expect(docsNight['--lm-docs-c-bg']).toBe('var(--lm-code-bg)');
+      expect(night['--lm-code-bg']).toBe('#191338');
+    });
+    // Measured on the rendered night panel (bg #191338) after #40 merged.
     it.each([
-      ['--lm-docs-c-text', 17.51],
-      ['--lm-docs-c-comment', 8.93],
-      ['--lm-docs-c-punct', 12.08],
+      ['--lm-docs-c-text', 15.72],
+      ['--lm-docs-c-comment', 8.02],
+      ['--lm-docs-c-punct', 10.84],
     ])('%s is 4.5:1 or better on the night docs panel', (name, expected) => {
-      const bg = toRgb(docsNight['--lm-docs-c-bg'] as string) as [
-        number,
-        number,
-        number,
-      ];
       const r = contrast(
         toRgb(docsNight[name] as string) as [number, number, number],
-        bg,
+        toRgb(night['--lm-code-bg'] as string) as [number, number, number],
       );
       expect(r).toBeGreaterThanOrEqual(4.5);
       expect(r).toBeCloseTo(expected, 1);
