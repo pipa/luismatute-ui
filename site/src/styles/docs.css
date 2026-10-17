@@ -1058,6 +1058,15 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
 .demo-stage .lm-shots {
   margin: 0;
 }
+/* Muse (#43): below 480px the two-up shots stack at full frame width with a
+   16px gap; from 480px up they stay side by side. No breakpoint token exists
+   for 480 (custom properties can't be used in media queries anyway). */
+@media (max-width: 479.98px) {
+  .demo-stage .lm-shots--two {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--lm-space-16);
+  }
+}
 .demo-note {
   margin: 12px 0 0;
   color: var(--lm-ink-soft);
@@ -1126,6 +1135,7 @@ html[data-mode="night"] .demo-frame:not([data-theme="day"]),
   }
 }
 .demo-pose[aria-pressed="true"] {
+  border: var(--lm-border-hairline) solid var(--lm-ink-fixed);
   background: var(--lm-marigold);
   color: var(--lm-ink-fixed);
   font-weight: 700;
