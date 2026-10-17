@@ -6,7 +6,7 @@
 import base from '../../../dist/base.css?raw';
 
 export const DEMO_MATCH =
-  /lm-(card|chip|more|pause|motion-toggle)\b|\.lm-(kicker|chips)\b/;
+  /lm-(card|chip|more|pause|motion-toggle|shot|avatar)\b|\.lm-(kicker|chips|shots|vh)\b|\.zz\b/;
 
 interface Block {
   prelude: string;
@@ -39,18 +39,38 @@ export function blocks(source: string): Block[] {
   return out;
 }
 
+function rules(source: string, match: RegExp): string[] {
+  const parts: string[] = [];
+  for (const b of blocks(source)) {
+    if (b.prelude.startsWith('@media') || b.prelude.startsWith('@supports')) {
+      const inner = rules(b.body, match);
+      if (inner.length) parts.push(`${b.prelude} {\n${inner.join('\n')}\n}`);
+    } else if (!b.prelude.startsWith('@') && match.test(b.prelude)) {
+      parts.push(`${b.prelude} {${b.body}}`);
+    }
+  }
+  return parts;
+}
+
+/**
+ * The component rules, plus the @keyframes those rules name (lm-avatar's
+ * wave and z's). Keyframes nobody uses stay out.
+ */
 export function demoCss(
   source: string = base,
   match: RegExp = DEMO_MATCH,
 ): string {
-  const parts: string[] = [];
+  const parts = rules(source, match);
+  // Animation values of the kept rules: the only place a keyframe is named.
+  const used = [
+    ...parts.join('\n').matchAll(/animation(?:-name)?\s*:\s*([^;}]+)/g),
+  ]
+    .map((m) => m[1])
+    .join(' ');
   for (const b of blocks(source)) {
-    if (b.prelude.startsWith('@media') || b.prelude.startsWith('@supports')) {
-      const inner = demoCss(b.body, match);
-      if (inner.trim()) parts.push(`${b.prelude} {\n${inner}}`);
-    } else if (!b.prelude.startsWith('@') && match.test(b.prelude)) {
+    const name = /^@keyframes\s+([\w-]+)$/.exec(b.prelude)?.[1];
+    if (name && new RegExp(`(?<![\\w-])${name}(?![\\w-])`).test(used))
       parts.push(`${b.prelude} {${b.body}}`);
-    }
   }
   return `${parts.join('\n')}\n`;
 }

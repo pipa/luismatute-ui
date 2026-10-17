@@ -1,0 +1,157 @@
+---
+import { inlineIllustration } from '../../../../dist/illustrations/index.js';
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const poses = ['wave', 'wow', 'read', 'beach', 'grad', 'sleep', 'wink', 'eek'];
+const pickerLabel = 'Luis waving from the plane';
+const noteLabel = 'Luis reading, with a note';
+
+/**
+ * Server-rendered portrait, so the demo shows without JS and doesn't shift
+ * when the element upgrades. The element reuses this svg as it is.
+ */
+const portrait = (prefix: string, pose: string, label: string) =>
+  inlineIllustration('avatar', prefix).replace(
+    'class="lu lm-art"',
+    `class="lu lm-art ex-${pose}" role="img" aria-label="${label}"`,
+  );
+
+const demo = `<lm-avatar pose="wave" label="${pickerLabel}"></lm-avatar>
+<lm-pause></lm-pause>
+<lm-avatar pose="read" note="new docs!" label="${noteLabel}"></lm-avatar>`;
+const fence = '-'.repeat(3);
+const astro = `${fence}
+import '@luismatute/ui/components/avatar';
+import '@luismatute/ui/base.css';
+${fence}
+<lm-avatar pose="beach" label="Luis on holiday" />`;
+const js = `const avatar = document.querySelector('lm-avatar');
+avatar.setAttribute('pose', 'sleep'); // the shade comes down
+avatar.setAttribute('motion', 'off'); // stop blinking and glancing`;
+const css = `/* lm-avatar is 168px wide; it keeps its 200:240 shape */
+.hero lm-avatar {
+  width: 120px;
+  --lm-duration-avatar-wave: 6s;
+}`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'in-astro', label: 'In Astro' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'poses', label: 'Poses' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-avatar"
+  title="lm-avatar"
+  description="Luis in a plane window. He blinks and glances around, and eight poses swap the face and props."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-avatar" label="lm-avatar with a pose picker, and with a note" log="lm-pause" code={demo}>
+    <div class="demo-row demo-avatars">
+      <div class="demo-avatar">
+        <lm-avatar pose="wave" label={pickerLabel} set:html={portrait('dpick', 'wave', pickerLabel)} />
+        <div class="demo-poses" role="group" aria-label="Pose" hidden data-avatar-poses>
+          {
+            poses.map((p) => (
+              <button type="button" class="demo-pose" data-pose={p} aria-pressed={String(p === 'wave')}>
+                {p}
+              </button>
+            ))
+          }
+          <button type="button" class="demo-pose" data-pose="" aria-pressed="false">none</button>
+        </div>
+        <lm-pause></lm-pause>
+      </div>
+      <div class="demo-avatar">
+        <lm-avatar pose="read" note="new docs!" label={noteLabel} set:html={`${portrait('dnote', 'read', noteLabel)}<p class="lm-note">new docs!</p>`} />
+      </div>
+    </div>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>
+    Import the element and <code>base.css</code>, then drop it in. It draws the portrait itself, or reuses an
+    <code>&lt;svg&gt;</code> you render inside it (handy for showing it without JS). Set <code>pose</code> any time to
+    change the face.
+  </p>
+  <CodeBlock lang="js" filename="avatar.js" code={js} />
+  <Heading id="in-astro" level={3}>In Astro</Heading>
+  <CodeBlock lang="astro" filename="Avatar.astro" code={astro} />
+  <Heading id="attributes">Attributes</Heading>
+  <ApiTable
+    caption="lm-avatar attributes"
+    head={['Attribute', 'Description']}
+    rows={[
+      { name: 'pose', detail: 'One of the poses below. Anything else, or none, is the plain smile. Reacts to changes.' },
+      { name: 'label', detail: 'The portrait\'s accessible name. Defaults to “Luis at the window”.' },
+      { name: 'note', detail: 'A short handwritten note under the portrait, as real text. Reacts to changes.' },
+      { name: 'motion', detail: '<code>idle</code> (default) blinks and glances, even in Just the info. <code>off</code> or <code>reduce</code> holds still.' },
+      { name: 'static', detail: 'Boolean. Holds still and stops the wave, whatever the page mode.' },
+    ]}
+  />
+  <Heading id="poses" level={3}>Poses</Heading>
+  <ApiTable
+    caption="lm-avatar poses"
+    head={['Pose', 'What changes']}
+    rows={[
+      { name: 'wave', detail: 'Arm up. The hand swings three times every 4.2s, and once more on hover or focus.' },
+      { name: 'wow', detail: 'Open mouth, brows up.' },
+      { name: 'read', detail: 'Holds a book, mouth closed.' },
+      { name: 'beach', detail: 'Tinted round sunglasses.' },
+      { name: 'grad', detail: 'Graduation cap.' },
+      { name: 'sleep', detail: 'Eyes shut, head tilted, the window shade slides down and z\'s float up.' },
+      { name: 'wink', detail: 'Left eye shut, wide grin.' },
+      { name: 'eek', detail: 'Eyes shut tight, brows up, open mouth.' },
+    ]}
+  />
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <p>The portrait is drawn with the colour tokens, so it follows day and night. These are the ones you're most likely to change.</p>
+  <ApiTable
+    caption="lm-avatar custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-ink-fixed', detail: 'Every outline. Dark ink by day and night, because the portrait stays a paper picture.' },
+      { name: '--lm-ink', detail: 'The note text, so it follows the page.' },
+      { name: '--lm-cream', detail: 'Window frame.' },
+      { name: '--lm-cabin', detail: 'Cabin wall behind him.' },
+      { name: '--lm-glint', detail: 'Eye highlights and lens glare. Stays paper at night.' },
+      { name: '--lm-skin', detail: 'Skin. <code>--lm-skin-d</code>, <code>--lm-skin-hair</code> and <code>--lm-skin-beard</code> shade it.' },
+      { name: '--lm-lens-tint', detail: 'Sunglasses tint in the beach pose, with <code>--lm-lens-tint-opacity</code>.' },
+      { name: '--lm-duration-avatar-wave', detail: 'Length of one wave loop (4.2s).' },
+      { name: '--lm-duration-avatar-wave-once', detail: 'The single wave on hover or focus.' },
+      { name: '--lm-ease-in-out', detail: 'Wave easing.' },
+      { name: '--lm-font-hand', detail: 'The note face (Caveat), at <code>--lm-font-size-hand</code>.' },
+    ]}
+  />
+  <CodeBlock lang="css" filename="site.css" code={css} />
+  <Heading id="events">Events</Heading>
+  <p>
+    It sends none. It listens for <code>lm-motion</code> and <code>lm-pause</code> on <code>&lt;html&gt;</code>, so
+    <a href={`${import.meta.env.BASE_URL}components/lm-motion-toggle/`}>lm-motion-toggle</a> and
+    <a href={`${import.meta.env.BASE_URL}components/lm-pause/`}>lm-pause</a> stop and restart it straight away.
+  </p>
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>The portrait is one image with a name (<code>role="img"</code> and <code>label</code>). Name the moment if the pose matters, for example “Luis asleep”.</li>
+    <li>The note is real text, so screen readers read it and it scales with the page.</li>
+    <li>The blink is a single frame swap and the wave has three swings per loop, well under three flashes a second.</li>
+    <li>The blink, glances and wave loop forever, so put an <a href={`${import.meta.env.BASE_URL}components/lm-pause/`}>lm-pause</a> on the same page, as the demo does. Pausing stops all of it.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>
+    With <code>prefers-reduced-motion</code>, <code>html[data-motion="reduce"]</code>, the page paused, <code>static</code>
+    or <code>motion="off"</code>, he holds still: no blinking, glancing or waving, and the z's stop. Poses still change, as
+    an instant swap. Just the info keeps the blink and glances, because they're small and don't move the layout.
+  </p>
+</Docs>

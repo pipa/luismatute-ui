@@ -1,0 +1,171 @@
+---
+import beaches from '../../../../docs/shots/beaches-600.webp';
+import sandals from '../../../../docs/shots/sandals-600.webp';
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const sandalsHref =
+  'https://web.archive.org/web/20160620110713/http://www.sandals.com/';
+const beachesHref =
+  'https://web.archive.org/web/20150110181715/http://www.beaches.com/';
+
+// The code panel shows package-relative paths, not the docs' hashed asset URLs.
+const demo = `<div class="lm-shots lm-shots--two">
+  <!-- Built from attributes; the noscript link shows without JS -->
+  <lm-shot
+    href="${sandalsHref}"
+    src="/shots/sandals-600.webp"
+    alt="The sandals.com home page in 2016"
+    chrome="sandals.com"
+    caption="sandals.com, 2016"
+    width="600"
+    height="390"
+  >
+    <noscript>
+      <a href="${sandalsHref}" target="_blank" rel="noopener noreferrer">
+        <img src="/shots/sandals-600.webp" alt="The sandals.com home page in 2016" width="600" height="390" />
+        <p class="lm-shot-cap">sandals.com, 2016</p>
+      </a>
+    </noscript>
+  </lm-shot>
+  <!-- Your own link: the element only adds the browser frame -->
+  <lm-shot chrome="beaches.com">
+    <a href="${beachesHref}" target="_blank" rel="noopener noreferrer">
+      <img src="/shots/beaches-600.webp" alt="The beaches.com home page in 2015" width="600" height="390" loading="lazy" />
+      <p class="lm-shot-cap">beaches.com, 2015</p>
+      <span class="lm-vh"> (opens in a new tab)</span>
+    </a>
+  </lm-shot>
+</div>`;
+const fence = '-'.repeat(3);
+const astro = `${fence}
+import '@luismatute/ui/components/shot';
+import '@luismatute/ui/base.css';
+import shot from '../assets/sandals-600.webp';
+${fence}
+<lm-shot
+  href="https://sandals.com"
+  src={shot.src}
+  width={shot.width}
+  height={shot.height}
+  alt="The sandals.com home page"
+  chrome="sandals.com"
+/>`;
+const css = `/* lm-shot reads these tokens; override them on the element */
+lm-shot {
+  --lm-radius-shot: 8px;
+  --lm-shadow-shot: none;
+  --lm-sand: var(--lm-cream); /* chrome bar */
+}`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'in-astro', label: 'In Astro' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-shot"
+  title="lm-shot"
+  description="A screenshot in a small browser frame, linked to the live site. It opens in a new tab and says so."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-shot" label="lm-shot, from attributes and from your own link" code={demo}>
+    <div class="lm-shots lm-shots--two">
+      <lm-shot
+        href={sandalsHref}
+        src={sandals.src}
+        alt="The sandals.com home page in 2016"
+        chrome="sandals.com"
+        caption="sandals.com, 2016"
+        width={String(sandals.width)}
+        height={String(sandals.height)}
+      >
+        <noscript>
+          <a href={sandalsHref} target="_blank" rel="noopener noreferrer">
+            <img src={sandals.src} alt="The sandals.com home page in 2016" width={sandals.width} height={sandals.height} />
+            <p class="lm-shot-cap">sandals.com, 2016</p>
+          </a>
+        </noscript>
+      </lm-shot>
+      <lm-shot chrome="beaches.com">
+        <a href={beachesHref} target="_blank" rel="noopener noreferrer">
+          <img
+            src={beaches.src}
+            alt="The beaches.com home page in 2015"
+            width={beaches.width}
+            height={beaches.height}
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="lm-shot-cap">beaches.com, 2015</p>
+          <span class="lm-vh"> (opens in a new tab)</span>
+        </a>
+      </lm-shot>
+    </div>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>
+    Give it <code>href</code> and <code>src</code> and it builds the link, image, frame and caption. Or put your own
+    <code>&lt;a&gt;</code> with an <code>&lt;img&gt;</code> inside and it only wraps the image in the frame. Use
+    <code>.lm-shots--two</code> on a wrapper for a two-up grid that stacks on narrow screens.
+  </p>
+  <Heading id="in-astro" level={3}>In Astro</Heading>
+  <p>Pass an imported image's <code>src</code>, <code>width</code> and <code>height</code> so the frame reserves its space before the image loads.</p>
+  <CodeBlock lang="astro" filename="Shot.astro" code={astro} />
+  <Heading id="attributes">Attributes</Heading>
+  <p>Read once, when the element connects. Without <code>href</code> and <code>src</code> it leaves your markup as it is.</p>
+  <ApiTable
+    caption="lm-shot attributes"
+    head={['Attribute', 'Description']}
+    rows={[
+      { name: 'href', detail: 'Where the screenshot links. Opens in a new tab with <code>rel="noopener noreferrer"</code>.' },
+      { name: 'src', detail: 'The screenshot. Loaded lazily and decoded off the main thread.' },
+      { name: 'alt', detail: 'Image description. Defaults to empty, so set it unless the caption already says what the picture shows.' },
+      { name: 'width', detail: 'Intrinsic width, default <code>600</code>. Sets the aspect ratio, not the shown size.' },
+      { name: 'height', detail: 'Intrinsic height, default <code>390</code>.' },
+      { name: 'srcset', detail: 'Optional, passed to the image.' },
+      { name: 'sizes', detail: 'Optional, passed to the image.' },
+      { name: 'chrome', detail: 'Text in the frame bar, usually the domain. Also used in your-own-link mode.' },
+      { name: 'caption', detail: 'Text under the frame. Falls back to <code>chrome</code>.' },
+    ]}
+  />
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <p>The frame reads these tokens. Override them on the element or a parent.</p>
+  <ApiTable
+    caption="lm-shot custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-ink', detail: 'Frame border, bar rule, bar text and the dot outlines.' },
+      { name: '--lm-border-line', detail: 'Frame border width (2.5px).' },
+      { name: '--lm-radius-shot', detail: 'Frame corner radius.' },
+      { name: '--lm-shadow-shot', detail: 'The hard offset shadow.' },
+      { name: '--lm-white', detail: 'Frame fill behind the image.' },
+      { name: '--lm-sand', detail: 'Bar fill.' },
+      { name: '--lm-highlight', detail: 'First dot. The second uses <code>--lm-paper</code> and the third <code>--lm-tomato</code>.' },
+      { name: '--lm-mat', detail: 'Image placeholder while it loads.' },
+    ]}
+  />
+  <CodeBlock lang="css" filename="site.css" code={css} />
+  <Heading id="events">Events</Heading>
+  <p>None. It's a plain link.</p>
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>One real link per shot. Its name is the alt text, the caption and a visually hidden “(opens in a new tab)”. Add that hint yourself in your-own-link mode.</li>
+    <li>The three dots are decorative and hidden from assistive tech. The bar text is visible but sits inside the link, so keep it short.</li>
+    <li>Bar text is ink on sand, over 12:1 by day and night. Keyboard focus shows a ring 4px outside the frame.</li>
+    <li>Without JS, the <code>&lt;noscript&gt;</code> link or your own link still works. Only the browser frame is missing.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>The shot doesn't animate.</p>
+</Docs>

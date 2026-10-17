@@ -234,7 +234,7 @@ Headings are deep-linkable (`id` on the section or heading).
 
 | Part | Spec |
 | --- | --- |
-| Frame | 3px ink/paper border, radius 20, `--lm-shadow-card` (6px 7px 0). Dark remaps shadow to paper. |
+| Frame | 1px ink/paper border (`--lm-border-hairline`), radius 12 (`--lm-radius-skip`), `--lm-shadow-card` (6px 7px 0). Dark remaps shadow to paper. |
 | Chrome | 48px min, sand/night, 2px bottom border, three 7px dots (marigold / paper / tomato) matching `lm-shot` |
 | Label | Mono 10.5px uppercase tracking 0.06em |
 | Toggles | Pills, 36px min, 2px ink border, white idle, marigold when `aria-pressed="true"` |
