@@ -188,7 +188,7 @@ const globe = wrap(
 );
 
 const art = {
-  plane: ['plane', wrap(api.planeSVG('__id__'), '0 0 640 260')],
+  plane: ['plane', highlights(wrap(api.planeSVG('__id__'), '0 0 640 260'))],
   'plane-top': ['planeTop', wrap(api.planeTop(), '0 0 120 100')],
   cloud: [
     'cloud',
@@ -214,10 +214,13 @@ const art = {
   hangar: ['hangar', wrap(api.hangar(), '-4 -140 190 150')],
   windsock: ['windsock', wrap(api.windsock(), '-4 -120 70 130')],
   'night-tower': ['nightTower', wrap(api.nightTower(), '-80 -180 420 200')],
-  'island-aa': ['islandAa', wrap(api.isleAA('__id__'), '-20 -20 1000 520')],
+  'island-aa': [
+    'islandAa',
+    highlights(wrap(api.isleAA('__id__'), '-20 -20 1000 520')),
+  ],
   'island-sandals': [
     'islandSandals',
-    wrap(api.isleSandals('__id__'), '-40 -80 1100 620'),
+    highlights(wrap(api.isleSandals('__id__'), '-40 -80 1100 620')),
   ],
   'island-bsc': ['islandBsc', wrap(api.isleBSc('__id__'), '-40 -80 1100 620')],
   'island-fluky': [
@@ -268,6 +271,17 @@ function glints(svg) {
       /(<g class="lu-book"><rect\b[^>]*?)fill="var\(--lm-white\)"/,
       '$1fill="var(--lm-glint)"',
     );
+}
+
+/**
+ * Muse (#41): every --lm-white in the plane (11), island-aa (5) and
+ * island-sandals (2) is a highlight, so it uses --lm-glint like the avatar.
+ */
+function highlights(svg) {
+  return svg.replace(
+    /(fill|stroke)="var\(--lm-white\)"/g,
+    '$1="var(--lm-glint)"',
+  );
 }
 
 const svgDir = resolve(outRoot, 'src/illustrations/svg');
