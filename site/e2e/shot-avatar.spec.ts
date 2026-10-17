@@ -224,3 +224,119 @@ for (const mode of ['day', 'night'] as const) {
     }
   });
 }
+
+// ---- Muse's calls on #43 ----
+const INK_FIXED = 'rgb(43, 27, 20)';
+
+/** Computed stroke of every avatar outline (stroke attr starting var(--lm-ink)). */
+async function outlineStrokes(page: Page, scope: string) {
+  return page
+    .locator(scope)
+    .evaluateAll((svgs) =>
+      svgs.flatMap((svg) =>
+        [...svg.querySelectorAll('[stroke^="var(--lm-ink"]')].map(
+          (el) => getComputedStyle(el).stroke,
+        ),
+      ),
+    );
+}
+
+test.describe('avatar outlines at night use --lm-ink-fixed', () => {
+  test('night page', async ({ context, page }) => {
+    await context.addCookies([
+      { name: 'lm-mode', value: 'night', domain: '127.0.0.1', path: '/' },
+    ]);
+    await page.goto(at('lm-avatar', '?motion=full'));
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'night');
+    const strokes = await outlineStrokes(page, '.demo lm-avatar svg');
+    expect(strokes.length).toBeGreaterThanOrEqual(50);
+    expect([...new Set(strokes)]).toEqual([INK_FIXED]);
+  });
+  test('day page with the demo frame flipped to night', async ({ page }) => {
+    await page.goto(at('lm-avatar', '?motion=full'));
+    await page
+      .getByRole('button', { name: /Night preview for this demo/ })
+      .click();
+    await expect(page.locator('.demo-frame')).toHaveAttribute(
+      'data-theme',
+      'night',
+    );
+    const strokes = await outlineStrokes(page, '.demo lm-avatar svg');
+    expect([...new Set(strokes)]).toEqual([INK_FIXED]);
+  });
+});
+
+test('shots stack below 480px with a 16px gap, and sit side by side from 480px', async ({
+  page,
+}) => {
+  const boxes = async () => {
+    const shots = page.locator('.demo lm-shot');
+    const a = await shots.nth(0).boundingBox();
+    const b = await shots.nth(1).boundingBox();
+    const grid = await page.locator('.demo .lm-shots').boundingBox();
+    if (!a || !b || !grid) throw new Error('missing shot boxes');
+    return { a, b, grid };
+  };
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto(at('lm-shot'));
+  let { a, b, grid } = await boxes();
+  expect(Math.round(a.x)).toBe(Math.round(b.x));
+  expect(Math.round(a.width)).toBe(Math.round(grid.width));
+  expect(Math.round(b.width)).toBe(Math.round(grid.width));
+  expect(Math.round(b.y - (a.y + a.height))).toBe(16);
+  await page.setViewportSize({ width: 479, height: 900 });
+  ({ a, b } = await boxes());
+  expect(b.y).toBeGreaterThan(a.y + a.height);
+  for (const w of [480, 768]) {
+    await page.setViewportSize({ width: w, height: 900 });
+    ({ a, b } = await boxes());
+    expect(Math.round(a.y), `${w}`).toBe(Math.round(b.y));
+    expect(b.x, `${w}`).toBeGreaterThan(a.x + a.width);
+  }
+});
+
+for (const mode of ['day', 'night'] as const) {
+  test(`pose pills: aria-pressed follows the selection; pressed pill is marigold with a 1px fixed-ink border (${mode})`, async ({
+    context,
+    page,
+  }) => {
+    await context.addCookies([
+      { name: 'lm-mode', value: mode, domain: '127.0.0.1', path: '/' },
+    ]);
+    await page.goto(at('lm-avatar', '?motion=full'));
+    const picker = page.getByRole('group', { name: 'Pose' });
+    const pills = picker.getByRole('button');
+    await expect(pills).toHaveCount(9);
+    for (const pill of await pills.all())
+      await expect(pill).toHaveAttribute('aria-pressed', /^(true|false)$/);
+    for (const name of ['beach', 'wink', 'none', 'wave']) {
+      await picker.getByRole('button', { name, exact: true }).click();
+      const states = await pills.evaluateAll((bs) =>
+        bs.map((b) => [b.textContent?.trim(), b.getAttribute('aria-pressed')]),
+      );
+      expect(
+        states.filter(([, p]) => p === 'true').map(([n]) => n),
+        name,
+      ).toEqual([name]);
+      expect(states.every(([, p]) => p === 'true' || p === 'false')).toBe(true);
+      const pressed = picker.locator('[aria-pressed="true"]');
+      const s = await pressed.evaluate((e) => {
+        const c = getComputedStyle(e);
+        return {
+          bw: c.borderTopWidth,
+          bs: c.borderTopStyle,
+          bc: c.borderTopColor,
+          bg: c.backgroundColor,
+          fg: c.color,
+        };
+      });
+      expect(s).toEqual({
+        bw: '1px',
+        bs: 'solid',
+        bc: INK_FIXED,
+        bg: 'rgb(246, 180, 60)',
+        fg: INK_FIXED,
+      });
+    }
+  });
+}

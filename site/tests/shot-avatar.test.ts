@@ -1,5 +1,6 @@
 // @vitest-environment happy-dom
 import { beforeEach, describe, expect, it } from 'vitest';
+import { avatar } from '../../src/illustrations/svg/avatar.ts';
 import { demoCss } from '../src/lib/component-css';
 import { initAvatarPoses } from '../src/scripts/avatar-poses';
 import docsCss from '../src/styles/docs.css?raw';
@@ -81,5 +82,17 @@ describe('lm-avatar pose picker', () => {
     expect(avatar.hasAttribute('pose')).toBe(false);
     expect(none?.getAttribute('aria-pressed')).toBe('true');
     expect(sleep?.getAttribute('aria-pressed')).toBe('false');
+  });
+});
+
+describe('avatar linework uses fixed ink (#43)', () => {
+  it('every ink stroke and fill in the portrait is --lm-ink-fixed', () => {
+    expect(avatar).not.toContain('var(--lm-ink)');
+    expect(avatar.match(/var\(--lm-ink-fixed\)/g)?.length).toBe(31);
+  });
+  it('the pressed pose pill has a 1px fixed-ink border', () => {
+    expect(docsCss).toContain(
+      'border: var(--lm-border-hairline) solid var(--lm-ink-fixed);',
+    );
   });
 });
