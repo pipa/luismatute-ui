@@ -564,7 +564,7 @@ var modeStable = {
   moonCrater: "#e9d9b4",
   star: "#fff6dc",
   duneDay: "#f3e2c0",
-  duneNight: "#2b2456",
+  duneNight: "#3a2c22",
   /** The paper tag behind kickers on the sky, both modes. */
   tagPaper: "#fff6e4",
   tagInk: "#a8321e"
@@ -596,7 +596,9 @@ var night = {
   pillInk: "#fff6e4",
   pillRim: "#fff6e4",
   /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
-  togglePressed: "#1f1945"
+  togglePressed: "#1f1945",
+  /** Sky dune at night only (#41); day keeps #3a2c22. */
+  duneNight: "#2b2456"
 };
 var code = {
   day: {

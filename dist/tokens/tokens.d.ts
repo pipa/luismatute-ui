@@ -543,7 +543,7 @@ export declare const modeStable: {
     readonly moonCrater: '#e9d9b4';
     readonly star: '#fff6dc';
     readonly duneDay: '#f3e2c0';
-    readonly duneNight: '#2b2456';
+    readonly duneNight: '#3a2c22';
     /** The paper tag behind kickers on the sky, both modes. */
     readonly tagPaper: '#fff6e4';
     readonly tagInk: '#a8321e';
@@ -578,6 +578,8 @@ export declare const night: {
     readonly pillRim: '#fff6e4';
     /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
     readonly togglePressed: '#1f1945';
+    /** Sky dune at night only (#41); day keeps #3a2c22. */
+    readonly duneNight: '#2b2456';
 };
 /**
  * Code theme. Day is the blog's shipped theme (luismatute.me #51) on sand.
@@ -1206,7 +1208,7 @@ export declare const tokens: {
         readonly moonCrater: '#e9d9b4';
         readonly star: '#fff6dc';
         readonly duneDay: '#f3e2c0';
-        readonly duneNight: '#2b2456';
+        readonly duneNight: '#3a2c22';
         /** The paper tag behind kickers on the sky, both modes. */
         readonly tagPaper: '#fff6e4';
         readonly tagInk: '#a8321e';
@@ -1239,6 +1241,8 @@ export declare const tokens: {
         readonly pillRim: '#fff6e4';
         /** Pressed lm-motion-toggle fill: Muse's indigo night card (#38), not brown. */
         readonly togglePressed: '#1f1945';
+        /** Sky dune at night only (#41); day keeps #3a2c22. */
+        readonly duneNight: '#2b2456';
     };
     readonly code: {
         readonly day: {

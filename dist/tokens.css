@@ -294,7 +294,7 @@
   --lm-moon-crater: #e9d9b4;
   --lm-star: #fff6dc;
   --lm-dune-day: #f3e2c0;
-  --lm-dune-night: #2b2456;
+  --lm-dune-night: #3a2c22;
   --lm-tag-paper: #fff6e4;
   --lm-tag-ink: #a8321e;
   --lm-sky-day-1: #fde7b0;
@@ -354,6 +354,7 @@ html[data-mode="night"] {
   --lm-pill-ink: #fff6e4;
   --lm-pill-rim: #fff6e4;
   --lm-toggle-pressed: #1f1945;
+  --lm-dune-night: #2b2456;
   --lm-code-bg: #33261c;
   --lm-code-text: #fff1cf;
   --lm-code-keyword: #ff8f73;
