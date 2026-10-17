@@ -247,10 +247,12 @@ const art = {
   foam: ['foam', wrap(api.foam(0, 640, 24), '-10 0 700 50')],
   avatar: [
     'avatar',
-    glints(
-      wrapRaw(
-        api.luisSVG('__id__'),
-        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="lu lm-art" viewBox="0 0 200 240">',
+    fixedInk(
+      glints(
+        wrapRaw(
+          api.luisSVG('__id__'),
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="lu lm-art" viewBox="0 0 200 240">',
+        ),
       ),
     ),
   ],
@@ -271,6 +273,15 @@ function glints(svg) {
       /(<g class="lu-book"><rect\b[^>]*?)fill="var\(--lm-white\)"/,
       '$1fill="var(--lm-glint)"',
     );
+}
+
+/**
+ * Muse (#43): the avatar is a paper portrait in both modes, so its linework
+ * uses --lm-ink-fixed (dark ink by day and night). --lm-ink turns cream at
+ * night and the outlines vanished on the cream window frame.
+ */
+function fixedInk(svg) {
+  return svg.replaceAll('var(--lm-ink)', 'var(--lm-ink-fixed)');
 }
 
 /**
