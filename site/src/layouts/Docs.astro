@@ -61,6 +61,14 @@ const canonical = new URL(
       </aside>
       <main id="main" class="main" tabindex="-1">
         <article class="prose">
+          {toc.length > 0 && (
+            <details class="toc-inline">
+              <summary>On this page</summary>
+              <nav aria-label="On this page">
+                <ul>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ul>
+              </nav>
+            </details>
+          )}
           <p class="crumb">{crumb}</p>
           <h1>{title}</h1>
           <p class="lede">{description}</p>
