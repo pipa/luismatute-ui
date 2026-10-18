@@ -1,6 +1,7 @@
 /**
  * Marks the "On this page" link for the section being read with
- * aria-current="true". Without JS the list is plain in-page links.
+ * aria-current="true", in the aside and in the inline "On this page"
+ * disclosure. Without JS both are plain in-page links.
  */
 export function pickCurrent(
   ids: string[],
@@ -19,11 +20,17 @@ export function initToc(
   doc: Document = document,
   offset = 96,
 ): (() => void) | undefined {
+  // The sticky aside (wide screens) and the inline disclosure (narrow) list
+  // the same sections; both get the current mark.
   const links = [
-    ...doc.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]'),
+    ...doc.querySelectorAll<HTMLAnchorElement>(
+      '.toc a[href^="#"], .toc-inline a[href^="#"]',
+    ),
   ];
   if (links.length === 0) return undefined;
-  const ids = links.map((a) => decodeURIComponent(a.hash.slice(1)));
+  const ids = [
+    ...new Set(links.map((a) => decodeURIComponent(a.hash.slice(1)))),
+  ];
   const update = () => {
     const tops = new Map<string, number>();
     for (const id of ids) {
@@ -35,7 +42,8 @@ export function initToc(
       doc.documentElement.scrollHeight - 2;
     const cur = atEnd ? ids[ids.length - 1] : pickCurrent(ids, tops, offset);
     for (const a of links) {
-      if (a.hash.slice(1) === cur) a.setAttribute('aria-current', 'true');
+      if (decodeURIComponent(a.hash.slice(1)) === cur)
+        a.setAttribute('aria-current', 'true');
       else a.removeAttribute('aria-current');
     }
   };

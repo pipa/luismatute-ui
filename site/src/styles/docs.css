@@ -15,6 +15,9 @@
   --lm-docs-link: #1f7e7a;
   --lm-docs-active-bg: var(--lm-marigold);
   --lm-docs-active-ink: var(--lm-ink);
+  /* current-section bar in "On this page" (non-text mark; weight is the second cue) */
+  --lm-docs-accent: var(--lm-marigold);
+  --lm-docs-toc-bg: var(--lm-cream);
   --lm-docs-focus: #1f7e7a;
   --lm-docs-shadow: var(--lm-ink);
   --lm-docs-backdrop: rgb(18 13 44 / 0.55);
@@ -64,6 +67,8 @@ html[data-mode="night"] {
   --lm-docs-link: #ffd27a;
   --lm-docs-active-bg: var(--lm-sky-night-4);
   --lm-docs-active-ink: #ffd27a;
+  --lm-docs-accent: #ffd27a;
+  --lm-docs-toc-bg: var(--lm-sky-night-2);
   --lm-docs-focus: #ffd27a;
   --lm-docs-shadow: #05030f;
 }
@@ -323,6 +328,59 @@ code:where(:not(.demo-frame *)) {
   text-decoration: none;
 }
 
+/* "On this page" for narrow screens: a disclosure at the top of the content
+   column. <details> opens and closes with no JS; the summary is the button. */
+.toc-inline {
+  display: none;
+  margin: 0 0 24px;
+  border: var(--lm-docs-border) dashed var(--lm-docs-rule);
+  border-radius: var(--lm-radius-plan);
+  background: var(--lm-docs-toc-bg);
+  box-shadow: 4px 4px 0 var(--lm-docs-shadow);
+}
+.toc-inline summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--lm-docs-tap);
+  padding: 0 16px 0 14px;
+  border-radius: var(--lm-radius-plan);
+  font: 700 var(--lm-docs-t-small) / 1 var(--lm-docs-f-text);
+  list-style: none;
+  cursor: pointer;
+}
+.toc-inline summary::-webkit-details-marker {
+  display: none;
+}
+/* Chevron: rotates on transform only. */
+.toc-inline summary::after {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: var(--lm-docs-border) solid currentColor;
+  border-bottom: var(--lm-docs-border) solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--lm-docs-feedback) var(--lm-docs-ease-in);
+}
+.toc-inline[open] summary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+.toc-inline ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px 14px 12px;
+  border-top: var(--lm-docs-border-hair) dashed var(--lm-docs-rule);
+}
+.toc-inline a {
+  display: block;
+  padding: 6px 0;
+  font: 600 var(--lm-docs-t-small) / 1.4 var(--lm-docs-f-text);
+  color: var(--lm-docs-ink);
+  text-decoration: none;
+}
+
 /* pager */
 .pager {
   display: grid;
@@ -364,6 +422,9 @@ code:where(:not(.demo-frame *)) {
   }
   .toc {
     display: none;
+  }
+  .toc-inline {
+    display: block;
   }
 }
 @media (max-width: 860px) {
@@ -666,9 +727,12 @@ html[data-mode="night"] {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
-.toc a[aria-current="true"] {
+.toc a[aria-current="true"],
+.toc-inline a[aria-current="true"] {
+  padding-left: 10px;
   color: var(--lm-docs-ink);
   font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--lm-docs-accent);
 }
 /* Headings jumped to via an anchor clear the sticky header. */
 h2[id],
