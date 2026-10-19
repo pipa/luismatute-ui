@@ -306,6 +306,12 @@ code:where(:not(.demo-frame *)) {
   background: var(--lm-docs-side);
   border: 1.5px solid var(--lm-docs-rule);
 }
+/* Long install lines and changelog tokens wrap inside the measure.
+   Code inside pre is excluded; .code pre code keeps white-space: pre. */
+.prose code:where(:not(pre *, .tok)) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 
 /* on this page */
 .toc {

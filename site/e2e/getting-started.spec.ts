@@ -84,6 +84,26 @@ test('changelog: dated h2 per version, groups as h3, TOC lists versions only', a
   expect(toc).toEqual(ids.map((id) => `#${id}`));
 });
 
+for (const mode of ['day', 'night'] as const) {
+  test(`${mode}: pages stay within 375px (no sideways scroll)`, async ({
+    page,
+    context,
+  }) => {
+    await context.addCookies([
+      { name: 'lm-mode', value: mode, domain: '127.0.0.1', path: '/' },
+    ]);
+    await page.setViewportSize({ width: 375, height: 812 });
+    for (const [slug] of pages) {
+      await page.goto(`/ui/${slug}/`);
+      await expect(page.locator('html')).toHaveAttribute('data-mode', mode);
+      const scrollWidth = await page.evaluate(
+        () => document.documentElement.scrollWidth,
+      );
+      expect(scrollWidth, slug).toBeLessThanOrEqual(375);
+    }
+  });
+}
+
 test('bare imports lists every package export path', async ({ page }) => {
   await page.goto('/ui/getting-started/bare-imports/');
   const paths = Object.keys(pkg.exports).map((k) => `${pkg.name}${k.slice(1)}`);
