@@ -1,0 +1,15 @@
+---
+import Docs from '../layouts/Docs.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Docs slug="404" title="Page not found" description="That URL is not on the board." bare>
+  <div class="not-found">
+    <p class="crumb">Gate closed</p>
+    <h1 class="nf-code">404</h1>
+    <p class="nf-hand">this flight was cancelled</p>
+    <p class="lede">That URL is not on the board. Search, or return to the gate.</p>
+    <p><a class="nf-home" href={base}>Back to /ui/</a></p>
+  </div>
+</Docs>
