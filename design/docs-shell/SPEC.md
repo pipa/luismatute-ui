@@ -150,8 +150,8 @@ Breakpoints (max-width):
 | ≤1439 | Nav 220, TOC 200, pad 28 |
 | ≤1279 | Pad 24 |
 | ≤1180 | TOC aside hides. Inline “On this page” appears at the **top of the content column**. |
-| ≤1023 | Nav 200, pad 20, title uses `--lm-font-size-pass-port`. Hide “wheels up”, the site link, and the Search label (keep ⌘K). Wordmark stays one line. |
-| ≤767 | Nav becomes a left drawer. Menu button shows. Top bar wraps to two rows (112px). Site link hides. Search label hides; ⌘K remains. |
+| ≤1023 | Nav 200, pad 20, title uses `--lm-font-size-pass-port`. Hide “wheels up”, the site link, and the Search label (magnifier stays, 44×44). Wordmark stays one line. |
+| ≤767 | Nav becomes a left drawer. Menu button shows. Top bar wraps to two rows (112px). Site link hides. Search label hides; magnifier stays. |
 
 Grid:
 
@@ -321,6 +321,8 @@ Copy the **CSS variable** (`--lm-ink`), not only the hex.
 | Hit | pad 12, radius 14. Title 14.5 bold. Excerpt 13 muted. Crumb mono 10.5 link colour |
 | Keyboard highlight | `.is-active`: `--docs-hover` + 2px `--docs-border`. `aria-selected="true"` |
 | Empty | Caveat 27px “no flights found”, muted 17px line under it |
+
+Shortcut hint (⌘K on Apple platforms, Ctrl K elsewhere) shows only under `(hover: hover) and (pointer: fine)`, never by width. Without JS the search pill is hidden.
 
 Keys: ⌘K / Ctrl+K toggle. Escape closes. ArrowUp/ArrowDown move highlight. Enter follows the active hit. Tab traps inside the panel. Restore focus to the search trigger.
 
