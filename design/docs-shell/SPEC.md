@@ -149,7 +149,7 @@ Breakpoints (max-width):
 | --- | --- |
 | ≤1439 | Nav 220, TOC 200, pad 28 |
 | ≤1279 | Pad 24 |
-| ≤1199 | TOC aside hides. Inline “On this page” appears at the **top of the content column**. |
+| ≤1180 | TOC aside hides. Inline “On this page” appears at the **top of the content column**. |
 | ≤1023 | Nav 200, pad 20, title uses `--lm-font-size-pass-port`. Hide “wheels up”, the site link, and the Search label (keep ⌘K). Wordmark stays one line. |
 | ≤767 | Nav becomes a left drawer. Menu button shows. Top bar wraps to two rows (112px). Site link hides. Search label hides; ⌘K remains. |
 
@@ -157,7 +157,7 @@ Grid:
 
 ```
 .docs-body { grid-template-columns: var(--docs-nav-w) minmax(0,1fr) var(--docs-toc-w); }
-/* ≤1199 */ grid-template-columns: var(--docs-nav-w) minmax(0,1fr);
+/* ≤1180 */ grid-template-columns: var(--docs-nav-w) minmax(0,1fr);
 /* ≤767 */  grid-template-columns: minmax(0,1fr);
 ```
 
@@ -211,9 +211,9 @@ Phone drawer: `translateX(-100%)` → `0` in `--lm-duration-copy` / `--lm-ease-o
 
 ## On this page
 
-≥1200: sticky aside, pad 24 16 32 0. Label: muted mono kicker. Links 13px, pad 6 0. Current: `inset 3px 0 0 marigold`, pad-left 10.
+≥1181: sticky aside, pad 24 16 32 0. Label: muted mono kicker. Links 13px, pad 6 0. Current: `inset 3px 0 0 marigold`, pad-left 10.
 
-&lt;1200: `<button>` “On this page” 44px tall, radius 8, **dashed** 2.5px border, cream fill, 4px shadow. `aria-expanded`. Panel hidden until open. Chevron rotates 45° → 225° via **transform only**.
+&lt;1181: native `<details>`/`<summary>` “On this page” (works without JS), 44px tall, radius 8, **dashed** 2.5px border, cream fill, 4px shadow. Panel hidden until open. `<summary>` keeps the shell focus ring and hides the default marker. Chevron rotates 45° → 225° via **transform only**.
 
 ## Component page
 
