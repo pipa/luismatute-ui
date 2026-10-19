@@ -49,20 +49,46 @@ test('sidebar keeps Getting started order, then Changelog', async ({
   ]);
 });
 
-test('changelog lists every CHANGELOG.md version in order', async ({
+test('changelog: dated h2 per version, groups as h3, TOC lists versions only', async ({
   page,
 }) => {
   const md = readFileSync(
     new URL('../../CHANGELOG.md', import.meta.url),
     'utf8',
   );
-  const versions = [...md.matchAll(/^## (.+)$/gm)].map((m) => m[1] ?? '');
+  const heads = [...md.matchAll(/^## (\S+) - (\S+)$/gm)].map((m) => ({
+    v: m[1] ?? '',
+    d: m[2] ?? '',
+  }));
   await page.goto('/ui/changelog/');
   // The h2 text includes the Heading anchor, so compare ids.
   const ids = await page
     .locator('main h2[id]')
     .evaluateAll((hs) => hs.map((h) => h.id));
   expect(ids).toEqual(
-    versions.map((v) => `v${v}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')),
+    heads.map((h) => `v${h.v}`.replace(/[^a-z0-9]+/gi, '-').toLowerCase()),
   );
+  const dates = await page
+    .locator('main h2 time')
+    .evaluateAll((ts) => ts.map((t) => t.getAttribute('datetime')));
+  expect(dates).toEqual(heads.map((h) => h.d));
+  expect(await page.locator('main h3[id] a.anchor').count()).toBeGreaterThan(
+    heads.length - 1,
+  );
+  await expect(page.locator('main hr.docs-flight')).toHaveCount(
+    heads.length - 1,
+  );
+  const toc = await page
+    .locator('aside.toc a')
+    .evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  expect(toc).toEqual(ids.map((id) => `#${id}`));
+});
+
+test('bare imports lists every package export path', async ({ page }) => {
+  await page.goto('/ui/getting-started/bare-imports/');
+  const paths = Object.keys(pkg.exports).map((k) => `${pkg.name}${k.slice(1)}`);
+  const cells = await page
+    .locator('main table td:first-child code')
+    .allTextContents();
+  expect(cells).toEqual(paths);
 });

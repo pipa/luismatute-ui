@@ -2,25 +2,39 @@
 import md from '../../../CHANGELOG.md?raw';
 import Heading from '../components/Heading.astro';
 import Docs from '../layouts/Docs.astro';
-import { parseChangelog } from '../lib/changelog';
-import { repo } from '../lib/install';
+import { inline, parseChangelog } from '../lib/changelog';
 
 const sections = parseChangelog(md);
-const toc = sections.map((s) => ({ id: s.id, label: `v${s.title}` }));
+// On this page lists versions only, not the groups inside them.
+const toc = sections.map((s) => ({ id: s.id, label: `v${s.version}` }));
+const fmt = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
 ---
 
-<Docs
-  slug="changelog"
-  title="Changelog"
-  description="What changed in each release, newest first. Built from the repo's CHANGELOG.md."
-  toc={toc}
->
-  <p>Install any of these by its tag, for example <code>{repo}#v{sections[0]?.title}</code>.</p>
+<Docs slug="changelog" title="Changelog" description="What changed in each release, newest first. Built from the repo's CHANGELOG.md." toc={toc}>
+  {sections.length === 0 && (
+    <aside class="callout callout-note"><p><strong>Note</strong> No releases yet.</p></aside>
+  )}
   {
-    sections.map((s) => (
-      <section class="changelog-entry">
-        <Heading id={s.id}>v{s.title}</Heading>
-        <Fragment set:html={s.html} />
+    sections.map((s, i) => (
+      <section class="release" aria-labelledby={s.id}>
+        {i > 0 && <hr class="docs-flight" />}
+        <Heading id={s.id}>
+          v{s.version}
+          {s.date && <time class="release-date" datetime={s.date}>{fmt(s.date)}</time>}
+        </Heading>
+        {s.lead && <Fragment set:html={s.lead} />}
+        {s.groups.map((g) => (
+          <>
+            <Heading id={g.id} level={3}><Fragment set:html={inline(g.title)} /></Heading>
+            <Fragment set:html={g.html} />
+          </>
+        ))}
       </section>
     ))
   }

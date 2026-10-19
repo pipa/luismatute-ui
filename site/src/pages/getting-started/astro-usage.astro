@@ -46,6 +46,9 @@ const toc = [
   <Heading id="styles">Styles</Heading>
   <p>Import the CSS in your layout's frontmatter. Astro bundles it and the fonts it points at.</p>
   <CodeBlock lang="astro" filename="src/layouts/Base.astro" code={layout} />
+  <aside class="callout callout-tip">
+    <p><strong>Tip</strong> Load the CSS once, in the layout every page shares. Importing it per page or per component adds nothing and can repeat the font faces.</p>
+  </aside>
   <Heading id="components">Components</Heading>
   <p>
     Each component has its own module with a <code>define</code> function. Call it in a

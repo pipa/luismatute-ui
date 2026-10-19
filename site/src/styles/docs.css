@@ -1475,3 +1475,56 @@ html[data-mode="night"] .search-kicker {
     outline: 2px solid Highlight;
   }
 }
+
+/* Getting started and Changelog (#18, Muse's layout note on the PR):
+   callouts, release rules and dates. Reuse docs tokens only. */
+.callout {
+  max-width: 68ch;
+  margin: 24px 0;
+  padding: 14px 18px;
+  border: var(--lm-docs-border-hair) solid var(--lm-docs-rule);
+  border-left-width: 4px;
+  border-radius: var(--lm-docs-radius-btn);
+  background: var(--lm-docs-toc-bg);
+}
+.callout-tip {
+  border-left-color: var(--lm-docs-link);
+}
+.callout-note {
+  border-left-color: var(--lm-docs-accent);
+}
+.callout p {
+  margin: 0;
+}
+.callout strong {
+  font: 500 var(--lm-docs-t-kicker) / 1.4 var(--lm-docs-f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+hr.docs-flight {
+  border: 0;
+  border-top: 2px dotted var(--lm-docs-rule);
+  margin: 32px 0;
+}
+.release h2 {
+  border-top: 0;
+  margin-top: 0;
+}
+.release-date {
+  margin-left: 12px;
+  font: 500 var(--lm-docs-t-kicker) / 1 var(--lm-docs-f-mono);
+  color: var(--lm-docs-ink-soft);
+  vertical-align: baseline;
+}
+.release ul,
+.release p {
+  max-width: 68ch;
+}
+.release a,
+.callout a {
+  color: var(--lm-docs-link);
+}
+.release code {
+  font: 13px / 1.4 var(--lm-docs-f-mono);
+}
