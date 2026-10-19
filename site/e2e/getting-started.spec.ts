@@ -32,6 +32,23 @@ test('install snippet uses the package name and current tag', async ({
   await expect(page.locator('main')).toContainText(`"${pkg.name}"`);
 });
 
+test('changelog kicker is just Changelog', async ({ page }) => {
+  await page.goto('/ui/changelog/');
+  await expect(page.locator('.crumb')).toHaveText('Changelog');
+});
+
+test('getting started pages keep the group / title kicker', async ({
+  page,
+}) => {
+  for (const [slug, title] of pages) {
+    if (!slug.startsWith('getting-started/')) continue;
+    await page.goto(`/ui/${slug}/`);
+    await expect(page.locator('.crumb')).toHaveText(
+      `Getting started / ${title}`,
+    );
+  }
+});
+
 test('sidebar keeps Getting started order, then Changelog', async ({
   page,
 }) => {
