@@ -88,7 +88,7 @@ test('bare imports lists every package export path', async ({ page }) => {
   await page.goto('/ui/getting-started/bare-imports/');
   const paths = Object.keys(pkg.exports).map((k) => `${pkg.name}${k.slice(1)}`);
   const cells = await page
-    .locator('main table td:first-child code')
+    .locator('main .api-table tbody td:first-child button.tok-copy')
     .allTextContents();
   expect(cells).toEqual(paths);
 });
