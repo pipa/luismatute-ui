@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Added
+
+- Shared `lm-mode` cookie (`day`, `night` or `auto`, `Domain=.luismatute.me`), so the day/night choice carries across subdomains. `theme-init` reads `?mode=`, then the cookie, then storage, then `prefers-color-scheme`; bad values fall through (#26).
+
 ## 0.2.0
 
 ### Added (blog Direction B, luismatute.me #55/#56; shared with the main site)
