@@ -18,6 +18,9 @@
   /* current-section bar in "On this page" (non-text mark; weight is the second cue) */
   --lm-docs-accent: var(--lm-marigold);
   --lm-docs-toc-bg: var(--lm-cream);
+  /* search: active result wash and its url line (tomato-d by day) */
+  --lm-docs-hit: var(--lm-hover);
+  --lm-docs-crumb: var(--lm-tomato-d);
   --lm-docs-focus: #1f7e7a;
   --lm-docs-shadow: var(--lm-ink);
   --lm-docs-backdrop: rgb(18 13 44 / 0.55);
@@ -46,6 +49,8 @@
   --lm-docs-border: var(--lm-border-line);
   --lm-docs-border-hair: var(--lm-border-hair);
   --lm-docs-shadow-btn: 3px 3px 0 var(--lm-docs-shadow);
+  /* hard 4px offset (inline TOC, pager tickets) */
+  --lm-docs-shadow-hard: 4px 4px 0 var(--lm-docs-shadow);
   --lm-docs-tap: 44px;
 
   /* motion: package tokens plus docs-only drawer timings */
@@ -69,6 +74,8 @@ html[data-mode="night"] {
   --lm-docs-active-ink: #ffd27a;
   --lm-docs-accent: #ffd27a;
   --lm-docs-toc-bg: var(--lm-sky-night-2);
+  --lm-docs-hit: var(--lm-sky-night-4);
+  --lm-docs-crumb: #ffd27a;
   --lm-docs-focus: #ffd27a;
   --lm-docs-shadow: #05030f;
 }
@@ -336,7 +343,7 @@ code:where(:not(.demo-frame *)) {
   border: var(--lm-docs-border) dashed var(--lm-docs-rule);
   border-radius: var(--lm-radius-plan);
   background: var(--lm-docs-toc-bg);
-  box-shadow: 4px 4px 0 var(--lm-docs-shadow);
+  box-shadow: var(--lm-docs-shadow-hard);
 }
 .toc-inline summary {
   display: flex;
@@ -399,7 +406,7 @@ code:where(:not(.demo-frame *)) {
   border-radius: var(--lm-docs-radius-card);
   color: var(--lm-docs-ink);
   text-decoration: none;
-  box-shadow: 4px 4px 0 var(--lm-docs-shadow);
+  box-shadow: var(--lm-docs-shadow-hard);
 }
 .pager small {
   display: block;
@@ -1245,5 +1252,226 @@ html[data-motion="calm"]
   html:not([data-motion="full"]) .demo-stage *::after {
     animation-play-state: paused !important;
     transition-duration: 0s !important;
+  }
+}
+
+/* ---- Search (#18): header pill + dialog. SPEC.md "Search dialog";
+   shots search-dialog.png, search-empty.png. Logic: scripts/search.ts ---- */
+.search-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--lm-docs-tap);
+  min-width: var(--lm-docs-tap);
+  margin-left: auto;
+  padding: 0 12px 0 14px;
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-white);
+  color: var(--lm-docs-ink);
+  box-shadow: var(--lm-docs-shadow-btn);
+  font: 600 var(--lm-docs-t-small) / 1 var(--lm-docs-f-text);
+  cursor: pointer;
+}
+.search-open[hidden] {
+  display: none;
+}
+.search-open svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.search-open:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.search-kbd {
+  display: none;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 6px;
+  border: var(--lm-docs-border-hair) solid currentColor;
+  border-radius: var(--lm-radius-plan);
+  font: 500 var(--lm-font-size-micro) / 1 var(--lm-docs-f-mono);
+}
+@media (hover: hover) and (pointer: fine) {
+  .search-open:hover {
+    background: var(--lm-marigold);
+    color: var(--lm-ink);
+  }
+  /* The shortcut hint only helps where there is a keyboard to press it on. */
+  .search-kbd {
+    display: inline-flex;
+  }
+}
+@media (max-width: 1023px) {
+  .search-label {
+    display: none;
+  }
+  .search-open {
+    padding: 0 12px;
+  }
+}
+
+.search-dialog {
+  box-sizing: border-box;
+  width: min(100% - 32px, 640px);
+  max-width: none;
+  max-height: min(72vh, 720px);
+  margin: 12vh auto auto;
+  padding: 0;
+  overflow: auto;
+  border: var(--lm-border-thick) solid var(--lm-docs-ink);
+  border-radius: var(--lm-radius-panel);
+  background: var(--lm-docs-page);
+  color: var(--lm-docs-ink);
+  box-shadow: 8px 9px 0 var(--lm-docs-shadow);
+}
+.search-dialog::backdrop {
+  background: var(--lm-docs-backdrop);
+}
+.search-dialog[open] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--lm-docs-drawer-in) var(--lm-docs-ease-in),
+    transform var(--lm-docs-drawer-in) var(--lm-docs-ease-in);
+}
+@starting-style {
+  .search-dialog[open] {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+.search-panel {
+  padding: 16px;
+}
+.search-kicker {
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: var(--lm-docs-border-hair) dotted var(--lm-docs-rule);
+  color: var(--lm-accent-ink);
+  font: 500 var(--lm-docs-t-kicker) / 1.4 var(--lm-docs-f-mono);
+  letter-spacing: var(--lm-tracking-kicker);
+  text-transform: uppercase;
+}
+html[data-mode="night"] .search-kicker {
+  color: var(--lm-docs-link);
+}
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.search-input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--lm-docs-tap);
+  padding: 0 14px;
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-radius-skip);
+  background: var(--lm-white);
+  color: var(--lm-docs-ink);
+  font: 400 var(--lm-docs-t-body) / 1.2 var(--lm-docs-f-text);
+}
+.search-input::placeholder {
+  color: var(--lm-docs-ink-soft);
+  opacity: 1;
+}
+.search-input::-webkit-search-cancel-button {
+  display: none;
+}
+.search-close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--lm-docs-tap);
+  height: var(--lm-docs-tap);
+  padding: 0;
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-radius-round);
+  background: var(--lm-white);
+  color: var(--lm-docs-ink);
+  box-shadow: var(--lm-docs-shadow-btn);
+  cursor: pointer;
+}
+.search-close svg {
+  width: 18px;
+  height: 18px;
+}
+.search-close:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.search-hits {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.search-hits[hidden] {
+  display: none;
+}
+.search-hit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border: var(--lm-docs-border) solid transparent;
+  border-radius: var(--lm-radius-shot);
+  color: var(--lm-docs-ink);
+  text-decoration: none;
+}
+.search-hit.is-active {
+  background: var(--lm-docs-hit);
+  border-color: var(--lm-docs-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .search-hit:hover {
+    background: var(--lm-docs-hit);
+  }
+}
+.search-title {
+  font: 700 var(--lm-font-size-chip) / 1.25 var(--lm-docs-f-text);
+}
+.search-excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  color: var(--lm-docs-ink-soft);
+  font-size: var(--lm-docs-t-small);
+  line-height: 1.45;
+}
+.search-excerpt mark {
+  background: none;
+  color: var(--lm-docs-ink);
+  font-weight: 700;
+}
+.search-crumb {
+  color: var(--lm-docs-crumb);
+  font: 500 var(--lm-font-size-micro) / 1.2 var(--lm-docs-f-mono);
+  overflow-wrap: anywhere;
+}
+.search-empty {
+  padding: 24px 8px;
+  text-align: center;
+}
+.search-empty[hidden] {
+  display: none;
+}
+.search-empty p {
+  margin: 0.2em 0 0;
+  color: var(--lm-docs-ink-soft);
+}
+.search-empty .search-hand {
+  margin: 0;
+  color: var(--lm-docs-ink);
+  font: 600 var(--lm-font-size-hand) / 1 var(--lm-font-hand);
+  transform: rotate(-3deg);
+}
+@media (forced-colors: active) {
+  .search-hit.is-active {
+    outline: 2px solid Highlight;
   }
 }

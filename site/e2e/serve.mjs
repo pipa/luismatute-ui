@@ -11,6 +11,8 @@ const types = {
   '.css': 'text/css',
   '.js': 'text/javascript',
   '.woff2': 'font/woff2',
+  '.wasm': 'application/wasm',
+  '.json': 'application/json',
 };
 
 createServer((req, res) => {

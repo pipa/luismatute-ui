@@ -16,7 +16,7 @@ const { name, label, log, code, lang = 'html' } = Astro.props;
 ---
 
 <figure class="demo" aria-label={`Live demo: ${label}`}>
-  <div class="demo-frame" data-demo-frame>
+  <div class="demo-frame" data-demo-frame data-pagefind-ignore>
     <div class="demo-bar">
       <code class="demo-name">{name}</code>
       <button type="button" class="demo-theme" aria-pressed="false" hidden data-demo-theme>
