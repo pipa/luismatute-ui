@@ -129,3 +129,73 @@ test('bare imports lists every package export path', async ({ page }) => {
     .allTextContents();
   expect(cells).toEqual(paths);
 });
+
+// Layout as it renders today. Crumb text is pinned by the kicker specs above;
+// here only its place (directly above the h1) is checked. A new kicker design
+// is pending Muse.
+const layout = [
+  {
+    slug: 'getting-started/install-from-a-tag',
+    callout: { cls: 'callout-note', label: 'Note' },
+    prev: null,
+    next: '/ui/getting-started/astro-usage/',
+  },
+  {
+    slug: 'getting-started/astro-usage',
+    callout: { cls: 'callout-tip', label: 'Tip' },
+    prev: '/ui/getting-started/install-from-a-tag/',
+    next: '/ui/getting-started/bare-imports/',
+  },
+  {
+    slug: 'getting-started/bare-imports',
+    callout: null,
+    prev: '/ui/getting-started/astro-usage/',
+    next: '/ui/foundations/colour/',
+  },
+  {
+    slug: 'changelog',
+    callout: null,
+    prev: '/ui/illustrations/svg-kit/',
+    next: null,
+  },
+] as const;
+
+for (const l of layout) {
+  test(`${l.slug}: crumb, callout and pager`, async ({ page }) => {
+    await page.goto(`/ui/${l.slug}/`);
+    const main = page.locator('main');
+    // kicker (crumb) sits directly above the h1
+    await expect(main.locator('p.crumb + h1')).toHaveCount(1);
+
+    const callouts = main.locator('aside.callout');
+    if (l.callout) {
+      await expect(callouts).toHaveCount(1);
+      const c = callouts.first();
+      await expect(c).toHaveClass(new RegExp(`\\b${l.callout.cls}\\b`));
+      // <aside> exposes the complementary role; its label is the lead word
+      expect(await c.evaluate((el) => el.tagName)).toBe('ASIDE');
+      await expect(c.locator('strong').first()).toHaveText(l.callout.label);
+      await expect(
+        main.getByRole('complementary').filter({ hasText: l.callout.label }),
+      ).toHaveCount(1);
+    } else {
+      await expect(callouts).toHaveCount(0);
+    }
+
+    const pager = page.getByRole('navigation', {
+      name: 'Previous and next page',
+    });
+    await expect(pager).toHaveCount(1);
+    const prev = pager.locator('a.prev');
+    const next = pager.locator('a.next');
+    if (l.prev) await expect(prev).toHaveAttribute('href', l.prev);
+    else await expect(prev).toHaveCount(0);
+    if (l.next) await expect(next).toHaveAttribute('href', l.next);
+    else await expect(next).toHaveCount(0);
+    for (const a of await pager.locator('a').all()) {
+      const href = (await a.getAttribute('href')) ?? '';
+      const res = await page.request.get(href);
+      expect(res.status(), href).toBe(200);
+    }
+  });
+}
