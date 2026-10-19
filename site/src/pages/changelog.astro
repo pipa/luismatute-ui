@@ -1,0 +1,27 @@
+---
+import md from '../../../CHANGELOG.md?raw';
+import Heading from '../components/Heading.astro';
+import Docs from '../layouts/Docs.astro';
+import { parseChangelog } from '../lib/changelog';
+import { repo } from '../lib/install';
+
+const sections = parseChangelog(md);
+const toc = sections.map((s) => ({ id: s.id, label: `v${s.title}` }));
+---
+
+<Docs
+  slug="changelog"
+  title="Changelog"
+  description="What changed in each release, newest first. Built from the repo's CHANGELOG.md."
+  toc={toc}
+>
+  <p>Install any of these by its tag, for example <code>{repo}#v{sections[0]?.title}</code>.</p>
+  {
+    sections.map((s) => (
+      <section class="changelog-entry">
+        <Heading id={s.id}>v{s.title}</Heading>
+        <Fragment set:html={s.html} />
+      </section>
+    ))
+  }
+</Docs>

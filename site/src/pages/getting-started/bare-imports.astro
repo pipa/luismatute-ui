@@ -1,0 +1,38 @@
+---
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+import { pkgName } from '../../lib/install';
+
+const side = `<lm-chip>Amsterdam</lm-chip>
+<script>
+  import '${pkgName}/components/chip';
+</script>`;
+const html = `<link rel="stylesheet" href="/node_modules/${pkgName}/dist/tokens.css" />
+<link rel="stylesheet" href="/node_modules/${pkgName}/dist/base.css" />`;
+const toc = [
+  { id: 'side-effect-imports', label: 'Side-effect imports' },
+  { id: 'plain-html', label: 'Plain HTML' },
+];
+---
+
+<Docs
+  slug="getting-started/bare-imports"
+  title="Bare imports"
+  description="Import a component module on its own and it registers itself."
+  toc={toc}
+>
+  <Heading id="side-effect-imports">Side-effect imports</Heading>
+  <p>
+    Every module under <code>{pkgName}/components/*</code> defines its element when it loads, so a bare
+    import is enough. Bundlers keep it because the package marks those files as side effects.
+  </p>
+  <CodeBlock lang="astro" filename="src/pages/index.astro" code={side} />
+  <p>The explicit <code>define</code> calls on <a href="../astro-usage/">Astro usage</a> do the same thing and read more clearly.</p>
+  <Heading id="plain-html">Plain HTML</Heading>
+  <p>
+    Without a bundler, package names don't resolve in <code>&lt;link&gt;</code> tags. Point at the files in
+    <code>dist/</code> instead.
+  </p>
+  <CodeBlock lang="html" filename="index.html" code={html} />
+</Docs>
