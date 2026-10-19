@@ -17,7 +17,10 @@ interface Props {
 }
 const { title, description, slug, toc = [], extraCss } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const crumb = slug ? `${groupOf(slug)?.label ?? 'Docs'} / ${title}` : 'Docs';
+// The crumb is the page kicker. When the group and the title are the same
+// word (Changelog), show that one item instead of "Changelog / Changelog".
+const group = groupOf(slug)?.label ?? 'Docs';
+const crumb = !slug ? 'Docs' : group === title ? title : `${group} / ${title}`;
 const { prev, next } = neighbours(slug);
 const canonical = new URL(
   hrefFor(base, slug),

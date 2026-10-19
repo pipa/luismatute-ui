@@ -1,0 +1,61 @@
+---
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+import { pkgName } from '../../lib/install';
+
+const layout = `---
+import '${pkgName}/tokens.css';
+import '${pkgName}/fonts.css';
+import '${pkgName}/base.css';
+---
+<html lang="en">
+  <head><meta charset="utf-8" /></head>
+  <body><slot /></body>
+</html>`;
+const page = `---
+import Base from '../layouts/Base.astro';
+---
+<Base>
+  <lm-card variant="stop"><h2>Front-end developer</h2></lm-card>
+  <lm-motion-toggle></lm-motion-toggle>
+  <script>
+    import { defineLmCard } from '${pkgName}/components/card';
+    import { defineLmMotionToggle } from '${pkgName}/components/motion-toggle';
+    defineLmCard();
+    defineLmMotionToggle();
+  </script>
+</Base>`;
+const all = `<script>
+  import { defineLmUi } from '${pkgName}/components';
+  defineLmUi();
+</script>`;
+const toc = [
+  { id: 'styles', label: 'Styles' },
+  { id: 'components', label: 'Components' },
+  { id: 'register-everything', label: 'Register everything' },
+];
+---
+
+<Docs
+  slug="getting-started/astro-usage"
+  title="Astro usage"
+  description="Import the CSS once in a layout, then register the components each page uses."
+  toc={toc}
+>
+  <Heading id="styles">Styles</Heading>
+  <p>Import the CSS in your layout's frontmatter. Astro bundles it and the fonts it points at.</p>
+  <CodeBlock lang="astro" filename="src/layouts/Base.astro" code={layout} />
+  <aside class="callout callout-tip">
+    <p><strong>Tip</strong> Load the CSS once, in the layout every page shares. Importing it per page or per component adds nothing and can repeat the font faces.</p>
+  </aside>
+  <Heading id="components">Components</Heading>
+  <p>
+    Each component has its own module with a <code>define</code> function. Call it in a
+    <code>&lt;script&gt;</code> so Astro bundles it and only the components you use ship.
+  </p>
+  <CodeBlock lang="astro" filename="src/pages/index.astro" code={page} />
+  <Heading id="register-everything">Register everything</Heading>
+  <p>For a quick start, register every component at once. It ships more JS.</p>
+  <CodeBlock lang="astro" filename="src/pages/index.astro" code={all} />
+</Docs>

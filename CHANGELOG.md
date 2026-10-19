@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.2.0
+## 0.2.1 - 2026-10-15
+
+### Added
+
+- Shared `lm-mode` cookie (`day`, `night` or `auto`, `Domain=.luismatute.me`), so the day/night choice carries across subdomains. `theme-init` reads `?mode=`, then the cookie, then storage, then `prefers-color-scheme`; bad values fall through (#26).
+
+## 0.2.0 - 2026-10-13
 
 ### Added (blog Direction B, luismatute.me #55/#56; shared with the main site)
 
@@ -12,7 +18,7 @@
 - **`lm-sky-header`** (`./components/sky-header`): M1 Cruise sky (bands, stars, sun/moon, three cloud strips, dunes). Off-screen pause via IntersectionObserver (`.lm-sky-off`), `button.lm-sky-pause` follows the `lm-pause` contract (`html.paused`, `lm-pause` event, "Pause sky"/"Play sky"), `compact` is the still post strip. `skyLayersHtml()` and `landEdge` server-render the layers; import them from the DOM-free `@luismatute/ui/sky-art` subpath in SSR (Astro).
 - **`sky.css`**: sky header, pills, porthole stills, ticket-stub card (`.lm-stubs`, `.lm-ticket`), porthole cover (`.lm-cover`), F1 Wheels down footer (`.lm-land`, `landEdge`). Only transform and opacity animate; everything is static under `prefers-reduced-motion`.
 
-## 0.1.2
+## 0.1.2 - 2026-10-11
 
 ### Fixed
 

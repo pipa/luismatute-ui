@@ -1,0 +1,48 @@
+---
+import pkg from '../../../../package.json';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+import { installCmd, pkgName, repo, tag } from '../../lib/install';
+
+const pkgJson = `{
+  "dependencies": {
+    "${pkgName}": "${repo}#${tag}"
+  }
+}`;
+const upgrade = `pnpm add ${repo}#vX.Y.Z`;
+const toc = [
+  { id: 'install', label: 'Install' },
+  { id: 'what-you-get', label: 'What you get' },
+  { id: 'upgrading', label: 'Upgrading' },
+  { id: 'requirements', label: 'Requirements' },
+];
+---
+
+<Docs
+  slug="getting-started/install-from-a-tag"
+  title="Install from a tag"
+  description={`${pkgName} isn't on npm. Install it straight from a Git tag on GitHub.`}
+  toc={toc}
+>
+  <Heading id="install">Install</Heading>
+  <p>Pin a release tag. This adds <code>{pkgName}</code> to your dependencies.</p>
+  <CodeBlock lang="sh" filename="terminal" code={installCmd} />
+  <p>With npm, run <code>npm install {repo}#{tag}</code> instead.</p>
+  <p>Your <code>package.json</code> ends up with:</p>
+  <CodeBlock lang="js" filename="package.json" code={pkgJson} />
+  <Heading id="what-you-get">What you get</Heading>
+  <p>
+    The built files ship in the repo under <code>dist/</code>, so there's no build step on install. The
+    package exports CSS (<code>tokens.css</code>, <code>fonts.css</code>, <code>base.css</code>,
+    <code>theme.css</code>, <code>sky.css</code>), one module per component under
+    <code>{pkgName}/components/*</code>, and <code>{pkgName}/components</code> to register them all.
+  </p>
+  <Heading id="upgrading">Upgrading</Heading>
+  <p>Point at a newer tag. The <a href="../../changelog/">Changelog</a> lists what each one changes.</p>
+  <CodeBlock lang="sh" filename="terminal" code={upgrade} />
+  <Heading id="requirements">Requirements</Heading>
+  <aside class="callout callout-note">
+    <p><strong>Note</strong> Node {pkg.engines.node}. These docs and their snippets are built with Astro {pkg.devDependencies.astro}.</p>
+  </aside>
+</Docs>

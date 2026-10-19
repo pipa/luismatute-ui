@@ -1,0 +1,74 @@
+---
+import pkg from '../../../../package.json';
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+import { pkgName } from '../../lib/install';
+
+const what: Record<string, string> = {
+  '.': '<code>defineLmUi()</code>, the motion helpers, the illustrations and the tokens as JS.',
+  './tokens': 'The tokens and theme pairs as JS objects.',
+  './tokens.json': 'The tokens as JSON.',
+  './illustrations/*':
+    'One illustration SVG file, such as <code>cloud.svg</code>.',
+  './components':
+    'Every component plus <code>defineLmUi()</code> to register them all.',
+  './tokens.css': 'Design tokens as CSS custom properties.',
+  './fonts.css': 'The <code>@font-face</code> rules for the bundled fonts.',
+  './base.css': 'Page defaults built on the tokens.',
+  './theme.css': 'Day and night theme variables.',
+  './sky.css': 'The sky header styles.',
+  './theme-init.js':
+    'A small script that sets the saved day or night mode before first paint.',
+  './sky-art': 'The sky header artwork.',
+  './illustrations':
+    'The illustration SVGs as strings, with <code>inlineIllustration()</code>.',
+};
+const rows = Object.keys(pkg.exports)
+  .filter((k) => k !== './package.json')
+  .map((k) => ({
+    name: `${pkgName}${k.slice(1)}`,
+    detail:
+      what[k] ??
+      (k.startsWith('./components/')
+        ? `The <code>lm-${k.slice(13)}</code> element; importing it registers it.`
+        : 'Package files.'),
+  }));
+
+const side = `<lm-chip>Amsterdam</lm-chip>
+<script>
+  import '${pkgName}/components/chip';
+</script>`;
+const html = `<link rel="stylesheet" href="/node_modules/${pkgName}/dist/tokens.css" />
+<link rel="stylesheet" href="/node_modules/${pkgName}/dist/base.css" />`;
+const toc = [
+  { id: 'side-effect-imports', label: 'Side-effect imports' },
+  { id: 'exports', label: 'Export paths' },
+  { id: 'plain-html', label: 'Plain HTML' },
+];
+---
+
+<Docs
+  slug="getting-started/bare-imports"
+  title="Bare imports"
+  description="Import a component module on its own and it registers itself."
+  toc={toc}
+>
+  <Heading id="side-effect-imports">Side-effect imports</Heading>
+  <p>
+    Every module under <code>{pkgName}/components/*</code> defines its element when it loads, so a bare
+    import is enough. Bundlers keep it because the package marks those files as side effects.
+  </p>
+  <CodeBlock lang="astro" filename="src/pages/index.astro" code={side} />
+  <p>The explicit <code>define</code> calls on <a href="../astro-usage/">Astro usage</a> do the same thing and read more clearly.</p>
+  <Heading id="exports">Export paths</Heading>
+  <p>Everything the package exports, read from its <code>package.json</code>.</p>
+  <ApiTable caption="Package export paths" head={['Import path', 'What you get']} rows={rows} />
+  <Heading id="plain-html">Plain HTML</Heading>
+  <p>
+    Without a bundler, package names don't resolve in <code>&lt;link&gt;</code> tags. Point at the files in
+    <code>dist/</code> instead.
+  </p>
+  <CodeBlock lang="html" filename="index.html" code={html} />
+</Docs>
