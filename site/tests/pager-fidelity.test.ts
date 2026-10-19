@@ -18,7 +18,7 @@ describe('docs.css pager', () => {
     expect(a).toContain('padding: 12px 16px;');
     expect(a).toContain('min-height: var(--lm-docs-tap);');
     expect(a).toContain('min-width: min(100%, 220px);');
-    expect(a).toContain('box-shadow: 4px 4px 0 var(--lm-docs-shadow);');
+    expect(a).toContain('box-shadow: var(--lm-docs-shadow-hard);');
   });
   it('stacks only below 768, not at 860', () => {
     const m767 =

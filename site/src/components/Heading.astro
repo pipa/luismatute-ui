@@ -10,4 +10,4 @@ const text = (await Astro.slots.render('default'))
   .trim();
 ---
 
-<Tag id={id}><slot /> <a class="anchor" href={`#${id}`} aria-label={`Link to ${text}`}>#</a></Tag>
+<Tag id={id}><slot /> <a class="anchor" data-pagefind-ignore href={`#${id}`} aria-label={`Link to ${text}`}>#</a></Tag>

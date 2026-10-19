@@ -1,6 +1,7 @@
 ---
 import themeInit from '../../../dist/theme-init.js?url';
 import pkg from '../../../package.json';
+import Search from '../components/Search.astro';
 import SideNav from '../components/SideNav.astro';
 import { groupOf, hrefFor, neighbours } from '../lib/nav';
 import '../styles/docs.css';
@@ -45,6 +46,12 @@ const canonical = new URL(
       </button>
       <a class="brand" href={base}>luismatute<b>/ui</b></a>
       <span class="ver" title="@luismatute/ui version">v{pkg.version}</span>
+      <!-- Hidden until scripts/search.ts runs: without JS there is no search to open. -->
+      <button class="search-open" type="button" hidden data-search-open aria-haspopup="dialog" aria-controls="search" aria-keyshortcuts="Control+K Meta+K /">
+        <svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="9.5" cy="9.5" r="6" fill="none" stroke="currentColor" stroke-width="2.5"></circle><path d="M14 14l5 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path></svg>
+        <span class="search-label">Search</span>
+        <kbd class="search-kbd" aria-hidden="true" data-search-kbd>Ctrl K</kbd>
+      </button>
     </header>
     <div id="drawer" class="drawer" popover>
       <div class="drawer-top">
@@ -60,20 +67,20 @@ const canonical = new URL(
         <SideNav current={slug} label="Docs" />
       </aside>
       <main id="main" class="main" tabindex="-1">
-        <article class="prose">
+        <article class="prose" data-pagefind-body>
           {toc.length > 0 && (
-            <details class="toc-inline">
+            <details class="toc-inline" data-pagefind-ignore>
               <summary>On this page</summary>
               <nav aria-label="On this page">
                 <ul>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ul>
               </nav>
             </details>
           )}
-          <p class="crumb">{crumb}</p>
+          <p class="crumb" data-pagefind-ignore>{crumb}</p>
           <h1>{title}</h1>
           <p class="lede">{description}</p>
           <slot />
-          <nav class="pager" aria-label="Previous and next page">
+          <nav class="pager" aria-label="Previous and next page" data-pagefind-ignore>
             {prev ? <a class="prev" href={hrefFor(base, prev.slug)}><small>Previous</small><strong>{prev.label}</strong></a> : <span></span>}
             {next && <a class="next" href={hrefFor(base, next.slug)}><small>Next</small><strong>{next.label}</strong></a>}
           </nav>
@@ -88,12 +95,14 @@ const canonical = new URL(
         )}
       </aside>
     </div>
+    <Search />
     <p id="copy-live" class="sr" aria-live="polite"></p>
     <script>
       // Called here, not as a side-effect import: package.json "sideEffects"
       // would let the bundler drop a bare import.
       import { initCopy } from '../scripts/copy';
       import { initTokenCopy } from '../scripts/token-copy';
+      import { initSearch } from '../scripts/search';
       import { initToc } from '../scripts/toc';
 
       initCopy();
@@ -101,6 +110,7 @@ const canonical = new URL(
       // Live demos only load the component code on pages that have one.
       if (document.querySelector('.demo')) void import('../scripts/demos').then((m) => m.initDemos());
       initToc();
+      initSearch();
     </script>
   </body>
 </html>
