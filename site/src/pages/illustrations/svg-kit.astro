@@ -1,0 +1,34 @@
+---
+import { inlineIllustration, type IllustrationName } from '@luismatute/ui/illustrations';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+import { kitItems, snippet } from '../../lib/svg-kit';
+
+const toc = [{ id: 'art', label: 'Illustrations' }];
+---
+
+<Docs
+  slug="illustrations/svg-kit"
+  title="SVG kit"
+  description="SVG kit from the takeoff page. Each piece ships as a file and as an inline string."
+  toc={toc}
+  extraCss="svg-kit.css"
+>
+  <Heading id="art">Illustrations</Heading>
+  <p class="kit-note">
+    Fills use <code>--lm-*</code> token variables, so inline art follows <code>data-theme</code> on its
+    container. A file loaded with <code>&lt;img&gt;</code> can't read page tokens and uses its built-in fallbacks.
+  </p>
+  <ul class="kit-grid" data-kit-grid>
+    {kitItems.map((item) => (
+      <li class="kit-card" data-kit-item={item.id}>
+        <div class="kit-art" role="img" aria-label={`${item.id} illustration`}>
+          <Fragment set:html={inlineIllustration(item.id as IllustrationName, `kit-${item.id}-`)} />
+        </div>
+        <h3 class="kit-name"><code>{item.id}</code></h3>
+        <CodeBlock code={snippet(item)} lang="ts" filename={item.id} />
+      </li>
+    ))}
+  </ul>
+</Docs>
