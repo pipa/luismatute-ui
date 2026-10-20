@@ -90,7 +90,7 @@ Tailwind v4 can load the theme with `@import "@luismatute/ui/theme.css";`.
 
 ## Illustrations
 
-SVG files live in `dist/illustrations/`. `inlineIllustration(name, prefix)` from `@luismatute/ui/illustrations` returns the markup and prefixes clip-path ids. The `stamp` art takes a `city` option, `inlineIllustration('stamp', 'st', { city: 'Lisbon' })`, rendered uppercase as `LISBON · ARRIVALS`; without it the label is `DESTINATION · ARRIVALS`. In the docs demos the same value comes from a `data-city` attribute on the `[data-art]` host. Fills use the token variables, so they follow `data-theme`. **Deprecated (#59):** `island-sandals` and `island-fluky` still work but alias `island-resort` and `island-studio` (see `deprecatedIllustrations`).
+SVG files live in `dist/illustrations/`. `inlineIllustration(name, prefix)` from `@luismatute/ui/illustrations` returns the markup and prefixes clip-path ids. The `stamp` art takes a `city` option, `inlineIllustration('stamp', 'st', { city: 'Lisbon' })`, rendered uppercase as `LISBON · ARRIVALS`; without it the label is `DESTINATION · ARRIVALS`. The label appears once and is spaced to fill the ring (`textLength`); long cities are squeezed rather than clipped. An optional `date` option (`{ city: 'Lisbon', date: '2026' }`) prints a year in the centre; without it the stamp shows no year. In the docs demos the same value comes from `data-city` and `data-date` attributes on the `[data-art]` host. Fills use the token variables, so they follow `data-theme`. **Deprecated (#59):** `island-sandals` and `island-fluky` still work but alias `island-resort` and `island-studio` (see `deprecatedIllustrations`).
 
 Colours that the source mixes at draw time (`mix` / `dk`) stay as hex. They do not track later token overrides.
 

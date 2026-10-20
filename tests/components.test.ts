@@ -719,28 +719,53 @@ describe('deprecated island ids (#59)', () => {
   });
 });
 
+describe('island-studio sign (#59)', () => {
+  it('reads Demo Studio, not Factory', () => {
+    const svg = inlineIllustration('island-studio', 'is-a');
+    expect(svg).toMatch(/>Demo<\/text>/);
+    expect(svg).toMatch(/>Studio<\/text>/);
+    expect(svg).not.toMatch(/Factory/);
+  });
+});
+
 describe('stamp city label (#59)', () => {
   const label = (svg: string) =>
     svg.match(/<textPath[^>]*>([^<]*)<\/textPath>/)?.[1] ?? '';
 
   it('defaults to DESTINATION · ARRIVALS when no city is set', () => {
     const svg = inlineIllustration('stamp', 'st-a');
-    expect(label(svg)).toBe(
-      'DESTINATION · ARRIVALS · DESTINATION · ARRIVALS ·',
-    );
+    expect(label(svg)).toBe('DESTINATION · ARRIVALS · ');
+    expect(svg.match(/ARRIVALS/g)).toHaveLength(1);
     expect(svg).not.toContain('__city__');
     expect(svg).not.toMatch(/AMSTERDAM/i);
   });
 
   it('renders the city uppercase and escaped', () => {
     expect(label(inlineIllustration('stamp', 'st-b', { city: 'Lisbon' }))).toBe(
-      'LISBON · ARRIVALS · LISBON · ARRIVALS ·',
+      'LISBON · ARRIVALS · ',
     );
     const odd = inlineIllustration('stamp', 'st-c', { city: 'a<b>&' });
     expect(odd).toContain('A&#60;B&#62;&#38; · ARRIVALS');
     expect(label(inlineIllustration('stamp', 'st-d', { city: '  ' }))).toMatch(
       /^DESTINATION · ARRIVALS/,
     );
+  });
+
+  it('fills the ring once: spacing for short labels, squeezes long ones', () => {
+    const short = inlineIllustration('stamp', 'st-g', { city: 'Lisbon' });
+    expect(short).toContain('textLength="486" lengthAdjust="spacing" ');
+    const long = inlineIllustration('stamp', 'st-h', { city: 'Llanfairpwllgwyngyll' });
+    expect(long).toContain('lengthAdjust="spacingAndGlyphs"');
+    expect(long.match(/ARRIVALS/g)).toHaveLength(1);
+  });
+
+  it('shows no year without a date, and the date when set', () => {
+    const none = inlineIllustration('stamp', 'st-i');
+    expect(none).not.toMatch(/2017|__date__/);
+    expect(none).not.toContain('font-size="46"');
+    const dated = inlineIllustration('stamp', 'st-j', { date: '2026' });
+    expect(dated).toMatch(/font-size="46"[^>]*>2026<\/text>/);
+    expect(inlineIllustration('stamp', 'st-k', { date: '<x>' })).toContain('&#60;x&#62;');
   });
 
   it('points the label at its own prefixed path, so it renders', () => {
