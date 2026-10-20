@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from 'playwright/test';
 
+const wcag = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+
 // #18 docs header controls and 404 (design/docs-shell SPEC.md "Top bar", "404").
 test.describe('docs header', () => {
   test.use({ viewport: { width: 1280, height: 800 } });
@@ -33,7 +35,9 @@ test.describe('docs header', () => {
     await page.goto('/ui/changelog/');
     await expect(page.locator('html')).toHaveAttribute('data-mode', 'night');
     await expect(
-      page.getByRole('group', { name: 'Theme' }).getByRole('button', { name: 'Night' }),
+      page
+        .getByRole('group', { name: 'Theme' })
+        .getByRole('button', { name: 'Night' }),
     ).toHaveAttribute('aria-pressed', 'true');
     // Keyboard: Tab reaches Day, Space selects it.
     await page.getByRole('button', { name: 'Day' }).focus();
@@ -43,10 +47,9 @@ test.describe('docs header', () => {
 
   test('GitHub and site links', async ({ page }) => {
     await page.goto('/ui/');
-    await expect(page.locator('.head').getByRole('link', { name: 'GitHub' })).toHaveAttribute(
-      'href',
-      'https://github.com/pipa/luismatute-ui',
-    );
+    await expect(
+      page.locator('.head').getByRole('link', { name: 'GitHub' }),
+    ).toHaveAttribute('href', 'https://github.com/pipa/luismatute-ui');
     await expect(
       page.locator('.head').getByRole('link', { name: 'luismatute.me' }),
     ).toHaveAttribute('href', 'https://luismatute.me');
@@ -78,8 +81,71 @@ test.describe('404', () => {
   for (const mode of ['day', 'night'] as const) {
     test(`axe clean (${mode})`, async ({ page }) => {
       await page.goto(`/ui/404.html?mode=${mode}`);
-      const r = await new AxeBuilder({ page }).analyze();
+      const r = await new AxeBuilder({ page }).withTags(wcag).analyze();
       expect(r.violations).toEqual([]);
     });
   }
+});
+
+test.describe('docs header (keyboard, reload, axe)', () => {
+  test.use({ viewport: { width: 1280, height: 800 } });
+
+  for (const how of ['Enter', 'ControlOrMeta+k'] as const) {
+    test(`search opens with ${how}, Esc returns focus to the pill`, async ({
+      page,
+    }) => {
+      await page.goto('/ui/');
+      const pill = page.locator('.head [data-search-open]');
+      const dialog = page.locator('dialog#search');
+      await pill.focus();
+      await page.keyboard.press(how);
+      await expect(dialog).toHaveJSProperty('open', true);
+      await expect(page.locator('#search-input')).toBeFocused();
+      await page.keyboard.press('Escape');
+      await expect(dialog).toHaveJSProperty('open', false);
+      await expect(pill).toBeFocused();
+    });
+  }
+
+  test('Night survives a reload and the active segment is marigold', async ({
+    page,
+  }) => {
+    await page.goto('/ui/?motion=reduce');
+    const night = () =>
+      page
+        .getByRole('group', { name: 'Theme' })
+        .getByRole('button', { name: 'Night' });
+    await night().click();
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'night');
+    await expect(night()).toHaveAttribute('aria-pressed', 'true');
+    await expect(night()).toHaveCSS('background-color', 'rgb(246, 180, 60)');
+    await expect(
+      page
+        .getByRole('group', { name: 'Theme' })
+        .getByRole('button', { name: 'Day' }),
+    ).not.toHaveCSS('background-color', 'rgb(246, 180, 60)');
+  });
+
+  for (const mode of ['day', 'night'] as const) {
+    test(`header axe clean, WCAG 2.2 AA (${mode})`, async ({ page }) => {
+      await page.goto(`/ui/?mode=${mode}`);
+      await expect(page.locator('html')).toHaveAttribute('data-mode', mode);
+      const r = await new AxeBuilder({ page })
+        .include('.head')
+        .withTags(wcag)
+        .analyze();
+      expect(r.violations).toEqual([]);
+    });
+  }
+});
+
+test('unknown URL returns 404 with the 404 page', async ({ page }) => {
+  const res = await page.goto('/ui/no-such-page/');
+  expect(res?.status()).toBe(404);
+  await expect(page.locator('h1')).toHaveText('404');
+  await expect(page.getByText('Gate closed')).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: 'Back to /ui/' }),
+  ).toHaveAttribute('href', '/ui/');
 });

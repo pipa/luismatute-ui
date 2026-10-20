@@ -22,8 +22,14 @@ createServer((req, res) => {
   if (!file.startsWith(root)) return res.writeHead(403).end();
   if (statSync(file, { throwIfNoEntry: false })?.isDirectory())
     file = join(file, 'index.html');
-  if (!statSync(file, { throwIfNoEntry: false }))
-    return res.writeHead(404).end();
+  if (!statSync(file, { throwIfNoEntry: false })) {
+    // Like astro preview and the static host: misses get 404.html, status 404.
+    const nf = join(root, '404.html');
+    if (!statSync(nf, { throwIfNoEntry: false }))
+      return res.writeHead(404).end();
+    res.writeHead(404, { 'content-type': 'text/html' });
+    return createReadStream(nf).pipe(res);
+  }
   res.writeHead(200, {
     'content-type': types[extname(file)] ?? 'application/octet-stream',
   });
