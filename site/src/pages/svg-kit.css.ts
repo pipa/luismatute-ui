@@ -1,14 +1,22 @@
 import type { APIRoute } from 'astro';
 
-/** SVG kit page styles, external so CSP style-src stays 'self'. */
+/**
+ * SVG kit page styles (Muse, ui#64 fidelity r2), external so CSP style-src stays 'self'.
+ * --lm-sky is not a package token yet, so it is scoped to the grid here.
+ */
 const css = `
-.kit-grid{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr))}
-.kit-card{min-width:0;display:flex;flex-direction:column;gap:.5rem;border:1px solid var(--lm-docs-border-hair);border-radius:var(--lm-docs-radius-card);padding:.75rem}
-.kit-art{aspect-ratio:4/3;display:grid;place-items:center;border-radius:8px;background:var(--lm-sky-top, #cfe6f5);overflow:hidden}
-.kit-art svg{max-width:80%;max-height:80%;width:auto;height:auto}
-.kit-name{margin:0;font-size:1rem}
-.kit-card .code{margin:0;min-width:0}
-.kit-card .code pre{overflow-x:auto;max-width:100%}
-.kit-card .code{max-width:100%;overflow:hidden}
+.kit-grid{--lm-sky:#cfe6f2;list-style:none;margin:24px 0 0;padding:0;display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+html[data-mode="night"] .kit-grid{--lm-sky:#2a3266}
+@media (min-width:600px){.kit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1024px){.kit-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.kit-grid .kit-card{margin:0;min-width:0;display:flex;flex-direction:column;gap:10px;padding:12px;background:var(--lm-sky);color:var(--lm-docs-ink);border:2px solid transparent;box-shadow:none}
+html[data-mode="night"] .kit-grid .kit-card{border-color:#3a4380}
+.kit-art{aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden}
+.kit-art svg{max-width:85%;max-height:85%;width:auto;height:auto}
+.kit-row{display:flex;align-items:center;gap:8px;min-width:0}
+.kit-name{margin:0;min-width:0;font-size:1rem;overflow-wrap:anywhere}
+.kit-grid .copy{flex:none;color:inherit;border-color:currentColor}
+.kit-path{margin:0;min-width:0}
+.kit-path code{display:block;white-space:normal;overflow-wrap:break-word;word-break:normal;font-size:13px;line-height:1.5;background:transparent;border:0;padding:0;color:inherit}
 `;
 export const GET: APIRoute = () => new Response(css.trim(), { headers: { 'content-type': 'text/css' } });

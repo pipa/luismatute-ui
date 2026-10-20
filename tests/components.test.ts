@@ -734,7 +734,23 @@ describe('deprecated island ids (#59)', () => {
     expect(deprecatedIllustrations).toEqual({
       'island-sandals': 'island-resort',
       'island-fluky': 'island-studio',
+      'island-aa': 'island-airport',
+      'island-bsc': 'island-campus',
     });
+  });
+
+  it('island-airport and island-campus match the old art, as id and as file (#18)', () => {
+    expect(illustrations['island-airport']).toBe(illustrations['island-aa']);
+    expect(illustrations['island-campus']).toBe(illustrations['island-bsc']);
+    expect(inlineIllustration('island-airport', 'x')).toBe(inlineIllustration('island-aa', 'x'));
+    expect(inlineIllustration('island-campus', 'x')).toBe(inlineIllustration('island-bsc', 'x'));
+    const file = (n: string) =>
+      readFileSync(resolve(__dirname, `../src/illustrations/files/${n}.svg`), 'utf8');
+    expect(file('island-airport')).toBe(file('island-aa'));
+    expect(file('island-campus')).toBe(file('island-bsc'));
+    expect(Object.keys(illustrations)).toEqual(
+      expect.arrayContaining(['island-airport', 'island-campus']),
+    );
   });
 });
 

@@ -14,7 +14,7 @@ export const RENAMED: Record<string, string> = {
   'island-sandals': 'island-resort',
   'island-fluky': 'island-studio',
 };
-/** Old file names with no generic id yet (#63); never listed. */
+/** Old file names that also ship under their generic id (#18); never listed. */
 export const HIDDEN = new Set(['island-aa', 'island-bsc']);
 
 export interface KitItem {
@@ -31,6 +31,21 @@ export const kitItems: KitItem[] = fileNames
   .filter((n) => !HIDDEN.has(n))
   .map((n) => ({ id: RENAMED[n] ?? n, file: !(n in RENAMED) }))
   .sort((a, b) => a.id.localeCompare(b.id));
+
+/** The one line a tile shows: the file import, or the inline call when there is no generic file. */
+export function pathLine(item: KitItem): string {
+  return item.file
+    ? `import url from '@luismatute/ui/illustrations/${item.id}.svg';`
+    : `inlineIllustration('${item.id}');`;
+}
+
+export const INLINE_EXAMPLE = `import { inlineIllustration } from '@luismatute/ui/illustrations';
+
+// Inline art reads the --lm-* tokens, so it follows data-theme on its container.
+el.innerHTML = inlineIllustration('palm');
+
+// As a file (fills fall back to their built-in colours):
+import url from '@luismatute/ui/illustrations/palm.svg';`;
 
 export function snippet(item: KitItem): string {
   const lines = [`import { inlineIllustration } from '@luismatute/ui/illustrations';`];
