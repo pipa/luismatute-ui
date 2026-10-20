@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defineLmAvatar } from '../src/components/avatar.ts';
@@ -6,6 +6,7 @@ import { defineLmCard } from '../src/components/card.ts';
 import { defineLmChip } from '../src/components/chip.ts';
 import { defineLmFlightPlan } from '../src/components/flight-plan.ts';
 import { defineLmGlobe } from '../src/components/globe.ts';
+import { defaultRoute } from '../src/components/globe-route.ts';
 import { defineLmMore } from '../src/components/more.ts';
 import {
   MOTION_KEY,
@@ -288,10 +289,7 @@ describe('lm-globe', () => {
     document.documentElement.dataset.motion = 'reduce';
     const globe = document.createElement('lm-globe');
     globe.setAttribute('heading', 'Route');
-    globe.setAttribute(
-      'description',
-      'Honduras, the Caribbean, then Amsterdam.',
-    );
+    globe.setAttribute('description', 'Four example stops.');
     document.body.append(globe);
     const button = globe.querySelector('.lm-globe-btn');
     const overlay = globe.querySelector('.lm-globe-overlay');
@@ -341,6 +339,93 @@ describe('lm-globe', () => {
     expect(globe.querySelector('.lm-pin circle')?.getAttribute('cx')).toBe(
       '10',
     );
+  });
+});
+
+// Real route places (Sentinel, #58). docs/*.html still carries the Sandals
+// stop demo (theme name and copy); that bio content is tracked separately.
+const PLACES =
+  /Honduras|Roat[aá]n|Amsterdam|Netherlands|Caribbean|Miami|San Pedro|Tegucigalpa/i;
+const BANNED =
+  /Honduras|Roat[aá]n|Amsterdam|Netherlands|Caribbean|Miami|San Pedro|Tegucigalpa|Sandals|Booking\.com|Fluky/i;
+
+describe('lm-globe night palette and dashed route (#57)', () => {
+  const css = readFileSync(resolve('src/styles/base.css'), 'utf8');
+  const block = (sel: string) => {
+    const i = css.indexOf(`${sel} {`);
+    expect(i, sel).toBeGreaterThan(-1);
+    return css.slice(i, css.indexOf('}', i));
+  };
+
+  it('ships one night token map keyed on data-mode', () => {
+    const night = block('html[data-mode="night"] lm-globe');
+    expect(night).toContain('--lm-globe-deep: #2a3266');
+    expect(night).toContain('--lm-globe-ocean: #1f254e');
+    expect(night).toContain('--lm-globe-shade: #1a1f43');
+    expect(night).toContain('--lm-globe-land: #24402f');
+    expect(night).toContain('--lm-globe-line: #3a4380');
+    expect(night).not.toMatch(/filter|marigold|tomato/);
+  });
+
+  it('scopes night outlines to the rim and land, not route or pins', () => {
+    const i = css.indexOf(
+      'html[data-mode="night"] lm-globe svg > circle[stroke]',
+    );
+    const sel = css.slice(i, css.indexOf('{', i));
+    expect(sel).toContain('svg > g > path[stroke]');
+    expect(sel).not.toMatch(/lm-leg|lm-pin|svg path\b/);
+    const globeCss = css.slice(
+      css.indexOf('/* ---------- globe'),
+      css.indexOf('@keyframes lm-globe-reveal'),
+    );
+    expect(globeCss).not.toMatch(/filter\s*:|mix-blend/);
+  });
+
+  it('has a dashed route matching the live globe', () => {
+    const dash = block('lm-globe[route-style="dashed"] .lm-leg');
+    expect(dash).toContain('stroke: var(--lm-tomato)');
+    expect(dash).toContain('stroke-dasharray: 13.64 8.36');
+    expect(dash).toContain('stroke-linecap: round');
+    expect(dash).not.toContain('data-mode');
+    expect(block('lm-globe .lm-leg')).toContain(
+      'vector-effect: non-scaling-stroke',
+    );
+  });
+
+  it('default route is generic: four legs, last one long and hot', () => {
+    expect(defaultRoute.legs).toHaveLength(4);
+    expect(defaultRoute.active).toBe(3);
+    for (const stop of defaultRoute.stops)
+      expect(stop.label).toMatch(/^Stop [A-Z]$/);
+    const first = defaultRoute.stops[0];
+    const last = defaultRoute.stops.at(-1);
+    expect(first && last).toBeTruthy();
+    if (first && last)
+      expect(Math.hypot(last.x - first.x, last.y - first.y)).toBeGreaterThan(
+        400,
+      );
+    const src = readFileSync(resolve('src/components/globe-route.ts'), 'utf8');
+    expect(src).not.toMatch(BANNED);
+  });
+
+  it('docs/*.html carry no real route or bio terms', () => {
+    const dir = resolve('docs');
+    const pages = readdirSync(dir).filter((f) => f.endsWith('.html'));
+    expect(pages.length).toBeGreaterThan(0);
+    for (const f of pages)
+      expect(readFileSync(resolve(dir, f), 'utf8'), f).not.toMatch(PLACES);
+  });
+
+  it('draws the default route when no route attribute is set', () => {
+    defineLmGlobe();
+    const globe = document.createElement('lm-globe');
+    globe.setAttribute('route-style', 'dashed');
+    document.body.append(globe);
+    expect(globe.querySelectorAll('.lm-leg')).toHaveLength(4);
+    expect(globe.querySelectorAll('.lm-pin')).toHaveLength(5);
+    expect(
+      globe.querySelector('.lm-leg[data-hot="true"]')?.getAttribute('d'),
+    ).toBe(defaultRoute.legs[3]);
   });
 });
 

@@ -848,6 +848,22 @@ lm-avatar .lm-note {
 
 /* ---------- globe ---------- */
 
+/* Night globe (#57, same map as luismatute.me #112 night.css): one token map
+   keyed on html[data-mode], set from the lm-mode cookie. Colours swap only;
+   no overlay or filter, and Day keeps its values. Pins and route stay as is. */
+html[data-mode="night"] lm-globe {
+  --lm-globe-deep: #2a3266;
+  --lm-globe-ocean: #1f254e;
+  --lm-globe-shade: #1a1f43;
+  --lm-globe-land: #24402f;
+  --lm-globe-line: #3a4380;
+}
+/* outlines only on the rim circle and the land path, never the route */
+html[data-mode="night"] lm-globe svg > circle[stroke],
+html[data-mode="night"] lm-globe svg > g > path[stroke] {
+  stroke: var(--lm-globe-line);
+}
+
 lm-globe {
   display: block;
 }
@@ -979,12 +995,24 @@ lm-globe .lm-leg {
   stroke: var(--lm-route-cool);
   stroke-width: 4;
   stroke-linecap: round;
+  /* #57 (Muse): widths and dashes in screen px, as on luismatute.me */
+  vector-effect: non-scaling-stroke;
 }
 
 lm-globe .lm-leg[data-hot="true"] {
   stroke: var(--lm-tomato);
   stroke-width: 5.5;
   opacity: 0;
+}
+
+/* Dashed route (#57): the live luismatute.me globe route, one 22-unit step
+   per dash drawn to 62% (13.64 on, 8.36 off, screen px via the
+   non-scaling stroke), round caps, tomato. The hot leg
+   keeps 5.5 and the rest keep 4, as on the live site. Works in Day and Night. */
+lm-globe[route-style="dashed"] .lm-leg {
+  stroke: var(--lm-tomato);
+  stroke-dasharray: 13.64 8.36;
+  stroke-linecap: round;
 }
 
 lm-globe.is-open .lm-leg[data-hot="true"] {

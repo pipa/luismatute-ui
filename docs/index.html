@@ -45,11 +45,11 @@
           <p class="lm-kicker">Boarding pass</p>
           <h1>Luis Matute</h1>
           <dl class="lm-route">
-            <div><dt>From</dt><dd>Honduras</dd></div>
-            <div><dt>To</dt><dd>Amsterdam</dd></div>
+            <div><dt>From</dt><dd>Stop A</dd></div>
+            <div><dt>To</dt><dd>Stop E</dd></div>
             <div><dt>Stops</dt><dd>6</dd></div>
           </dl>
-          <p class="lm-intro">Born in Honduras. At Booking.com in Amsterdam since October 2017.</p>
+          <p class="lm-intro">Example intro: two lines about where this stop is and what happened there.</p>
         </lm-card>
         <lm-card variant="stop">
           <p class="lm-kicker">Stop 2 of 6 · July 2011 – August 2017</p>
@@ -73,7 +73,7 @@
           height="390"
         ></lm-shot>
         <lm-flight-plan id="plan"></lm-flight-plan>
-        <lm-globe heading="Route" description="Honduras, the Caribbean, then Amsterdam."></lm-globe>
+        <lm-globe heading="Route" description="Four example stops."></lm-globe>
       </div>
 
       <h2>Avatar</h2>
@@ -127,7 +127,7 @@
       const samples = [
         ['display', 'Landed.', 'lm-display'],
         ['kicker', 'Stop 1 of 6', 'lm-kicker'],
-        ['body', 'Born in Honduras. At Booking.com in Amsterdam since October 2017.', ''],
+        ['body', 'Example intro: two lines about where this stop is and what happened there.', ''],
         ['hand', 'hola', 'lm-hand'],
       ];
       for (const [name, text, cls] of samples) {

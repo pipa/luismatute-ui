@@ -1,15 +1,16 @@
 // src/components/globe-route.ts
-var hon = { id: "hon", label: "Honduras", x: 185.6, y: 578.7 };
-var car = { id: "car", label: "Caribbean", x: 263.9, y: 636.4 };
-var rtb = { id: "rtb", label: "Roat\xE1n", x: 188.4, y: 658.6 };
-var ams = { id: "ams", label: "Amsterdam", x: 736.9, y: 259.7 };
+var a = { id: "a", label: "Stop A", x: 276, y: 346 };
+var b = { id: "b", label: "Stop B", x: 258, y: 398 };
+var c = { id: "c", label: "Stop C", x: 238, y: 452 };
+var d = { id: "d", label: "Stop D", x: 214, y: 500 };
+var e = { id: "e", label: "Stop E", x: 730, y: 350 };
 var defaultRoute = {
-  stops: [hon, car, rtb, ams],
+  stops: [a, b, c, d, e],
   legs: [
-    `M${hon.x} ${hon.y} C${hon.x + 26} ${hon.y + 30} ${hon.x + 52} ${hon.y + 4} ${hon.x + 38} ${hon.y - 18} C${hon.x + 26} ${hon.y - 36} ${hon.x - 8} ${hon.y - 22} ${hon.x} ${hon.y}`,
-    `M${hon.x} ${hon.y} C${hon.x + 24} ${hon.y - 18} ${car.x - 40} ${car.y - 34} ${car.x} ${car.y}`,
-    `M${car.x} ${car.y} C${car.x - 24} ${car.y + 42} ${rtb.x + 30} ${rtb.y + 20} ${rtb.x} ${rtb.y}`,
-    `M${rtb.x} ${rtb.y} C${rtb.x + 120} ${rtb.y - 300} ${ams.x - 320} ${ams.y - 200} ${ams.x} ${ams.y}`
+    `M${a.x} ${a.y} C${a.x + 6} ${a.y + 18} ${b.x + 10} ${b.y - 20} ${b.x} ${b.y}`,
+    `M${b.x} ${b.y} C${b.x - 4} ${b.y + 20} ${c.x + 12} ${c.y - 22} ${c.x} ${c.y}`,
+    `M${c.x} ${c.y} C${c.x - 8} ${c.y + 18} ${d.x + 10} ${d.y - 22} ${d.x} ${d.y}`,
+    `M${d.x} ${d.y} C${d.x + 140} ${d.y - 260} ${e.x - 280} ${e.y - 200} ${e.x} ${e.y}`
   ],
   active: 3
 };
@@ -378,9 +379,9 @@ var LmChip = class extends HTMLElement {
     const featured = this.getAttribute("variant") === "featured";
     const badge = this.querySelector("b");
     if (featured && !badge) {
-      const b = document.createElement("b");
-      b.textContent = BADGE;
-      this.append(b);
+      const b2 = document.createElement("b");
+      b2.textContent = BADGE;
+      this.append(b2);
     } else if (!featured && badge?.textContent === BADGE) {
       badge.remove();
     }
@@ -421,12 +422,12 @@ var LmFlightPlan = class extends HTMLElement {
   }
   stopsFromChildren() {
     return [...this.querySelectorAll(":scope > a")].map(
-      (a) => {
-        const years = a.querySelector(".lm-yr")?.textContent ?? a.dataset.years ?? "";
-        const named = a.querySelector(".lm-name")?.textContent;
-        const label = named ?? (a.textContent ?? "").replace(years, "").trim();
+      (a2) => {
+        const years = a2.querySelector(".lm-yr")?.textContent ?? a2.dataset.years ?? "";
+        const named = a2.querySelector(".lm-name")?.textContent;
+        const label = named ?? (a2.textContent ?? "").replace(years, "").trim();
         return {
-          href: a.getAttribute("href") ?? "#",
+          href: a2.getAttribute("href") ?? "#",
           years,
           label
         };
@@ -440,17 +441,17 @@ var LmFlightPlan = class extends HTMLElement {
     const ol = document.createElement("ol");
     for (const stop of data) {
       const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = stop.href;
-      a.className = "lm-plan-jump";
+      const a2 = document.createElement("a");
+      a2.href = stop.href;
+      a2.className = "lm-plan-jump";
       const years = document.createElement("span");
       years.className = "lm-yr";
       years.textContent = stop.years;
       const name = document.createElement("span");
       name.className = "lm-name";
       name.textContent = stop.label;
-      a.append(years, name);
-      li.append(a);
+      a2.append(years, name);
+      li.append(a2);
       ol.append(li);
     }
     this.append(ol);
@@ -571,11 +572,11 @@ var LmGlobe = class extends HTMLElement {
   drawRoute(svg) {
     const route = this.route();
     const active = route.active ?? route.legs.length - 1;
-    for (const [i, d] of route.legs.entries()) {
+    for (const [i, d2] of route.legs.entries()) {
       const path = document.createElementNS(SVG_NS, "path");
       path.setAttribute("class", "lm-leg");
       path.setAttribute("data-hot", i === active ? "true" : "false");
-      path.setAttribute("d", d);
+      path.setAttribute("d", d2);
       path.setAttribute("fill", "none");
       if (i !== active) path.setAttribute("opacity", "0.55");
       svg.append(path);

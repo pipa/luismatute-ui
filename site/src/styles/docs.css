@@ -1647,12 +1647,3 @@ hr.docs-flight {
     padding: 0 10px;
   }
 }
-
-/* lm-globe night palette for the docs demo only (Muse, #18): the package has
-   no night globe tokens yet, so the frame overrides them. Gap noted on the PR. */
-html[data-mode="night"] .demo-frame:not([data-theme="day"]) lm-globe,
-.demo-frame[data-theme="night"] lm-globe {
-  --lm-globe-ocean: #2a3266;
-  --lm-globe-deep: #2a3266;
-  --lm-globe-land: #24402f;
-}
