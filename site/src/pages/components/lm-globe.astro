@@ -6,8 +6,8 @@ import Heading from '../../components/Heading.astro';
 import Docs from '../../layouts/Docs.astro';
 
 const demo = `<lm-globe
-  heading="Honduras to Amsterdam"
-  description="Four legs, from Honduras through the Caribbean to Amsterdam."
+  heading="Example route"
+  description="The default route: four example legs."
 ></lm-globe>`;
 const fence = '-'.repeat(3);
 const astro = `${fence}
@@ -48,14 +48,14 @@ const toc = [
   <Heading id="demo">Live demo</Heading>
   <Demo name="lm-globe" label="lm-globe with the default route" code={demo}>
     <lm-globe
-      heading="Honduras to Amsterdam"
-      description="Four legs, from Honduras through the Caribbean to Amsterdam."
+      heading="Example route"
+      description="The default route: four example legs."
     ></lm-globe>
   </Demo>
   <Heading id="usage">Usage</Heading>
   <p>
     Drop in the element. It builds a 72px globe button and a <code>&lt;dialog&gt;</code> with the map. Without a
-    <code>route</code> it draws the default four legs: Honduras, the Caribbean, Roatán and Amsterdam.
+    <code>route</code> it draws the four legs built into the element.
   </p>
   <p>Your own route is JSON in the 1000×1000 globe space: stops with <code>x</code>/<code>y</code>, one SVG path per leg, and the index of the hot leg.</p>
   <CodeBlock lang="html" filename="route.html" code={route} />

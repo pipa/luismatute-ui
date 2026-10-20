@@ -6,9 +6,9 @@ import Heading from '../../components/Heading.astro';
 import Docs from '../../layouts/Docs.astro';
 
 const stops = [
-  { href: '#usage', years: '1987–2011', label: 'Honduras' },
-  { href: '#attributes', years: '2011–2017', label: 'Sandals, Caribbean' },
-  { href: '#custom-properties', years: '2017–now', label: 'Booking.com, Amsterdam' },
+  { href: '#usage', years: '2015–2018', label: 'Stop one, Example Co.' },
+  { href: '#attributes', years: '2018–2021', label: 'Stop two, Sample Studio' },
+  { href: '#custom-properties', years: '2021–now', label: 'Now, Example Co.' },
 ];
 const demo = `<lm-flight-plan>
 ${stops.map((s) => `  <a href="${s.href}"><span class="lm-yr">${s.years}</span><span class="lm-name">${s.label}</span></a>`).join('\n')}
@@ -17,12 +17,12 @@ const fence = '-'.repeat(3);
 const astro = `${fence}
 import '@luismatute/ui/components/flight-plan';
 import '@luismatute/ui/base.css';
-const stops = [{ href: '#honduras', years: '1987–2011', label: 'Honduras' }];
+const stops = [{ href: '#stop-one', years: '2015–2018', label: 'Stop one' }];
 ${fence}
 <lm-flight-plan stops={JSON.stringify(stops)} />`;
 const js = `const plan = document.querySelector('lm-flight-plan');
 plan.stops = [
-  { href: '#amsterdam', years: '2017–now', label: 'Amsterdam' },
+  { href: '#now', years: '2021–now', label: 'Now' },
 ];`;
 const css = `/* lm-flight-plan reads these tokens; override them on the element */
 lm-flight-plan {

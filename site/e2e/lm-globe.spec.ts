@@ -8,7 +8,7 @@ test('demo renders and the route map opens and closes', async ({ page }) => {
   await expect(btn).toBeVisible();
   await expect(btn.locator('svg')).toHaveCount(1);
   await btn.click();
-  const dialog = page.getByRole('dialog', { name: 'Honduras to Amsterdam' });
+  const dialog = page.getByRole('dialog', { name: 'Example route' });
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('.lm-leg')).toHaveCount(4);
   await expect(dialog.getByRole('button', { name: 'Close route map' })).toBeFocused();
