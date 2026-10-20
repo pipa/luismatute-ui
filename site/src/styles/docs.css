@@ -1586,7 +1586,7 @@ hr.docs-flight {
   flex: none;
   min-height: var(--lm-docs-tap);
   padding: 0 6px;
-  /* tomato-d (day 6.2:1 on the stage bar) / peach at night, as in the mock. */
+  /* tomato-d (day 4.79:1 on the stage bar) / peach at night, as in the mock. */
   color: var(--lm-tomato-d);
   font: 700 var(--lm-docs-t-small) / 1 var(--lm-docs-f-text);
   text-decoration: underline;
