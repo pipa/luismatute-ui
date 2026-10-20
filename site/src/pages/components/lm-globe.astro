@@ -1,0 +1,108 @@
+---
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const demo = `<lm-globe
+  heading="Example route"
+  description="The default route: four example legs."
+></lm-globe>`;
+const fence = '-'.repeat(3);
+const astro = `${fence}
+import '@luismatute/ui/components/globe';
+import '@luismatute/ui/base.css';
+${fence}
+<lm-globe heading="Route" description="Where I have lived." />`;
+const route = `<lm-globe
+  heading="Two stops"
+  route='{"stops":[{"id":"a","label":"A","x":200,"y":580},{"id":"b","label":"B","x":737,"y":260}],
+          "legs":["M200 580 C320 280 420 60 737 260"],"active":0}'
+></lm-globe>`;
+const css = `/* lm-globe reads these tokens; override them on the element */
+lm-globe {
+  --lm-globe-ocean: #2a3266;
+  --lm-globe-deep: #2a3266;
+  --lm-globe-land: #24402f;
+}`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'in-astro', label: 'In Astro' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-globe"
+  title="lm-globe"
+  description="A small globe button that opens a modal route map. The hot leg draws in when the map opens."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-globe" label="lm-globe with the default route" code={demo}>
+    <lm-globe
+      heading="Example route"
+      description="The default route: four example legs."
+    ></lm-globe>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>
+    Drop in the element. It builds a 72px globe button and a <code>&lt;dialog&gt;</code> with the map. Without a
+    <code>route</code> it draws the four legs built into the element.
+  </p>
+  <p>Your own route is JSON in the 1000×1000 globe space: stops with <code>x</code>/<code>y</code>, one SVG path per leg, and the index of the hot leg.</p>
+  <CodeBlock lang="html" filename="route.html" code={route} />
+  <Heading id="in-astro" level={3}>In Astro</Heading>
+  <CodeBlock lang="astro" filename="Globe.astro" code={astro} />
+  <Heading id="attributes">Attributes</Heading>
+  <p>Read once, when the element connects.</p>
+  <ApiTable
+    caption="lm-globe attributes"
+    head={['Attribute', 'Description']}
+    rows={[
+      { name: 'heading', detail: 'Dialog title. Defaults to <code>Route</code>.' },
+      { name: 'description', detail: 'Optional line under the title. Hidden when absent.' },
+      { name: 'route', detail: 'JSON <code>{"stops":[{id,label,x,y}],"legs":["d"],"active":n}</code>. Invalid JSON falls back to the default route. <code>active</code> defaults to the last leg.' },
+    ]}
+  />
+  <p>Methods: <code>open()</code> and <code>close()</code>.</p>
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <ApiTable
+    caption="lm-globe custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-globe-ocean', detail: 'Outer sea and the map stage fill.' },
+      { name: '--lm-globe-deep', detail: 'Inner sea disc.' },
+      { name: '--lm-globe-land', detail: 'Land fill.' },
+      { name: '--lm-globe-shade', detail: 'Edge shading.' },
+      { name: '--lm-foam', detail: 'Highlight wash.' },
+      { name: '--lm-route-cool', detail: 'Inactive legs.' },
+      { name: '--lm-tomato', detail: 'The hot leg.' },
+      { name: '--lm-marigold', detail: 'Stop pins (with an <code>--lm-ink</code> ring).' },
+      { name: '--lm-ink', detail: 'Outlines, button and panel borders.' },
+      { name: '--lm-paper', detail: 'Button, panel and close fill.' },
+      { name: '--lm-overlay', detail: 'Dimmed page behind the map.' },
+      { name: '--lm-shadow-globe', detail: 'Button shadow (<code>--lm-shadow-globe-press</code> when pressed).' },
+      { name: '--lm-shadow-panel', detail: 'Panel shadow.' },
+      { name: '--lm-duration-globe-draw', detail: 'Hot-leg reveal (2.2s).' },
+    ]}
+  />
+  <CodeBlock lang="css" filename="site.css" code={css} />
+  <Heading id="events">Events</Heading>
+  <p>None. Watch <code>aria-expanded</code> on the button or the <code>is-open</code> class if you need the state.</p>
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>The button is named “Open route map” and has <code>aria-expanded</code> and <code>aria-controls</code>.</li>
+    <li>The map is a modal <code>&lt;dialog&gt;</code> labelled by its heading. Focus goes to “Close route map”, Tab is trapped, and Escape, the close button or a backdrop click closes it and returns focus to the globe.</li>
+    <li>The map itself is decorative (<code>aria-hidden</code>), so put the route in words in <code>description</code>.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>The hot leg fades in over <code>--lm-duration-globe-draw</code>. With reduced motion (the OS setting, <code>html[data-motion="reduce"]</code> or <code>html.is-static</code>) the animation is off and the leg shows at once.</p>
+</Docs>

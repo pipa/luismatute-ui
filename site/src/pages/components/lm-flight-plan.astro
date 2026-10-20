@@ -1,0 +1,100 @@
+---
+import ApiTable from '../../components/ApiTable.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Demo from '../../components/Demo.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+
+const stops = [
+  { href: '#usage', years: '2015–2018', label: 'Stop one, Example Co.' },
+  { href: '#attributes', years: '2018–2021', label: 'Stop two, Sample Studio' },
+  { href: '#custom-properties', years: '2021–now', label: 'Now, Example Co.' },
+];
+const demo = `<lm-flight-plan>
+${stops.map((s) => `  <a href="${s.href}"><span class="lm-yr">${s.years}</span><span class="lm-name">${s.label}</span></a>`).join('\n')}
+</lm-flight-plan>`;
+const fence = '-'.repeat(3);
+const astro = `${fence}
+import '@luismatute/ui/components/flight-plan';
+import '@luismatute/ui/base.css';
+const stops = [{ href: '#stop-one', years: '2015–2018', label: 'Stop one' }];
+${fence}
+<lm-flight-plan stops={JSON.stringify(stops)} />`;
+const js = `const plan = document.querySelector('lm-flight-plan');
+plan.stops = [
+  { href: '#now', years: '2021–now', label: 'Now' },
+];`;
+const css = `/* lm-flight-plan reads these tokens; override them on the element */
+lm-flight-plan {
+  --lm-accent-ink: var(--lm-tomato-d); /* stop numbers */
+  --lm-rule: rgba(43, 27, 20, 0.28);  /* dashed dividers */
+}`;
+const toc = [
+  { id: 'demo', label: 'Live demo' },
+  { id: 'usage', label: 'Usage' },
+  { id: 'in-astro', label: 'In Astro' },
+  { id: 'attributes', label: 'Attributes' },
+  { id: 'custom-properties', label: 'CSS custom properties' },
+  { id: 'events', label: 'Events' },
+  { id: 'accessibility', label: 'Accessibility' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
+];
+---
+
+<Docs
+  slug="components/lm-flight-plan"
+  title="lm-flight-plan"
+  description="A numbered list of stops: years, then a place, each one a jump link. Dashed dividers like a boarding-pass itinerary."
+  toc={toc}
+  extraCss="components.css"
+>
+  <Heading id="demo">Live demo</Heading>
+  <Demo name="lm-flight-plan" label="lm-flight-plan from child links" code={demo}>
+    <lm-flight-plan>
+      {stops.map((s) => <a href={s.href}><span class="lm-yr">{s.years}</span><span class="lm-name">{s.label}</span></a>)}
+    </lm-flight-plan>
+  </Demo>
+  <Heading id="usage">Usage</Heading>
+  <p>
+    Three ways in, checked in this order: the <code>stops</code> property, the <code>stops</code> attribute (JSON), then child
+    <code>&lt;a&gt;</code> links. Child links read <code>.lm-yr</code> (or <code>data-years</code>) and <code>.lm-name</code>. The
+    element replaces its content with an <code>&lt;ol&gt;</code>, so the child links also work as the no-JS fallback.
+  </p>
+  <CodeBlock lang="js" filename="plan.js" code={js} />
+  <Heading id="in-astro" level={3}>In Astro</Heading>
+  <CodeBlock lang="astro" filename="Plan.astro" code={astro} />
+  <Heading id="attributes">Attributes</Heading>
+  <p>The attribute is read when the element connects. Setting the property re-renders.</p>
+  <ApiTable
+    caption="lm-flight-plan attributes"
+    head={['Attribute / property', 'Description']}
+    rows={[
+      { name: 'stops', detail: 'JSON array of <code>{href, years, label}</code>. Invalid JSON falls back to the child links.' },
+      { name: '.stops', detail: 'Property with the same array. Set before or after the element upgrades.' },
+    ]}
+  />
+  <Heading id="custom-properties">CSS custom properties</Heading>
+  <ApiTable
+    caption="lm-flight-plan custom properties"
+    head={['Property', 'Used for']}
+    rows={[
+      { name: '--lm-accent-ink', detail: 'Stop numbers.' },
+      { name: '--lm-ink-soft', detail: 'Years.' },
+      { name: '--lm-rule', detail: 'Dashed divider above each stop.' },
+      { name: '--lm-hover', detail: 'Row hover wash.' },
+      { name: '--lm-focus', detail: 'Focus ring.' },
+      { name: '--lm-radius-plan', detail: 'Row corner radius.' },
+    ]}
+  />
+  <CodeBlock lang="css" filename="site.css" code={css} />
+  <Heading id="events">Events</Heading>
+  <p>None. Each stop is a plain link.</p>
+  <Heading id="accessibility">Accessibility</Heading>
+  <ul>
+    <li>An ordered list of links, so screen readers announce the count and position. The numbers are CSS counters, not text.</li>
+    <li>Each link reads as years then place. Keep labels short.</li>
+    <li>Keyboard focus shows a 3px ring.</li>
+  </ul>
+  <Heading id="reduced-motion">Reduced motion</Heading>
+  <p>The flight plan doesn't animate.</p>
+</Docs>
