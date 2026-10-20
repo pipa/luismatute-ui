@@ -19,10 +19,11 @@ describe('demo stylesheet for lm-shot and lm-avatar (#18)', () => {
     ])
       expect(css).toContain(sel);
   });
-  it('keeps the keyframes the avatar uses, and only those', () => {
-    for (const k of ['lm-avatar-wave', 'lm-avatar-wave-once', 'lm-zz'])
+  it('keeps the keyframes the demoed elements use, and only those', () => {
+    // lm-globe-reveal is in since the lm-globe page (#18) demos it.
+    for (const k of ['lm-avatar-wave', 'lm-avatar-wave-once', 'lm-zz', 'lm-globe-reveal'])
       expect(css).toMatch(new RegExp(`@keyframes ${k} \\{`));
-    for (const k of ['lm-bob', 'lm-spin', 'lm-globe-reveal', 'lm-wave'])
+    for (const k of ['lm-bob', 'lm-spin', 'lm-wave'])
       expect(css).not.toMatch(new RegExp(`@keyframes ${k} \\{`));
   });
   it('keeps the avatar reduced-motion holds, inside their media query', () => {

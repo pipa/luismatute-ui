@@ -6,7 +6,7 @@
 import base from '../../../dist/base.css?raw';
 
 export const DEMO_MATCH =
-  /lm-(card|chip|more|pause|motion-toggle|shot|avatar)\b|\.lm-(kicker|chips|shots|vh)\b|\.zz\b/;
+  /lm-(card|chip|more|pause|motion-toggle|shot|avatar|globe|flight-plan)\b|\.lm-(kicker|chips|shots|vh)\b|\.zz\b/;
 
 interface Block {
   prelude: string;
