@@ -449,6 +449,25 @@ describe('lm-globe night palette and dashed route (#57)', () => {
     }
   });
 
+  // Sentinel (#61): Muse's copy fixes stay fixed in the art and in the shipped dist/.
+  it('illustration art has no Factory sign or hard-coded 2017 (src and dist)', () => {
+    for (const dir of ['src/illustrations/files', 'dist/illustrations']) {
+      for (const f of readdirSync(resolve(dir)).filter((n) => n.endsWith('.svg'))) {
+        const text = readFileSync(resolve(dir, f), 'utf8');
+        expect(text, `${dir}/${f}`).not.toMatch(/>\s*Factory\s*</);
+        expect(text, `${dir}/${f}`).not.toMatch(/>\s*2017\s*</);
+      }
+    }
+  });
+
+  it('dist/illustrations SVGs match src/illustrations/files (dist rebuilt)', () => {
+    const src = resolve('src/illustrations/files');
+    for (const f of readdirSync(src).filter((n) => n.endsWith('.svg')))
+      expect(readFileSync(resolve('dist/illustrations', f), 'utf8'), f).toBe(
+        readFileSync(resolve(src, f), 'utf8'),
+      );
+  });
+
   it('the scan still catches the terms it bans', () => {
     expect('Front-end developer, Sandals Resorts').toMatch(BIO);
     expect('Booking.com').toMatch(BIO);
