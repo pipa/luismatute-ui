@@ -1647,3 +1647,23 @@ hr.docs-flight {
     padding: 0 10px;
   }
 }
+/* Narrow phones, 320-419px (#18 svg-kit): the header row was up to ~50px too wide. Tap targets stay >= 24px (WCAG 2.5.8). */
+@media (max-width: 419.98px) {
+  .head {
+    gap: 6px;
+    padding: 0 12px;
+  }
+  .head .brand {
+    font-size: 18px;
+  }
+  .theme-switch button {
+    min-width: 0;
+    padding: 0 6px;
+  }
+}
+/* Brand link meets the 24px target size (WCAG 2.5.8). */
+.head .brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}

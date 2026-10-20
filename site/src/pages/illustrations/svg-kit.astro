@@ -1,0 +1,47 @@
+---
+import { inlineIllustration, type IllustrationName } from '@luismatute/ui/illustrations';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Heading from '../../components/Heading.astro';
+import Docs from '../../layouts/Docs.astro';
+import { INLINE_EXAMPLE, kitItems, pathLine, snippet } from '../../lib/svg-kit';
+
+const toc = [
+  { id: 'use', label: 'Using the art' },
+  { id: 'art', label: 'Illustrations' },
+];
+---
+
+<Docs
+  slug="illustrations/svg-kit"
+  title="SVG kit"
+  description="SVG kit from the takeoff page. Each piece ships as a file and as an inline string."
+  toc={toc}
+  extraCss="svg-kit.css"
+>
+  <Heading id="use">Using the art</Heading>
+  <p class="kit-note">
+    Fills use <code>--lm-*</code> token variables, so inline art follows <code>data-theme</code> on its
+    container. A file loaded with <code>&lt;img&gt;</code> can't read page tokens and uses its built-in fallbacks.
+  </p>
+  <CodeBlock code={INLINE_EXAMPLE} lang="ts" filename="usage.ts" />
+  <Heading id="art">Illustrations</Heading>
+  <ul class="kit-grid" data-kit-grid>
+    {kitItems.map((item) => (
+      <li class="kit-card code" data-kit-item={item.id}>
+        <div class="kit-art" role="img" aria-label={`${item.id} illustration`}>
+          <Fragment set:html={inlineIllustration(item.id as IllustrationName, `kit-${item.id}-`)} />
+        </div>
+        <div class="kit-row">
+          <h3 class="kit-name"><code>{item.id}</code></h3>
+          <button class="copy" type="button" data-copy aria-label={`Copy ${item.id} snippet`} hidden>
+            <svg class="idle" viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg>
+            <svg class="ok" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span class="copy-t">Copy</span>
+          </button>
+        </div>
+        <p class="kit-path"><code set:html={pathLine(item).split('/').map((p) => p.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('/<wbr>')} /></p>
+        <pre class="kit-full" hidden>{snippet(item)}</pre>
+      </li>
+    ))}
+  </ul>
+</Docs>

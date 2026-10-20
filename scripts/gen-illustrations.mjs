@@ -320,7 +320,17 @@ for (const [file, entry] of Object.entries(art)) {
 }
 
 // #59: generic ids for the stop islands. The old ids stay as deprecated aliases.
-const deprecatedArt = { 'island-sandals': 'island-resort', 'island-fluky': 'island-studio' };
+const deprecatedArt = {
+  'island-sandals': 'island-resort',
+  'island-fluky': 'island-studio',
+  'island-aa': 'island-airport',
+  'island-bsc': 'island-campus',
+};
+// #18 svg-kit: these generic ids also ship as files, so the kit can show a plain import path.
+for (const to of ['island-airport', 'island-campus']) {
+  const from = Object.keys(deprecatedArt).find((k) => deprecatedArt[k] === to);
+  writeFileSync(resolve(fileDir, `${to}.svg`), art[from][1]);
+}
 for (const [from, to] of Object.entries(deprecatedArt)) {
   const line = keys.find((k) => k.startsWith(`  '${from}': `));
   if (!line) throw new Error(`missing ${from}`);
