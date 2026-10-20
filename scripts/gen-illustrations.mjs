@@ -31,7 +31,7 @@ const extras = readFileSync(
   'utf8',
 );
 const factory = new Function(`${chunk}\n${extras}\nreturn {
-  planeSVG, planeTop, luisSVG, cloud, palm, isleAA, isleSandals, isleBSc, isleFluky,
+  planeSVG, planeTop, luisSVG, cloud, palm, isleAirport, isleResort, isleCampus, isleStudio,
   suitcase, gear, bush, pine, flower, foam, stampSVG, windmill, C,
   controlTower, hangar, windsock, nightTower, gullMark, sunMark, raysMark, skyMark, seaMark, wavesMark, houseMark
 };`);
@@ -217,16 +217,16 @@ const art = {
   'night-tower': ['nightTower', wrap(api.nightTower(), '-80 -180 420 200')],
   'island-aa': [
     'islandAa',
-    highlights(wrap(api.isleAA('__id__'), '-20 -20 1000 520')),
+    highlights(wrap(api.isleAirport('__id__'), '-20 -20 1000 520')),
   ],
   'island-sandals': [
     'islandSandals',
-    highlights(wrap(api.isleSandals('__id__'), '-40 -80 1100 620')),
+    highlights(wrap(api.isleResort('__id__'), '-40 -80 1100 620')),
   ],
-  'island-bsc': ['islandBsc', wrap(api.isleBSc('__id__'), '-40 -80 1100 620')],
+  'island-bsc': ['islandBsc', wrap(api.isleCampus('__id__'), '-40 -80 1100 620')],
   'island-fluky': [
     'islandFluky',
-    wrap(api.isleFluky('__id__'), '-40 -80 1100 620'),
+    wrap(api.isleStudio('__id__'), '-40 -80 1100 620'),
   ],
   suitcase: [
     'suitcase',

@@ -48,12 +48,12 @@ const N = (v) => Math.round(v * 10) / 10;
   const STATIC_EXPR = {
     hero: 'wow',
     plan: 'wave',
-    aa: 'read',
-    sandals: 'beach',
-    bsc: 'grad',
-    fluky: 'wave',
+    airport: 'read',
+    resort: 'beach',
+    campus: 'grad',
+    studio: 'wave',
     move: 'sleep',
-    booking: 'wink',
+    platform: 'wink',
   };
   const hexRGB = (h) => [1, 3, 5].map((i) => Number.parseInt(h.slice(i, i + 2), 16));
   const mix = (a, b, t) => {
@@ -402,7 +402,7 @@ const N = (v) => Math.round(v * 10) / 10;
   }
 
   /* ---------- islands, each in a 1000 × 560 box with the waterline at y 440 ---------- */
-  function isleAA(id) {
+  function isleAirport(id) {
     let s = '';
     for (const x of [150, 310, 480, 650, 820]) s += rect(x - 10, 360, 20, 112, '#8b6d55', ol(4));
     s += rr(88, 336, 824, 44, 12, '#eadfc8', ol(5));
@@ -443,7 +443,7 @@ const N = (v) => Math.round(v * 10) / 10;
     return s;
   }
 
-  function isleSandals(id) {
+  function isleResort(id) {
     let s = '';
     s += path('M54 444C110 398 196 378 300 370C420 360 560 354 690 362C810 370 890 404 946 444Z', '#f6d79b', ol(5));
     s += path('M100 434C210 414 330 406 480 404C640 404 790 412 900 432L938 444L62 444Z', '#e9c27c');
@@ -464,7 +464,7 @@ const N = (v) => Math.round(v * 10) / 10;
     return s;
   }
 
-  function isleBSc(id) {
+  function isleCampus(id) {
     let s = '';
     s += path('M60 444C130 372 250 312 420 300C600 290 770 330 870 392C904 414 924 430 936 444Z', '#7dbb5a', ol(5));
     s += path('M110 428C240 404 400 396 560 398C720 402 840 414 922 438L936 444L66 444Z', '#5f9e46');
@@ -484,7 +484,7 @@ const N = (v) => Math.round(v * 10) / 10;
     return s;
   }
 
-  function isleFluky(id) {
+  function isleStudio(id) {
     let s = '';
     // the dock on the right, its posts in the water
     s += [784, 846, 908, 968].map((x) => rect(x - 7, 400, 14, 58, '#7f6250', ol(3.5))).join('');
