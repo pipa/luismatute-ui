@@ -14,12 +14,20 @@ export interface Hit {
   url: string;
   title: string;
   excerpt: string;
+  /** Set on a heading-level hit (#49): the title of the page it sits in. */
+  page?: string;
 }
 
-interface PagefindData {
+export interface PagefindSub {
+  url: string;
+  title: string;
+  excerpt: string;
+}
+export interface PagefindData {
   url: string;
   excerpt: string;
   meta: { title?: string };
+  sub_results?: PagefindSub[];
 }
 interface Pagefind {
   options(o: Record<string, unknown>): Promise<void>;
@@ -30,6 +38,31 @@ interface Pagefind {
 }
 
 export const MAX_HITS = 8;
+/** Heading-level hits shown under one page (#49). */
+export const MAX_SUBS = 3;
+
+/**
+ * Pagefind page results to a flat option list (#49): each page, then up to
+ * MAX_SUBS of its sub_results that point at a heading anchor. Pagefind's
+ * sub_result for the text above the first heading has the bare page URL; that
+ * one is already the page hit, so it is dropped. Capped at MAX_HITS overall.
+ */
+export function toHits(data: PagefindData[], max = MAX_HITS): Hit[] {
+  const out: Hit[] = [];
+  for (const d of data) {
+    if (out.length >= max) break;
+    const title = d.meta.title ?? d.url;
+    out.push({ url: d.url, title, excerpt: d.excerpt });
+    const subs = (d.sub_results ?? [])
+      .filter((s) => s.url.includes('#') && s.url.split('#')[0] === d.url)
+      .slice(0, MAX_SUBS);
+    for (const s of subs) {
+      if (out.length >= max) break;
+      out.push({ url: s.url, title: s.title, excerpt: s.excerpt, page: title });
+    }
+  }
+  return out;
+}
 
 /** True when a key press belongs to a text field, not to a page shortcut. */
 export function isTypingTarget(el: EventTarget | null): boolean {
@@ -99,7 +132,8 @@ export function renderHits(
   const doc = list.ownerDocument;
   const opts = hits.map((hit, i) => {
     const a = doc.createElement('a');
-    a.className = 'search-hit';
+    a.className = hit.page ? 'search-hit search-hit-sub' : 'search-hit';
+    if (hit.page) a.dataset.searchSub = '';
     a.id = `search-hit-${i}`;
     a.href = hit.url;
     a.tabIndex = -1;
@@ -209,13 +243,7 @@ export function initSearch(
         (res?.results ?? []).slice(0, MAX_HITS).map((r) => r.data()),
       );
       if (mine !== seq) return;
-      show(
-        data.map((d) => ({
-          url: d.url,
-          title: d.meta.title ?? d.url,
-          excerpt: d.excerpt,
-        })),
-      );
+      show(toHits(data));
     } catch {
       if (mine === seq) show([], 'Search is not available right now.');
     }
