@@ -97,20 +97,20 @@ export declare const sky: {
     readonly hero: readonly ['#f29a3a', '#f4a742', '#f6b34c', '#f8bf5a', '#f9ca6b', '#fbd580', '#fce09a', '#fdebb7'];
     readonly high: readonly ['#3f8fc4', '#4c9bcc', '#5aa7d3', '#69b3da', '#7bbfe0', '#8ecae5', '#a3d5ea', '#bae0ef'];
     readonly aa: readonly ['#4cacd5', '#59b4d9', '#67bcdd', '#76c4e1', '#86cce5', '#98d4e9', '#abdced', '#bfe4f1'];
-    readonly sandals: readonly ['#ec6a58', '#ee7760', '#f08568', '#f29372', '#f4a17c', '#f6af88', '#f8bd95', '#f9cba4'];
+    readonly resort: readonly ['#ec6a58', '#ee7760', '#f08568', '#f29372', '#f4a17c', '#f6af88', '#f8bd95', '#f9cba4'];
     readonly bsc: readonly ['#1d877d', '#229087', '#289a90', '#31a39a', '#3dada3', '#4bb7ad', '#5dc1b7', '#72cbc1'];
-    readonly fluky: readonly ['#d6412b', '#da4b32', '#de5539', '#e26042', '#e56b4c', '#e87857', '#eb8564', '#ee9372'];
+    readonly studio: readonly ['#d6412b', '#da4b32', '#de5539', '#e26042', '#e56b4c', '#e87857', '#eb8564', '#ee9372'];
     readonly move: readonly ['#1f1840', '#251d4a', '#2c2354', '#33295e', '#3b3068', '#443872', '#4e417c', '#594b86'];
-    readonly booking: readonly ['#f19c74', '#f4a87e', '#f6b389', '#f8bf95', '#f9caa1', '#fbd4ad', '#fcdebb', '#fde8c9'];
+    readonly platform: readonly ['#f19c74', '#f4a87e', '#f6b389', '#f8bf95', '#f9caa1', '#fbd4ad', '#fcdebb', '#fde8c9'];
 };
 /** Twelve-band climb gradient (HIGH) used above the hero sky. */
 export declare const climb: readonly ['#3c8cc2', '#4797ca', '#54a3d1', '#62aed7', '#73b9dc', '#87c4df', '#a0cfdf', '#bcd9d6', '#d8dfc6', '#eedcae', '#f5c98a', '#f4b46a'];
 /** Four-band seas, horizon to deep, from the SEA table. */
 export declare const sea: {
     readonly aa: readonly ['#2c84ad', '#2a789f', '#276b90', '#235e80'];
-    readonly sandals: readonly ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'];
+    readonly resort: readonly ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'];
     readonly bsc: readonly ['#2c6f95', '#286386', '#235777', '#1e4b68'];
-    readonly fluky: readonly ['#1f7470', '#1c6764', '#185a58', '#144d4c'];
+    readonly studio: readonly ['#1f7470', '#1c6764', '#185a58', '#144d4c'];
     readonly move: readonly ['#2a3266', '#242b5a', '#1f254e', '#1a1f43'];
 };
 export declare const font: {
@@ -345,6 +345,15 @@ export declare const target: {
  * Scene themes. Keys are the SKY / scene ids from the source file.
  * `sea` is omitted when that scene has no SEA entry.
  */
+/**
+ * Deprecated theme names (#59), kept as CSS aliases for one minor release so
+ * existing data-theme values keep working. Use the new names.
+ */
+export declare const themeAliases: {
+    readonly sandals: 'resort';
+    readonly fluky: 'studio';
+    readonly booking: 'platform';
+};
 export declare const themes: {
     readonly hero: {
         readonly label: 'Hero sunrise';
@@ -374,8 +383,8 @@ export declare const themes: {
         readonly stop: '#3d9ad0';
         readonly wave: '#7fc0dc';
     };
-    readonly sandals: {
-        readonly label: 'Sandals coral';
+    readonly resort: {
+        readonly label: 'Resort coral';
         readonly sky: readonly ["#ec6a58", "#ee7760", "#f08568", "#f29372", "#f4a17c", "#f6af88", "#f8bd95", "#f9cba4"];
         readonly sea: readonly ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"];
         readonly rays: '#fff1c7';
@@ -398,8 +407,8 @@ export declare const themes: {
         readonly stop: '#22a093';
         readonly wave: '#5c9bc0';
     };
-    readonly fluky: {
-        readonly label: 'Fluky red';
+    readonly studio: {
+        readonly label: 'Studio red';
         readonly sky: readonly ["#d6412b", "#da4b32", "#de5539", "#e26042", "#e56b4c", "#e87857", "#eb8564", "#ee9372"];
         readonly sea: readonly ["#1f7470", "#1c6764", "#185a58", "#144d4c"];
         readonly rays: '#ffd9a8';
@@ -422,8 +431,8 @@ export declare const themes: {
         readonly stop: '#7563bd';
         readonly wave: '#3a4278';
     };
-    readonly booking: {
-        readonly label: 'Booking';
+    readonly platform: {
+        readonly label: 'Platform';
         readonly sky: readonly ["#f19c74", "#f4a87e", "#f6b389", "#f8bf95", "#f9caa1", "#fbd4ad", "#fcdebb", "#fde8c9"];
         readonly rays: '#fff3d0';
         readonly sun: readonly ['#fff3d0', '#fcd2a8', '#fbc79a'];
@@ -493,7 +502,7 @@ export declare const textPairs: readonly [{
     readonly bg: "#4cacd5";
     readonly large: true;
 }, {
-    readonly name: 'ink on sandals sky';
+    readonly name: 'ink on resort sky';
     readonly fg: "#2b1b14";
     readonly bg: "#ec6a58";
     readonly large: true;
@@ -503,12 +512,12 @@ export declare const textPairs: readonly [{
     readonly bg: "#1d877d";
     readonly large: true;
 }, {
-    readonly name: 'ink on fluky sky';
+    readonly name: 'ink on studio sky';
     readonly fg: "#2b1b14";
     readonly bg: "#d6412b";
     readonly large: true;
 }, {
-    readonly name: 'ink on booking sky';
+    readonly name: 'ink on platform sky';
     readonly fg: "#2b1b14";
     readonly bg: "#f19c74";
     readonly large: true;
@@ -697,6 +706,11 @@ export declare const modePairs: readonly [{
     large: boolean;
 })[]];
 export declare const tokens: {
+    readonly themeAliases: {
+        readonly sandals: 'resort';
+        readonly fluky: 'studio';
+        readonly booking: 'platform';
+    };
     readonly color: {
         readonly ink: '#2b1b14';
         readonly inkSoft: '#5b4536';
@@ -783,18 +797,18 @@ export declare const tokens: {
         readonly hero: readonly ['#f29a3a', '#f4a742', '#f6b34c', '#f8bf5a', '#f9ca6b', '#fbd580', '#fce09a', '#fdebb7'];
         readonly high: readonly ['#3f8fc4', '#4c9bcc', '#5aa7d3', '#69b3da', '#7bbfe0', '#8ecae5', '#a3d5ea', '#bae0ef'];
         readonly aa: readonly ['#4cacd5', '#59b4d9', '#67bcdd', '#76c4e1', '#86cce5', '#98d4e9', '#abdced', '#bfe4f1'];
-        readonly sandals: readonly ['#ec6a58', '#ee7760', '#f08568', '#f29372', '#f4a17c', '#f6af88', '#f8bd95', '#f9cba4'];
+        readonly resort: readonly ['#ec6a58', '#ee7760', '#f08568', '#f29372', '#f4a17c', '#f6af88', '#f8bd95', '#f9cba4'];
         readonly bsc: readonly ['#1d877d', '#229087', '#289a90', '#31a39a', '#3dada3', '#4bb7ad', '#5dc1b7', '#72cbc1'];
-        readonly fluky: readonly ['#d6412b', '#da4b32', '#de5539', '#e26042', '#e56b4c', '#e87857', '#eb8564', '#ee9372'];
+        readonly studio: readonly ['#d6412b', '#da4b32', '#de5539', '#e26042', '#e56b4c', '#e87857', '#eb8564', '#ee9372'];
         readonly move: readonly ['#1f1840', '#251d4a', '#2c2354', '#33295e', '#3b3068', '#443872', '#4e417c', '#594b86'];
-        readonly booking: readonly ['#f19c74', '#f4a87e', '#f6b389', '#f8bf95', '#f9caa1', '#fbd4ad', '#fcdebb', '#fde8c9'];
+        readonly platform: readonly ['#f19c74', '#f4a87e', '#f6b389', '#f8bf95', '#f9caa1', '#fbd4ad', '#fcdebb', '#fde8c9'];
     };
     readonly climb: readonly ["#3c8cc2", "#4797ca", "#54a3d1", "#62aed7", "#73b9dc", "#87c4df", "#a0cfdf", "#bcd9d6", "#d8dfc6", "#eedcae", "#f5c98a", "#f4b46a"];
     readonly sea: {
         readonly aa: readonly ['#2c84ad', '#2a789f', '#276b90', '#235e80'];
-        readonly sandals: readonly ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'];
+        readonly resort: readonly ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'];
         readonly bsc: readonly ['#2c6f95', '#286386', '#235777', '#1e4b68'];
-        readonly fluky: readonly ['#1f7470', '#1c6764', '#185a58', '#144d4c'];
+        readonly studio: readonly ['#1f7470', '#1c6764', '#185a58', '#144d4c'];
         readonly move: readonly ['#2a3266', '#242b5a', '#1f254e', '#1a1f43'];
     };
     readonly font: {
@@ -1052,8 +1066,8 @@ export declare const tokens: {
             readonly stop: '#3d9ad0';
             readonly wave: '#7fc0dc';
         };
-        readonly sandals: {
-            readonly label: 'Sandals coral';
+        readonly resort: {
+            readonly label: 'Resort coral';
             readonly sky: readonly ["#ec6a58", "#ee7760", "#f08568", "#f29372", "#f4a17c", "#f6af88", "#f8bd95", "#f9cba4"];
             readonly sea: readonly ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"];
             readonly rays: '#fff1c7';
@@ -1076,8 +1090,8 @@ export declare const tokens: {
             readonly stop: '#22a093';
             readonly wave: '#5c9bc0';
         };
-        readonly fluky: {
-            readonly label: 'Fluky red';
+        readonly studio: {
+            readonly label: 'Studio red';
             readonly sky: readonly ["#d6412b", "#da4b32", "#de5539", "#e26042", "#e56b4c", "#e87857", "#eb8564", "#ee9372"];
             readonly sea: readonly ["#1f7470", "#1c6764", "#185a58", "#144d4c"];
             readonly rays: '#ffd9a8';
@@ -1100,8 +1114,8 @@ export declare const tokens: {
             readonly stop: '#7563bd';
             readonly wave: '#3a4278';
         };
-        readonly booking: {
-            readonly label: 'Booking';
+        readonly platform: {
+            readonly label: 'Platform';
             readonly sky: readonly ["#f19c74", "#f4a87e", "#f6b389", "#f8bf95", "#f9caa1", "#fbd4ad", "#fcdebb", "#fde8c9"];
             readonly rays: '#fff3d0';
             readonly sun: readonly ['#fff3d0', '#fcd2a8', '#fbc79a'];
@@ -1166,7 +1180,7 @@ export declare const tokens: {
         readonly bg: "#4cacd5";
         readonly large: true;
     }, {
-        readonly name: 'ink on sandals sky';
+        readonly name: 'ink on resort sky';
         readonly fg: "#2b1b14";
         readonly bg: "#ec6a58";
         readonly large: true;
@@ -1176,12 +1190,12 @@ export declare const tokens: {
         readonly bg: "#1d877d";
         readonly large: true;
     }, {
-        readonly name: 'ink on fluky sky';
+        readonly name: 'ink on studio sky';
         readonly fg: "#2b1b14";
         readonly bg: "#d6412b";
         readonly large: true;
     }, {
-        readonly name: 'ink on booking sky';
+        readonly name: 'ink on platform sky';
         readonly fg: "#2b1b14";
         readonly bg: "#f19c74";
         readonly large: true;

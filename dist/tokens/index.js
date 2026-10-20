@@ -112,7 +112,7 @@ var sky = {
     "#abdced",
     "#bfe4f1"
   ],
-  sandals: [
+  resort: [
     "#ec6a58",
     "#ee7760",
     "#f08568",
@@ -132,7 +132,7 @@ var sky = {
     "#5dc1b7",
     "#72cbc1"
   ],
-  fluky: [
+  studio: [
     "#d6412b",
     "#da4b32",
     "#de5539",
@@ -152,7 +152,7 @@ var sky = {
     "#4e417c",
     "#594b86"
   ],
-  booking: [
+  platform: [
     "#f19c74",
     "#f4a87e",
     "#f6b389",
@@ -179,9 +179,9 @@ var climb = [
 ];
 var sea = {
   aa: ["#2c84ad", "#2a789f", "#276b90", "#235e80"],
-  sandals: ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"],
+  resort: ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"],
   bsc: ["#2c6f95", "#286386", "#235777", "#1e4b68"],
-  fluky: ["#1f7470", "#1c6764", "#185a58", "#144d4c"],
+  studio: ["#1f7470", "#1c6764", "#185a58", "#144d4c"],
   move: ["#2a3266", "#242b5a", "#1f254e", "#1a1f43"]
 };
 var font = {
@@ -411,6 +411,11 @@ var alpha = {
 var target = {
   min: "44px"
 };
+var themeAliases = {
+  sandals: "resort",
+  fluky: "studio",
+  booking: "platform"
+};
 var themes = {
   hero: {
     label: "Hero sunrise",
@@ -440,10 +445,10 @@ var themes = {
     stop: "#3d9ad0",
     wave: "#7fc0dc"
   },
-  sandals: {
-    label: "Sandals coral",
-    sky: sky.sandals,
-    sea: sea.sandals,
+  resort: {
+    label: "Resort coral",
+    sky: sky.resort,
+    sea: sea.resort,
     rays: "#fff1c7",
     sun: ["#fff1c7", "#fbc79d", "#fab88f"],
     cloud: ["#fbd2bd", "#f4b49c"],
@@ -464,10 +469,10 @@ var themes = {
     stop: "#22a093",
     wave: "#5c9bc0"
   },
-  fluky: {
-    label: "Fluky red",
-    sky: sky.fluky,
-    sea: sea.fluky,
+  studio: {
+    label: "Studio red",
+    sky: sky.studio,
+    sea: sea.studio,
     rays: "#ffd9a8",
     sun: ["#ffe7b0", "#f4a07f", "#f0906f"],
     cloud: ["#f5b39b", "#e98f75"],
@@ -488,9 +493,9 @@ var themes = {
     stop: "#7563bd",
     wave: "#3a4278"
   },
-  booking: {
-    label: "Booking",
-    sky: sky.booking,
+  platform: {
+    label: "Platform",
+    sky: sky.platform,
     rays: "#fff3d0",
     sun: ["#fff3d0", "#fcd2a8", "#fbc79a"],
     title: color.ink,
@@ -526,17 +531,17 @@ var textPairs = [
   { name: "ink on hero sky", fg: color.ink, bg: sky.hero[0], large: true },
   { name: "ink on aa sky", fg: color.ink, bg: sky.aa[0], large: true },
   {
-    name: "ink on sandals sky",
+    name: "ink on resort sky",
     fg: color.ink,
-    bg: sky.sandals[0],
+    bg: sky.resort[0],
     large: true
   },
   { name: "ink on bsc sky", fg: color.ink, bg: sky.bsc[0], large: true },
-  { name: "ink on fluky sky", fg: color.ink, bg: sky.fluky[0], large: true },
+  { name: "ink on studio sky", fg: color.ink, bg: sky.studio[0], large: true },
   {
-    name: "ink on booking sky",
+    name: "ink on platform sky",
     fg: color.ink,
-    bg: sky.booking[0],
+    bg: sky.platform[0],
     large: true
   }
 ];
@@ -708,6 +713,7 @@ var modePairs = [
   }))
 ];
 var tokens = {
+  themeAliases,
   color,
   skin,
   sky,

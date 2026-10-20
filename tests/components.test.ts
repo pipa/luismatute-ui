@@ -68,13 +68,13 @@ describe('lm-chip', () => {
   it('adds and removes the featured badge', () => {
     defineLmChip();
     const chip = document.createElement('lm-chip');
-    chip.textContent = 'Catch Advisory Group';
+    chip.textContent = 'Featured client';
     chip.setAttribute('variant', 'featured');
     document.body.append(chip);
     expect(chip.querySelector('b')?.textContent).toBe('Featured');
     chip.removeAttribute('variant');
     expect(chip.querySelector('b')).toBeNull();
-    expect(chip.textContent).toContain('Catch Advisory Group');
+    expect(chip.textContent).toContain('Featured client');
   });
 });
 
@@ -83,14 +83,14 @@ describe('lm-more', () => {
     defineLmMore();
     const more = document.createElement('lm-more');
     more.setAttribute('label', 'More');
-    more.setAttribute('panel', 'more-sandals');
+    more.setAttribute('panel', 'more-example');
     more.textContent = 'Led several full redesigns.';
     document.body.append(more);
     const button = more.querySelector('button');
     const body = more.querySelector<HTMLElement>('.lm-more-body');
     expect(button?.getAttribute('aria-expanded')).toBe('false');
-    expect(button?.getAttribute('aria-controls')).toBe('more-sandals');
-    expect(body?.id).toBe('more-sandals');
+    expect(button?.getAttribute('aria-controls')).toBe('more-example');
+    expect(body?.id).toBe('more-example');
     expect(body?.hidden).toBe(true);
     expect(body?.textContent).toContain('Led several full redesigns.');
     button?.click();
@@ -199,13 +199,10 @@ describe('lm-shot', () => {
   it('links the framed shot out with an accessible hint', () => {
     defineLmShot();
     const shot = document.createElement('lm-shot');
-    shot.setAttribute(
-      'href',
-      'https://web.archive.org/web/20160620110713/http://www.sandals.com/',
-    );
-    shot.setAttribute('src', 'shots/sandals-600.webp');
-    shot.setAttribute('chrome', 'sandals.com');
-    shot.setAttribute('caption', 'sandals.com');
+    shot.setAttribute('href', 'https://example.com/');
+    shot.setAttribute('src', 'shots/example-600.webp');
+    shot.setAttribute('chrome', 'example.com');
+    shot.setAttribute('caption', 'example.com');
     document.body.append(shot);
     const link = shot.querySelector('a');
     expect(link?.target).toBe('_blank');
@@ -215,24 +212,24 @@ describe('lm-shot', () => {
       ' (opens in a new tab)',
     );
     expect(shot.querySelector('.lm-shot-chrome')?.textContent).toContain(
-      'sandals.com',
+      'example.com',
     );
     expect(shot.querySelector('img')?.getAttribute('src')).toBe(
-      'shots/sandals-600.webp',
+      'shots/example-600.webp',
     );
   });
 
   it('wraps a light-DOM image instead of replacing the link', () => {
     defineLmShot();
     const shot = document.createElement('lm-shot');
-    shot.setAttribute('chrome', 'sandals.com');
+    shot.setAttribute('chrome', 'example.com');
     shot.innerHTML =
-      '<a href="https://example.com"><img src="shots/sandals-600.webp" alt="" /></a>';
+      '<a href="https://example.com"><img src="shots/example-600.webp" alt="" /></a>';
     document.body.append(shot);
     const link = shot.querySelector('a');
     expect(link?.getAttribute('href')).toBe('https://example.com');
     expect(link?.querySelector('.lm-shot-frame img')?.getAttribute('src')).toBe(
-      'shots/sandals-600.webp',
+      'shots/example-600.webp',
     );
     expect(shot.querySelectorAll('a')).toHaveLength(1);
   });
@@ -245,16 +242,20 @@ describe('lm-flight-plan', () => {
     plan.setAttribute(
       'stops',
       JSON.stringify([
-        { href: '#stop-aa', years: '2006–2011', label: 'American Airlines' },
-        { href: '#stop-sandals', years: '2011–2017', label: 'Sandals Resorts' },
+        {
+          href: '#stop-one',
+          years: '2010–2014',
+          label: 'Stop one, Example Co.',
+        },
+        { href: '#stop-example', years: '2011–2017', label: 'Example Co.' },
       ]),
     );
     document.body.append(plan);
     const links = plan.querySelectorAll('a');
     expect(links).toHaveLength(2);
-    expect(links[1]?.getAttribute('href')).toBe('#stop-sandals');
+    expect(links[1]?.getAttribute('href')).toBe('#stop-example');
     expect(links[1]?.className).toBe('lm-plan-jump');
-    expect(links[1]?.textContent).toContain('Sandals Resorts');
+    expect(links[1]?.textContent).toContain('Example Co.');
     const broken = document.createElement('lm-flight-plan');
     broken.setAttribute('stops', '{');
     expect(() => document.body.append(broken)).not.toThrow();
@@ -262,15 +263,19 @@ describe('lm-flight-plan', () => {
     const kept = document.createElement('lm-flight-plan');
     kept.setAttribute('stops', '{');
     kept.innerHTML =
-      '<a href="#stop-aa"><span class="lm-yr">2006–2011</span><span class="lm-name">American Airlines</span></a>';
+      '<a href="#stop-one"><span class="lm-yr">2010–2014</span><span class="lm-name">Stop one, Example Co.</span></a>';
     document.body.append(kept);
     expect(kept.querySelectorAll('a')).toHaveLength(1);
-    expect(kept.querySelector('a')?.getAttribute('href')).toBe('#stop-aa');
+    expect(kept.querySelector('a')?.getAttribute('href')).toBe('#stop-one');
     const early = document.createElement('lm-flight-plan');
     Object.defineProperty(early, 'stops', {
       value: [
-        { href: '#stop-aa', years: '2006–2011', label: 'American Airlines' },
-        { href: '#stop-sandals', years: '2011–2017', label: 'Sandals Resorts' },
+        {
+          href: '#stop-one',
+          years: '2010–2014',
+          label: 'Stop one, Example Co.',
+        },
+        { href: '#stop-example', years: '2011–2017', label: 'Example Co.' },
       ],
       writable: true,
       configurable: true,
@@ -278,7 +283,7 @@ describe('lm-flight-plan', () => {
     document.body.append(early);
     expect(early.querySelectorAll('a')).toHaveLength(2);
     expect(early.querySelectorAll('a')[1]?.textContent).toContain(
-      'Sandals Resorts',
+      'Example Co.',
     );
   });
 });
@@ -342,8 +347,11 @@ describe('lm-globe', () => {
   });
 });
 
-// Real route places (Sentinel, #58). docs/*.html still carries the Sandals
-// stop demo (theme name and copy); that bio content is tracked separately.
+// Real route places (Sentinel, #58) and real career content (#59). The bio
+// terms are case-sensitive so art ids like
+// island-sandals (public API names) don't trip them; the copy does.
+const BIO =
+  /Sandals|Fluky|Booking\.com|sandals\.com|beaches\.com|American Airlines|BSc Computer|Catch Advisory/;
 const PLACES =
   /Honduras|Roat[aá]n|Amsterdam|Netherlands|Caribbean|Miami|San Pedro|Tegucigalpa/i;
 const BANNED =
@@ -408,12 +416,44 @@ describe('lm-globe night palette and dashed route (#57)', () => {
     expect(src).not.toMatch(BANNED);
   });
 
-  it('docs/*.html carry no real route or bio terms', () => {
-    const dir = resolve('docs');
-    const pages = readdirSync(dir).filter((f) => f.endsWith('.html'));
-    expect(pages.length).toBeGreaterThan(0);
-    for (const f of pages)
-      expect(readFileSync(resolve(dir, f), 'utf8'), f).not.toMatch(PLACES);
+  it('docs/*.html and site/src/** carry no real route or bio terms', () => {
+    const walk = (dir: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory()
+          ? walk(resolve(dir, e.name))
+          : /\.(html|astro|ts|mjs|js|md|mdx|css|json)$/.test(e.name)
+            ? [resolve(dir, e.name)]
+            : [],
+      );
+    const files = [
+      ...readdirSync(resolve('docs'))
+        .filter((f) => f.endsWith('.html'))
+        .map((f) => resolve('docs', f)),
+      ...walk(resolve('site/src')),
+    ];
+    expect(files.length).toBeGreaterThan(20);
+    for (const f of files) {
+      const text = readFileSync(f, 'utf8');
+      expect(text, f).not.toMatch(PLACES);
+      expect(text, f).not.toMatch(BIO);
+    }
+  });
+
+  it('illustration art text carries no employer or place names', () => {
+    const dir = resolve('src/illustrations/files');
+    for (const f of readdirSync(dir).filter((n) => n.endsWith('.svg'))) {
+      const text = readFileSync(resolve(dir, f), 'utf8');
+      expect(text, f).not.toMatch(PLACES);
+      expect(text, f).not.toMatch(BIO);
+    }
+  });
+
+  it('the scan still catches the terms it bans', () => {
+    expect('Front-end developer, Sandals Resorts').toMatch(BIO);
+    expect('Booking.com').toMatch(BIO);
+    expect('Fluky Factory').toMatch(BIO);
+    expect('Born in Honduras').toMatch(PLACES);
+    expect('island-sandals').not.toMatch(BIO);
   });
 
   it('draws the default route when no route attribute is set', () => {
@@ -658,5 +698,44 @@ describe('illustrations', () => {
     );
     expect(waveMotion).toContain('transform: rotate');
     expect(waveMotion).not.toContain('translate');
+  });
+});
+
+describe('stamp city label (#59)', () => {
+  const label = (svg: string) =>
+    svg.match(/<textPath[^>]*>([^<]*)<\/textPath>/)?.[1] ?? '';
+
+  it('defaults to DESTINATION · ARRIVALS when no city is set', () => {
+    const svg = inlineIllustration('stamp', 'st-a');
+    expect(label(svg)).toBe(
+      'DESTINATION · ARRIVALS · DESTINATION · ARRIVALS ·',
+    );
+    expect(svg).not.toContain('__city__');
+    expect(svg).not.toMatch(/AMSTERDAM/i);
+  });
+
+  it('renders the city uppercase and escaped', () => {
+    expect(label(inlineIllustration('stamp', 'st-b', { city: 'Lisbon' }))).toBe(
+      'LISBON · ARRIVALS · LISBON · ARRIVALS ·',
+    );
+    const odd = inlineIllustration('stamp', 'st-c', { city: 'a<b>&' });
+    expect(odd).toContain('A&#60;B&#62;&#38; · ARRIVALS');
+    expect(label(inlineIllustration('stamp', 'st-d', { city: '  ' }))).toMatch(
+      /^DESTINATION · ARRIVALS/,
+    );
+  });
+
+  it('points the label at its own prefixed path, so it renders', () => {
+    const svg = inlineIllustration('stamp', 'st-f');
+    expect(svg).toContain('id="st-fstp"');
+    expect(svg).toContain('href="#st-fstp"');
+  });
+
+  it('keeps the stamp geometry, type and colour', () => {
+    const svg = inlineIllustration('stamp', 'st-e');
+    expect(svg).toContain('font-size="22"');
+    expect(svg).toContain('letter-spacing="3"');
+    expect(svg).toContain('fill="#d63c25"');
+    expect(svg).toContain('viewBox="-120 -120 240 240"');
   });
 });

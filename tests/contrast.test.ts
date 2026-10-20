@@ -38,10 +38,23 @@ describe('generated token CSS', () => {
     const css = renderTokensCss();
     expect(css).toContain('--lm-ink: #2b1b14;');
     expect(css).toContain('--lm-ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);');
-    expect(css).toContain('[data-theme="sandals"]');
+    expect(css).toContain('[data-theme="resort"]');
     expect(css).toContain('[data-theme="move"]');
     expect(css).toContain('--lm-sea-1:');
     expect(renderThemeCss()).toContain('@theme {');
-    expect(renderThemeCss()).toContain('--color-sandals-sky-1:');
+    expect(renderThemeCss()).toContain('--color-resort-sky-1:');
+  });
+});
+
+describe('renamed scene themes (#59)', () => {
+  it('keeps the old names as deprecated CSS aliases with the same values', async () => {
+    const { renderTokensCss } = await import('../src/tokens/render.ts');
+    const css = renderTokensCss();
+    for (const [from, to] of [
+      ['sandals', 'resort'],
+      ['fluky', 'studio'],
+      ['booking', 'platform'],
+    ])
+      expect(css).toContain(`[data-theme="${to}"],\n[data-theme="${from}"] {`);
   });
 });

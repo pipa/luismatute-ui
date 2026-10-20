@@ -247,7 +247,11 @@ export function renderTokensCss(): string {
         `--lm-cloud: ${theme.cloud[0]};`,
         `--lm-cloud-shade: ${theme.cloud[1]};`,
       );
-    css += themeBlock(`[data-theme="${name}"]`, lines);
+    const aliases = Object.entries(tokens.themeAliases)
+      .filter(([, to]) => to === name)
+      .map(([from]) => `,\n[data-theme="${from}"]`)
+      .join('');
+    css += themeBlock(`[data-theme="${name}"]${aliases}`, lines);
   }
   return css;
 }

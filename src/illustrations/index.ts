@@ -67,11 +67,25 @@ export function illustrationNames(): IllustrationName[] {
   return Object.keys(illustrations) as IllustrationName[];
 }
 
+export interface IllustrationOptions {
+  /** Stamp label (#59), rendered uppercase as "CITY · ARRIVALS". Defaults to "Destination". */
+  city?: string;
+}
+
+export const DEFAULT_STAMP_CITY = 'Destination';
+
+const escapeXml = (s: string): string => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
 /** Inline an illustration. `prefix` keeps clip-path ids unique when the same art is used twice. */
-export function inlineIllustration(name: IllustrationName, prefix: string = name): string {
+export function inlineIllustration(
+  name: IllustrationName,
+  prefix: string = name,
+  options: IllustrationOptions = {},
+): string {
   const svg = illustrations[name];
   if (!svg) throw new Error(`Unknown illustration: ${name}`);
-  const marked = svg.replaceAll('__id__', prefix);
+  const city = escapeXml((options.city?.trim() || DEFAULT_STAMP_CITY).toUpperCase());
+  const marked = svg.replaceAll('__id__', prefix).replaceAll('__city__', city);
   if (/\bclass="[^"]*\blm-art\b/.test(marked)) return marked;
   if (/<svg\b[^>]*\bclass="/.test(marked))
     return marked.replace(/<svg\b([^>]*?)class="([^"]*)"/, '<svg$1class="$2 lm-art"');

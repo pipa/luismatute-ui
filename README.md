@@ -28,9 +28,9 @@ import '@luismatute/ui/tokens.css';
 import '@luismatute/ui/fonts.css';
 import '@luismatute/ui/base.css';
 ---
-<html data-theme="sandals">
+<html data-theme="resort">
   <body>
-    <lm-card variant="stop"><h2>Front-end developer, Sandals Resorts</h2></lm-card>
+    <lm-card variant="stop"><h2>Front-end developer, Example Co.</h2></lm-card>
     <script>
       import { defineLmCard } from '@luismatute/ui/components/card';
       defineLmCard();
@@ -65,7 +65,7 @@ Import `@luismatute/ui` if you also want the token object and `inlineIllustratio
 
 ## Theming
 
-Set `data-theme` on any ancestor. Names are the scene ids from the source file: `hero`, `high`, `aa`, `sandals`, `bsc`, `fluky`, `move`, `booking`. Each theme sets the sky bands, sun, rays, title colour and, where the file has a sea, the sea bands.
+Set `data-theme` on any ancestor. Names are the scene ids from the source file: `hero`, `high`, `aa`, `resort`, `bsc`, `studio`, `move`, `platform`. The old names `sandals`, `fluky` and `booking` still work as deprecated aliases of `resort`, `studio` and `platform` (CSS only; they go in the next minor). Each theme sets the sky bands, sun, rays, title colour and, where the file has a sea, the sea bands.
 
 Skin and beard follow `--lm-skin`, `--lm-skin-d`, `--lm-skin-blush`, `--lm-skin-hair`, `--lm-skin-fade`, `--lm-skin-beard`, `--lm-avatar-amber` (aliased as `--lm-skin-amber` so older overrides and the pilot’s glasses keep working), `--lm-skin-tort`, `--lm-skin-lip`, `--lm-beard-line`, `--lm-skin-highlight`, `--lm-lens-tint` and `--lm-lens-tint-opacity`.
 
@@ -90,7 +90,7 @@ Tailwind v4 can load the theme with `@import "@luismatute/ui/theme.css";`.
 
 ## Illustrations
 
-SVG files live in `dist/illustrations/`. `inlineIllustration(name, prefix)` from `@luismatute/ui/illustrations` returns the markup and prefixes clip-path ids. Fills use the token variables, so they follow `data-theme`.
+SVG files live in `dist/illustrations/`. `inlineIllustration(name, prefix)` from `@luismatute/ui/illustrations` returns the markup and prefixes clip-path ids. The `stamp` art takes a `city` option, `inlineIllustration('stamp', 'st', { city: 'Lisbon' })`, rendered uppercase as `LISBON · ARRIVALS`; without it the label is `DESTINATION · ARRIVALS`. In the docs demos the same value comes from a `data-city` attribute on the `[data-art]` host. Fills use the token variables, so they follow `data-theme`.
 
 Colours that the source mixes at draw time (`mix` / `dk`) stay as hex. They do not track later token overrides.
 

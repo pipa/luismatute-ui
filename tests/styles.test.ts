@@ -21,8 +21,8 @@ describe('lm-shot frame', () => {
     defineLmShot();
     const shot = document.createElement('lm-shot');
     shot.setAttribute('href', 'https://example.com');
-    shot.setAttribute('src', 'shots/sandals-600.webp');
-    shot.setAttribute('chrome', 'sandals.com');
+    shot.setAttribute('src', 'shots/example-600.webp');
+    shot.setAttribute('chrome', 'example.com');
     document.body.append(shot);
     const frame = shot.querySelector('.lm-shot-frame');
     expect(frame).toBeTruthy();

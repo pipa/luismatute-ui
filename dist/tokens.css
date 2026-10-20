@@ -423,6 +423,7 @@ html[data-mode="night"] {
   --lm-cloud: #e6f5fa;
   --lm-cloud-shade: #cbe9f3;
 }
+[data-theme="resort"],
 [data-theme="sandals"] {
   --lm-sky-1: #ec6a58;
   --lm-sky-2: #ee7760;
@@ -471,6 +472,7 @@ html[data-mode="night"] {
   --lm-cloud: #b9e6df;
   --lm-cloud-shade: #93d6cc;
 }
+[data-theme="studio"],
 [data-theme="fluky"] {
   --lm-sky-1: #d6412b;
   --lm-sky-2: #da4b32;
@@ -519,6 +521,7 @@ html[data-mode="night"] {
   --lm-cloud: #8b7cc4;
   --lm-cloud-shade: #5a4c92;
 }
+[data-theme="platform"],
 [data-theme="booking"] {
   --lm-sky-1: #f19c74;
   --lm-sky-2: #f4a87e;

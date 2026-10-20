@@ -458,7 +458,7 @@ const N = (v) => Math.round(v * 10) / 10;
     s += at(668, 372, 1, `${path('M0 -10L74 -10L96 -36', 'none', ol(10))}${path('M0 -10L74 -10L96 -36', 'none', ' stroke="#4fb3a6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"')}${line('M8 -10V0M66 -10V0', INK, 4)}`);
     s += at(560, 392, 1, `${ell(0, 0, 13, 6, C.marigold, ol(3))}${ell(26, 3, 13, 6, C.marigold, ol(3))}${line('M-4 0Q0 -6 4 0M22 3Q26 -3 30 3', INK, 2.5)}`);
     // the two sites on a signpost
-    s += at(836, 380, 1, `${rect(-6, -150, 12, 150, C.wood, ol(4))}${path('M-70 -146H40L58 -130L40 -114H-70Z', C.cream, ol(4))}${text(-60, -124, 'sandals.com', 19, INK, ' font-family="Bricolage, sans-serif" font-weight="700"')}${path('M70 -100H-40L-58 -84L-40 -68H70Z', C.cream, ol(4))}${text(-44, -78, 'beaches.com', 19, INK, ' font-family="Bricolage, sans-serif" font-weight="700"')}`);
+    s += at(836, 380, 1, `${rect(-6, -150, 12, 150, C.wood, ol(4))}${path('M-70 -146H40L58 -130L40 -114H-70Z', C.cream, ol(4))}${text(-60, -124, 'example.com', 19, INK, ' font-family="Bricolage, sans-serif" font-weight="700"')}${path('M70 -100H-40L-58 -84L-40 -68H70Z', C.cream, ol(4))}${text(-44, -78, 'example.org', 19, INK, ' font-family="Bricolage, sans-serif" font-weight="700"')}`);
     s += anim('crab', at(780, 428, 1, `${anim('claw', `${path('M-28 -10Q-44 -26 -34 -36Q-26 -30 -30 -22Q-22 -26 -20 -16Z', C.tomato, ol(3))}`)}${anim('claw', `${path('M28 -10Q44 -26 34 -36Q26 -30 30 -22Q22 -26 20 -16Z', C.tomato, ol(3))}`, 'animation-delay:-.25s')}${ell(0, -6, 22, 13, C.tomato, ol(3.5))}${line('M-8 -16V-26M8 -16V-26', INK, 3)}${circ(-8, -28, 4, '#fff', ol(2))}${circ(8, -28, 4, '#fff', ol(2))}${line('M-18 2L-26 8M-10 5L-14 12M18 2L26 8M10 5L14 12', INK, 3)}`));
     s += foam(60, 940, 446);
     return s;
@@ -523,17 +523,17 @@ const N = (v) => Math.round(v * 10) / 10;
     s += rr(470, 300, 64, 56, 6, C.tomato, ol(4));
     // sign with a four-leaf clover
     const leaf = (r) => `<g transform="rotate(${r})">${path('M0 0C-14 -10 -16 -30 -6 -34C-2 -36 0 -30 0 -26C0 -30 2 -36 6 -34C16 -30 14 -10 0 0Z', C.leaf, ol(3))}</g>`;
-    s += at(232, 300, 1, `${rect(-6, 0, 12, 56, C.wood, ol(3.5))}${rr(-74, -58, 148, 62, 12, C.cream, ol(4.5))}${text(-30, -32, 'Fluky', 22, INK, ' font-family="Bricolage Display, sans-serif" font-weight="800"')}${text(-30, -10, 'Factory', 18, INK, ' font-family="Bricolage Display, sans-serif" font-weight="800"')}${at(-50, -28, 0.62, `<g class="spin" style="--t:14s">${leaf(0)}${leaf(90)}${leaf(180)}${leaf(270)}${circ(0, 0, 5, '#3f7d35')}</g>`)}`);
+    s += at(232, 300, 1, `${rect(-6, 0, 12, 56, C.wood, ol(3.5))}${rr(-74, -58, 148, 62, 12, C.cream, ol(4.5))}${text(-30, -32, 'Demo', 22, INK, ' font-family="Bricolage Display, sans-serif" font-weight="800"')}${text(-30, -10, 'Factory', 18, INK, ' font-family="Bricolage Display, sans-serif" font-weight="800"')}${at(-50, -28, 0.62, `<g class="spin" style="--t:14s">${leaf(0)}${leaf(90)}${leaf(180)}${leaf(270)}${circ(0, 0, 5, '#3f7d35')}</g>`)}`);
     // crates on the dock, one per project, the featured one with a star
     const crate = (x, y, w, h, label, feat) => `${rect(x, y, w, h, '#c98a4a', ol(4))}${line(`M${x + 4} ${y + 4}L${x + w - 4} ${y + h - 4}`, '#a8703a', 3)}${rr(x + 9, y + h * 0.26, w - 18, h * 0.48, 4, C.cream, ol(2.5))}${text(x + w / 2, y + h * 0.59, label, 14, INK, ' text-anchor="middle" font-family="IBM Plex Mono, monospace" font-weight="500"')}${feat ? `${circ(x + w - 6, y + 4, 15, C.marigold, ol(3))}${at(x + w - 6, y + 4, 1.25, path('M0 -8l2.4 5 5.4.6-4 3.6 1.1 5.3-4.9-2.7-4.9 2.7 1.1-5.3-4-3.6 5.4-.6z', INK))}` : ''}`;
     s += crate(758, 340, 112, 56, 'EXCURSIONS', false);
-    s += crate(876, 330, 104, 66, 'CATCH', true);
-    s += crate(778, 290, 90, 50, 'MAYAN', false);
+    s += crate(876, 330, 104, 66, 'CARGO', true);
+    s += crate(778, 290, 90, 50, 'TOURS', false);
     s += crate(890, 286, 78, 44, 'FERRY', false);
     return s + foam(70, 990, 446);
   }
 
-  /* ---------- Amsterdam: canal houses that draw in ---------- */
+  /* ---------- canal city: canal houses that draw in ---------- */
   function house(x, base, w, h, kind, c) {
     const top = base - h;
     let sil;
@@ -575,7 +575,7 @@ const N = (v) => Math.round(v * 10) / 10;
     const ring = (r, w) => circ(0, 0, r, 'none', ` stroke="#d63c25" stroke-width="${w}"`);
     let s = `<defs><path id="stp" d="M-78 0A78 78 0 1 1 78 0A78 78 0 1 1 -78 0"/></defs>`;
     s += ring(R, 8) + ring(R - 14, 3) + ring(58, 3);
-    s += `<text font-family="Bricolage Display, sans-serif" font-weight="800" font-size="22" fill="#d63c25" letter-spacing="3"><textPath href="#stp" startOffset="2%">AMSTERDAM · ARRIVALS · AMSTERDAM · ARRIVALS ·</textPath></text>`;
+    s += `<text font-family="Bricolage Display, sans-serif" font-weight="800" font-size="22" fill="#d63c25" letter-spacing="3"><textPath href="#stp" startOffset="2%">__city__ · ARRIVALS · __city__ · ARRIVALS ·</textPath></text>`;
     s += text(0, 18, '2017', 46, '#d63c25', ' text-anchor="middle" font-family="Bricolage Display, sans-serif" font-weight="800"');
     s += at(-20, -44, 0.34, planeTop().replaceAll(INK, '#d63c25').replaceAll(C.cream, 'none').replaceAll(C.sand, 'none').replaceAll(C.lagoon, 'none').replaceAll(C.tomato, '#d63c25'));
     const r = rng(7);

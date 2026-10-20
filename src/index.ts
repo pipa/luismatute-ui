@@ -6,8 +6,12 @@ export {
   MOTION_KEY,
   readMotionPreference,
 } from './components/motion.ts';
-export type { IllustrationName } from './illustrations/index.ts';
+export type {
+  IllustrationName,
+  IllustrationOptions,
+} from './illustrations/index.ts';
 export {
+  DEFAULT_STAMP_CITY,
   illustrationNames,
   illustrations,
   inlineIllustration,
