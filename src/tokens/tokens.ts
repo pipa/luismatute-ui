@@ -95,8 +95,40 @@ export const skin = {
   lensTintOpacity: '0.82',
 } as const;
 
+
+/** Old ids kept on `sky`, `sea` and `themes` (#59). Each is a non-enumerable getter for its new key. */
+type LegacyKeys<T> = {
+  /** @deprecated Use `airport`. */ readonly aa: T extends { airport: infer V } ? V : never;
+  /** @deprecated Use `resort`. */ readonly sandals: T extends { resort: infer V } ? V : never;
+  /** @deprecated Use `campus`. */ readonly bsc: T extends { campus: infer V } ? V : never;
+  /** @deprecated Use `studio`. */ readonly fluky: T extends { studio: infer V } ? V : never;
+};
+type LegacyPlatform<T> = {
+  /** @deprecated Use `platform`. */ readonly booking: T extends { platform: infer V } ? V : never;
+};
+type WithLegacy<T> = T & LegacyKeys<T> & ('platform' extends keyof T ? LegacyPlatform<T> : unknown);
+
+function withLegacy<T extends object>(base: T): WithLegacy<T> {
+  const legacy: Record<string, string> = {
+    aa: 'airport',
+    sandals: 'resort',
+    bsc: 'campus',
+    fluky: 'studio',
+    booking: 'platform',
+  };
+  for (const [old, now] of Object.entries(legacy)) {
+    if (!(now in base)) continue;
+    // Non-enumerable so Object.keys/entries (CSS output, docs lists) never see duplicates.
+    Object.defineProperty(base, old, {
+      get: () => (base as Record<string, unknown>)[now],
+      enumerable: false,
+    });
+  }
+  return base as WithLegacy<T>;
+}
+
 /** Eight-band skies, top to bottom, from the SKY table. */
-export const sky = {
+const skyBase = {
   hero: [
     '#f29a3a',
     '#f4a742',
@@ -178,6 +210,7 @@ export const sky = {
     '#fde8c9',
   ],
 } as const;
+export const sky = withLegacy(skyBase);
 
 /** Twelve-band climb gradient (HIGH) used above the hero sky. */
 export const climb = [
@@ -196,13 +229,14 @@ export const climb = [
 ] as const;
 
 /** Four-band seas, horizon to deep, from the SEA table. */
-export const sea = {
+const seaBase = {
   airport: ['#2c84ad', '#2a789f', '#276b90', '#235e80'],
   resort: ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'],
   campus: ['#2c6f95', '#286386', '#235777', '#1e4b68'],
   studio: ['#1f7470', '#1c6764', '#185a58', '#144d4c'],
   move: ['#2a3266', '#242b5a', '#1f254e', '#1a1f43'],
 } as const;
+export const sea = withLegacy(seaBase);
 
 export const font = {
   display: '"Bricolage Display", "Arial Narrow", system-ui, sans-serif',
@@ -467,7 +501,7 @@ export const themeAliases = {
   booking: 'platform',
 } as const;
 
-export const themes = {
+const themesBase = {
   hero: {
     label: 'Hero sunrise',
     sky: sky.hero,
@@ -555,7 +589,9 @@ export const themes = {
   },
 } as const;
 
-export type ThemeName = keyof typeof themes;
+export const themes = withLegacy(themesBase);
+
+export type ThemeName = keyof typeof themesBase;
 
 /**
  * Text/background pairs the components and base styles actually paint.
