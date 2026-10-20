@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { defineLmAvatar } from '../src/components/avatar.ts';
@@ -342,6 +342,13 @@ describe('lm-globe', () => {
   });
 });
 
+// Real route places (Sentinel, #58). docs/*.html still carries the Sandals
+// stop demo (theme name and copy); that bio content is tracked separately.
+const PLACES =
+  /Honduras|Roat[aá]n|Amsterdam|Netherlands|Caribbean|Miami|San Pedro|Tegucigalpa/i;
+const BANNED =
+  /Honduras|Roat[aá]n|Amsterdam|Netherlands|Caribbean|Miami|San Pedro|Tegucigalpa|Sandals|Booking\.com|Fluky/i;
+
 describe('lm-globe night palette and dashed route (#57)', () => {
   const css = readFileSync(resolve('src/styles/base.css'), 'utf8');
   const block = (sel: string) => {
@@ -398,9 +405,15 @@ describe('lm-globe night palette and dashed route (#57)', () => {
         400,
       );
     const src = readFileSync(resolve('src/components/globe-route.ts'), 'utf8');
-    expect(src).not.toMatch(
-      /Honduras|Roat|Amsterdam|Netherlands|Caribbean|Sandals|Booking|Fluky|Miami/i,
-    );
+    expect(src).not.toMatch(BANNED);
+  });
+
+  it('docs/*.html carry no real route or bio terms', () => {
+    const dir = resolve('docs');
+    const pages = readdirSync(dir).filter((f) => f.endsWith('.html'));
+    expect(pages.length).toBeGreaterThan(0);
+    for (const f of pages)
+      expect(readFileSync(resolve(dir, f), 'utf8'), f).not.toMatch(PLACES);
   });
 
   it('draws the default route when no route attribute is set', () => {
