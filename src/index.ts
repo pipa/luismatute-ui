@@ -12,6 +12,7 @@ export type {
 } from './illustrations/index.ts';
 export {
   DEFAULT_STAMP_CITY,
+  deprecatedIllustrations,
   illustrationNames,
   illustrations,
   inlineIllustration,

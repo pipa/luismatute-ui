@@ -102,8 +102,12 @@ var illustrations = {
   "windsock": windsock,
   "night-tower": nightTower,
   "island-aa": islandAa,
+  "island-resort": islandSandals,
+  /** @deprecated Use 'island-resort'. */
   "island-sandals": islandSandals,
   "island-bsc": islandBsc,
+  "island-studio": islandFluky,
+  /** @deprecated Use 'island-studio'. */
   "island-fluky": islandFluky,
   "suitcase": suitcase,
   "gear": gear,
@@ -117,6 +121,7 @@ var illustrations = {
   "avatar": avatar,
   "globe": globe
 };
+var deprecatedIllustrations = { "island-sandals": "island-resort", "island-fluky": "island-studio" };
 function illustrationNames() {
   return Object.keys(illustrations);
 }
@@ -133,6 +138,6 @@ function inlineIllustration(name, prefix = name, options = {}) {
   return marked.replace("<svg", '<svg class="lm-art"');
 }
 
-export { DEFAULT_STAMP_CITY, illustrationNames, illustrations, inlineIllustration };
+export { DEFAULT_STAMP_CITY, deprecatedIllustrations, illustrationNames, illustrations, inlineIllustration };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

@@ -18,6 +18,7 @@ import { defineLmMotionToggle } from '../src/components/motion-toggle.ts';
 import { defineLmPause } from '../src/components/pause.ts';
 import { defineLmShot } from '../src/components/shot.ts';
 import {
+  deprecatedIllustrations,
   illustrations,
   inlineIllustration,
 } from '../src/illustrations/index.ts';
@@ -698,6 +699,23 @@ describe('illustrations', () => {
     );
     expect(waveMotion).toContain('transform: rotate');
     expect(waveMotion).not.toContain('translate');
+  });
+});
+
+describe('deprecated island ids (#59)', () => {
+  it('serves the same art under the new and the old ids', () => {
+    for (const [from, to] of Object.entries(deprecatedIllustrations)) {
+      expect(illustrations[to as keyof typeof illustrations]).toBe(
+        illustrations[from as keyof typeof illustrations],
+      );
+      expect(inlineIllustration(from as never, 'x')).toBe(
+        inlineIllustration(to as never, 'x'),
+      );
+    }
+    expect(deprecatedIllustrations).toEqual({
+      'island-sandals': 'island-resort',
+      'island-fluky': 'island-studio',
+    });
   });
 });
 

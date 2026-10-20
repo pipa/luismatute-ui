@@ -117,7 +117,7 @@ export const sky = {
     '#a3d5ea',
     '#bae0ef',
   ],
-  aa: [
+  airport: [
     '#4cacd5',
     '#59b4d9',
     '#67bcdd',
@@ -137,7 +137,7 @@ export const sky = {
     '#f8bd95',
     '#f9cba4',
   ],
-  bsc: [
+  campus: [
     '#1d877d',
     '#229087',
     '#289a90',
@@ -197,9 +197,9 @@ export const climb = [
 
 /** Four-band seas, horizon to deep, from the SEA table. */
 export const sea = {
-  aa: ['#2c84ad', '#2a789f', '#276b90', '#235e80'],
+  airport: ['#2c84ad', '#2a789f', '#276b90', '#235e80'],
   resort: ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'],
-  bsc: ['#2c6f95', '#286386', '#235777', '#1e4b68'],
+  campus: ['#2c6f95', '#286386', '#235777', '#1e4b68'],
   studio: ['#1f7470', '#1c6764', '#185a58', '#144d4c'],
   move: ['#2a3266', '#242b5a', '#1f254e', '#1a1f43'],
 } as const;
@@ -454,11 +454,15 @@ export const target = {
  * `sea` is omitted when that scene has no SEA entry.
  */
 /**
- * Deprecated theme names (#59), kept as CSS aliases for one minor release so
- * existing data-theme values keep working. Use the new names.
+ * Deprecated theme ids (#59) → their generic names. The old ids keep working
+ * as `[data-theme]` selectors and as `--color-<old>-sky-*` / `-sea-*` aliases.
+ * @deprecated Use the generic names (`airport`, `resort`, `campus`, `studio`,
+ * `platform`); the old ids will be removed in a future major.
  */
 export const themeAliases = {
+  aa: 'airport',
   sandals: 'resort',
+  bsc: 'campus',
   fluky: 'studio',
   booking: 'platform',
 } as const;
@@ -480,10 +484,10 @@ export const themes = {
     title: color.ink,
     titleShadow: '#2a7aa3',
   },
-  aa: {
-    label: 'AA sky',
-    sky: sky.aa,
-    sea: sea.aa,
+  airport: {
+    label: 'Airport sky',
+    sky: sky.airport,
+    sea: sea.airport,
     rays: '#ffffff',
     sun: ['#fff8e0', '#d3eff7', '#bfe6f2'],
     cloud: ['#e6f5fa', '#cbe9f3'],
@@ -504,10 +508,10 @@ export const themes = {
     stop: '#ef6f5a',
     wave: '#a3e3da',
   },
-  bsc: {
-    label: 'BSc teal',
-    sky: sky.bsc,
-    sea: sea.bsc,
+  campus: {
+    label: 'Campus teal',
+    sky: sky.campus,
+    sea: sea.campus,
     rays: '#e9fff8',
     sun: ['#fff6d6', '#82d3c9', '#6dc9be'],
     cloud: ['#b9e6df', '#93d6cc'],
@@ -583,14 +587,19 @@ export const textPairs = [
     large: true,
   },
   { name: 'ink on hero sky', fg: color.ink, bg: sky.hero[0], large: true },
-  { name: 'ink on aa sky', fg: color.ink, bg: sky.aa[0], large: true },
+  {
+    name: 'ink on airport sky',
+    fg: color.ink,
+    bg: sky.airport[0],
+    large: true,
+  },
   {
     name: 'ink on resort sky',
     fg: color.ink,
     bg: sky.resort[0],
     large: true,
   },
-  { name: 'ink on bsc sky', fg: color.ink, bg: sky.bsc[0], large: true },
+  { name: 'ink on campus sky', fg: color.ink, bg: sky.campus[0], large: true },
   { name: 'ink on studio sky', fg: color.ink, bg: sky.studio[0], large: true },
   {
     name: 'ink on platform sky',

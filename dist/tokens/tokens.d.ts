@@ -96,9 +96,9 @@ export declare const skin: {
 export declare const sky: {
     readonly hero: readonly ['#f29a3a', '#f4a742', '#f6b34c', '#f8bf5a', '#f9ca6b', '#fbd580', '#fce09a', '#fdebb7'];
     readonly high: readonly ['#3f8fc4', '#4c9bcc', '#5aa7d3', '#69b3da', '#7bbfe0', '#8ecae5', '#a3d5ea', '#bae0ef'];
-    readonly aa: readonly ['#4cacd5', '#59b4d9', '#67bcdd', '#76c4e1', '#86cce5', '#98d4e9', '#abdced', '#bfe4f1'];
+    readonly airport: readonly ['#4cacd5', '#59b4d9', '#67bcdd', '#76c4e1', '#86cce5', '#98d4e9', '#abdced', '#bfe4f1'];
     readonly resort: readonly ['#ec6a58', '#ee7760', '#f08568', '#f29372', '#f4a17c', '#f6af88', '#f8bd95', '#f9cba4'];
-    readonly bsc: readonly ['#1d877d', '#229087', '#289a90', '#31a39a', '#3dada3', '#4bb7ad', '#5dc1b7', '#72cbc1'];
+    readonly campus: readonly ['#1d877d', '#229087', '#289a90', '#31a39a', '#3dada3', '#4bb7ad', '#5dc1b7', '#72cbc1'];
     readonly studio: readonly ['#d6412b', '#da4b32', '#de5539', '#e26042', '#e56b4c', '#e87857', '#eb8564', '#ee9372'];
     readonly move: readonly ['#1f1840', '#251d4a', '#2c2354', '#33295e', '#3b3068', '#443872', '#4e417c', '#594b86'];
     readonly platform: readonly ['#f19c74', '#f4a87e', '#f6b389', '#f8bf95', '#f9caa1', '#fbd4ad', '#fcdebb', '#fde8c9'];
@@ -107,9 +107,9 @@ export declare const sky: {
 export declare const climb: readonly ['#3c8cc2', '#4797ca', '#54a3d1', '#62aed7', '#73b9dc', '#87c4df', '#a0cfdf', '#bcd9d6', '#d8dfc6', '#eedcae', '#f5c98a', '#f4b46a'];
 /** Four-band seas, horizon to deep, from the SEA table. */
 export declare const sea: {
-    readonly aa: readonly ['#2c84ad', '#2a789f', '#276b90', '#235e80'];
+    readonly airport: readonly ['#2c84ad', '#2a789f', '#276b90', '#235e80'];
     readonly resort: readonly ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'];
-    readonly bsc: readonly ['#2c6f95', '#286386', '#235777', '#1e4b68'];
+    readonly campus: readonly ['#2c6f95', '#286386', '#235777', '#1e4b68'];
     readonly studio: readonly ['#1f7470', '#1c6764', '#185a58', '#144d4c'];
     readonly move: readonly ['#2a3266', '#242b5a', '#1f254e', '#1a1f43'];
 };
@@ -346,11 +346,15 @@ export declare const target: {
  * `sea` is omitted when that scene has no SEA entry.
  */
 /**
- * Deprecated theme names (#59), kept as CSS aliases for one minor release so
- * existing data-theme values keep working. Use the new names.
+ * Deprecated theme ids (#59) → their generic names. The old ids keep working
+ * as `[data-theme]` selectors and as `--color-<old>-sky-*` / `-sea-*` aliases.
+ * @deprecated Use the generic names (`airport`, `resort`, `campus`, `studio`,
+ * `platform`); the old ids will be removed in a future major.
  */
 export declare const themeAliases: {
+    readonly aa: 'airport';
     readonly sandals: 'resort';
+    readonly bsc: 'campus';
     readonly fluky: 'studio';
     readonly booking: 'platform';
 };
@@ -371,8 +375,8 @@ export declare const themes: {
         readonly title: "#2b1b14";
         readonly titleShadow: '#2a7aa3';
     };
-    readonly aa: {
-        readonly label: 'AA sky';
+    readonly airport: {
+        readonly label: 'Airport sky';
         readonly sky: readonly ["#4cacd5", "#59b4d9", "#67bcdd", "#76c4e1", "#86cce5", "#98d4e9", "#abdced", "#bfe4f1"];
         readonly sea: readonly ["#2c84ad", "#2a789f", "#276b90", "#235e80"];
         readonly rays: '#ffffff';
@@ -395,8 +399,8 @@ export declare const themes: {
         readonly stop: '#ef6f5a';
         readonly wave: '#a3e3da';
     };
-    readonly bsc: {
-        readonly label: 'BSc teal';
+    readonly campus: {
+        readonly label: 'Campus teal';
         readonly sky: readonly ["#1d877d", "#229087", "#289a90", "#31a39a", "#3dada3", "#4bb7ad", "#5dc1b7", "#72cbc1"];
         readonly sea: readonly ["#2c6f95", "#286386", "#235777", "#1e4b68"];
         readonly rays: '#e9fff8';
@@ -497,7 +501,7 @@ export declare const textPairs: readonly [{
     readonly bg: "#f29a3a";
     readonly large: true;
 }, {
-    readonly name: 'ink on aa sky';
+    readonly name: 'ink on airport sky';
     readonly fg: "#2b1b14";
     readonly bg: "#4cacd5";
     readonly large: true;
@@ -507,7 +511,7 @@ export declare const textPairs: readonly [{
     readonly bg: "#ec6a58";
     readonly large: true;
 }, {
-    readonly name: 'ink on bsc sky';
+    readonly name: 'ink on campus sky';
     readonly fg: "#2b1b14";
     readonly bg: "#1d877d";
     readonly large: true;
@@ -707,7 +711,9 @@ export declare const modePairs: readonly [{
 })[]];
 export declare const tokens: {
     readonly themeAliases: {
+        readonly aa: 'airport';
         readonly sandals: 'resort';
+        readonly bsc: 'campus';
         readonly fluky: 'studio';
         readonly booking: 'platform';
     };
@@ -796,18 +802,18 @@ export declare const tokens: {
     readonly sky: {
         readonly hero: readonly ['#f29a3a', '#f4a742', '#f6b34c', '#f8bf5a', '#f9ca6b', '#fbd580', '#fce09a', '#fdebb7'];
         readonly high: readonly ['#3f8fc4', '#4c9bcc', '#5aa7d3', '#69b3da', '#7bbfe0', '#8ecae5', '#a3d5ea', '#bae0ef'];
-        readonly aa: readonly ['#4cacd5', '#59b4d9', '#67bcdd', '#76c4e1', '#86cce5', '#98d4e9', '#abdced', '#bfe4f1'];
+        readonly airport: readonly ['#4cacd5', '#59b4d9', '#67bcdd', '#76c4e1', '#86cce5', '#98d4e9', '#abdced', '#bfe4f1'];
         readonly resort: readonly ['#ec6a58', '#ee7760', '#f08568', '#f29372', '#f4a17c', '#f6af88', '#f8bd95', '#f9cba4'];
-        readonly bsc: readonly ['#1d877d', '#229087', '#289a90', '#31a39a', '#3dada3', '#4bb7ad', '#5dc1b7', '#72cbc1'];
+        readonly campus: readonly ['#1d877d', '#229087', '#289a90', '#31a39a', '#3dada3', '#4bb7ad', '#5dc1b7', '#72cbc1'];
         readonly studio: readonly ['#d6412b', '#da4b32', '#de5539', '#e26042', '#e56b4c', '#e87857', '#eb8564', '#ee9372'];
         readonly move: readonly ['#1f1840', '#251d4a', '#2c2354', '#33295e', '#3b3068', '#443872', '#4e417c', '#594b86'];
         readonly platform: readonly ['#f19c74', '#f4a87e', '#f6b389', '#f8bf95', '#f9caa1', '#fbd4ad', '#fcdebb', '#fde8c9'];
     };
     readonly climb: readonly ["#3c8cc2", "#4797ca", "#54a3d1", "#62aed7", "#73b9dc", "#87c4df", "#a0cfdf", "#bcd9d6", "#d8dfc6", "#eedcae", "#f5c98a", "#f4b46a"];
     readonly sea: {
-        readonly aa: readonly ['#2c84ad', '#2a789f', '#276b90', '#235e80'];
+        readonly airport: readonly ['#2c84ad', '#2a789f', '#276b90', '#235e80'];
         readonly resort: readonly ['#45bfb4', '#35aba2', '#2a958f', '#227f7b'];
-        readonly bsc: readonly ['#2c6f95', '#286386', '#235777', '#1e4b68'];
+        readonly campus: readonly ['#2c6f95', '#286386', '#235777', '#1e4b68'];
         readonly studio: readonly ['#1f7470', '#1c6764', '#185a58', '#144d4c'];
         readonly move: readonly ['#2a3266', '#242b5a', '#1f254e', '#1a1f43'];
     };
@@ -1054,8 +1060,8 @@ export declare const tokens: {
             readonly title: "#2b1b14";
             readonly titleShadow: '#2a7aa3';
         };
-        readonly aa: {
-            readonly label: 'AA sky';
+        readonly airport: {
+            readonly label: 'Airport sky';
             readonly sky: readonly ["#4cacd5", "#59b4d9", "#67bcdd", "#76c4e1", "#86cce5", "#98d4e9", "#abdced", "#bfe4f1"];
             readonly sea: readonly ["#2c84ad", "#2a789f", "#276b90", "#235e80"];
             readonly rays: '#ffffff';
@@ -1078,8 +1084,8 @@ export declare const tokens: {
             readonly stop: '#ef6f5a';
             readonly wave: '#a3e3da';
         };
-        readonly bsc: {
-            readonly label: 'BSc teal';
+        readonly campus: {
+            readonly label: 'Campus teal';
             readonly sky: readonly ["#1d877d", "#229087", "#289a90", "#31a39a", "#3dada3", "#4bb7ad", "#5dc1b7", "#72cbc1"];
             readonly sea: readonly ["#2c6f95", "#286386", "#235777", "#1e4b68"];
             readonly rays: '#e9fff8';
@@ -1175,7 +1181,7 @@ export declare const tokens: {
         readonly bg: "#f29a3a";
         readonly large: true;
     }, {
-        readonly name: 'ink on aa sky';
+        readonly name: 'ink on airport sky';
         readonly fg: "#2b1b14";
         readonly bg: "#4cacd5";
         readonly large: true;
@@ -1185,7 +1191,7 @@ export declare const tokens: {
         readonly bg: "#ec6a58";
         readonly large: true;
     }, {
-        readonly name: 'ink on bsc sky';
+        readonly name: 'ink on campus sky';
         readonly fg: "#2b1b14";
         readonly bg: "#1d877d";
         readonly large: true;

@@ -102,7 +102,7 @@ var sky = {
     "#a3d5ea",
     "#bae0ef"
   ],
-  aa: [
+  airport: [
     "#4cacd5",
     "#59b4d9",
     "#67bcdd",
@@ -122,7 +122,7 @@ var sky = {
     "#f8bd95",
     "#f9cba4"
   ],
-  bsc: [
+  campus: [
     "#1d877d",
     "#229087",
     "#289a90",
@@ -178,9 +178,9 @@ var climb = [
   "#f4b46a"
 ];
 var sea = {
-  aa: ["#2c84ad", "#2a789f", "#276b90", "#235e80"],
+  airport: ["#2c84ad", "#2a789f", "#276b90", "#235e80"],
   resort: ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"],
-  bsc: ["#2c6f95", "#286386", "#235777", "#1e4b68"],
+  campus: ["#2c6f95", "#286386", "#235777", "#1e4b68"],
   studio: ["#1f7470", "#1c6764", "#185a58", "#144d4c"],
   move: ["#2a3266", "#242b5a", "#1f254e", "#1a1f43"]
 };
@@ -412,7 +412,9 @@ var target = {
   min: "44px"
 };
 var themeAliases = {
+  aa: "airport",
   sandals: "resort",
+  bsc: "campus",
   fluky: "studio",
   booking: "platform"
 };
@@ -433,10 +435,10 @@ var themes = {
     title: color.ink,
     titleShadow: "#2a7aa3"
   },
-  aa: {
-    label: "AA sky",
-    sky: sky.aa,
-    sea: sea.aa,
+  airport: {
+    label: "Airport sky",
+    sky: sky.airport,
+    sea: sea.airport,
     rays: "#ffffff",
     sun: ["#fff8e0", "#d3eff7", "#bfe6f2"],
     cloud: ["#e6f5fa", "#cbe9f3"],
@@ -457,10 +459,10 @@ var themes = {
     stop: "#ef6f5a",
     wave: "#a3e3da"
   },
-  bsc: {
-    label: "BSc teal",
-    sky: sky.bsc,
-    sea: sea.bsc,
+  campus: {
+    label: "Campus teal",
+    sky: sky.campus,
+    sea: sea.campus,
     rays: "#e9fff8",
     sun: ["#fff6d6", "#82d3c9", "#6dc9be"],
     cloud: ["#b9e6df", "#93d6cc"],
@@ -529,14 +531,19 @@ var textPairs = [
     large: true
   },
   { name: "ink on hero sky", fg: color.ink, bg: sky.hero[0], large: true },
-  { name: "ink on aa sky", fg: color.ink, bg: sky.aa[0], large: true },
+  {
+    name: "ink on airport sky",
+    fg: color.ink,
+    bg: sky.airport[0],
+    large: true
+  },
   {
     name: "ink on resort sky",
     fg: color.ink,
     bg: sky.resort[0],
     large: true
   },
-  { name: "ink on bsc sky", fg: color.ink, bg: sky.bsc[0], large: true },
+  { name: "ink on campus sky", fg: color.ink, bg: sky.campus[0], large: true },
   { name: "ink on studio sky", fg: color.ink, bg: sky.studio[0], large: true },
   {
     name: "ink on platform sky",
@@ -744,6 +751,6 @@ var tokens = {
   modePairs
 };
 
-export { alpha, border, breakpoint, climb, code, color, day, duration, easing, font, fontSize, fontWeight, letterSpacing, lineHeight, modePairs, modeStable, motion, night, radius, sea, shadow, skin, sky, space, target, textPairs, themes, tokens, zIndex };
+export { alpha, border, breakpoint, climb, code, color, day, duration, easing, font, fontSize, fontWeight, letterSpacing, lineHeight, modePairs, modeStable, motion, night, radius, sea, shadow, skin, sky, space, target, textPairs, themeAliases, themes, tokens, zIndex };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

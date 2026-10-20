@@ -45,8 +45,12 @@ export const illustrations = {
   'windsock': windsock,
   'night-tower': nightTower,
   'island-aa': islandAa,
+  'island-resort': islandSandals,
+  /** @deprecated Use 'island-resort'. */
   'island-sandals': islandSandals,
   'island-bsc': islandBsc,
+  'island-studio': islandFluky,
+  /** @deprecated Use 'island-studio'. */
   'island-fluky': islandFluky,
   'suitcase': suitcase,
   'gear': gear,
@@ -62,6 +66,9 @@ export const illustrations = {
 } as const;
 
 export type IllustrationName = keyof typeof illustrations;
+
+/** @deprecated ids (#59) and the generic id each one aliases. */
+export const deprecatedIllustrations = {"island-sandals":"island-resort","island-fluky":"island-studio"} as const;
 
 export function illustrationNames(): IllustrationName[] {
   return Object.keys(illustrations) as IllustrationName[];

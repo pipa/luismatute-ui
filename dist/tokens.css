@@ -399,6 +399,7 @@ html[data-mode="night"] {
   --lm-title: #2b1b14;
   --lm-title-shadow: #2a7aa3;
 }
+[data-theme="airport"],
 [data-theme="aa"] {
   --lm-sky-1: #4cacd5;
   --lm-sky-2: #59b4d9;
@@ -448,6 +449,7 @@ html[data-mode="night"] {
   --lm-cloud: #fbd2bd;
   --lm-cloud-shade: #f4b49c;
 }
+[data-theme="campus"],
 [data-theme="bsc"] {
   --lm-sky-1: #1d877d;
   --lm-sky-2: #229087;

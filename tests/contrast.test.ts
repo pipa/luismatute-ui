@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { renderThemeCss, renderTokensCss } from '../src/tokens/render.ts';
-import { textPairs } from '../src/tokens/tokens.ts';
+import { sea, textPairs, themeAliases, themes } from '../src/tokens/tokens.ts';
 
 function channel(hex: string, index: number): number {
   const h = hex.replace('#', '');
@@ -47,14 +47,37 @@ describe('generated token CSS', () => {
 });
 
 describe('renamed scene themes (#59)', () => {
-  it('keeps the old names as deprecated CSS aliases with the same values', async () => {
-    const { renderTokensCss } = await import('../src/tokens/render.ts');
+  const pairs = [
+    ['aa', 'airport'],
+    ['sandals', 'resort'],
+    ['bsc', 'campus'],
+    ['fluky', 'studio'],
+    ['booking', 'platform'],
+  ] as const;
+
+  it('keeps every old id as a deprecated [data-theme] alias of the new one', () => {
     const css = renderTokensCss();
-    for (const [from, to] of [
-      ['sandals', 'resort'],
-      ['fluky', 'studio'],
-      ['booking', 'platform'],
-    ])
+    for (const [from, to] of pairs) {
       expect(css).toContain(`[data-theme="${to}"],\n[data-theme="${from}"] {`);
+      expect(themes).toHaveProperty(to);
+      expect(themes).not.toHaveProperty(from);
+      expect(themeAliases[from]).toBe(to);
+    }
+  });
+
+  it('aliases the old Tailwind colour variables to the new ones', () => {
+    const css = renderThemeCss();
+    for (const [from, to] of pairs) {
+      expect(css).toContain(`--color-${to}-sky-1: ${themes[to].sky[0]}`);
+      themes[to].sky.forEach((_, i) => {
+        expect(css).toContain(
+          `--color-${from}-sky-${i + 1}: var(--color-${to}-sky-${i + 1})`,
+        );
+      });
+      if (to in sea)
+        expect(css).toContain(
+          `--color-${from}-sea-1: var(--color-${to}-sea-1)`,
+        );
+    }
   });
 });
