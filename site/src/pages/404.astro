@@ -1,4 +1,6 @@
 ---
+// Not in the Pagefind index on purpose (#50): `bare` drops data-pagefind-body,
+// so search never offers "Page not found". site/e2e/search-index.spec.ts checks it.
 import Docs from '../layouts/Docs.astro';
 
 const base = import.meta.env.BASE_URL;
