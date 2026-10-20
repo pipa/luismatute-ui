@@ -100,11 +100,16 @@ for (const [w, cols] of [[320, 1], [768, 2], [1280, 3]] as const) {
       els.filter((e) => e.scrollWidth > e.clientWidth + 1 || e.getBoundingClientRect().right > e.closest('li')!.getBoundingClientRect().right).length,
     );
     expect(clipped).toBe(0);
-    // Name and Copy share one row.
-    const card = page.locator('[data-kit-item="palm"]');
-    const n = await card.locator('.kit-name').boundingBox();
-    const b = await card.locator('button[data-copy]').boundingBox();
-    expect(Math.abs(n!.y + n!.height / 2 - (b!.y + b!.height / 2))).toBeLessThan(8);
+    // Name and Copy share one row on every tile, without overlapping or leaving the tile.
+    const broken = await page.locator('.kit-row').evaluateAll((rows) =>
+      rows.filter((r) => {
+        const n = r.querySelector('.kit-name code')!.getBoundingClientRect();
+        const b = r.querySelector('button')!.getBoundingClientRect();
+        const li = r.closest('li')!.getBoundingClientRect();
+        return n.right > b.left || b.right > li.right || Math.abs(n.top + n.height / 2 - (b.top + b.height / 2)) > 8;
+      }).length,
+    );
+    expect(broken).toBe(0);
   });
 }
 

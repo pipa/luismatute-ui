@@ -1647,8 +1647,8 @@ hr.docs-flight {
     padding: 0 10px;
   }
 }
-/* 320px phones (#18 svg-kit): the header row was ~50px too wide. Tap targets stay >= 24px (WCAG 2.5.8). */
-@media (max-width: 359.98px) {
+/* Narrow phones, 320-419px (#18 svg-kit): the header row was up to ~50px too wide. Tap targets stay >= 24px (WCAG 2.5.8). */
+@media (max-width: 419.98px) {
   .head {
     gap: 6px;
     padding: 0 12px;
@@ -1660,4 +1660,10 @@ hr.docs-flight {
     min-width: 0;
     padding: 0 6px;
   }
+}
+/* Brand link meets the 24px target size (WCAG 2.5.8). */
+.head .brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
 }
