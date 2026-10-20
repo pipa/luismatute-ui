@@ -1,13 +1,14 @@
 ---
-// Not in the Pagefind index on purpose (#50): `bare` drops data-pagefind-body,
-// so search never offers "Page not found". site/e2e/search-index.spec.ts checks it.
+// Not in the Pagefind index on purpose (#50): `bare` drops data-pagefind-body
+// and the root carries data-pagefind-ignore (belt and braces, per Muse), so
+// search never offers "Page not found". site/e2e/search-index.spec.ts checks it.
 import Docs from '../layouts/Docs.astro';
 
 const base = import.meta.env.BASE_URL;
 ---
 
 <Docs slug="404" title="Page not found" description="That URL is not on the board." bare>
-  <div class="not-found">
+  <div class="not-found" data-pagefind-ignore>
     <p class="crumb">Gate closed</p>
     <h1 class="nf-code">404</h1>
     <p class="nf-hand">this flight was cancelled</p>

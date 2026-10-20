@@ -4,7 +4,8 @@ import { expect, type Page, test } from 'playwright/test';
 
 // #50: which pages the Pagefind index covers. Run `pnpm build:site` first.
 // Decision: every docs page is indexed, including the home page (/ui/); the
-// 404 page is excluded on purpose (Docs.astro `bare` drops data-pagefind-body),
+// 404 page is excluded on purpose (Docs.astro `bare` drops data-pagefind-body
+// and its root has data-pagefind-ignore),
 // so a search never offers "Page not found" as a result.
 const dist = new URL('../../site-dist/', import.meta.url).pathname;
 
@@ -61,6 +62,7 @@ test('home page is searchable', async ({ page }) => {
 test('404 is excluded on purpose', async ({ page }) => {
   const html = readFileSync(join(dist, '404.html'), 'utf8');
   expect(html).not.toContain('data-pagefind-body');
+  expect(html).toMatch(/class="not-found"[^>]*data-pagefind-ignore/);
   await page.goto('/ui/');
   const urls = await page.evaluate(async () => {
     const pf = await import('/ui/pagefind/pagefind.js' as string);
