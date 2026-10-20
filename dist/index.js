@@ -1256,7 +1256,24 @@ var skin = {
   lensTint: "#3a2a22",
   lensTintOpacity: "0.82"
 };
-var sky2 = {
+function withLegacy(base) {
+  const legacy = {
+    aa: "airport",
+    sandals: "resort",
+    bsc: "campus",
+    fluky: "studio",
+    booking: "platform"
+  };
+  for (const [old, now] of Object.entries(legacy)) {
+    if (!(now in base)) continue;
+    Object.defineProperty(base, old, {
+      get: () => base[now],
+      enumerable: false
+    });
+  }
+  return base;
+}
+var skyBase = {
   hero: [
     "#f29a3a",
     "#f4a742",
@@ -1338,6 +1355,7 @@ var sky2 = {
     "#fde8c9"
   ]
 };
+var sky2 = withLegacy(skyBase);
 var climb = [
   "#3c8cc2",
   "#4797ca",
@@ -1352,13 +1370,14 @@ var climb = [
   "#f5c98a",
   "#f4b46a"
 ];
-var sea2 = {
+var seaBase = {
   airport: ["#2c84ad", "#2a789f", "#276b90", "#235e80"],
   resort: ["#45bfb4", "#35aba2", "#2a958f", "#227f7b"],
   campus: ["#2c6f95", "#286386", "#235777", "#1e4b68"],
   studio: ["#1f7470", "#1c6764", "#185a58", "#144d4c"],
   move: ["#2a3266", "#242b5a", "#1f254e", "#1a1f43"]
 };
+var sea2 = withLegacy(seaBase);
 var font = {
   display: '"Bricolage Display", "Arial Narrow", system-ui, sans-serif',
   text: '"Bricolage", system-ui, -apple-system, "Segoe UI", sans-serif',
@@ -1593,7 +1612,7 @@ var themeAliases = {
   fluky: "studio",
   booking: "platform"
 };
-var themes = {
+var themesBase = {
   hero: {
     label: "Hero sunrise",
     sky: sky2.hero,
@@ -1680,6 +1699,7 @@ var themes = {
     stop: "#f2913f"
   }
 };
+var themes = withLegacy(themesBase);
 var textPairs = [
   { name: "ink on paper", fg: color.ink, bg: color.paper, large: false },
   { name: "ink on sand", fg: color.ink, bg: color.sand, large: false },
