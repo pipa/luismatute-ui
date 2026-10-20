@@ -20,7 +20,7 @@
     <main class="docs" id="main">
       <p class="lm-kicker">Design system · v0.1.2</p>
       <h1>Wheels up</h1>
-      <p>Tokens, components and illustrations extracted from the approved takeoff page. <a class="nav" href="./demo.html">Sandals stop demo</a></p>
+      <p>Tokens, components and illustrations extracted from the approved takeoff page. <a class="nav" href="./demo.html">Example stop demo</a></p>
 
       <h2>Colour</h2>
       <div class="swatches" id="swatches"></div>
@@ -52,22 +52,22 @@
           <p class="lm-intro">Example intro: two lines about where this stop is and what happened there.</p>
         </lm-card>
         <lm-card variant="stop">
-          <p class="lm-kicker">Stop 2 of 6 · July 2011 – August 2017</p>
-          <h2>Front-end developer, Sandals Resorts</h2>
-          <p>Frontend developer with some backend on sandals.com and beaches.com.</p>
+          <p class="lm-kicker">Stop 2 of 6 · 2018 – 2021</p>
+          <h2>Front-end developer, Example Co.</h2>
+          <p>Frontend developer with some backend on example.com and example.org.</p>
           <lm-more label="More" panel="more-demo">
-            <p>Led several full redesigns and re-engineering efforts.</p>
+            <p>Example notes about this stop.</p>
           </lm-more>
           <ul class="lm-chips">
-            <li><lm-chip>sandals.com</lm-chip></li>
-            <li><lm-chip variant="featured">Catch Advisory Group</lm-chip></li>
+            <li><lm-chip>example.com</lm-chip></li>
+            <li><lm-chip variant="featured">Featured client</lm-chip></li>
           </ul>
         </lm-card>
         <lm-shot
-          href="https://web.archive.org/web/20160620110713/http://www.sandals.com/"
-          src="./shots/sandals-600.webp"
-          chrome="sandals.com"
-          caption="sandals.com"
+          href="https://example.com/"
+          src="./shots/example-600.webp"
+          chrome="example.com"
+          caption="example.com"
           alt=""
           width="600"
           height="390"
@@ -143,12 +143,12 @@
 
       const plan = document.querySelector('#plan');
       plan.stops = [
-        { href: '#stop-aa', years: '2006–2011', label: 'American Airlines' },
-        { href: '#stop-sandals', years: '2011–2017', label: 'Sandals Resorts' },
-        { href: '#stop-bsc', years: '2012', label: 'BSc Computer Science' },
-        { href: '#stop-fluky', years: 'c. 2012–2019', label: 'Fluky Factory' },
-        { href: '#stop-move', years: '2017', label: 'The move' },
-        { href: '#stop-booking', years: 'Since 2017', label: 'Booking.com' },
+        { href: '#stop-one', years: '2010–2014', label: 'Stop one, Example Co.' },
+        { href: '#stop-example', years: '2014–2018', label: 'Stop two, Sample Studio' },
+        { href: '#stop-three', years: '2016', label: 'Example course' },
+        { href: '#stop-four', years: '2016–2019', label: 'Stop four, Demo Labs' },
+        { href: '#stop-five', years: '2019', label: 'The move' },
+        { href: '#stop-six', years: 'Since 2019', label: 'Now, Example Co.' },
       ];
 
       const poses = document.querySelector('#poses');

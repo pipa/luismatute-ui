@@ -194,7 +194,7 @@ export function renderTokensCss(): string {
   css += skyDecls(themes.hero.sky)
     .map((line) => `  ${line}\n`)
     .join('');
-  css += seaDecls(tokens.sea.aa)
+  css += seaDecls(tokens.sea.airport)
     .map((line) => `  ${line}\n`)
     .join('');
   climb.forEach((hex, i) => {
@@ -247,7 +247,11 @@ export function renderTokensCss(): string {
         `--lm-cloud: ${theme.cloud[0]};`,
         `--lm-cloud-shade: ${theme.cloud[1]};`,
       );
-    css += themeBlock(`[data-theme="${name}"]`, lines);
+    const aliases = Object.entries(tokens.themeAliases)
+      .filter(([, to]) => to === name)
+      .map(([from]) => `,\n[data-theme="${from}"]`)
+      .join('');
+    css += themeBlock(`[data-theme="${name}"]${aliases}`, lines);
   }
   return css;
 }
@@ -319,6 +323,16 @@ export function renderThemeCss(): string {
     bands.forEach((hex, i) => {
       add(`--color-${name}-sea-${i + 1}`, hex);
     });
+  }
+  // #59: deprecated theme ids alias the generic ones
+  for (const [from, to] of Object.entries(tokens.themeAliases)) {
+    themes[to].sky.forEach((_, i) => {
+      add(`--color-${from}-sky-${i + 1}`, `var(--color-${to}-sky-${i + 1})`);
+    });
+    if (to in sea)
+      sea[to as keyof typeof sea].forEach((_, i) => {
+        add(`--color-${from}-sea-${i + 1}`, `var(--color-${to}-sea-${i + 1})`);
+      });
   }
   climb.forEach((hex, i) => {
     add(`--color-climb-${i + 1}`, hex);

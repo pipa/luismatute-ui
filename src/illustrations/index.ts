@@ -45,8 +45,12 @@ export const illustrations = {
   'windsock': windsock,
   'night-tower': nightTower,
   'island-aa': islandAa,
+  'island-resort': islandSandals,
+  /** @deprecated Use 'island-resort'. */
   'island-sandals': islandSandals,
   'island-bsc': islandBsc,
+  'island-studio': islandFluky,
+  /** @deprecated Use 'island-studio'. */
   'island-fluky': islandFluky,
   'suitcase': suitcase,
   'gear': gear,
@@ -63,15 +67,49 @@ export const illustrations = {
 
 export type IllustrationName = keyof typeof illustrations;
 
+/** @deprecated ids (#59) and the generic id each one aliases. */
+export const deprecatedIllustrations = {"island-sandals":"island-resort","island-fluky":"island-studio"} as const;
+
 export function illustrationNames(): IllustrationName[] {
   return Object.keys(illustrations) as IllustrationName[];
 }
 
+export interface IllustrationOptions {
+  /** Stamp label (#59), rendered uppercase as "CITY · ARRIVALS". Defaults to "Destination". */
+  city?: string;
+  /** Stamp year or date (#59), e.g. "2026". Without it the stamp shows no year. */
+  date?: string;
+}
+
+export const DEFAULT_STAMP_CITY = 'Destination';
+/** Stamp ring text length (path circumference 2π·78 ≈ 490, minus a small seam gap). */
+const STAMP_RING = 486;
+/** Approximate advance per uppercase glyph at 22px/800 with letter-spacing 3. */
+const STAMP_EM = 18;
+
+const escapeXml = (s: string): string => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
 /** Inline an illustration. `prefix` keeps clip-path ids unique when the same art is used twice. */
-export function inlineIllustration(name: IllustrationName, prefix: string = name): string {
+export function inlineIllustration(
+  name: IllustrationName,
+  prefix: string = name,
+  options: IllustrationOptions = {},
+): string {
   const svg = illustrations[name];
   if (!svg) throw new Error(`Unknown illustration: ${name}`);
-  const marked = svg.replaceAll('__id__', prefix);
+  const rawCity = (options.city?.trim() || DEFAULT_STAMP_CITY).toUpperCase();
+  const label = `${rawCity} · ARRIVALS · `;
+  // Fill the ring once: spread short labels with spacing, squeeze long ones so they never clip.
+  // Set on both <text> (Firefox) and <textPath> (WebKit); Chromium honours either.
+  const adjust = [...label].length * STAMP_EM <= STAMP_RING ? 'spacing' : 'spacingAndGlyphs';
+  const date = options.date?.trim();
+  let marked = svg
+    .replaceAll('__id__', prefix)
+    .replaceAll('__city__', escapeXml(rawCity))
+    .replace(/<text(\b[^>]*>)<textPath\b/g, `<text textLength="${STAMP_RING}" lengthAdjust="${adjust}"$1<textPath textLength="${STAMP_RING}" lengthAdjust="${adjust}"`);
+  marked = date
+    ? marked.replaceAll('__date__', escapeXml(date))
+    : marked.replace(/<text\b[^>]*>__date__<\/text>/g, '');
   if (/\bclass="[^"]*\blm-art\b/.test(marked)) return marked;
   if (/<svg\b[^>]*\bclass="/.test(marked))
     return marked.replace(/<svg\b([^>]*?)class="([^"]*)"/, '<svg$1class="$2 lm-art"');

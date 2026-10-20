@@ -28,9 +28,9 @@ import '@luismatute/ui/tokens.css';
 import '@luismatute/ui/fonts.css';
 import '@luismatute/ui/base.css';
 ---
-<html data-theme="sandals">
+<html data-theme="resort">
   <body>
-    <lm-card variant="stop"><h2>Front-end developer, Sandals Resorts</h2></lm-card>
+    <lm-card variant="stop"><h2>Front-end developer, Example Co.</h2></lm-card>
     <script>
       import { defineLmCard } from '@luismatute/ui/components/card';
       defineLmCard();
@@ -65,7 +65,7 @@ Import `@luismatute/ui` if you also want the token object and `inlineIllustratio
 
 ## Theming
 
-Set `data-theme` on any ancestor. Names are the scene ids from the source file: `hero`, `high`, `aa`, `sandals`, `bsc`, `fluky`, `move`, `booking`. Each theme sets the sky bands, sun, rays, title colour and, where the file has a sea, the sea bands.
+Set `data-theme` on any ancestor. Names are the scene ids from the source file: `hero`, `high`, `airport`, `resort`, `campus`, `studio`, `move`, `platform`. **Deprecated (#59):** the old ids `aa`, `sandals`, `bsc`, `fluky` and `booking` still work as aliases of `airport`, `resort`, `campus`, `studio` and `platform`, both as `data-theme` values and as the Tailwind `--color-<old>-sky-*` / `--color-<old>-sea-*` variables (`tokens.themeAliases` lists them). They will go in a future major. Each theme sets the sky bands, sun, rays, title colour and, where the file has a sea, the sea bands.
 
 Skin and beard follow `--lm-skin`, `--lm-skin-d`, `--lm-skin-blush`, `--lm-skin-hair`, `--lm-skin-fade`, `--lm-skin-beard`, `--lm-avatar-amber` (aliased as `--lm-skin-amber` so older overrides and the pilot’s glasses keep working), `--lm-skin-tort`, `--lm-skin-lip`, `--lm-beard-line`, `--lm-skin-highlight`, `--lm-lens-tint` and `--lm-lens-tint-opacity`.
 
@@ -90,7 +90,7 @@ Tailwind v4 can load the theme with `@import "@luismatute/ui/theme.css";`.
 
 ## Illustrations
 
-SVG files live in `dist/illustrations/`. `inlineIllustration(name, prefix)` from `@luismatute/ui/illustrations` returns the markup and prefixes clip-path ids. Fills use the token variables, so they follow `data-theme`.
+SVG files live in `dist/illustrations/`. `inlineIllustration(name, prefix)` from `@luismatute/ui/illustrations` returns the markup and prefixes clip-path ids. The `stamp` art takes a `city` option, `inlineIllustration('stamp', 'st', { city: 'Lisbon' })`, rendered uppercase as `LISBON · ARRIVALS`; without it the label is `DESTINATION · ARRIVALS`. The label appears once and is spaced to fill the ring (`textLength`); long cities are squeezed rather than clipped. An optional `date` option (`{ city: 'Lisbon', date: '2026' }`) prints a year in the centre; without it the stamp shows no year. In the docs demos the same value comes from `data-city` and `data-date` attributes on the `[data-art]` host. Fills use the token variables, so they follow `data-theme`. **Deprecated (#59):** `island-sandals` and `island-fluky` still work but alias `island-resort` and `island-studio` (see `deprecatedIllustrations`).
 
 Colours that the source mixes at draw time (`mix` / `dk`) stay as hex. They do not track later token overrides.
 

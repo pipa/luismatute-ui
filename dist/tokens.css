@@ -399,6 +399,7 @@ html[data-mode="night"] {
   --lm-title: #2b1b14;
   --lm-title-shadow: #2a7aa3;
 }
+[data-theme="airport"],
 [data-theme="aa"] {
   --lm-sky-1: #4cacd5;
   --lm-sky-2: #59b4d9;
@@ -423,6 +424,7 @@ html[data-mode="night"] {
   --lm-cloud: #e6f5fa;
   --lm-cloud-shade: #cbe9f3;
 }
+[data-theme="resort"],
 [data-theme="sandals"] {
   --lm-sky-1: #ec6a58;
   --lm-sky-2: #ee7760;
@@ -447,6 +449,7 @@ html[data-mode="night"] {
   --lm-cloud: #fbd2bd;
   --lm-cloud-shade: #f4b49c;
 }
+[data-theme="campus"],
 [data-theme="bsc"] {
   --lm-sky-1: #1d877d;
   --lm-sky-2: #229087;
@@ -471,6 +474,7 @@ html[data-mode="night"] {
   --lm-cloud: #b9e6df;
   --lm-cloud-shade: #93d6cc;
 }
+[data-theme="studio"],
 [data-theme="fluky"] {
   --lm-sky-1: #d6412b;
   --lm-sky-2: #da4b32;
@@ -519,6 +523,7 @@ html[data-mode="night"] {
   --lm-cloud: #8b7cc4;
   --lm-cloud-shade: #5a4c92;
 }
+[data-theme="platform"],
 [data-theme="booking"] {
   --lm-sky-1: #f19c74;
   --lm-sky-2: #f4a87e;

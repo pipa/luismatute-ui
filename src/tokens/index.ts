@@ -26,6 +26,7 @@ export {
   space,
   target,
   textPairs,
+  themeAliases,
   themes,
   tokens,
   zIndex,
