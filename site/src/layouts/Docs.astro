@@ -14,8 +14,10 @@ interface Props {
   toc?: { id: string; label: string }[];
   /** Extra stylesheet under the base, e.g. 'foundations.css'. */
   extraCss?: string;
+  /** Page draws its own heading block (404): no crumb, title, lede or pager. */
+  bare?: boolean;
 }
-const { title, description, slug, toc = [], extraCss } = Astro.props;
+const { title, description, slug, toc = [], extraCss, bare = false } = Astro.props;
 const base = import.meta.env.BASE_URL;
 // The crumb is the page kicker. When the group and the title are the same
 // word (Changelog), show that one item instead of "Changelog / Changelog".
@@ -55,6 +57,14 @@ const canonical = new URL(
         <span class="search-label">Search</span>
         <kbd class="search-kbd" aria-hidden="true" data-search-kbd>Ctrl K</kbd>
       </button>
+      <!-- Hidden until scripts/theme-switch.ts runs; without JS theme-init still applies the saved mode. -->
+      <fieldset class="theme-switch" hidden data-theme-switch>
+        <legend class="sr">Theme</legend>
+        <button type="button" data-mode-set="day" aria-pressed="false">Day</button>
+        <button type="button" data-mode-set="night" aria-pressed="false">Night</button>
+      </fieldset>
+      <a class="head-ext" href="https://github.com/pipa/luismatute-ui">GitHub</a>
+      <a class="head-ext head-site" href="https://luismatute.me">luismatute.me</a>
     </header>
     <div id="drawer" class="drawer" popover>
       <div class="drawer-top">
@@ -70,7 +80,7 @@ const canonical = new URL(
         <SideNav current={slug} label="Docs" />
       </aside>
       <main id="main" class="main" tabindex="-1">
-        <article class="prose" data-pagefind-body>
+        <article class="prose" data-pagefind-body={bare ? undefined : ''}>
           {toc.length > 0 && (
             <details class="toc-inline" data-pagefind-ignore>
               <summary>On this page</summary>
@@ -79,14 +89,14 @@ const canonical = new URL(
               </nav>
             </details>
           )}
-          <p class="crumb" data-pagefind-ignore>{crumb}</p>
-          <h1>{title}</h1>
-          <p class="lede">{description}</p>
+          {!bare && <p class="crumb" data-pagefind-ignore>{crumb}</p>}
+          {!bare && <h1>{title}</h1>}
+          {!bare && <p class="lede">{description}</p>}
           <slot />
-          <nav class="pager" aria-label="Previous and next page" data-pagefind-ignore>
+          {!bare && <nav class="pager" aria-label="Previous and next page" data-pagefind-ignore>
             {prev ? <a class="prev" href={hrefFor(base, prev.slug)}><small>Previous</small><strong>{prev.label}</strong></a> : <span></span>}
             {next && <a class="next" href={hrefFor(base, next.slug)}><small>Next</small><strong>{next.label}</strong></a>}
-          </nav>
+          </nav>}
         </article>
       </main>
       <aside class="toc" aria-label="On this page">
@@ -107,6 +117,7 @@ const canonical = new URL(
       import { initTokenCopy } from '../scripts/token-copy';
       import { initSearch } from '../scripts/search';
       import { initToc } from '../scripts/toc';
+      import { initThemeSwitch } from '../scripts/theme-switch';
 
       initCopy();
       initTokenCopy();
@@ -114,6 +125,7 @@ const canonical = new URL(
       if (document.querySelector('.demo')) void import('../scripts/demos').then((m) => m.initDemos());
       initToc();
       initSearch();
+      initThemeSwitch();
     </script>
   </body>
 </html>

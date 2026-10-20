@@ -1534,3 +1534,116 @@ hr.docs-flight {
 .release code {
   font: 13px / 1.4 var(--lm-docs-f-mono);
 }
+
+/* ---- Header controls (#18): theme Day/Night + GitHub/site links.
+   SPEC.md "Top bar"; shots component-1440-*, theme-toggle.png.
+   Auto was dropped (Luis, Oct 19). Logic: scripts/theme-switch.ts ---- */
+.theme-switch {
+  display: inline-flex;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+  border: var(--lm-docs-border) solid var(--lm-docs-ink);
+  border-radius: var(--lm-radius-pill);
+  background: var(--lm-white);
+  box-shadow: var(--lm-docs-shadow-btn);
+  overflow: hidden;
+}
+.theme-switch[hidden] {
+  display: none;
+}
+.theme-switch button {
+  min-width: var(--lm-docs-tap);
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-right: var(--lm-docs-border-hair) solid var(--lm-docs-ink);
+  background: transparent;
+  color: var(--lm-docs-ink);
+  font: 600 var(--lm-docs-t-small) / 1 var(--lm-docs-f-text);
+  cursor: pointer;
+}
+.theme-switch button:last-child {
+  border-right: 0;
+}
+.theme-switch button[aria-pressed="true"] {
+  background: var(--lm-marigold);
+  color: var(--lm-ink-fixed);
+}
+.theme-switch button:focus-visible {
+  outline: 3px solid var(--lm-docs-focus);
+  outline-offset: -3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .theme-switch button[aria-pressed="false"]:hover {
+    background: var(--lm-sand, #f3e3c3);
+  }
+}
+.head-ext {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  min-height: var(--lm-docs-tap);
+  padding: 0 6px;
+  /* tomato-d (day 6.2:1 on the stage bar) / peach at night, as in the mock. */
+  color: var(--lm-tomato-d);
+  font: 700 var(--lm-docs-t-small) / 1 var(--lm-docs-f-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Narrow: the links give way first (site link < 1024, GitHub < 768). */
+@media (max-width: 1023px) {
+  .head-site {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .head .head-ext {
+    display: none;
+  }
+  .head {
+    gap: 10px;
+  }
+}
+@media (max-width: 400px) {
+  .head .ver {
+    display: none;
+  }
+}
+
+/* ---- 404 (#18): SPEC.md "404"; shot 404-1440-light.png ---- */
+.not-found {
+  padding-block: clamp(32px, 18vh, 160px) 64px;
+}
+.not-found .nf-code {
+  margin: 8px 0 0;
+  font: 800 clamp(96px, 16vw, 168px) / 0.9 var(--lm-docs-f-display);
+  letter-spacing: -0.03em;
+  color: var(--lm-docs-ink);
+  text-shadow: 8px 8px 0 var(--lm-tomato, #e8553a);
+}
+.not-found .nf-hand {
+  margin: 12px 0 4px;
+  color: var(--lm-docs-ink);
+  font: 600 20px / 1 var(--lm-font-hand);
+  transform: rotate(-3deg);
+  transform-origin: left;
+}
+.not-found .nf-home {
+  font-weight: 700;
+}
+.head .menu,
+.head .search-open,
+.head .brand {
+  flex: none;
+}
+/* Phones: the icon pill only (no shortcut hint) so theme fits beside it. */
+@media (max-width: 479.98px) {
+  .head .search-kbd {
+    display: none;
+  }
+  .theme-switch button {
+    padding: 0 10px;
+  }
+}
