@@ -20,11 +20,13 @@ const route = `<lm-globe
   route='{"stops":[{"id":"a","label":"A","x":200,"y":580},{"id":"b","label":"B","x":737,"y":260}],
           "legs":["M200 580 C320 280 420 60 737 260"],"active":0}'
 ></lm-globe>`;
-const css = `/* lm-globe reads these tokens; override them on the element */
-lm-globe {
-  --lm-globe-ocean: #2a3266;
-  --lm-globe-deep: #2a3266;
-  --lm-globe-land: #24402f;
+const dashed = `<lm-globe heading="Route" route-style="dashed"></lm-globe>`;
+const css = `/* lm-globe reads these tokens; override them on the element.
+   Night values ship built in on html[data-mode="night"]. */
+lm-globe.brand {
+  --lm-globe-ocean: #2f86a8;
+  --lm-globe-deep: #3592b3;
+  --lm-globe-land: #8cc06a;
 }`;
 const toc = [
   { id: 'demo', label: 'Live demo' },
@@ -59,6 +61,8 @@ const toc = [
   </p>
   <p>Your own route is JSON in the 1000×1000 globe space: stops with <code>x</code>/<code>y</code>, one SVG path per leg, and the index of the hot leg.</p>
   <CodeBlock lang="html" filename="route.html" code={route} />
+  <p>For the dashed red route, the same one as the luismatute.me globe, add <code>route-style="dashed"</code>. It works in Day and Night.</p>
+  <CodeBlock lang="html" filename="dashed.html" code={dashed} />
   <Heading id="in-astro" level={3}>In Astro</Heading>
   <CodeBlock lang="astro" filename="Globe.astro" code={astro} />
   <Heading id="attributes">Attributes</Heading>
@@ -69,6 +73,7 @@ const toc = [
     rows={[
       { name: 'heading', detail: 'Dialog title. Defaults to <code>Route</code>.' },
       { name: 'description', detail: 'Optional line under the title. Hidden when absent.' },
+      { name: 'route-style', detail: '<code>dashed</code> draws every leg as a red dash (13.64/8.36, round caps). Leave it off for the solid route.' },
       { name: 'route', detail: 'JSON <code>{"stops":[{id,label,x,y}],"legs":["d"],"active":n}</code>. Invalid JSON falls back to the default route. <code>active</code> defaults to the last leg.' },
     ]}
   />
@@ -82,6 +87,7 @@ const toc = [
       { name: '--lm-globe-deep', detail: 'Inner sea disc.' },
       { name: '--lm-globe-land', detail: 'Land fill.' },
       { name: '--lm-globe-shade', detail: 'Edge shading.' },
+      { name: '--lm-globe-line', detail: 'Night only: rim and land outlines (#3a4380).' },
       { name: '--lm-foam', detail: 'Highlight wash.' },
       { name: '--lm-route-cool', detail: 'Inactive legs.' },
       { name: '--lm-tomato', detail: 'The hot leg.' },
@@ -94,6 +100,7 @@ const toc = [
       { name: '--lm-duration-globe-draw', detail: 'Hot-leg reveal (2.2s).' },
     ]}
   />
+  <p>Night (<code>html[data-mode="night"]</code>, set from the <code>lm-mode</code> cookie) swaps the globe tokens to sea <code>#2a3266</code>, rim <code>#1f254e</code>/<code>#1a1f43</code>, land <code>#24402f</code> and outlines <code>#3a4380</code>. Pins and the route keep their colours. There is no overlay or filter.</p>
   <CodeBlock lang="css" filename="site.css" code={css} />
   <Heading id="events">Events</Heading>
   <p>None. Watch <code>aria-expanded</code> on the button or the <code>is-open</code> class if you need the state.</p>

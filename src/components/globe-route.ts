@@ -13,19 +13,22 @@ export interface GlobeRoute {
   active?: number;
 }
 
-const hon = { id: 'hon', label: 'Honduras', x: 185.6, y: 578.7 };
-const car = { id: 'car', label: 'Caribbean', x: 263.9, y: 636.4 };
-const rtb = { id: 'rtb', label: 'Roatán', x: 188.4, y: 658.6 };
-const ams = { id: 'ams', label: 'Amsterdam', x: 736.9, y: 259.7 };
+// Generic example stops (#57): no real places. Four legs, the last a long
+// arc across the open ocean so the draw-in still reads.
+const a = { id: 'a', label: 'Stop A', x: 252, y: 430 };
+const b = { id: 'b', label: 'Stop B', x: 334, y: 506 };
+const c = { id: 'c', label: 'Stop C', x: 288, y: 604 };
+const d = { id: 'd', label: 'Stop D', x: 372, y: 676 };
+const e = { id: 'e', label: 'Stop E', x: 772, y: 302 };
 
-/** The four legs from concept-c-takeoff.html, same control points. */
+/** The built-in example route: four legs, the last one hot. */
 export const defaultRoute: GlobeRoute = {
-  stops: [hon, car, rtb, ams],
+  stops: [a, b, c, d, e],
   legs: [
-    `M${hon.x} ${hon.y} C${hon.x + 26} ${hon.y + 30} ${hon.x + 52} ${hon.y + 4} ${hon.x + 38} ${hon.y - 18} C${hon.x + 26} ${hon.y - 36} ${hon.x - 8} ${hon.y - 22} ${hon.x} ${hon.y}`,
-    `M${hon.x} ${hon.y} C${hon.x + 24} ${hon.y - 18} ${car.x - 40} ${car.y - 34} ${car.x} ${car.y}`,
-    `M${car.x} ${car.y} C${car.x - 24} ${car.y + 42} ${rtb.x + 30} ${rtb.y + 20} ${rtb.x} ${rtb.y}`,
-    `M${rtb.x} ${rtb.y} C${rtb.x + 120} ${rtb.y - 300} ${ams.x - 320} ${ams.y - 200} ${ams.x} ${ams.y}`,
+    `M${a.x} ${a.y} C${a.x + 30} ${a.y + 6} ${b.x - 24} ${b.y - 40} ${b.x} ${b.y}`,
+    `M${b.x} ${b.y} C${b.x + 18} ${b.y + 38} ${c.x + 34} ${c.y - 30} ${c.x} ${c.y}`,
+    `M${c.x} ${c.y} C${c.x - 10} ${c.y + 40} ${d.x - 40} ${d.y + 10} ${d.x} ${d.y}`,
+    `M${d.x} ${d.y} C${d.x + 110} ${d.y - 320} ${e.x - 300} ${e.y - 190} ${e.x} ${e.y}`,
   ],
   active: 3,
 };
