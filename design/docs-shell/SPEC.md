@@ -128,7 +128,7 @@ A saved Light or Dark choice is applied by a tiny **external, render-blocking** 
 
 A saved Dark theme must **never** flash Light on load. If `theme.js` is deferred, async, inline, or placed after CSS, Dark users on a light OS will paint paper first. That fails this spec.
 
-Docs `data-theme` is only `light` | `dark`. Scene themes (`hero`, `sandals`, `move`, …) stay on the **demo stage**, never on `html`.
+Docs `data-theme` is only `light` | `dark`. Scene themes (`hero`, `move`, …) stay on the **demo stage**, never on `html`.
 
 ## Layout grid
 
@@ -387,3 +387,11 @@ Shot helpers: `?shot=search`, `?shot=search-empty`, `?shot=drawer`. Theme stills
 - [ ] Colour is not the only current-page cue (inset + weight)
 - [ ] Saved Dark never flashes Light (blocking `theme.js` before CSS)
 - [ ] Base path `/ui/` on every in-site link in the real build
+
+## Demo content
+
+Mocks use generic content only, never a real biography.
+
+- Stops: "Stop A" to "Stop E". Companies: "Example Co.", "Sample Studio". Years: 2015–2018, 2018–2021, 2021–now.
+- Default globe route: US East Coast to Iberia.
+- Stamp illustration label: "DESTINATION · ARRIVALS". The city part is a configurable attribute (suggested name: `city`), set in uppercase in the existing stamp type and colour. Only the text changes; the stamp geometry stays as it is.
