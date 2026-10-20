@@ -5,7 +5,7 @@ import { expect, type Page, test } from 'playwright/test';
 // match under a heading had no option linking to that heading's anchor.
 const page_ = '/ui/getting-started/';
 const pill = (p: Page) => p.locator('button.search-open[data-search-open]');
-const input = (p: Page) => p.getByRole('combobox', { name: 'Search the docs' });
+const input = (p: Page) => p.getByRole('combobox', { name: 'Search pages' });
 const options = (p: Page) =>
   p.getByRole('listbox', { name: 'Results' }).getByRole('option');
 const active = (p: Page) =>
