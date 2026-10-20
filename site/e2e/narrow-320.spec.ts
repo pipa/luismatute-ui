@@ -19,8 +19,7 @@ test('enumerates the docs routes', () => {
   expect(routes).toContain('/ui/illustrations/svg-kit/');
 });
 
-// 360-367 still overflows by up to 8px on main and at f9c923b (header min ~368px); tracked separately.
-for (const width of [320, 359]) {
+for (const width of [320, 359, 360, 414]) {
   for (const route of routes) {
     test(`${route} @${width}: no sideways scroll, header/nav targets >= 24px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 800 });
@@ -39,11 +38,11 @@ for (const width of [320, 359]) {
             const r = e.getBoundingClientRect();
             return s.visibility !== 'hidden' && s.display !== 'none' && r.width > 0 && r.height > 0;
           });
-          const rects = vis.map((e) => e.getBoundingClientRect());
+          const items = vis.map((e, i) => ({ e, r: e.getBoundingClientRect(), i }));
+          const rects = items.map((t) => t.r);
           // WCAG 2.5.8: >= 24x24, or (spacing exception) a 24px circle centred on an
           // undersized target must not intersect another target or its circle.
-          return vis
-            .map((e, i) => ({ e, r: rects[i], i }))
+          return items
             .filter(({ r }) => r.width < 24 || r.height < 24)
             .filter(({ r, i }) => {
               const cx = r.x + r.width / 2;
