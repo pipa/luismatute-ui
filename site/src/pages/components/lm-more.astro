@@ -5,11 +5,11 @@ import Demo from '../../components/Demo.astro';
 import Heading from '../../components/Heading.astro';
 import Docs from '../../layouts/Docs.astro';
 
-const html = `<lm-more label="More" panel="more-sandals">
-  <p>Led several full redesigns and re-engineering efforts.</p>
+const html = `<lm-more label="More" panel="more-example">
+  <p>Example notes about this stop.</p>
 </lm-more>`;
 const demo = `<lm-more label="More" panel="demo-more">
-  <p>Led several full redesigns and re-engineering efforts, and brought in Sass and frontend tooling.</p>
+  <p>Example notes about this stop, with a little more detail.</p>
 </lm-more>`;
 const js = `document.querySelector('lm-more')
   ?.addEventListener('lm-toggle', (e) => console.log(e.detail.open));`;
@@ -34,7 +34,7 @@ const toc = [
   <Heading id="demo">Live demo</Heading>
   <Demo name="lm-more" label="lm-more disclosure" log="lm-toggle" code={demo}>
     <lm-more label="More" panel="demo-more">
-      <p>Led several full redesigns and re-engineering efforts, and brought in Sass and frontend tooling.</p>
+      <p>Example notes about this stop, with a little more detail.</p>
     </lm-more>
   </Demo>
   <Heading id="usage">Usage</Heading>

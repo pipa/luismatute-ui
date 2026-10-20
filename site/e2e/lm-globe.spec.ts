@@ -88,3 +88,44 @@ for (const mode of ['day', 'night'] as const) {
 }
 
 pageChecks('lm-globe', '<lm-globe');
+
+// #59 (Sentinel gap from #58): route stroke widths are screen px (5.5 hot, 4
+// rest) and the open map renders inside the viewport at 375.
+for (const style of ['solid', 'dashed'] as const) {
+  test(`route stroke widths and 375 rendering (${style})`, async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 800 });
+    await page.goto('/ui/components/lm-globe/?motion=reduce');
+    const globe = page.locator('.demo lm-globe');
+    if (style === 'dashed') await globe.evaluate((el) => el.setAttribute('route-style', 'dashed'));
+    await globe.getByRole('button', { name: 'Open route map' }).click();
+    const dialog = page.getByRole('dialog', { name: 'Example route' });
+    await expect(dialog).toBeVisible();
+    const legs = await dialog.locator('.lm-leg').evaluateAll((els) =>
+      els.map((l) => {
+        const s = getComputedStyle(l);
+        const r = l.getBoundingClientRect();
+        return {
+          hot: l.getAttribute('data-hot') === 'true',
+          width: s.strokeWidth,
+          ve: s.getPropertyValue('vector-effect'),
+          box: { l: r.left, r: r.right, w: r.width, h: r.height },
+        };
+      }),
+    );
+    expect(legs).toHaveLength(4);
+    for (const leg of legs) {
+      expect(leg.width).toBe(leg.hot ? '5.5px' : '4px');
+      expect(leg.ve).toBe('non-scaling-stroke');
+      expect(leg.box.w + leg.box.h).toBeGreaterThan(4);
+      expect(leg.box.l).toBeGreaterThanOrEqual(0);
+      expect(leg.box.r).toBeLessThanOrEqual(375);
+    }
+    const hot = legs.find((l) => l.hot);
+    // the long ocean leg spans a good part of the 375 screen
+    expect(hot?.box.w ?? 0).toBeGreaterThan(100);
+    const stage = await dialog.locator('.lm-globe-stage').boundingBox();
+    expect(stage?.x ?? -1).toBeGreaterThanOrEqual(0);
+    expect((stage?.x ?? 0) + (stage?.width ?? 999)).toBeLessThanOrEqual(375);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+  });
+}

@@ -23,7 +23,7 @@ const what: Record<string, string> = {
     'A small script that sets the saved day or night mode before first paint.',
   './sky-art': 'The sky header artwork.',
   './illustrations':
-    'The illustration SVGs as strings, with <code>inlineIllustration()</code>.',
+    'The illustration SVGs as strings, with <code>inlineIllustration(name, prefix, { city })</code>. <code>city</code> sets the stamp label (<code>CITY · ARRIVALS</code>, default <code>DESTINATION · ARRIVALS</code>).',
 };
 const rows = Object.keys(pkg.exports)
   .filter((k) => k !== './package.json')

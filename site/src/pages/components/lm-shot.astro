@@ -1,41 +1,41 @@
 ---
-import beaches from '../../../../docs/shots/beaches-600.webp';
-import sandals from '../../../../docs/shots/sandals-600.webp';
+import sample from '../../../../docs/shots/sample-600.webp';
+import example from '../../../../docs/shots/example-600.webp';
 import ApiTable from '../../components/ApiTable.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 import Demo from '../../components/Demo.astro';
 import Heading from '../../components/Heading.astro';
 import Docs from '../../layouts/Docs.astro';
 
-const sandalsHref =
-  'https://web.archive.org/web/20160620110713/http://www.sandals.com/';
-const beachesHref =
-  'https://web.archive.org/web/20150110181715/http://www.beaches.com/';
+const exampleHref =
+  'https://example.com/';
+const sampleHref =
+  'https://example.org/';
 
 // The code panel shows package-relative paths, not the docs' hashed asset URLs.
 const demo = `<div class="lm-shots lm-shots--two">
   <!-- Built from attributes; the noscript link shows without JS -->
   <lm-shot
-    href="${sandalsHref}"
-    src="/shots/sandals-600.webp"
-    alt="The sandals.com home page in 2016"
-    chrome="sandals.com"
-    caption="sandals.com, 2016"
+    href="${exampleHref}"
+    src="/shots/example-600.webp"
+    alt="An example.com home page"
+    chrome="example.com"
+    caption="example.com, 2020"
     width="600"
     height="390"
   >
     <noscript>
-      <a href="${sandalsHref}" target="_blank" rel="noopener noreferrer">
-        <img src="/shots/sandals-600.webp" alt="The sandals.com home page in 2016" width="600" height="390" />
-        <p class="lm-shot-cap">sandals.com, 2016</p>
+      <a href="${exampleHref}" target="_blank" rel="noopener noreferrer">
+        <img src="/shots/example-600.webp" alt="An example.com home page" width="600" height="390" />
+        <p class="lm-shot-cap">example.com, 2020</p>
       </a>
     </noscript>
   </lm-shot>
   <!-- Your own link: the element only adds the browser frame -->
-  <lm-shot chrome="beaches.com">
-    <a href="${beachesHref}" target="_blank" rel="noopener noreferrer">
-      <img src="/shots/beaches-600.webp" alt="The beaches.com home page in 2015" width="600" height="390" loading="lazy" />
-      <p class="lm-shot-cap">beaches.com, 2015</p>
+  <lm-shot chrome="example.org">
+    <a href="${sampleHref}" target="_blank" rel="noopener noreferrer">
+      <img src="/shots/sample-600.webp" alt="An example.org landing page" width="600" height="390" loading="lazy" />
+      <p class="lm-shot-cap">example.org, 2019</p>
       <span class="lm-vh"> (opens in a new tab)</span>
     </a>
   </lm-shot>
@@ -44,15 +44,15 @@ const fence = '-'.repeat(3);
 const astro = `${fence}
 import '@luismatute/ui/components/shot';
 import '@luismatute/ui/base.css';
-import shot from '../assets/sandals-600.webp';
+import shot from '../assets/example-600.webp';
 ${fence}
 <lm-shot
-  href="https://sandals.com"
+  href="https://example.com"
   src={shot.src}
   width={shot.width}
   height={shot.height}
-  alt="The sandals.com home page"
-  chrome="sandals.com"
+  alt="An example.com home page"
+  chrome="example.com"
 />`;
 const css = `/* lm-shot reads these tokens; override them on the element */
 lm-shot {
@@ -83,32 +83,32 @@ const toc = [
   <Demo name="lm-shot" label="lm-shot, from attributes and from your own link" code={demo}>
     <div class="lm-shots lm-shots--two">
       <lm-shot
-        href={sandalsHref}
-        src={sandals.src}
-        alt="The sandals.com home page in 2016"
-        chrome="sandals.com"
-        caption="sandals.com, 2016"
-        width={String(sandals.width)}
-        height={String(sandals.height)}
+        href={exampleHref}
+        src={example.src}
+        alt="An example.com home page"
+        chrome="example.com"
+        caption="example.com, 2020"
+        width={String(example.width)}
+        height={String(example.height)}
       >
         <noscript>
-          <a href={sandalsHref} target="_blank" rel="noopener noreferrer">
-            <img src={sandals.src} alt="The sandals.com home page in 2016" width={sandals.width} height={sandals.height} />
-            <p class="lm-shot-cap">sandals.com, 2016</p>
+          <a href={exampleHref} target="_blank" rel="noopener noreferrer">
+            <img src={example.src} alt="An example.com home page" width={example.width} height={example.height} />
+            <p class="lm-shot-cap">example.com, 2020</p>
           </a>
         </noscript>
       </lm-shot>
-      <lm-shot chrome="beaches.com">
-        <a href={beachesHref} target="_blank" rel="noopener noreferrer">
+      <lm-shot chrome="example.org">
+        <a href={sampleHref} target="_blank" rel="noopener noreferrer">
           <img
-            src={beaches.src}
-            alt="The beaches.com home page in 2015"
-            width={beaches.width}
-            height={beaches.height}
+            src={sample.src}
+            alt="An example.org landing page"
+            width={sample.width}
+            height={sample.height}
             loading="lazy"
             decoding="async"
           />
-          <p class="lm-shot-cap">beaches.com, 2015</p>
+          <p class="lm-shot-cap">example.org, 2019</p>
           <span class="lm-vh"> (opens in a new tab)</span>
         </a>
       </lm-shot>
