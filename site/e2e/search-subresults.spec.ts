@@ -103,3 +103,23 @@ test('at most 2 heading options per page, named "<heading>, in <page>"', async (
     page.getByRole('option', { name: name ?? '', exact: true }),
   ).toHaveCount(1);
 });
+
+// #68: the exact accessible name of one known sub-result, so a changed
+// separator or a dropped page title fails here, not only in the unit test.
+test('a known sub-result is named "Install, in Install from a tag"', async ({
+  page,
+}) => {
+  await page.goto(page_);
+  await pill(page).click();
+  await search(page, 'install');
+  const opt = page.getByRole('option', {
+    name: 'Install, in Install from a tag',
+    exact: true,
+  });
+  await expect(opt).toHaveCount(1);
+  await expect(opt).toHaveAttribute(
+    'href',
+    '/ui/getting-started/install-from-a-tag/#install',
+  );
+  await expect(opt.locator('.search-title')).toHaveText('Install');
+});
