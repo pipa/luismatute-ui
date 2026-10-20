@@ -5,9 +5,12 @@ import {
   excerptNodes,
   isApple,
   isTypingTarget,
+  MAX_HITS,
+  MAX_SUBS,
   renderHits,
   shortcutOf,
   step,
+  toHits,
 } from '../src/scripts/search';
 import docsCss from '../src/styles/docs.css?raw';
 
@@ -116,5 +119,60 @@ describe('build and styles', () => {
       '--lm-docs-shadow-hard: 4px 4px 0 var(--lm-docs-shadow);',
     );
     expect(docsCss.match(/4px 4px 0 var\(--lm-docs-shadow\)/g)).toHaveLength(1);
+  });
+});
+
+// #49: Pagefind sub_results become heading-level options under their page.
+describe('toHits (sub-results)', () => {
+  const page = (url: string, subs: string[] = []) => ({
+    url,
+    excerpt: `${url} text`,
+    meta: { title: url },
+    sub_results: subs.map((s) => ({
+      url: s,
+      title: `h ${s}`,
+      excerpt: `x ${s}`,
+    })),
+  });
+  it('puts anchor sub-results right after their page and drops the bare-url one', () => {
+    const hits = toHits([
+      page('/ui/a/', ['/ui/a/', '/ui/a/#one', '/ui/a/#two']),
+      page('/ui/b/'),
+    ]);
+    expect(hits.map((h) => h.url)).toEqual([
+      '/ui/a/',
+      '/ui/a/#one',
+      '/ui/a/#two',
+      '/ui/b/',
+    ]);
+    expect(hits[1]).toMatchObject({ title: 'h /ui/a/#one', page: '/ui/a/' });
+    expect(hits[0]?.page).toBeUndefined();
+  });
+  it('caps sub-results per page and hits overall', () => {
+    const many = ['#1', '#2', '#3', '#4', '#5'].map((h) => `/ui/a/${h}`);
+    expect(toHits([page('/ui/a/', many)])).toHaveLength(3);
+    expect(MAX_SUBS).toBe(2);
+    const pages = Array.from({ length: 6 }, (_, i) =>
+      page(`/ui/${i}/`, [`/ui/${i}/#h`]),
+    );
+    expect(toHits(pages)).toHaveLength(MAX_HITS);
+  });
+  it('ignores sub-results pointing at another page', () => {
+    expect(toHits([page('/ui/a/', ['/ui/b/#x'])]).map((h) => h.url)).toEqual([
+      '/ui/a/',
+    ]);
+  });
+  it('marks sub-result options so they can be styled apart', () => {
+    const list = document.createElement('div');
+    const [p, s] = renderHits(list, toHits([page('/ui/a/', ['/ui/a/#one'])]));
+    expect(p?.hasAttribute('data-search-sub')).toBe(false);
+    expect(s?.hasAttribute('data-search-sub')).toBe(true);
+    expect(s?.getAttribute('href')).toBe('/ui/a/#one');
+    expect(s?.getAttribute('role')).toBe('option');
+    expect(s?.getAttribute('aria-label')).toBe('h /ui/a/#one, in /ui/a/');
+    expect(s?.querySelector('.search-title')?.textContent).toBe('h /ui/a/#one');
+    expect(s?.classList.contains('search-hit-sub')).toBe(true);
+    expect(p?.hasAttribute('aria-label')).toBe(false);
+    expect(s?.parentElement).toBe(list);
   });
 });
