@@ -150,7 +150,8 @@ describe('toHits (sub-results)', () => {
   });
   it('caps sub-results per page and hits overall', () => {
     const many = ['#1', '#2', '#3', '#4', '#5'].map((h) => `/ui/a/${h}`);
-    expect(toHits([page('/ui/a/', many)])).toHaveLength(1 + MAX_SUBS);
+    expect(toHits([page('/ui/a/', many)])).toHaveLength(3);
+    expect(MAX_SUBS).toBe(2);
     const pages = Array.from({ length: 6 }, (_, i) =>
       page(`/ui/${i}/`, [`/ui/${i}/#h`]),
     );
@@ -168,5 +169,10 @@ describe('toHits (sub-results)', () => {
     expect(s?.hasAttribute('data-search-sub')).toBe(true);
     expect(s?.getAttribute('href')).toBe('/ui/a/#one');
     expect(s?.getAttribute('role')).toBe('option');
+    expect(s?.getAttribute('aria-label')).toBe('h /ui/a/#one, in /ui/a/');
+    expect(s?.querySelector('.search-title')?.textContent).toBe('h /ui/a/#one');
+    expect(s?.classList.contains('search-hit-sub')).toBe(true);
+    expect(p?.hasAttribute('aria-label')).toBe(false);
+    expect(s?.parentElement).toBe(list);
   });
 });

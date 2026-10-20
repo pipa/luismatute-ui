@@ -39,7 +39,7 @@ interface Pagefind {
 
 export const MAX_HITS = 8;
 /** Heading-level hits shown under one page (#49). */
-export const MAX_SUBS = 3;
+export const MAX_SUBS = 2;
 
 /**
  * Pagefind page results to a flat option list (#49): each page, then up to
@@ -142,6 +142,8 @@ export function renderHits(
     const title = doc.createElement('span');
     title.className = 'search-title';
     title.textContent = hit.title;
+    // #49: a heading hit names its page for screen readers only.
+    if (hit.page) a.setAttribute('aria-label', `${hit.title}, in ${hit.page}`);
     const excerpt = doc.createElement('span');
     excerpt.className = 'search-excerpt';
     excerpt.append(...excerptNodes(doc, hit.excerpt));

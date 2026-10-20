@@ -58,3 +58,48 @@ test('arrow keys reach a sub-result and Enter lands on its heading', async ({
   await expect(page).toHaveURL(new RegExp(`${path}#${hash}$`));
   await expect(page.locator(`[id="${hash}"]`)).toBeVisible();
 });
+
+test('at most 2 heading options per page, named "<heading>, in <page>"', async ({
+  page,
+}) => {
+  await page.goto(page_);
+  await pill(page).click();
+  for (const q of ['reduced motion', 'usage', 'attributes']) {
+    await search(page, q);
+    await expect(options(page).first()).toBeVisible();
+    const rows = await options(page).evaluateAll((os) =>
+      os.map((o) => ({
+        href: o.getAttribute('href') ?? '',
+        label: o.getAttribute('aria-label'),
+        heading: o.querySelector('.search-title')?.textContent ?? '',
+        sub: o.classList.contains('search-hit-sub'),
+        parent: o.parentElement?.getAttribute('role'),
+      })),
+    );
+    const titles = new Map(
+      rows.filter((r) => !r.sub).map((r) => [r.href, r.heading]),
+    );
+    const per = new Map<string, number>();
+    for (const r of rows) {
+      expect(r.parent).toBe('listbox');
+      if (!r.href.includes('#')) {
+        expect(r.label).toBeNull();
+        continue;
+      }
+      const base = r.href.split('#')[0] ?? '';
+      per.set(base, (per.get(base) ?? 0) + 1);
+      expect(r.sub).toBe(true);
+      expect(r.label).toBe(`${r.heading}, in ${titles.get(base)}`);
+    }
+    for (const n of per.values()) expect(n).toBeLessThanOrEqual(2);
+  }
+  // Accessible name, not just the attribute.
+  await search(page, 'reduced motion');
+  const sub = page.locator('[data-search-sub]').first();
+  await expect(sub).toBeVisible();
+  const name = await sub.getAttribute('aria-label');
+  expect(name).toMatch(/^.+, in .+$/);
+  await expect(
+    page.getByRole('option', { name: name ?? '', exact: true }),
+  ).toHaveCount(1);
+});
