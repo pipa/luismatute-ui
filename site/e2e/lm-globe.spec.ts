@@ -64,7 +64,7 @@ for (const mode of ['day', 'night'] as const) {
       el.setAttribute('route-style', 'dashed');
       return [...el.querySelectorAll('.lm-leg')].map((l) => {
         const s = getComputedStyle(l);
-        return { dash: s.strokeDasharray, cap: s.strokeLinecap, stroke: s.stroke };
+        return { dash: s.strokeDasharray, cap: s.strokeLinecap, stroke: s.stroke, ve: s.getPropertyValue('vector-effect') };
       });
     });
     expect(legs).toHaveLength(4);
@@ -72,6 +72,7 @@ for (const mode of ['day', 'night'] as const) {
     for (const leg of legs) {
       expect(leg.dash.replaceAll('px', '')).toMatch(/^13\.64,? 8\.36$/);
       expect(leg.cap).toBe('round');
+      expect(leg.ve).toBe('non-scaling-stroke');
       expect(leg.stroke).toBe(tomato);
     }
   });

@@ -1,16 +1,16 @@
 // src/components/globe-route.ts
-var a = { id: "a", label: "Stop A", x: 252, y: 430 };
-var b = { id: "b", label: "Stop B", x: 334, y: 506 };
-var c = { id: "c", label: "Stop C", x: 288, y: 604 };
-var d = { id: "d", label: "Stop D", x: 372, y: 676 };
-var e = { id: "e", label: "Stop E", x: 772, y: 302 };
+var a = { id: "a", label: "Stop A", x: 276, y: 346 };
+var b = { id: "b", label: "Stop B", x: 258, y: 398 };
+var c = { id: "c", label: "Stop C", x: 238, y: 452 };
+var d = { id: "d", label: "Stop D", x: 214, y: 500 };
+var e = { id: "e", label: "Stop E", x: 730, y: 350 };
 var defaultRoute = {
   stops: [a, b, c, d, e],
   legs: [
-    `M${a.x} ${a.y} C${a.x + 30} ${a.y + 6} ${b.x - 24} ${b.y - 40} ${b.x} ${b.y}`,
-    `M${b.x} ${b.y} C${b.x + 18} ${b.y + 38} ${c.x + 34} ${c.y - 30} ${c.x} ${c.y}`,
-    `M${c.x} ${c.y} C${c.x - 10} ${c.y + 40} ${d.x - 40} ${d.y + 10} ${d.x} ${d.y}`,
-    `M${d.x} ${d.y} C${d.x + 110} ${d.y - 320} ${e.x - 300} ${e.y - 190} ${e.x} ${e.y}`
+    `M${a.x} ${a.y} C${a.x + 6} ${a.y + 18} ${b.x + 10} ${b.y - 20} ${b.x} ${b.y}`,
+    `M${b.x} ${b.y} C${b.x - 4} ${b.y + 20} ${c.x + 12} ${c.y - 22} ${c.x} ${c.y}`,
+    `M${c.x} ${c.y} C${c.x - 8} ${c.y + 18} ${d.x + 10} ${d.y - 22} ${d.x} ${d.y}`,
+    `M${d.x} ${d.y} C${d.x + 140} ${d.y - 260} ${e.x - 280} ${e.y - 200} ${e.x} ${e.y}`
   ],
   active: 3
 };

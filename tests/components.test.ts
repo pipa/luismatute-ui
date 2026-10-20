@@ -380,6 +380,9 @@ describe('lm-globe night palette and dashed route (#57)', () => {
     expect(dash).toContain('stroke-dasharray: 13.64 8.36');
     expect(dash).toContain('stroke-linecap: round');
     expect(dash).not.toContain('data-mode');
+    expect(block('lm-globe .lm-leg')).toContain(
+      'vector-effect: non-scaling-stroke',
+    );
   });
 
   it('default route is generic: four legs, last one long and hot', () => {
@@ -396,7 +399,7 @@ describe('lm-globe night palette and dashed route (#57)', () => {
       );
     const src = readFileSync(resolve('src/components/globe-route.ts'), 'utf8');
     expect(src).not.toMatch(
-      /Honduras|Roat|Amsterdam|Caribbean|Sandals|Booking|Fluky/i,
+      /Honduras|Roat|Amsterdam|Netherlands|Caribbean|Sandals|Booking|Fluky|Miami/i,
     );
   });
 

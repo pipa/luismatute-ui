@@ -11,7 +11,7 @@ export interface GlobeRoute {
     /** Index of the hot leg. Defaults to the last leg. */
     active?: number;
 }
-/** The built-in example route: four legs, the last one hot. */
+/** The built-in example route: four legs, the last (long) one hot. */
 export declare const defaultRoute: GlobeRoute;
 export declare function parseRoute(value: string | null): GlobeRoute;
 //# sourceMappingURL=globe-route.d.ts.map
