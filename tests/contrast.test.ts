@@ -60,7 +60,9 @@ describe('renamed scene themes (#59)', () => {
     for (const [from, to] of pairs) {
       expect(css).toContain(`[data-theme="${to}"],\n[data-theme="${from}"] {`);
       expect(themes).toHaveProperty(to);
-      expect(themes).not.toHaveProperty(from);
+      // Deprecated JS alias (Eddie, #61): resolves to the new theme, not enumerated.
+      expect(themes[from]).toBe(themes[to]);
+      expect(Object.keys(themes)).not.toContain(from);
       expect(themeAliases[from]).toBe(to);
     }
   });
