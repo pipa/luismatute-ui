@@ -114,6 +114,8 @@ describe('lm-globe stop attribute (#14)', () => {
     expect(g.querySelector('.lm-plane')?.getAttribute('transform')).toMatch(
       /^translate\(238\.0 452\.0\) rotate\(/,
     );
+    expect(g.querySelectorAll('.lm-globe-stage svg')).toHaveLength(1);
+    expect(g.querySelector('.lm-plane path')).not.toBeNull();
     g.setAttribute('stop', 'booking');
     expect(legs()).toHaveLength(4);
     expect(legs().map((l) => l.getAttribute('opacity'))).toEqual([

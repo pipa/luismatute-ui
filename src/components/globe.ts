@@ -190,7 +190,9 @@ export class LmGlobe extends HTMLElement {
         'transform',
         `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${deg.toFixed(1)}) scale(0.62) translate(-60 -50)`,
       );
-      g.innerHTML = planeTop.replace('<svg ', '<svg width="120" height="100" ');
+      // the art's 120×100 box, inlined (no nested <svg>)
+      g.setAttribute('fill', 'none');
+      g.innerHTML = planeTop.replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
       svg.append(g);
     }
   }
