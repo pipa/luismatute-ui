@@ -129,3 +129,83 @@ for (const style of ['solid', 'dashed'] as const) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
   });
 }
+
+// #14: current-stop state. Switching `stop` moves the hot leg, the plane and the lit pin.
+test('switching stop moves the hot leg, dims legs and pins, and turns the plane', async ({
+  page,
+}) => {
+  await page.goto('/ui/components/lm-globe/?motion=reduce');
+  const globe = page.locator('.demo lm-globe');
+  await globe.getByRole('button', { name: 'Open route map' }).click();
+  const read = () =>
+    globe.evaluate((el) => {
+      const legs = [...el.querySelectorAll('.lm-leg')].map((l) => {
+        const s = getComputedStyle(l);
+        return {
+          state: l.getAttribute('data-leg'),
+          opacity: Number(s.opacity),
+          width: s.strokeWidth,
+          ve: s.getPropertyValue('vector-effect'),
+        };
+      });
+      const pins = [...el.querySelectorAll('.lm-pin')].map((p) =>
+        Number(getComputedStyle(p).opacity),
+      );
+      const plane = el.querySelectorAll('.lm-plane');
+      const box = plane[0]?.getBoundingClientRect();
+      return {
+        legs,
+        pins,
+        planes: plane.length,
+        plane: plane[0]?.getAttribute('transform') ?? '',
+        box: box ? { w: box.width, h: box.height } : null,
+      };
+    });
+  const want = {
+    hero: { hot: 0, pin: 0 },
+    sandals: { hot: 1, pin: 2 },
+    bsc: { hot: 2, pin: 3 },
+    move: { hot: 3, pin: -1 },
+    booking: { hot: 3, pin: 4 },
+  } as const;
+  const transforms = new Set<string>();
+  for (const [stop, w] of Object.entries(want)) {
+    await globe.evaluate((el, s) => el.setAttribute('stop', s), stop);
+    const r = await read();
+    expect(r.legs, stop).toHaveLength(4);
+    r.legs.forEach((leg, i) => {
+      const state = i === w.hot ? 'hot' : i < w.hot ? 'past' : 'future';
+      expect(leg.state, `${stop} leg ${i}`).toBe(state);
+      expect(leg.opacity, `${stop} leg ${i}`).toBeCloseTo(
+        state === 'hot' ? 1 : state === 'past' ? 0.55 : 0.14,
+        2,
+      );
+      expect(leg.width).toBe(state === 'hot' ? '5.5px' : '4px');
+      expect(leg.ve).toBe('non-scaling-stroke');
+    });
+    r.pins.forEach((o, i) =>
+      expect(o, `${stop} pin ${i}`).toBeCloseTo(i === w.pin ? 1 : 0.45, 2),
+    );
+    expect(r.planes).toBe(1);
+    expect((r.box?.w ?? 0) * (r.box?.h ?? 0)).toBeGreaterThan(0);
+    transforms.add(r.plane);
+  }
+  expect(transforms.size).toBe(Object.keys(want).length);
+});
+
+test(`per-stop open map visuals (#14)`, async ({ page }, info) => {
+  test.skip(info.project.name !== 'chromium', 'pixel baseline is Chromium');
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/ui/components/lm-globe/?mode=day&motion=reduce');
+  const globe = page.locator('.demo lm-globe');
+  await globe.getByRole('button', { name: 'Open route map' }).click();
+  const stage = page
+    .getByRole('dialog', { name: 'Example route' })
+    .locator('.lm-globe-stage');
+  for (const stop of ['hero', 'sandals', 'bsc', 'move', 'booking']) {
+    await globe.evaluate((el, s) => el.setAttribute('stop', s), stop);
+    await expect(stage).toHaveScreenshot(`globe-stop-${stop}.png`, {
+      animations: 'disabled',
+    });
+  }
+});

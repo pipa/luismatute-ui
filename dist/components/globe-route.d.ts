@@ -14,4 +14,5 @@ export interface GlobeRoute {
 /** The built-in example route: four legs, the last (long) one hot. */
 export declare const defaultRoute: GlobeRoute;
 export declare function parseRoute(value: string | null): GlobeRoute;
+export * from './globe-stops.js';
 //# sourceMappingURL=globe-route.d.ts.map

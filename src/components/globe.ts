@@ -1,5 +1,12 @@
 import { globe as globeMarkup } from '../illustrations/svg/globe.ts';
-import { type GlobeRoute, parseRoute } from './globe-route.ts';
+import { planeTop } from '../illustrations/svg/plane-top.ts';
+import {
+  type GlobeRoute,
+  LEG_OPACITY,
+  parseRoute,
+  resolveStop,
+  routeState,
+} from './globe-route.ts';
 import { applyMotionPreference } from './motion.ts';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -12,6 +19,27 @@ export class LmGlobe extends HTMLElement {
   private closeBtn: HTMLButtonElement | null = null;
   private stage: HTMLElement | null = null;
   private stageSvg: SVGSVGElement | null = null;
+
+  static get observedAttributes(): string[] {
+    return ['stop'];
+  }
+
+  attributeChangedCallback(
+    name: string,
+    old: string | null,
+    now: string | null,
+  ): void {
+    if (name !== 'stop' || old === now || !this.stageSvg) return;
+    this.drawRoute(this.stageSvg);
+  }
+
+  /** The resolved stop: the `stop` attribute, else `html[data-theme]`. */
+  get currentStop(): string | null {
+    return resolveStop(
+      this.getAttribute('stop'),
+      document.documentElement.getAttribute('data-theme'),
+    );
+  }
 
   connectedCallback(): void {
     if (this.button) return;
@@ -110,21 +138,34 @@ export class LmGlobe extends HTMLElement {
   }
 
   private drawRoute(svg: SVGSVGElement): void {
+    for (const el of svg.querySelectorAll('.lm-leg, .lm-pin, .lm-plane'))
+      el.remove();
     const route = this.route();
-    const active = route.active ?? route.legs.length - 1;
+    const state = routeState(
+      route,
+      resolveStop(
+        this.getAttribute('stop'),
+        document.documentElement.getAttribute('data-theme'),
+      ),
+    );
     for (const [i, d] of route.legs.entries()) {
+      const leg = state.legs[i] ?? 'past';
       const path = document.createElementNS(SVG_NS, 'path');
       path.setAttribute('class', 'lm-leg');
-      path.setAttribute('data-hot', i === active ? 'true' : 'false');
+      path.setAttribute('data-hot', leg === 'hot' ? 'true' : 'false');
+      path.setAttribute('data-leg', leg);
       path.setAttribute('d', d);
       path.setAttribute('fill', 'none');
-      if (i !== active) path.setAttribute('opacity', '0.55');
+      if (leg !== 'hot') path.setAttribute('opacity', String(LEG_OPACITY[leg]));
       svg.append(path);
     }
-    for (const stop of route.stops) {
+    for (const [i, stop] of route.stops.entries()) {
       if (!Number.isFinite(stop.x) || !Number.isFinite(stop.y)) continue;
       const g = document.createElementNS(SVG_NS, 'g');
       g.setAttribute('class', 'lm-pin');
+      const o = state.pins[i] ?? 1;
+      g.setAttribute('data-current', o === 1 ? 'true' : 'false');
+      if (o !== 1) g.setAttribute('opacity', String(o));
       const outer = document.createElementNS(SVG_NS, 'circle');
       outer.setAttribute('cx', String(stop.x));
       outer.setAttribute('cy', String(stop.y));
@@ -138,6 +179,18 @@ export class LmGlobe extends HTMLElement {
       inner.setAttribute('r', '3');
       inner.setAttribute('fill', 'var(--lm-ink)');
       g.append(outer, inner);
+      svg.append(g);
+    }
+    if (state.plane) {
+      // live: translate(x y) rotate(deg) scale(0.62) translate(-60 -50)
+      const { x, y, deg } = state.plane;
+      const g = document.createElementNS(SVG_NS, 'g');
+      g.setAttribute('class', 'lm-plane');
+      g.setAttribute(
+        'transform',
+        `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${deg.toFixed(1)}) scale(0.62) translate(-60 -50)`,
+      );
+      g.innerHTML = planeTop.replace('<svg ', '<svg width="120" height="100" ');
       svg.append(g);
     }
   }
