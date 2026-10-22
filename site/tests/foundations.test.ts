@@ -36,6 +36,17 @@ describe('token data comes from dist/tokens.css', () => {
       durations.find((t) => t.name === '--lm-duration-copy-fade')?.value,
     ).toBe('0.28s');
   });
+  it('lists the seat-line motion tokens (#70)', () => {
+    expect(durations.find((t) => t.name === '--lm-dur-seat-line')?.value).toBe(
+      '1.45s',
+    );
+    expect(
+      durations.find((t) => t.name === '--lm-dur-seat-line-delay')?.value,
+    ).toBe('0.15s');
+    expect(easings.find((t) => t.name === '--lm-ease-seat-line')?.value).toBe(
+      'cubic-bezier(0.5, 0.06, 0.24, 1)',
+    );
+  });
 });
 
 describe('swatch labels pass AA', () => {
