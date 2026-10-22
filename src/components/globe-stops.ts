@@ -167,3 +167,11 @@ export function routeState(
     plane: d ? legPose(d, t) : null,
   };
 }
+
+/**
+ * Route stroke widths in screen px (non-scaling stroke). The hot leg is
+ * drawn at 5.5 and the other legs at 4, as on luismatute.me (#57, #59).
+ * The CSS in base.css is the source the browser uses; tests pin both.
+ */
+export const LEG_WIDTH_HOT = 5.5;
+export const LEG_WIDTH = 4;
