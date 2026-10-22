@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 - 2026-10-22
+
+### Added
+
+- **Seat-line motion tokens** for the boarding-pass seat-line draw (luismatute.me #12, #70): `--lm-dur-seat-line` (`1.45s`), `--lm-dur-seat-line-delay` (`0.15s`), `--lm-ease-seat-line` (`cubic-bezier(0.5, 0.06, 0.24, 1)`). They replace the site's `--seat-line-*` bridge tokens and are listed on Foundations → Motion tokens.
+
 ## 0.2.1 - 2026-10-15
 
 ### Added

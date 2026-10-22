@@ -1,6 +1,6 @@
 {
   "name": "@luismatute/ui",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Design system for Luis Matute's sites, extracted from the Wheels up design.",
   "license": "MIT",
   "type": "module",

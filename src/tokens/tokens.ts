@@ -388,6 +388,8 @@ export const easing = {
   out: 'cubic-bezier(0.16, 1, 0.3, 1)',
   /** Porthole glare sweep (blog sky, M1 Cruise). */
   glide: 'cubic-bezier(0.45, 0, 0.2, 1)',
+  /** Boarding-pass seat-line draw (luismatute.me #12). */
+  seatLine: 'cubic-bezier(0.5, 0.06, 0.24, 1)',
   drop: 'cubic-bezier(0.5, 0, 0.9, 0.5)',
   settle: 'cubic-bezier(0.2, 0.6, 0.4, 1)',
   stamp: 'cubic-bezier(0.6, 0, 1, 0.6)',
@@ -662,6 +664,9 @@ export const motion = {
   /** Porthole glare cycle (one ~1.3s sweep, then rest). */
   glare: '12s',
   glareDelay: '2s',
+  /** Boarding-pass seat-line draw and its start delay (luismatute.me #12). */
+  seatLine: '1.45s',
+  seatLineDelay: '0.15s',
   twinkle1: '3.2s',
   twinkle2: '4.4s',
   twinkle3: '5.6s',
