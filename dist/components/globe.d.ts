@@ -4,6 +4,10 @@ export declare class LmGlobe extends HTMLElement {
     private closeBtn;
     private stage;
     private stageSvg;
+    static get observedAttributes(): string[];
+    attributeChangedCallback(name: string, old: string | null, now: string | null): void;
+    /** The resolved stop: the `stop` attribute, else `html[data-theme]`. */
+    get currentStop(): string | null;
     connectedCallback(): void;
     disconnectedCallback(): void;
     private route;

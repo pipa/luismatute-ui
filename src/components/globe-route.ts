@@ -44,3 +44,7 @@ export function parseRoute(value: string | null): GlobeRoute {
     return defaultRoute;
   }
 }
+
+// Current-stop state (#14) lives in globe-stops.ts; its stop ids are the
+// scene ids, kept out of this file so the default route stays generic (#57).
+export * from './globe-stops.ts';

@@ -8,6 +8,7 @@ import Docs from '../../layouts/Docs.astro';
 const demo = `<lm-globe
   heading="Example route"
   description="The default route: four example legs."
+  stop="move"
 ></lm-globe>`;
 const fence = '-'.repeat(3);
 const astro = `${fence}
@@ -52,6 +53,7 @@ const toc = [
     <lm-globe
       heading="Example route"
       description="The default route: four example legs."
+      stop="move"
     ></lm-globe>
   </Demo>
   <Heading id="usage">Usage</Heading>
@@ -66,7 +68,7 @@ const toc = [
   <Heading id="in-astro" level={3}>In Astro</Heading>
   <CodeBlock lang="astro" filename="Globe.astro" code={astro} />
   <Heading id="attributes">Attributes</Heading>
-  <p>Read once, when the element connects.</p>
+  <p>Read once, when the element connects, except <code>stop</code>, which redraws on change.</p>
   <ApiTable
     caption="lm-globe attributes"
     head={['Attribute', 'Description']}
@@ -74,6 +76,7 @@ const toc = [
       { name: 'heading', detail: 'Dialog title. Defaults to <code>Route</code>.' },
       { name: 'description', detail: 'Optional line under the title. Hidden when absent.' },
       { name: 'route-style', detail: '<code>dashed</code> draws every leg as a red dash (13.64/8.36, round caps). Leave it off for the solid route.' },
+      { name: 'stop', detail: 'Current stop: <code>hero</code>, <code>plan</code>, <code>aa</code>, <code>sandals</code>, <code>bsc</code>, <code>fluky</code>, <code>move</code> or <code>booking</code>. Picks the hot leg (tomato, 5.5px) and puts the plane there, turned along the route. Earlier legs show at 0.55, later ones at 0.14, and pins other than the current one at 0.45. Without it, <code>data-theme</code> on <code>&lt;html&gt;</code> is used (<code>resort</code> → <code>sandals</code> and so on). With neither, <code>active</code> (or the last leg) is hot and there is no plane. Live: changing it redraws the map.' },
       { name: 'route', detail: 'JSON <code>{"stops":[{id,label,x,y}],"legs":["d"],"active":n}</code>. Invalid JSON falls back to the default route. <code>active</code> defaults to the last leg.' },
     ]}
   />

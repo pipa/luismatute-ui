@@ -1,6 +1,121 @@
 // src/illustrations/svg/globe.ts
 var globe = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1000 1000"><defs><clipPath id="__id__lmglobe__id__"><circle cx="500" cy="500" r="500"/></clipPath></defs><g clip-path="url(#__id__lmglobe__id__)"><circle cx="500" cy="500" r="500" fill="var(--lm-globe-ocean)"/><circle cx="500" cy="500" r="430" fill="var(--lm-globe-deep)"/><path fill="var(--lm-globe-land)" stroke="var(--lm-ink)" stroke-linejoin="round" stroke-width="3" d="M286 571q4 0 13 3 10 4 15 9 6 6 4 7-1 2-9-1-7-2-10 0-3 3-7 0-3-4-9-5-6 0-7-3t6-2q8 2 5-3-4-5-1-5Zm-50-44q8 5 25 22 16 17 4 14-13-3-10-4 3-2-2-9-4-6-14-12-10-7-9-8 0-2-11-3t-1-3 18 3Zm210-202q-2 4-4 7-2 4 0 3 2-2 2 1 1 2 7 4 7 2 5 5-1 3 1 2 2 0 3 5t-1 8q-1 4-4 3-4-1-3-5 0-4-4-1-4 4-6 3-1 0 1-2 2-1 0-3-3-1-12-2-8-1-1-13 8-12 12-15 5-4 4 0Zm245-51q2 9 0 13t-6 4q-3 1-4-4 0-4-3-8-3-3-2-9 2-6 7-6 5 1 8 10Zm-17-40q3-2 4 3 1 4 5 2 3-2 5 5 2 6 19 13t20 12 3 8-7 7-10 8q-3 5-5 5-1 0 1-7t-3-7q-5-1-4-3 2-2-2-6-3-4 0-5t2-3-7-3q-5-1-8-5-3-3-3-1t-4-3q-4-4-7-12-2-7 1-8Zm-78-34q8-5 12-1 5 4 0 12-6 8-13 8-8 0-7-2t-4-3q-4-1-2-3t-2-2q-4-1-4-3 1-2 6-2 6 1 14-4Zm-220-39q1 2-2 5t1 1q4-1 0 6-3 7 6 0 10-7 12-5 3 2-1 10-5 9-9 10t-7-1q-3-1-10 3-7 5-27 12t-27 13q-6 6-4 7 2 2-1 9-3 6-1 6 3 1 9 13t11 14q5 3 1 10-3 7-3 16 1 10 7 6 5-4 7-13 1-9 11-14 11-4 11-14 1-9 5-12t8-12 11-7q8 1 10 7 3 6 6 7t1 9q-3 8-1 11 3 4 12-3t12 7q4 14 2 16-1 3 8 11t12 13q3 6 3 11-1 4-14 11-13 6-30 4-16-3-33 8t-2 4q15-6 19-6t6 3q2 2-1 4-3 3-3 11-1 7 8 10 8 3 12-1t5 0q1 5-18 12-18 8-20 7-3-1-2-4 1-4 7-6 6-3-2-4-8 0-18 4-11 4-14 9-4 5-2 9 1 3-11 3t-6 2q5 1-1 0-7 0-12 6-5 7-6 4t-1 2-5 9q-4 4-2-4 1-8 0-4-2 5-3 3-2-1-2 11 0 13-22 24-23 12-24 32-2 21-5 27-2 7-6 2-4-4-4-19 1-15-2-20-2-6-6-5-3 1-6-4t-10-8q-8-3-11 1-2 5-11-3-10-8-14-9t-14 3q-10 5-18 23-9 19-9 28-1 8 1 17 1 10 4 15 4 5 15 6 12 1 15-5t13-4q11 2 0 23-12 20 1 25t17 10q5 5 1 22-4 16 3 28 7 13 14 12t17 6 14 5q5-2 8-7 4-6 10-5 5 1 12-3 7-3 9-1t-1 4-3 12 3 7 1-7q-1-5 4-6 5 0 7-3 1-3 7 5t19 12q14 5 16 3 3-2 13-1 10 2 6 2-4 1-2 3 1 2 7 6 7 3 7 6 1 3 7 7 7 3 15 12t21 11q14 2 25 9 12 6 15 15 4 9 6 10t-1 6q-3 6 6 8t9 6q0 3 4 1 3-2 16 1 13 4 14 8t21 4 32 6q12 7 20 8 9 2 11 8t0 12-17 20q-16 15-19 29-3 15-11 26-7 12-11 15-5 3-27 8-23 5-26 7-4 3-5 9t-18 17-34 8q-16-2-9 3t5 8q-3 2-18 1t-13 2q3 3-6 2t-3 2q7 3-2 4-8 2-2 5 7 2 2 4-5 1-1 2 5 2-12-2-16-4-27-10t-11-8q-1-2 3-1 4 2 2-1-1-2-4-2-4 0-10-9t-4-17q2-7-2-15-3-8-4-25-1-18-4-27-3-8-26-25t-40-46-22-35q-6-5-7-10t5-11q5-5 1-8t-4-8q0-4 3-10t7-6q5-1 6-5 2-5 7-8t4-14q0-12-6-23-5-11-10-10-4 1-3 5 1 3-1 4-1 0-12-8-10-9-14-17-5-9-5-7-1 2-3 0-1-3-1-7 0-5-4-16-4-12-15-20-12-8-20-23-8-14-13-15-6-1-20-24-14-22-17-32-2-10 1-20 3-9 1-28-2-20 2-53 3-33 0-26-4 6-8 41-3 35-5 36t-3-11q0-11 2-16t1-16q-1-12 2-13 2-2 8-24 5-21 5-33 0-11 9-31 8-20 35-49 26-30 24-24-2 7 4 1t9-18q4-11 28-37 24-25 25-31 2-5 13-19 11-15 8-14-3 0-4-3t6-4q8-2-5-4-13-1-12-6 2-6 4-2 2 3 7 3 5-1 9-6 3-5 17-12 14-6 18-6t2 3q-1 3 12-5 14-7 10-2t9 0q13-4 12-3t2 2q4 2 5 5 0 3-6 8-6 4-15 17-9 12-3 16 6 3 4 4-2 2 1 1 4 0 0 3-3 4 0 4 3-1 0 1-3 1-1 2 2 0 2 8 0 7-4 11-3 4 0 6 4 2 2 4-1 3 6 1 7-1 7 5t4 8q3 2 6 0 4-2 1 3-2 4 5 1 8-4 9-8t8-8 5 2q-2 7-4 8-3 1-1 2Zm-19-44q8 1 6 1-2 1 0 2 3 0 1 2-1 2 2 2 2-1-1 3-4 4 2 2t-2 9q-8 12-12 13t-5-2q-2-4-9-8-8-4-5-9 4-6 8-4 4 3 2-1t1-5q4 0 4-3-1-2 8-2Zm51 28q-2 1-3 4-1 2 6 0 6-2 4 3-3 5 2 4 5 0 6 5 2 6 4 6 3 0 6 9t0 10 5 9 3 14q-6 6-9 0-3-5-5-5t-1 11q2 11 1 14-2 2-7-3-6-5-3 2 2 8-6 2-7-5-11-13-3-8-9-9-7-2-4-4t9-1q7 2 12-4 5-5 3-17-3-12-7-12-4 1-11-5-7-5-3-11t9-8q5-3 9-3 3 1 0 2Zm-51-30q-11 1-14 0-2-1 1-5 3-3 13-6t12-1q1 1-1 7-1 5-11 5Zm56 5q3 0 3 6-1 6 6 8 7 3 6 5 0 3-7 2-8-1-12-5-4-3 0-7 3-5 3-7-1-2 1-2ZM381 15q16-4 9-1t6-1q12-4 41-8 28-4 75-3 46 1 77 7 30 5 74 21 44 15 72 30 27 14 65 42 37 28 58 51 22 22 49 60t30 47-2 5-4 1q1 4 11 16t6-1q-5-12 10 21 14 34 22 70 8 37 3 23-4-13-16-29-11-16-21-23-11-8-13-13-3-6 0 3 3 8-3 3-5-5 12 14 18 19 34 45 16 27 12 6-3-21 3 13 6 35 6 87 0 51-9 96-8 44-19 74-11 29-34 70-22 41-42 67-20 25-6 0t16-39 11-36 9-40q-1-19-8-28-7-8-4-26 2-17-2-22-3-4-10 3t-12 2q-4-5-23 11-18 16-26 19-9 2-18 9-10 8-15 8t-18-5-23-17q-10-11-17-15-7-3-8-9-1-5-5-9t-1-11q4-7 4-15 0-9-6-24t-1-36 16-42q11-20 9-31-3-12 1-21 5-9 5-17t11-10 17-12q7-11 20-21 13-9 16-14 3-4 5-3 3 2 4-1t6 11q6 13 29 12t21-15 6-16q7-2 13-6 5-4 6-11 0-6 2-6 2 1 3-5 1-5-11-26-12-22-12-13-1 8-3 8-2-1-2 4-1 6-4 7-3 2-12-5t-10-27 5-25q5-5 4-12t-4-10q-4-3-13-3-9 1-14-9-6-9-4 0 1 9 6 10 4 2 5 8t-3 5-5-4q-2-4-5-1-3 2 6 19t15 20q5 3 5 10t-2 6q-2-2-4-1-1 2 0 7 2 5-1 5-2 0 6 7 9 8 7 8-1 1 1 7 3 7-10-2-14-8-18-13-3-6-23-10-20-5-17 2 3 6 23 11 19 5 19 7 1 1-3 1-3 0 1 10 5 10-1 4t-15-7q-10-2-22-7-13-5-14 3-1 7-8 12-7 4-4 9 2 4-1 11-3 6 0 15 3 10 1 21-1 11-7 14-6 2-7 7-1 4-6 1t-11 0q-7 3-18-21-12-24-10-29 2-4 18-9 15-5 15-8t-4-11q-4-7-16-11-11-4-13-7-2-2 5-5 6-3 3-7t-1-3q3 0 6-5t1-8q-1-3 1-8t0-11q-3-6 2-11 4-5-6-17t-9-16 6 4q6 8 12 12 6 3 7 0 1-4 5-3 4 0 5-7 1-8 4-9 4-1 3-5t-8-11q-7-6-7-8-1-2 3-2t-4-5-6-10q2-6 1-9-2-2-4-2t-3 7q-2 7-6 6-4 0-11-5-7-4-15-15t-10-11q-3 0-3 3 0 2 11 17 12 16 18 18 6 1 16 16 10 14 8 15t0 4 1 4q-2 2-18-8t-15-4q2 5-3 7-5 1-16-8-10-10-12-22-1-12-13-31-11-20-12-29t7-8q7 0 6-1t4-3q4-2 11-4 7-1 13 4 5 5 2 8-4 4 8 5 12 2 7 0-5-3-2-4 2-1-5-7-8-6-6-7t-8-4-9-5 7 0q7 2-3-7-10-8-7-8 2-1-2-5-5-4-3-4t-4-2q-7-2-5-7 3-4-7-5-10 0-20-4t14-2 16 0q-8-3-25-4-18 0-13-1 4-1-2-4t-11-2q-6 1-12-2t-30-6-24-5-6-5q-5-2 2-2 8-1 4-3-3-2-19-4-17-1-21-4-5-3-49 0-44 4-68 13-25 9-37 9-11 0-9-2 3-1-6 1-8 1 0-4 7-6 20-10 12-4 7-3-6 1 10-3Zm484 180q9 5 19 15 11 10 12 7t-1-7q-3-4-13-16-11-11-14-12-2-2 1 2t-6 0q-9-5-17-15-8-9 1 6t18 20Zm-402-93q14 1 16 4 3 2-7 8-10 5-15 6-5 0-5 2-1 3-7 5-7 2-6 4t-3 3q-4 0-10-3-6-4-1-7t6-1 1-1q1-3 7-7t9-4q3 1 0-1-3-1-1-5 3-4 16-3Zm47 1q8-1 13 0 4 1-1 4t0 2 6 2q2 2 5-1 2-3 6-2 3 1 1 5-3 4 5 13 7 8 5 10-2 1 4 8 7 6 4 7-2 0 0 2 3 2 0 4-3 1 0 4t0 3q-3 1 3 5 7 4 5 5-2 2-6-1-4-2-4 2 1 4 7 3 5-1 0 6-6 7-11 9-6 2-12 11-6 8-12 10t-10 13q-5 10-6 20t-4 10-6-3-7-3q-5 0-11-11-6-10-8-23-3-13 3-22t1-9q-6 1-5-3t5-3-1-3q-6-4-4-7t0-12q-2-10-12-13-9-4-10-7t4-3q4-1 0-4-5-3 4-5 8-3 7-5 0-2 6-6 5-4 13-5t11 1q4 2 3 0-2-3 0-5 2-1 9-3Z"/><path fill="var(--lm-globe-shade)" fill-rule="evenodd" d="M-20-20h1040v1040H-20Zm-90 440a530 530 0 1 0 1060 0 530 530 0 1 0-1060 0" opacity=".26"/><path fill="var(--lm-foam)" fill-rule="evenodd" d="M-20-20h1040v1040H-20Zm30 560a530 530 0 1 0 1060 0 530 530 0 1 0-1060 0" opacity=".3"/></g><circle cx="500" cy="500" r="500" stroke="var(--lm-ink)" stroke-width="4.5"/></svg>';
 
+// src/illustrations/svg/plane-top.ts
+var planeTop = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 120 100"><path fill="var(--lm-sand)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M64 48 40 8q-2-5 4-5h8l30 41Z"/><path fill="var(--lm-sand)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M64 52 40 92q-2 5 4 5h8l30-41Z"/><path fill="var(--lm-lagoon)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M22 49 10 30h7l15 16Z"/><path fill="var(--lm-lagoon)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M22 51 10 70h7l15-16Z"/><rect width="108" height="18" x="6" y="41" fill="var(--lm-cream)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" rx="9"/><rect width="92" height="5" x="14" y="47.5" fill="var(--lm-tomato)"/><path fill="var(--lm-ink)" d="M98 44q10 2 12 6-2 4-12 6Z"/><rect width="16" height="8" x="52" y="22" fill="var(--lm-tomato)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" rx="4"/><rect width="16" height="8" x="52" y="70" fill="var(--lm-tomato)" stroke="var(--lm-ink)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" rx="4"/></svg>';
+
+// src/components/globe-stops.ts
+var GLOBE_STOPS = [
+  "hero",
+  "plan",
+  "aa",
+  "sandals",
+  "bsc",
+  "fluky",
+  "move",
+  "booking"
+];
+var STOP_LEG = {
+  hero: 0,
+  plan: 0,
+  aa: 0,
+  sandals: 1,
+  bsc: 2,
+  fluky: 2,
+  move: 3,
+  booking: 3
+};
+var STOP_T = {
+  hero: 0,
+  plan: 0,
+  aa: 1,
+  sandals: 1,
+  bsc: 1,
+  fluky: 1,
+  move: 0.66,
+  booking: 1
+};
+var THEME_STOP = {
+  hero: "hero",
+  high: "plan",
+  airport: "aa",
+  resort: "sandals",
+  campus: "bsc",
+  studio: "fluky",
+  move: "move",
+  platform: "booking",
+  aa: "aa",
+  sandals: "sandals",
+  bsc: "bsc",
+  fluky: "fluky",
+  booking: "booking"
+};
+var LEG_OPACITY = { hot: 1, past: 0.55, future: 0.14 };
+var PIN_DIM = 0.45;
+function resolveStop(stop, theme) {
+  if (stop && GLOBE_STOPS.includes(stop))
+    return stop;
+  if (theme && theme in THEME_STOP) return THEME_STOP[theme] ?? null;
+  return null;
+}
+function cubics(d2) {
+  const n = (d2.match(/-?\d*\.?\d+(?:e-?\d+)?/gi) ?? []).map(Number);
+  const out = [];
+  if (n.length < 2) return out;
+  let p = [n[0], n[1]];
+  for (let i = 2; i + 5 < n.length; i += 6) {
+    const c1 = [n[i], n[i + 1]];
+    const c2 = [n[i + 2], n[i + 3]];
+    const e2 = [n[i + 4], n[i + 5]];
+    out.push([p, c1, c2, e2]);
+    p = e2;
+  }
+  return out;
+}
+function legPose(d2, t) {
+  const segs = cubics(d2);
+  const tt = Math.min(1, Math.max(0, t));
+  if (!segs.length) return { x: 0, y: 0, deg: 0 };
+  const f = tt * segs.length;
+  const i = Math.min(segs.length - 1, Math.floor(f));
+  const u = f - i;
+  const [p0, p1, p2, p3] = segs[i];
+  const v = 1 - u;
+  const at = (k) => v * v * v * p0[k] + 3 * v * v * u * p1[k] + 3 * v * u * u * p2[k] + u * u * u * p3[k];
+  const tan = (k) => 3 * v * v * (p1[k] - p0[k]) + 6 * v * u * (p2[k] - p1[k]) + 3 * u * u * (p3[k] - p2[k]);
+  let dx = tan(0);
+  let dy = tan(1);
+  if (Math.hypot(dx, dy) < 1e-9) {
+    dx = p3[0] - p0[0];
+    dy = p3[1] - p0[1];
+  }
+  return { x: at(0), y: at(1), deg: Math.atan2(dy, dx) * 180 / Math.PI };
+}
+function routeState(route, stop) {
+  const last = route.legs.length - 1;
+  if (!stop) {
+    const active2 = route.active ?? last;
+    return {
+      active: active2,
+      legs: route.legs.map((_, i) => i === active2 ? "hot" : "past"),
+      pins: route.stops.map(() => 1),
+      plane: null
+    };
+  }
+  const active = Math.min(STOP_LEG[stop], last);
+  const t = STOP_T[stop];
+  const here = t <= 0 ? active : t >= 1 ? active + 1 : -1;
+  const d2 = route.legs[active];
+  return {
+    active,
+    legs: route.legs.map(
+      (_, i) => i === active ? "hot" : i < active ? "past" : "future"
+    ),
+    pins: route.stops.map((_, i) => i === here ? 1 : PIN_DIM),
+    plane: d2 ? legPose(d2, t) : null
+  };
+}
+
 // src/components/globe-route.ts
 var a = { id: "a", label: "Stop A", x: 276, y: 346 };
 var b = { id: "b", label: "Stop B", x: 258, y: 398 };
@@ -118,6 +233,20 @@ var LmGlobe = class extends HTMLElement {
   closeBtn = null;
   stage = null;
   stageSvg = null;
+  static get observedAttributes() {
+    return ["stop"];
+  }
+  attributeChangedCallback(name, old, now) {
+    if (name !== "stop" || old === now || !this.stageSvg) return;
+    this.drawRoute(this.stageSvg);
+  }
+  /** The resolved stop: the `stop` attribute, else `html[data-theme]`. */
+  get currentStop() {
+    return resolveStop(
+      this.getAttribute("stop"),
+      document.documentElement.getAttribute("data-theme")
+    );
+  }
   connectedCallback() {
     if (this.button) return;
     const id = `lm-globe-${++globeSeq}`;
@@ -212,21 +341,34 @@ var LmGlobe = class extends HTMLElement {
     this.stageSvg = svg;
   }
   drawRoute(svg) {
+    for (const el of svg.querySelectorAll(".lm-leg, .lm-pin, .lm-plane"))
+      el.remove();
     const route = this.route();
-    const active = route.active ?? route.legs.length - 1;
+    const state = routeState(
+      route,
+      resolveStop(
+        this.getAttribute("stop"),
+        document.documentElement.getAttribute("data-theme")
+      )
+    );
     for (const [i, d2] of route.legs.entries()) {
+      const leg = state.legs[i] ?? "past";
       const path = document.createElementNS(SVG_NS, "path");
       path.setAttribute("class", "lm-leg");
-      path.setAttribute("data-hot", i === active ? "true" : "false");
+      path.setAttribute("data-hot", leg === "hot" ? "true" : "false");
+      path.setAttribute("data-leg", leg);
       path.setAttribute("d", d2);
       path.setAttribute("fill", "none");
-      if (i !== active) path.setAttribute("opacity", "0.55");
+      if (leg !== "hot") path.setAttribute("opacity", String(LEG_OPACITY[leg]));
       svg.append(path);
     }
-    for (const stop of route.stops) {
+    for (const [i, stop] of route.stops.entries()) {
       if (!Number.isFinite(stop.x) || !Number.isFinite(stop.y)) continue;
       const g = document.createElementNS(SVG_NS, "g");
       g.setAttribute("class", "lm-pin");
+      const o = state.pins[i] ?? 1;
+      g.setAttribute("data-current", o === 1 ? "true" : "false");
+      if (o !== 1) g.setAttribute("opacity", String(o));
       const outer = document.createElementNS(SVG_NS, "circle");
       outer.setAttribute("cx", String(stop.x));
       outer.setAttribute("cy", String(stop.y));
@@ -240,6 +382,18 @@ var LmGlobe = class extends HTMLElement {
       inner.setAttribute("r", "3");
       inner.setAttribute("fill", "var(--lm-ink)");
       g.append(outer, inner);
+      svg.append(g);
+    }
+    if (state.plane) {
+      const { x, y, deg } = state.plane;
+      const g = document.createElementNS(SVG_NS, "g");
+      g.setAttribute("class", "lm-plane");
+      g.setAttribute(
+        "transform",
+        `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${deg.toFixed(1)}) scale(0.62) translate(-60 -50)`
+      );
+      g.setAttribute("fill", "none");
+      g.innerHTML = planeTop.replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, "");
       svg.append(g);
     }
   }
