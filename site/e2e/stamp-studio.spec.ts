@@ -4,8 +4,15 @@ import { inlineIllustration } from '../../src/illustrations/index.ts';
 // #59/#62: the stamp label shows once and fills the ring without clipping; the
 // year only appears with `date`; the studio island sign reads "Demo Studio".
 
+const stampLabelCases: Array<string | undefined> = [
+  undefined,
+  'Lisbon',
+  'Llanfairpwllgwyngyll',
+  'WMWMWMWMWMWMWMWMWM',
+];
+
 for (const width of [375, 1280]) {
-  for (const city of [undefined, 'Lisbon', 'Llanfairpwllgwyngyll']) {
+  for (const city of stampLabelCases) {
     test(`stamp label once, not clipped @${width} (${city ?? 'default'})`, async ({
       page,
     }) => {
@@ -57,7 +64,7 @@ for (const width of [375, 1280]) {
       expect(await label.getAttribute('lengthAdjust')).toBe('spacing');
       const size = Number(await label.getAttribute('font-size'));
       expect(size).toBeGreaterThanOrEqual(9);
-      if (city !== 'Llanfairpwllgwyngyll') {
+      if (city === undefined || city === 'Lisbon') {
         expect(size).toBe(22);
         expect(await label.getAttribute('letter-spacing')).toBe('3');
       }
