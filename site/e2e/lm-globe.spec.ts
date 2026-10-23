@@ -163,8 +163,11 @@ test('switching stop moves the hot leg, dims legs and pins, and turns the plane'
     });
   const want = {
     hero: { hot: 0, pin: 0 },
+    plan: { hot: 0, pin: 0 },
+    aa: { hot: 0, pin: 1 },
     sandals: { hot: 1, pin: 2 },
     bsc: { hot: 2, pin: 3 },
+    fluky: { hot: 2, pin: 3 },
     move: { hot: 3, pin: -1 },
     booking: { hot: 3, pin: 4 },
   } as const;
@@ -190,7 +193,8 @@ test('switching stop moves the hot leg, dims legs and pins, and turns the plane'
     expect((r.box?.w ?? 0) * (r.box?.h ?? 0)).toBeGreaterThan(0);
     transforms.add(r.plane);
   }
-  expect(transforms.size).toBe(Object.keys(want).length);
+  // hero/plan share a pose, as do bsc/fluky (same leg and t); the rest differ.
+  expect(transforms.size).toBe(Object.keys(want).length - 2);
 });
 
 test(`per-stop open map visuals (#14)`, async ({ page }, info) => {
@@ -202,7 +206,7 @@ test(`per-stop open map visuals (#14)`, async ({ page }, info) => {
   const stage = page
     .getByRole('dialog', { name: 'Example route' })
     .locator('.lm-globe-stage');
-  for (const stop of ['hero', 'sandals', 'bsc', 'move', 'booking']) {
+  for (const stop of ['hero', 'plan', 'aa', 'sandals', 'bsc', 'fluky', 'move', 'booking']) {
     await globe.evaluate((el, s) => el.setAttribute('stop', s), stop);
     await expect(stage).toHaveScreenshot(`globe-stop-${stop}.png`, {
       animations: 'disabled',
