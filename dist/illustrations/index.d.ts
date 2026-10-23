@@ -53,6 +53,23 @@ export interface IllustrationOptions {
     date?: string;
 }
 export declare const DEFAULT_STAMP_CITY = "Destination";
+/** Stamp label fitting floors (#62, Muse's spec). */
+export declare const STAMP_MIN_FONT = 9;
+export declare const STAMP_MIN_TRACKING_EM = -0.02;
+export declare const STAMP_MIN_SQUEEZE = 0.92;
+export interface StampFit {
+    fontSize: number;
+    /** Letter-spacing in px (rounded to 0.01). */
+    letterSpacing: number;
+    adjust: 'spacing' | 'spacingAndGlyphs';
+    textLength: number;
+}
+/**
+ * Fit a stamp label on one line around the ring (#62). Defaults stay as they were; long labels
+ * first tighten tracking in 0.01em steps (floor -0.02em), then drop the font 1px at a time
+ * (floor 9px), and only then squeeze glyphs, never below 92% of their natural width.
+ */
+export declare function fitStampLabel(label: string): StampFit;
 /** Inline an illustration. `prefix` keeps clip-path ids unique when the same art is used twice. */
 export declare function inlineIllustration(name: IllustrationName, prefix?: string, options?: IllustrationOptions): string;
 //# sourceMappingURL=index.d.ts.map
