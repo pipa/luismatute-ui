@@ -1312,15 +1312,45 @@ function illustrationNames() {
 var DEFAULT_STAMP_CITY = "Destination";
 var STAMP_RING = 486;
 var STAMP_EM = 18;
+var STAMP_MIN_FONT = 9;
+var STAMP_MIN_TRACKING_EM = -0.02;
+var STAMP_MIN_SQUEEZE = 0.92;
+var STAMP_FONT = 22;
+var STAMP_TRACKING_EM = 3 / STAMP_FONT;
+var STAMP_GLYPH_EM = (STAMP_EM - 3) / STAMP_FONT;
+function fitStampLabel(label) {
+  const n2 = [...label].length;
+  const round = (v) => Math.round(v * 100) / 100;
+  const width = (font2, em2) => n2 * font2 * (STAMP_GLYPH_EM + em2);
+  if (n2 * STAMP_EM <= STAMP_RING)
+    return { fontSize: STAMP_FONT, letterSpacing: 3, adjust: "spacing", textLength: STAMP_RING };
+  const steps = Math.round((STAMP_TRACKING_EM - STAMP_MIN_TRACKING_EM) * 100);
+  for (let i = 1; i <= steps + 1; i++) {
+    const em2 = Math.max(STAMP_MIN_TRACKING_EM, STAMP_TRACKING_EM - i * 0.01);
+    if (width(STAMP_FONT, em2) <= STAMP_RING)
+      return { fontSize: STAMP_FONT, letterSpacing: round(em2 * STAMP_FONT), adjust: "spacing", textLength: STAMP_RING };
+  }
+  const em = STAMP_MIN_TRACKING_EM;
+  for (let font2 = STAMP_FONT - 1; font2 >= STAMP_MIN_FONT; font2--)
+    if (width(font2, em) <= STAMP_RING)
+      return { fontSize: font2, letterSpacing: round(em * font2), adjust: "spacing", textLength: STAMP_RING };
+  const natural = width(STAMP_MIN_FONT, em);
+  return {
+    fontSize: STAMP_MIN_FONT,
+    letterSpacing: round(em * STAMP_MIN_FONT),
+    adjust: "spacingAndGlyphs",
+    textLength: Math.max(STAMP_RING, Math.ceil(natural * STAMP_MIN_SQUEEZE))
+  };
+}
 var escapeXml = (s) => s.replace(/[&<>"']/g, (c2) => `&#${c2.charCodeAt(0)};`);
 function inlineIllustration(name, prefix = name, options = {}) {
   const svg = illustrations[name];
   if (!svg) throw new Error(`Unknown illustration: ${name}`);
   const rawCity = (options.city?.trim() || DEFAULT_STAMP_CITY).toUpperCase();
   const label = `${rawCity} \xB7 ARRIVALS \xB7 `;
-  const adjust = [...label].length * STAMP_EM <= STAMP_RING ? "spacing" : "spacingAndGlyphs";
+  const { fontSize: fontSize2, letterSpacing: letterSpacing2, adjust, textLength } = fitStampLabel(label);
   const date = options.date?.trim();
-  let marked = svg.replaceAll("__id__", prefix).replaceAll("__city__", escapeXml(rawCity)).replace(/<text(\b[^>]*>)<textPath\b/g, `<text textLength="${STAMP_RING}" lengthAdjust="${adjust}"$1<textPath textLength="${STAMP_RING}" lengthAdjust="${adjust}"`);
+  let marked = svg.replaceAll("__id__", prefix).replaceAll("__city__", escapeXml(rawCity)).replace(/(<text\b[^>]*?)font-size="22"([^>]*?)letter-spacing="3"([^>]*><textPath\b)/g, (_m, a2, b2, c2) => `${a2}font-size="${fontSize2}"${b2}letter-spacing="${letterSpacing2}"${c2}`).replace(/<text(\b[^>]*>)<textPath\b/g, `<text textLength="${textLength}" lengthAdjust="${adjust}"$1<textPath textLength="${textLength}" lengthAdjust="${adjust}"`);
   marked = date ? marked.replaceAll("__date__", escapeXml(date)) : marked.replace(/<text\b[^>]*>__date__<\/text>/g, "");
   if (/\bclass="[^"]*\blm-art\b/.test(marked)) return marked;
   if (/<svg\b[^>]*\bclass="/.test(marked))

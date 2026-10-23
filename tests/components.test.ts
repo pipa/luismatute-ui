@@ -19,8 +19,12 @@ import { defineLmPause } from '../src/components/pause.ts';
 import { defineLmShot } from '../src/components/shot.ts';
 import {
   deprecatedIllustrations,
+  fitStampLabel,
   illustrations,
   inlineIllustration,
+  STAMP_MIN_FONT,
+  STAMP_MIN_SQUEEZE,
+  STAMP_MIN_TRACKING_EM,
 } from '../src/illustrations/index.ts';
 import { duration, skin } from '../src/tokens/tokens.ts';
 
@@ -452,7 +456,9 @@ describe('lm-globe night palette and dashed route (#57)', () => {
   // Sentinel (#61): Muse's copy fixes stay fixed in the art and in the shipped dist/.
   it('illustration art has no Factory sign or hard-coded 2017 (src and dist)', () => {
     for (const dir of ['src/illustrations/files', 'dist/illustrations']) {
-      for (const f of readdirSync(resolve(dir)).filter((n) => n.endsWith('.svg'))) {
+      for (const f of readdirSync(resolve(dir)).filter((n) =>
+        n.endsWith('.svg'),
+      )) {
         const text = readFileSync(resolve(dir, f), 'utf8');
         expect(text, `${dir}/${f}`).not.toMatch(/>\s*Factory\s*</);
         expect(text, `${dir}/${f}`).not.toMatch(/>\s*2017\s*</);
@@ -742,10 +748,17 @@ describe('deprecated island ids (#59)', () => {
   it('island-airport and island-campus match the old art, as id and as file (#18)', () => {
     expect(illustrations['island-airport']).toBe(illustrations['island-aa']);
     expect(illustrations['island-campus']).toBe(illustrations['island-bsc']);
-    expect(inlineIllustration('island-airport', 'x')).toBe(inlineIllustration('island-aa', 'x'));
-    expect(inlineIllustration('island-campus', 'x')).toBe(inlineIllustration('island-bsc', 'x'));
+    expect(inlineIllustration('island-airport', 'x')).toBe(
+      inlineIllustration('island-aa', 'x'),
+    );
+    expect(inlineIllustration('island-campus', 'x')).toBe(
+      inlineIllustration('island-bsc', 'x'),
+    );
     const file = (n: string) =>
-      readFileSync(resolve(__dirname, `../src/illustrations/files/${n}.svg`), 'utf8');
+      readFileSync(
+        resolve(__dirname, `../src/illustrations/files/${n}.svg`),
+        'utf8',
+      );
     expect(file('island-airport')).toBe(file('island-aa'));
     expect(file('island-campus')).toBe(file('island-bsc'));
     expect(Object.keys(illustrations)).toEqual(
@@ -786,12 +799,66 @@ describe('stamp city label (#59)', () => {
     );
   });
 
-  it('fills the ring once: spacing for short labels, squeezes long ones', () => {
+  it('fills the ring once: short labels keep the default spacing and size', () => {
     const short = inlineIllustration('stamp', 'st-g', { city: 'Lisbon' });
     expect(short).toContain('textLength="486" lengthAdjust="spacing" ');
-    const long = inlineIllustration('stamp', 'st-h', { city: 'Llanfairpwllgwyngyll' });
-    expect(long).toContain('lengthAdjust="spacingAndGlyphs"');
+    expect(short).toContain(
+      'font-size="22" font-weight="800" letter-spacing="3"',
+    );
+    expect(inlineIllustration('stamp', 'st-g2')).toContain(
+      'font-size="22" font-weight="800" letter-spacing="3"',
+    );
+  });
+
+  it('long names tighten, then shrink, without squeezing glyphs (#62)', () => {
+    const long = inlineIllustration('stamp', 'st-h', {
+      city: 'Llanfairpwllgwyngyll',
+    });
+    expect(long).not.toContain('spacingAndGlyphs');
+    expect(long).toContain('textLength="486" lengthAdjust="spacing"');
     expect(long.match(/ARRIVALS/g)).toHaveLength(1);
+    const fit = fitStampLabel('LLANFAIRPWLLGWYNGYLL · ARRIVALS · ');
+    expect(fit.fontSize).toBeLessThan(22);
+    expect(fit.fontSize).toBeGreaterThanOrEqual(STAMP_MIN_FONT);
+    expect(fit.letterSpacing).toBeCloseTo(
+      STAMP_MIN_TRACKING_EM * fit.fontSize,
+      2,
+    );
+    expect(long).toContain(`font-size="${fit.fontSize}"`);
+  });
+
+  it('tightens tracking in 0.01em steps before touching the font size', () => {
+    // 28 glyphs: 28*18=504 > 486 but fits at 22px once tracking drops.
+    const fit = fitStampLabel(`${'A'.repeat(17)} · ARRIVALS · `);
+    expect(fit.fontSize).toBe(22);
+    expect(fit.adjust).toBe('spacing');
+    const em = fit.letterSpacing / 22;
+    expect(em).toBeLessThan(3 / 22);
+    expect(em).toBeGreaterThanOrEqual(STAMP_MIN_TRACKING_EM - 0.001);
+    expect(
+      Math.abs((3 / 22 - em) * 100 - Math.round((3 / 22 - em) * 100)),
+    ).toBeLessThan(0.05);
+  });
+
+  it('pins the floors: 9px, -0.02em, squeeze never below 92% (#62)', () => {
+    expect(STAMP_MIN_FONT).toBe(9);
+    expect(STAMP_MIN_TRACKING_EM).toBe(-0.02);
+    expect(STAMP_MIN_SQUEEZE).toBe(0.92);
+    for (let n = 1; n <= 200; n++) {
+      const fit = fitStampLabel('W'.repeat(n));
+      expect(fit.fontSize).toBeGreaterThanOrEqual(9);
+      expect(fit.letterSpacing / fit.fontSize).toBeGreaterThanOrEqual(
+        -0.02 - 1e-3,
+      );
+      if (fit.adjust === 'spacingAndGlyphs') {
+        expect(fit.fontSize).toBe(9);
+        const natural = n * 9 * (15 / 22 - 0.02);
+        expect(fit.textLength).toBeGreaterThanOrEqual(natural * 0.92 - 1e-6);
+      } else expect(fit.textLength).toBe(486);
+    }
+    const huge = fitStampLabel('W'.repeat(120));
+    expect(huge.adjust).toBe('spacingAndGlyphs');
+    expect(huge.fontSize).toBe(9);
   });
 
   it('shows no year without a date, and the date when set', () => {
@@ -800,7 +867,9 @@ describe('stamp city label (#59)', () => {
     expect(none).not.toContain('font-size="46"');
     const dated = inlineIllustration('stamp', 'st-j', { date: '2026' });
     expect(dated).toMatch(/font-size="46"[^>]*>2026<\/text>/);
-    expect(inlineIllustration('stamp', 'st-k', { date: '<x>' })).toContain('&#60;x&#62;');
+    expect(inlineIllustration('stamp', 'st-k', { date: '<x>' })).toContain(
+      '&#60;x&#62;',
+    );
   });
 
   it('points the label at its own prefixed path, so it renders', () => {

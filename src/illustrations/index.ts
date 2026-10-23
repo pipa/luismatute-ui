@@ -91,6 +91,54 @@ const STAMP_RING = 486;
 /** Approximate advance per uppercase glyph at 22px/800 with letter-spacing 3. */
 const STAMP_EM = 18;
 
+/** Stamp label fitting floors (#62, Muse's spec). */
+export const STAMP_MIN_FONT = 9;
+export const STAMP_MIN_TRACKING_EM = -0.02;
+export const STAMP_MIN_SQUEEZE = 0.92;
+const STAMP_FONT = 22;
+/** Default tracking: letter-spacing 3px at 22px. */
+const STAMP_TRACKING_EM = 3 / STAMP_FONT;
+/** Approximate uppercase glyph advance in em (18px advance minus 3px tracking at 22px). */
+const STAMP_GLYPH_EM = (STAMP_EM - 3) / STAMP_FONT;
+
+export interface StampFit {
+  fontSize: number;
+  /** Letter-spacing in px (rounded to 0.01). */
+  letterSpacing: number;
+  adjust: 'spacing' | 'spacingAndGlyphs';
+  textLength: number;
+}
+
+/**
+ * Fit a stamp label on one line around the ring (#62). Defaults stay as they were; long labels
+ * first tighten tracking in 0.01em steps (floor -0.02em), then drop the font 1px at a time
+ * (floor 9px), and only then squeeze glyphs, never below 92% of their natural width.
+ */
+export function fitStampLabel(label: string): StampFit {
+  const n = [...label].length;
+  const round = (v: number) => Math.round(v * 100) / 100;
+  const width = (font: number, em: number) => n * font * (STAMP_GLYPH_EM + em);
+  if (n * STAMP_EM <= STAMP_RING)
+    return { fontSize: STAMP_FONT, letterSpacing: 3, adjust: 'spacing', textLength: STAMP_RING };
+  const steps = Math.round((STAMP_TRACKING_EM - STAMP_MIN_TRACKING_EM) * 100);
+  for (let i = 1; i <= steps + 1; i++) {
+    const em = Math.max(STAMP_MIN_TRACKING_EM, STAMP_TRACKING_EM - i * 0.01);
+    if (width(STAMP_FONT, em) <= STAMP_RING)
+      return { fontSize: STAMP_FONT, letterSpacing: round(em * STAMP_FONT), adjust: 'spacing', textLength: STAMP_RING };
+  }
+  const em = STAMP_MIN_TRACKING_EM;
+  for (let font = STAMP_FONT - 1; font >= STAMP_MIN_FONT; font--)
+    if (width(font, em) <= STAMP_RING)
+      return { fontSize: font, letterSpacing: round(em * font), adjust: 'spacing', textLength: STAMP_RING };
+  const natural = width(STAMP_MIN_FONT, em);
+  return {
+    fontSize: STAMP_MIN_FONT,
+    letterSpacing: round(em * STAMP_MIN_FONT),
+    adjust: 'spacingAndGlyphs',
+    textLength: Math.max(STAMP_RING, Math.ceil(natural * STAMP_MIN_SQUEEZE)),
+  };
+}
+
 const escapeXml = (s: string): string => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 /** Inline an illustration. `prefix` keeps clip-path ids unique when the same art is used twice. */
@@ -103,14 +151,15 @@ export function inlineIllustration(
   if (!svg) throw new Error(`Unknown illustration: ${name}`);
   const rawCity = (options.city?.trim() || DEFAULT_STAMP_CITY).toUpperCase();
   const label = `${rawCity} · ARRIVALS · `;
-  // Fill the ring once: spread short labels with spacing, squeeze long ones so they never clip.
+  // Fill the ring once: spread short labels with spacing; long ones tighten, then shrink (#62).
   // Set on both <text> (Firefox) and <textPath> (WebKit); Chromium honours either.
-  const adjust = [...label].length * STAMP_EM <= STAMP_RING ? 'spacing' : 'spacingAndGlyphs';
+  const { fontSize, letterSpacing, adjust, textLength } = fitStampLabel(label);
   const date = options.date?.trim();
   let marked = svg
     .replaceAll('__id__', prefix)
     .replaceAll('__city__', escapeXml(rawCity))
-    .replace(/<text(\b[^>]*>)<textPath\b/g, `<text textLength="${STAMP_RING}" lengthAdjust="${adjust}"$1<textPath textLength="${STAMP_RING}" lengthAdjust="${adjust}"`);
+    .replace(/(<text\b[^>]*?)font-size="22"([^>]*?)letter-spacing="3"([^>]*><textPath\b)/g, (_m, a, b, c) => `${a}font-size="${fontSize}"${b}letter-spacing="${letterSpacing}"${c}`)
+    .replace(/<text(\b[^>]*>)<textPath\b/g, `<text textLength="${textLength}" lengthAdjust="${adjust}"$1<textPath textLength="${textLength}" lengthAdjust="${adjust}"`);
   marked = date
     ? marked.replaceAll('__date__', escapeXml(date))
     : marked.replace(/<text\b[^>]*>__date__<\/text>/g, '');
