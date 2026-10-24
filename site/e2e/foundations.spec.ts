@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, type Page, test } from 'playwright/test';
+import { type BrowserContext, expect, type Page, test } from 'playwright/test';
 
 const pages = ['colour', 'type', 'spacing', 'radius', 'motion-tokens'];
 
@@ -14,38 +14,94 @@ test('every foundations page renders tokens as copy buttons', async ({
   }
 });
 
-test('token copy works by keyboard (Enter and Space) and announces', async ({
+declare global {
+  interface Window {
+    __copied?: string[];
+  }
+}
+
+/**
+ * Strict clipboard check on every engine (#82). Chromium grants clipboard
+ * permissions and reads the real clipboard back. Playwright can't grant them
+ * in Firefox or WebKit, so there an init script wraps
+ * navigator.clipboard.writeText to record the exact argument (and resolve).
+ */
+async function strictClipboard(
+  page: Page,
+  context: BrowserContext,
+  browserName: string,
+): Promise<() => Promise<string | undefined>> {
+  if (browserName === 'chromium') {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    return () => page.evaluate(() => navigator.clipboard.readText());
+  }
+  await page.addInitScript(() => {
+    window.__copied = [];
+    const clip = navigator.clipboard ?? ({} as Clipboard);
+    Object.defineProperty(clip, 'writeText', {
+      configurable: true,
+      value: async (t: string) => {
+        window.__copied?.push(String(t));
+      },
+    });
+    if (!navigator.clipboard)
+      Object.defineProperty(navigator, 'clipboard', { value: clip });
+  });
+  return () => page.evaluate(() => window.__copied?.at(-1));
+}
+
+test('token copy works by keyboard (Enter and Space), copies the exact token and announces', async ({
   page,
   context,
   browserName,
 }) => {
-  if (browserName === 'chromium')
-    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  const clipboard = await strictClipboard(page, context, browserName);
   await page.goto('/ui/foundations/spacing/');
   const name = page.getByRole('button', { name: 'Copy var(--lm-space-8)' });
   const value = page.getByRole('button', {
     name: 'Copy value of --lm-space-8',
   });
+  const live = page.locator('#copy-live');
   await name.focus();
   await page.keyboard.press('Enter');
-  const live = page.locator('#copy-live');
-  await expect(live).toHaveText(
-    /Copied var\(--lm-space-8\)|Text selected, press/,
-  );
-  if (browserName === 'chromium') {
-    await expect(name).toHaveAttribute('data-copied', '');
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-      'var(--lm-space-8)',
-    );
-  }
+  await expect(live).toHaveText('Copied var(--lm-space-8)');
+  await expect(name).toHaveAttribute('data-copied', '');
+  expect(await clipboard()).toBe('var(--lm-space-8)');
   await page.keyboard.press('Tab');
   await expect(value).toBeFocused();
   await page.keyboard.press('Space');
-  await expect(live).toHaveText(/Copied 8px|Text selected, press/);
-  if (browserName === 'chromium')
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-      '8px',
-    );
+  await expect(live).toHaveText('Copied 8px');
+  await expect(value).toHaveAttribute('data-copied', '');
+  expect(await clipboard()).toBe('8px');
+});
+
+test('token copy falls back to selecting the text when the clipboard rejects', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const clip = navigator.clipboard ?? ({} as Clipboard);
+    Object.defineProperty(clip, 'writeText', {
+      configurable: true,
+      value: () =>
+        Promise.reject(new DOMException('denied', 'NotAllowedError')),
+    });
+    if (!navigator.clipboard)
+      Object.defineProperty(navigator, 'clipboard', { value: clip });
+  });
+  await page.goto('/ui/foundations/spacing/');
+  const name = page.getByRole('button', { name: 'Copy var(--lm-space-8)' });
+  await name.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#copy-live')).toHaveText(
+    /^Copy failed\. Text selected, press (Ctrl\+C|⌘C)\.$/,
+  );
+  await expect(name).not.toHaveAttribute('data-copied', '');
+  // The fallback selects the button's visible label (the token name), not
+  // data-copy-text (var(...)); see #82 PR notes.
+  expect(await page.evaluate(() => String(window.getSelection()))).toBe(
+    await name.innerText(),
+  );
+  await expect(name).toHaveText('--lm-space-8');
 });
 
 test.describe('reduced motion', () => {
