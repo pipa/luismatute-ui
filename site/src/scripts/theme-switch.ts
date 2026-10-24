@@ -18,7 +18,9 @@ function sync(group: HTMLElement): void {
 export function initThemeSwitch(root: ParentNode = document): number {
   const groups = [...root.querySelectorAll<HTMLElement>('[data-theme-switch]')];
   for (const group of groups) {
-    for (const b of group.querySelectorAll<HTMLButtonElement>('[data-mode-set]')) {
+    for (const b of group.querySelectorAll<HTMLButtonElement>(
+      '[data-mode-set]',
+    )) {
       b.addEventListener('click', () => {
         const mode = b.dataset.modeSet as ThemeMode;
         if (mode !== 'day' && mode !== 'night') return;

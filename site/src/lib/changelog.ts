@@ -20,6 +20,11 @@ export interface ChangelogSection {
   groups: ChangelogGroup[];
 }
 
+// NUL and SOH mark placeholders between the replace passes below.
+// Built with RegExp so the control characters are not regex literals.
+const SITE_MARK = new RegExp(`${'\u0001'}(\\d+)`, 'g');
+const CODE_MARK = new RegExp(`${'\u0000'}(\\d+)${'\u0000'}`, 'g');
+
 const ref = (repo: string, n: string) =>
   `<a href="${repo}/issues/${n}">#${n}</a>`;
 
@@ -41,11 +46,8 @@ export function inline(text: string): string {
           `luismatute.me ${refs.replace(/#(\d+)/g, '\u0001$1')}`,
       )
       .replace(/#(\d+)/g, (_, n: string) => ref(REPO, n))
-      .replace(/\u0001(\d+)/g, (_, n: string) => ref(SITE_REPO, n))
-      .replace(
-        /\u0000(\d+)\u0000/g,
-        (_, i: string) => `<code>${codes[Number(i)]}</code>`,
-      )
+      .replace(SITE_MARK, (_, n: string) => ref(SITE_REPO, n))
+      .replace(CODE_MARK, (_, i: string) => `<code>${codes[Number(i)]}</code>`)
   );
 }
 

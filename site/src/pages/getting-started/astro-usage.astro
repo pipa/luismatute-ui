@@ -4,18 +4,20 @@ import Heading from '../../components/Heading.astro';
 import Docs from '../../layouts/Docs.astro';
 import { pkgName } from '../../lib/install';
 
-const layout = `---
+// A bare `---` line inside a template literal ends Biome's frontmatter parse early.
+const fence = '---';
+const layout = `${fence}
 import '${pkgName}/tokens.css';
 import '${pkgName}/fonts.css';
 import '${pkgName}/base.css';
----
+${fence}
 <html lang="en">
   <head><meta charset="utf-8" /></head>
   <body><slot /></body>
 </html>`;
-const page = `---
+const page = `${fence}
 import Base from '../layouts/Base.astro';
----
+${fence}
 <Base>
   <lm-card variant="stop"><h2>Front-end developer</h2></lm-card>
   <lm-motion-toggle></lm-motion-toggle>

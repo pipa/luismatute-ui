@@ -4,14 +4,18 @@ import { pageChecks } from './component-page-checks';
 // #18 lm-globe page: the element as it is on main.
 test('demo renders and the route map opens and closes', async ({ page }) => {
   await page.goto('/ui/components/lm-globe/?motion=reduce');
-  const btn = page.locator('.demo lm-globe').getByRole('button', { name: 'Open route map' });
+  const btn = page
+    .locator('.demo lm-globe')
+    .getByRole('button', { name: 'Open route map' });
   await expect(btn).toBeVisible();
   await expect(btn.locator('svg')).toHaveCount(1);
   await btn.click();
   const dialog = page.getByRole('dialog', { name: 'Example route' });
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('.lm-leg')).toHaveCount(4);
-  await expect(dialog.getByRole('button', { name: 'Close route map' })).toBeFocused();
+  await expect(
+    dialog.getByRole('button', { name: 'Close route map' }),
+  ).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
   await expect(btn).toBeFocused();
@@ -27,7 +31,10 @@ const fills = (page: import('playwright/test').Page) =>
       sea: css(g?.querySelector(':scope > circle[r="430"]') ?? null, 'fill'),
       edge: css(g?.querySelector(':scope > circle[r="500"]') ?? null, 'fill'),
       land: css(g?.querySelector(':scope > path[stroke]') ?? null, 'fill'),
-      landLine: css(g?.querySelector(':scope > path[stroke]') ?? null, 'stroke'),
+      landLine: css(
+        g?.querySelector(':scope > path[stroke]') ?? null,
+        'stroke',
+      ),
       rim: css(svg.querySelector(':scope > circle[stroke]'), 'stroke'),
       hot: css(svg.querySelector('.lm-leg[data-hot="true"]'), 'stroke'),
       pin: css(svg.querySelector('.lm-pin circle'), 'fill'),
@@ -37,7 +44,9 @@ const fills = (page: import('playwright/test').Page) =>
 // #57: the palette is built into lm-globe now (no docs.css override).
 // Computed fills are read from the shapes themselves, so no probe lands on
 // an anti-aliased edge (Firefox draws edges about 1px off).
-test('night demo uses the built-in night globe palette, land and sea', async ({ page }) => {
+test('night demo uses the built-in night globe palette, land and sea', async ({
+  page,
+}) => {
   await page.goto('/ui/components/lm-globe/?mode=night&motion=reduce');
   const f = await fills(page);
   expect(f.sea).toBe('rgb(42, 50, 102)');
@@ -64,7 +73,12 @@ for (const mode of ['day', 'night'] as const) {
       el.setAttribute('route-style', 'dashed');
       return [...el.querySelectorAll('.lm-leg')].map((l) => {
         const s = getComputedStyle(l);
-        return { dash: s.strokeDasharray, cap: s.strokeLinecap, stroke: s.stroke, ve: s.getPropertyValue('vector-effect') };
+        return {
+          dash: s.strokeDasharray,
+          cap: s.strokeLinecap,
+          stroke: s.stroke,
+          ve: s.getPropertyValue('vector-effect'),
+        };
       });
     });
     expect(legs).toHaveLength(4);
@@ -81,9 +95,16 @@ for (const mode of ['day', 'night'] as const) {
     test.skip(info.project.name !== 'chromium', 'pixel baseline is Chromium');
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/ui/components/lm-globe/?mode=${mode}&motion=reduce`);
-    await page.locator('.demo lm-globe').getByRole('button', { name: 'Open route map' }).click();
-    const stage = page.getByRole('dialog', { name: 'Example route' }).locator('.lm-globe-stage');
-    await expect(stage).toHaveScreenshot(`globe-open-${mode}.png`, { animations: 'disabled' });
+    await page
+      .locator('.demo lm-globe')
+      .getByRole('button', { name: 'Open route map' })
+      .click();
+    const stage = page
+      .getByRole('dialog', { name: 'Example route' })
+      .locator('.lm-globe-stage');
+    await expect(stage).toHaveScreenshot(`globe-open-${mode}.png`, {
+      animations: 'disabled',
+    });
   });
 }
 
@@ -96,7 +117,8 @@ for (const style of ['solid', 'dashed'] as const) {
     await page.setViewportSize({ width: 375, height: 800 });
     await page.goto('/ui/components/lm-globe/?motion=reduce');
     const globe = page.locator('.demo lm-globe');
-    if (style === 'dashed') await globe.evaluate((el) => el.setAttribute('route-style', 'dashed'));
+    if (style === 'dashed')
+      await globe.evaluate((el) => el.setAttribute('route-style', 'dashed'));
     await globe.getByRole('button', { name: 'Open route map' }).click();
     const dialog = page.getByRole('dialog', { name: 'Example route' });
     await expect(dialog).toBeVisible();
@@ -126,7 +148,11 @@ for (const style of ['solid', 'dashed'] as const) {
     const stage = await dialog.locator('.lm-globe-stage').boundingBox();
     expect(stage?.x ?? -1).toBeGreaterThanOrEqual(0);
     expect((stage?.x ?? 0) + (stage?.width ?? 999)).toBeLessThanOrEqual(375);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth - window.innerWidth,
+      ),
+    ).toBeLessThanOrEqual(0);
   });
 }
 
@@ -186,9 +212,9 @@ test('switching stop moves the hot leg, dims legs and pins, and turns the plane'
       expect(leg.width).toBe(state === 'hot' ? '5.5px' : '4px');
       expect(leg.ve).toBe('non-scaling-stroke');
     });
-    r.pins.forEach((o, i) =>
-      expect(o, `${stop} pin ${i}`).toBeCloseTo(i === w.pin ? 1 : 0.45, 2),
-    );
+    for (const [i, o] of r.pins.entries()) {
+      expect(o, `${stop} pin ${i}`).toBeCloseTo(i === w.pin ? 1 : 0.45, 2);
+    }
     expect(r.planes).toBe(1);
     expect((r.box?.w ?? 0) * (r.box?.h ?? 0)).toBeGreaterThan(0);
     transforms.add(r.plane);
@@ -206,7 +232,16 @@ test(`per-stop open map visuals (#14)`, async ({ page }, info) => {
   const stage = page
     .getByRole('dialog', { name: 'Example route' })
     .locator('.lm-globe-stage');
-  for (const stop of ['hero', 'plan', 'aa', 'sandals', 'bsc', 'fluky', 'move', 'booking']) {
+  for (const stop of [
+    'hero',
+    'plan',
+    'aa',
+    'sandals',
+    'bsc',
+    'fluky',
+    'move',
+    'booking',
+  ]) {
     await globe.evaluate((el, s) => el.setAttribute('stop', s), stop);
     await expect(stage).toHaveScreenshot(`globe-stop-${stop}.png`, {
       animations: 'disabled',

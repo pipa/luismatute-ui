@@ -17,7 +17,14 @@ interface Props {
   /** Page draws its own heading block (404): no crumb, title, lede or pager. */
   bare?: boolean;
 }
-const { title, description, slug, toc = [], extraCss, bare = false } = Astro.props;
+const {
+  title,
+  description,
+  slug,
+  toc = [],
+  extraCss,
+  bare = false,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 // The crumb is the page kicker. When the group and the title are the same
 // word (Changelog), show that one item instead of "Changelog / Changelog".
