@@ -104,6 +104,48 @@ test('token copy falls back to selecting the text when the clipboard rejects', a
   await expect(name).toHaveText('--lm-space-8');
 });
 
+test('token copy fallback reuses one aria-hidden span and clears it after a successful copy', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const clip = navigator.clipboard ?? ({} as Clipboard);
+    (window as unknown as { failCopy: boolean }).failCopy = true;
+    Object.defineProperty(clip, 'writeText', {
+      configurable: true,
+      value: () =>
+        (window as unknown as { failCopy: boolean }).failCopy
+          ? Promise.reject(new DOMException('denied', 'NotAllowedError'))
+          : Promise.resolve(),
+    });
+    if (!navigator.clipboard)
+      Object.defineProperty(navigator, 'clipboard', { value: clip });
+  });
+  await page.goto('/ui/foundations/spacing/');
+  const name = page.getByRole('button', { name: 'Copy var(--lm-space-8)' });
+  const live = page.locator('#copy-live');
+  const span = page.locator('span.tok-copy-sel');
+  await name.focus();
+  for (let i = 0; i < 3; i++) {
+    await page.keyboard.press('Enter');
+    await expect(live).toHaveText(/^Copy failed\./);
+    await page.evaluate(() => {
+      const el = document.getElementById('copy-live');
+      if (el) el.textContent = '';
+    });
+  }
+  await expect(span).toHaveCount(1);
+  await expect(span).toHaveAttribute('aria-hidden', 'true');
+  await expect(span).toHaveText('var(--lm-space-8)');
+  await page.evaluate(() => {
+    (window as unknown as { failCopy: boolean }).failCopy = false;
+  });
+  await page.keyboard.press('Enter');
+  await expect(live).toHaveText('Copied var(--lm-space-8)');
+  await expect(span).toHaveCount(1);
+  await expect(span).toHaveText('');
+  expect(await page.evaluate(() => String(window.getSelection()))).toBe('');
+});
+
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
   test('easing demos jump instead of animating', async ({ page }) => {

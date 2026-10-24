@@ -114,6 +114,25 @@ describe('token click-to-copy', () => {
       'Copy failed. Text selected, press ⌘C.',
     );
   });
+  it('reuses one aria-hidden span across failed copies and clears it after a successful copy', async () => {
+    initTokenCopy(document);
+    const b = document.querySelector<HTMLButtonElement>(
+      'button.tok-copy',
+    ) as HTMLButtonElement;
+    const fail = async () => {
+      throw new Error('blocked');
+    };
+    for (let i = 0; i < 3; i++)
+      expect(await copyToken(b, { writeText: fail })).toBe(false);
+    const spans = document.querySelectorAll('span.tok-copy-sel');
+    expect(spans).toHaveLength(1);
+    expect(spans[0]?.getAttribute('aria-hidden')).toBe('true');
+    expect(spans[0]?.textContent).toBe('var(--lm-ink)');
+    expect(await copyToken(b, { writeText: async () => {} })).toBe(true);
+    expect(document.querySelectorAll('span.tok-copy-sel')).toHaveLength(1);
+    expect(spans[0]?.textContent).toBe('');
+    expect(window.getSelection()?.toString()).toBe('');
+  });
 });
 
 describe('foundations CSS', () => {
