@@ -46,7 +46,7 @@ export function pathLine(item: KitItem): string {
 
 export const INLINE_EXAMPLE = `import { inlineIllustration } from '@luismatute/ui/illustrations';
 
-// Inline art reads the --lm-* tokens, so it follows data-theme on its container.
+// Inline art reads the --lm-* tokens, so it follows data-mode on its container.
 el.innerHTML = inlineIllustration('palm');
 
 // As a file (fills fall back to their built-in colours):
