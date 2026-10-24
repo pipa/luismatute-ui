@@ -773,6 +773,15 @@ h3[id] {
 code.tok {
   padding: 2px 6px;
 }
+/* Off-screen holder the token-copy fallback selects (the value, not the label). */
+.tok-copy-sel {
+  position: fixed;
+  top: 0;
+  left: -9999px;
+  white-space: pre;
+  user-select: text;
+}
+
 button.tok-copy {
   position: relative;
   isolation: isolate;

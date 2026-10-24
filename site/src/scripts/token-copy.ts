@@ -2,13 +2,29 @@
  * Click-to-copy for token names and values on the Foundations pages.
  * Progressive: tokens ship as plain <code>; this upgrades each one to a real
  * <button> (Enter/Space) that copies its data-copy-text, shares the slice 2
- * live region and timer, and falls back to selecting the text.
+ * live region and timer, and falls back to selecting the copyable value
+ * (data-copy-text, e.g. var(--lm-space-8)), not the button's visible label.
  */
 import { COPIED_MS, type CopyDeps, copyShortcut } from './copy';
 
-function select(el: HTMLElement): void {
+const SEL_CLASS = 'tok-copy-sel';
+
+/**
+ * Select `text` so Ctrl+C / ⌘C copies it. The value lives in an off-screen,
+ * aria-hidden span (one per document, reused) because the button shows the
+ * label, not the value.
+ */
+function selectValue(text: string): void {
+  let holder = document.querySelector<HTMLElement>(`span.${SEL_CLASS}`);
+  if (!holder) {
+    holder = document.createElement('span');
+    holder.className = SEL_CLASS;
+    holder.setAttribute('aria-hidden', 'true');
+    document.body.append(holder);
+  }
+  holder.textContent = text;
   const range = document.createRange();
-  range.selectNodeContents(el);
+  range.selectNodeContents(holder);
   const sel = window.getSelection();
   sel?.removeAllRanges();
   sel?.addRange(range);
@@ -31,7 +47,7 @@ export async function copyToken(
     if (live) live.textContent = `Copied ${text}`;
   } catch {
     ok = false;
-    select(button);
+    selectValue(text);
     if (live)
       live.textContent = `Copy failed. Text selected, press ${copyShortcut(deps.platform)}.`;
   }

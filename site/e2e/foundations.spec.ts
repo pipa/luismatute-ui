@@ -96,10 +96,10 @@ test('token copy falls back to selecting the text when the clipboard rejects', a
     /^Copy failed\. Text selected, press (Ctrl\+C|⌘C)\.$/,
   );
   await expect(name).not.toHaveAttribute('data-copied', '');
-  // The fallback selects the button's visible label (the token name), not
-  // data-copy-text (var(...)); see #82 PR notes.
+  // The fallback selects the copyable value (data-copy-text), not the
+  // button's visible label (#85).
   expect(await page.evaluate(() => String(window.getSelection()))).toBe(
-    await name.innerText(),
+    'var(--lm-space-8)',
   );
   await expect(name).toHaveText('--lm-space-8');
 });
