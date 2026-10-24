@@ -3,7 +3,10 @@ import { sea, sky, themeAliases, themes } from '../src/tokens/tokens.ts';
 
 // #59: old theme ids stay on the JS token objects as deprecated aliases.
 describe('deprecated token keys (#59)', () => {
-  const pairs = Object.entries(themeAliases) as [keyof typeof themeAliases, string][];
+  const pairs = Object.entries(themeAliases) as [
+    keyof typeof themeAliases,
+    string,
+  ][];
 
   it.each(pairs)('themes.%s resolves exactly like themes.%s', (old, now) => {
     expect(themes[old]).toBe((themes as Record<string, unknown>)[now]);
@@ -19,7 +22,9 @@ describe('deprecated token keys (#59)', () => {
         expect(old in sea).toBe(false);
         continue;
       }
-      expect((sea as Record<string, unknown>)[old]).toBe((sea as Record<string, unknown>)[now]);
+      expect((sea as Record<string, unknown>)[old]).toBe(
+        (sea as Record<string, unknown>)[now],
+      );
     }
   });
 
@@ -30,7 +35,8 @@ describe('deprecated token keys (#59)', () => {
 
   it('aliases stay out of enumeration (no duplicate CSS or docs entries)', () => {
     for (const obj of [themes, sky, sea]) {
-      for (const old of Object.keys(themeAliases)) expect(Object.keys(obj)).not.toContain(old);
+      for (const old of Object.keys(themeAliases))
+        expect(Object.keys(obj)).not.toContain(old);
     }
   });
 });

@@ -95,18 +95,33 @@ export const skin = {
   lensTintOpacity: '0.82',
 } as const;
 
-
 /** Old ids kept on `sky`, `sea` and `themes` (#59). Each is a non-enumerable getter for its new key. */
 type LegacyKeys<T> = {
-  /** @deprecated Use `airport`. */ readonly aa: T extends { airport: infer V } ? V : never;
-  /** @deprecated Use `resort`. */ readonly sandals: T extends { resort: infer V } ? V : never;
-  /** @deprecated Use `campus`. */ readonly bsc: T extends { campus: infer V } ? V : never;
-  /** @deprecated Use `studio`. */ readonly fluky: T extends { studio: infer V } ? V : never;
+  /** @deprecated Use `airport`. */ readonly aa: T extends { airport: infer V }
+    ? V
+    : never;
+  /** @deprecated Use `resort`. */ readonly sandals: T extends {
+    resort: infer V;
+  }
+    ? V
+    : never;
+  /** @deprecated Use `campus`. */ readonly bsc: T extends { campus: infer V }
+    ? V
+    : never;
+  /** @deprecated Use `studio`. */ readonly fluky: T extends { studio: infer V }
+    ? V
+    : never;
 };
 type LegacyPlatform<T> = {
-  /** @deprecated Use `platform`. */ readonly booking: T extends { platform: infer V } ? V : never;
+  /** @deprecated Use `platform`. */ readonly booking: T extends {
+    platform: infer V;
+  }
+    ? V
+    : never;
 };
-type WithLegacy<T> = T & LegacyKeys<T> & ('platform' extends keyof T ? LegacyPlatform<T> : unknown);
+type WithLegacy<T> = T &
+  LegacyKeys<T> &
+  ('platform' extends keyof T ? LegacyPlatform<T> : unknown);
 
 function withLegacy<T extends object>(base: T): WithLegacy<T> {
   const legacy: Record<string, string> = {

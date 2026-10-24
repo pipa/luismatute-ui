@@ -22,10 +22,14 @@ export function pageChecks(slug: string, snippet: string): void {
       };
     });
     await page.goto(url);
-    const button = page.locator('.demo').getByRole('button', { name: 'Copy HTML snippet' });
+    const button = page
+      .locator('.demo')
+      .getByRole('button', { name: 'Copy HTML snippet' });
     await button.click();
     await expect(button).toHaveText('Copied');
-    const written = await page.evaluate(() => (window as unknown as { __clip?: string }).__clip ?? '');
+    const written = await page.evaluate(
+      () => (window as unknown as { __clip?: string }).__clip ?? '',
+    );
     expect(written).toContain(snippet);
     if (browserName === 'chromium') {
       const clip = await page.evaluate(() => navigator.clipboard.readText());
@@ -38,7 +42,12 @@ export function pageChecks(slug: string, snippet: string): void {
       await page.goto(`${url}?mode=${mode}&motion=reduce`);
       await page.locator('.demo-stage :defined').first().waitFor();
       const r = await new AxeBuilder({ page }).analyze();
-      expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
+      expect(
+        r.violations.map(
+          (v) =>
+            `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`,
+        ),
+      ).toEqual([]);
     });
   }
 

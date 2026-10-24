@@ -1,9 +1,9 @@
 /** Registers the demoed elements. Without JS the demos show their static markup. */
 import { defineLmAvatar } from '../../../dist/components/avatar.js';
 import { defineLmCard } from '../../../dist/components/card.js';
+import { defineLmChip } from '../../../dist/components/chip.js';
 import { defineLmFlightPlan } from '../../../dist/components/flight-plan.js';
 import { defineLmGlobe } from '../../../dist/components/globe.js';
-import { defineLmChip } from '../../../dist/components/chip.js';
 import { defineLmMore } from '../../../dist/components/more.js';
 import { defineLmMotionToggle } from '../../../dist/components/motion-toggle.js';
 import { defineLmPause } from '../../../dist/components/pause.js';

@@ -8,11 +8,14 @@ const root = fileURLToPath(new URL('../../site-dist/', import.meta.url));
 function walk(dir: string): string[] {
   return readdirSync(dir).flatMap((f) => {
     const p = join(dir, f);
-    if (statSync(p).isDirectory()) return f === 'pagefind' || f.startsWith('_') ? [] : walk(p);
+    if (statSync(p).isDirectory())
+      return f === 'pagefind' || f.startsWith('_') ? [] : walk(p);
     return f === 'index.html' ? [relative(root, dir)] : [];
   });
 }
-const routes = walk(root).map((r) => `/ui/${r ? `${r}/` : ''}`).sort();
+const routes = walk(root)
+  .map((r) => `/ui/${r ? `${r}/` : ''}`)
+  .sort();
 
 test('enumerates the docs routes', () => {
   expect(routes.length).toBeGreaterThan(10);
@@ -21,24 +24,40 @@ test('enumerates the docs routes', () => {
 
 for (const width of [320, 359, 360, 414]) {
   for (const route of routes) {
-    test(`${route} @${width}: no sideways scroll, header/nav targets >= 24px`, async ({ page }) => {
+    test(`${route} @${width}: no sideways scroll, header/nav targets >= 24px`, async ({
+      page,
+    }) => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto(route);
       const over = await page.evaluate(() => ({
         sw: document.documentElement.scrollWidth,
         cw: document.documentElement.clientWidth,
       }));
-      expect(over.sw, `scrollWidth ${over.sw} > clientWidth ${over.cw}`).toBeLessThanOrEqual(over.cw);
+      expect(
+        over.sw,
+        `scrollWidth ${over.sw} > clientWidth ${over.cw}`,
+      ).toBeLessThanOrEqual(over.cw);
       const small = await page
         .locator('header.head, nav[aria-label="Previous and next page"]')
-        .locator('a, button, input, select, [role="button"], [tabindex]:not([tabindex="-1"])')
+        .locator(
+          'a, button, input, select, [role="button"], [tabindex]:not([tabindex="-1"])',
+        )
         .evaluateAll((els) => {
           const vis = els.filter((e) => {
             const s = getComputedStyle(e);
             const r = e.getBoundingClientRect();
-            return s.visibility !== 'hidden' && s.display !== 'none' && r.width > 0 && r.height > 0;
+            return (
+              s.visibility !== 'hidden' &&
+              s.display !== 'none' &&
+              r.width > 0 &&
+              r.height > 0
+            );
           });
-          const items = vis.map((e, i) => ({ e, r: e.getBoundingClientRect(), i }));
+          const items = vis.map((e, i) => ({
+            e,
+            r: e.getBoundingClientRect(),
+            i,
+          }));
           const rects = items.map((t) => t.r);
           // WCAG 2.5.8: >= 24x24, or (spacing exception) a 24px circle centred on an
           // undersized target must not intersect another target or its circle.
@@ -54,7 +73,11 @@ for (const width of [320, 359, 360, 414]) {
                 return Math.hypot(nx - cx, ny - cy) < 12;
               });
             })
-            .map(({ e, r }) => ({ el: e.outerHTML.slice(0, 80), w: Math.round(r.width), h: Math.round(r.height) }));
+            .map(({ e, r }) => ({
+              el: e.outerHTML.slice(0, 80),
+              w: Math.round(r.width),
+              h: Math.round(r.height),
+            }));
         });
       expect(small).toEqual([]);
     });
@@ -63,8 +86,18 @@ for (const width of [320, 359, 360, 414]) {
 
 test('svg-kit lists generic island ids only', async ({ page }) => {
   await page.goto('/ui/illustrations/svg-kit/');
-  const ids = await page.locator('[data-kit-item]').evaluateAll((els) => els.map((e) => e.getAttribute('data-kit-item')));
-  for (const id of ['island-airport', 'island-campus', 'island-resort', 'island-studio']) expect(ids).toContain(id);
-  const text = (await page.locator('main').innerText()) + (await page.locator('[data-kit-item] pre').allTextContents()).join('\n');
+  const ids = await page
+    .locator('[data-kit-item]')
+    .evaluateAll((els) => els.map((e) => e.getAttribute('data-kit-item')));
+  for (const id of [
+    'island-airport',
+    'island-campus',
+    'island-resort',
+    'island-studio',
+  ])
+    expect(ids).toContain(id);
+  const text =
+    (await page.locator('main').innerText()) +
+    (await page.locator('[data-kit-item] pre').allTextContents()).join('\n');
   expect(text).not.toMatch(/\b(island-)?(sandals|fluky|aa|bsc)\b/i);
 });

@@ -24,7 +24,12 @@ export interface KitItem {
 }
 
 export const fileNames = Object.keys(files)
-  .map((p) => p.split('/').pop()!.replace(/\.svg$/, ''))
+  .map((p) =>
+    p
+      .split('/')
+      .pop()!
+      .replace(/\.svg$/, ''),
+  )
   .sort();
 
 export const kitItems: KitItem[] = fileNames
@@ -48,8 +53,17 @@ el.innerHTML = inlineIllustration('palm');
 import url from '@luismatute/ui/illustrations/palm.svg';`;
 
 export function snippet(item: KitItem): string {
-  const lines = [`import { inlineIllustration } from '@luismatute/ui/illustrations';`];
-  if (item.file) lines.unshift(`import url from '@luismatute/ui/illustrations/${item.id}.svg';`, `// <img src={url} alt="" />`);
-  lines.push(`// Inline, so fills follow the --lm-* tokens:`, `el.innerHTML = inlineIllustration('${item.id}');`);
+  const lines = [
+    `import { inlineIllustration } from '@luismatute/ui/illustrations';`,
+  ];
+  if (item.file)
+    lines.unshift(
+      `import url from '@luismatute/ui/illustrations/${item.id}.svg';`,
+      `// <img src={url} alt="" />`,
+    );
+  lines.push(
+    `// Inline, so fills follow the --lm-* tokens:`,
+    `el.innerHTML = inlineIllustration('${item.id}');`,
+  );
   return lines.join('\n');
 }
