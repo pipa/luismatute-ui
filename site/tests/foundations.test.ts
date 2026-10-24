@@ -109,7 +109,7 @@ describe('token click-to-copy', () => {
       },
     });
     expect(ok).toBe(false);
-    expect(window.getSelection()?.toString()).toBe('--lm-ink');
+    expect(window.getSelection()?.toString()).toBe('var(--lm-ink)');
     expect(document.getElementById('copy-live')?.textContent).toBe(
       'Copy failed. Text selected, press ⌘C.',
     );
