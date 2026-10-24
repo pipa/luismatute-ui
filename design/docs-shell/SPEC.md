@@ -27,70 +27,65 @@ Caveat is a **small accent** only: the “wheels up” mark in the top bar (14px
 
 ### Colour roles (no new hex)
 
-Light (default Auto when `prefers-color-scheme: light`):
+The docs have two themes, **Day** and **Night**, set on `html[data-mode]` (`day` | `night`). There is no Auto option (Luis dropped it on Oct 19). Shipped values live in `site/src/styles/docs.css` as `--lm-docs-*` aliases over package tokens.
 
-| Role | Token | Hex |
+Day (`:root`, and `html[data-mode="day"]`):
+
+| Role | Alias | Value |
 | --- | --- | --- |
-| Page, top bar | `--lm-paper` | `#fff6e4` |
-| Text | `--lm-ink` | `#2b1b14` |
-| Muted text | `--lm-ink-soft` | `#5b4536` (8.32:1 on paper) |
-| Links, group labels | `--lm-tomato-d` | `#a8321e` (6.23:1 on paper) |
-| Elevations | `--lm-white` | `#ffffff` |
-| Sunken / badge / table head | `--lm-sand` | `#f3e2c0` |
-| Sidebar, inline TOC | `--lm-cream` | `#fff4e2` |
-| Hairlines | `--lm-rule` | `rgba(43, 27, 20, 0.28)` |
-| Hover wash | `--lm-hover` | `rgba(246, 180, 60, 0.22)` |
-| Pressed / current mark | `--lm-marigold` | `#f6b43c` |
-| Focus ring | `--lm-ink` | 3px solid, offset 3px |
-| Overlay | `--lm-overlay` | `rgba(43, 27, 20, 0.55)` |
-| Hard shadow colour | `--lm-ink` | |
+| Page | `--lm-docs-page` | `--lm-paper` `#fff6e4` |
+| Text | `--lm-docs-ink` | `--lm-ink` `#2b1b14` |
+| Muted text | `--lm-docs-ink-soft` | `--lm-ink-soft` |
+| Rules, borders | `--lm-docs-rule` | `--lm-ink` |
+| Sidebar | `--lm-docs-side` | `--lm-sand` `#f3e2c0` |
+| Top bar | `--lm-docs-head` | `--lm-stage` `#fbd682` |
+| Links, focus ring | `--lm-docs-link`, `--lm-docs-focus` | `#1f7e7a` |
+| Current page, pressed | `--lm-docs-active-bg` / `--lm-docs-active-ink` | `--lm-marigold` / `--lm-ink` |
+| Inline TOC | `--lm-docs-toc-bg` | `--lm-cream` `#fff4e2` |
+| Search hit / url line | `--lm-docs-hit` / `--lm-docs-crumb` | `--lm-hover` / `--lm-tomato-d` |
+| Hard shadow colour | `--lm-docs-shadow` | `--lm-ink` |
+| Overlay | `--lm-docs-backdrop` | `rgb(18 13 44 / 0.55)` |
 
-Dark (Auto when `prefers-color-scheme: dark`, or saved Dark):
+Night (`html[data-mode="night"]`): the site's indigo night sky, never the package's brown paper.
 
-The brief’s `#111412` is **not** a package token. Do not add it. Dark canvas is **ink**.
+| Role | Alias | Value |
+| --- | --- | --- |
+| Page | `--lm-docs-page` | `--lm-sky-night-1` `#120d2c` |
+| Text | `--lm-docs-ink` | `--lm-moon` `#fff1cf` |
+| Muted text | `--lm-docs-ink-soft` | `#d9cfee` |
+| Rules, borders | `--lm-docs-rule` | `#7466bd` |
+| Sidebar, inline TOC | `--lm-docs-side`, `--lm-docs-toc-bg` | `--lm-sky-night-2` `#1b1640` |
+| Top bar | `--lm-docs-head` | `--lm-sky-night-3` `#241d52` |
+| Current page, search hit | `--lm-docs-active-bg`, `--lm-docs-hit` | `--lm-sky-night-4` `#2e2563` |
+| Links, accent, focus, url line, active text | `--lm-docs-link` etc. | `#ffd27a` |
+| Hard shadow colour | `--lm-docs-shadow` | `#05030f` |
 
-| Role | Token | Hex | Contrast |
-| --- | --- | --- | --- |
-| Page | `--lm-ink` | `#2b1b14` | — |
-| Text | `--lm-paper` | `#fff6e4` | 15.40:1 |
-| Muted text | `--lm-wheel` | `#a39282` | 5.51:1 |
-| Links, group labels | `--lm-marigold` | `#f6b43c` | 9.07:1 |
-| Elevations | `--lm-night` | `#120d2c` | |
-| Sunken (badge, table head) | `--lm-hair-line` | `#4b3428` | visible on ink |
-| Borders, dashed rails | `--lm-paper` | | 15.40:1 |
-| Focus ring | `--lm-paper` | | |
-| Overlay | `--lm-night` | solid (ink-tinted overlay is invisible on ink) |
-| Hard shadow colour | `--lm-paper` | |
-
-Do **not** remap `--lm-paper` / `--lm-ink` on `html`. Cards and illustrations stay paper tickets on both themes. Remap only the `--docs-*` aliases in `mock.css`.
+Do **not** remap `--lm-paper` / `--lm-ink` on `html` in the docs CSS. Cards and illustrations stay paper tickets in both themes. Remap only the `--lm-docs-*` aliases.
 
 Tomato `#e2492f` on paper is 3.74:1 — large text / chrome only. Lagoon `#1f7f7a` on paper is 4.47:1 — not body text. Leaf `#62a64e` on paper is 2.76:1 — not text. Ink-soft on ink is 1.85:1 — never muted-on-dark.
 
 ### Semantic aliases
 
 ```css
-:root { /* light values */ }
-@media (prefers-color-scheme: dark) { :root { /* dark values */ } }
-html[data-theme="light"] { /* light values */ }
-html[data-theme="dark"] { /* dark values */ }
+:root { /* day values */ }
+html[data-mode="night"] { /* night values */ }
 ```
 
-`--docs-*` names are in `mock.css`. Pixel may keep them or map 1:1 into the Astro layout.
+There is no `prefers-color-scheme` block in the CSS. The OS preference is only read by `theme-init.js` when nothing is saved (see below), and it always resolves to `day` or `night`. The mock (`mock/`, `--docs-*` names, Light/Dark/Auto) predates this and is kept as a historical reference only.
 
 ## Theme control and first paint
 
-Three-button segmented control. **No `<select>`.**
+Two-button segmented control: **Day** and **Night**. **No `<select>`.** There is no Auto button.
 
 ```html
-<fieldset class="docs-theme">
-  <legend class="lm-vh">Theme</legend>
-  <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
-  <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
-  <button type="button" data-theme-set="auto" aria-pressed="true">Auto</button>
+<fieldset class="theme-switch" hidden data-theme-switch>
+  <legend class="sr">Theme</legend>
+  <button type="button" data-mode-set="day" aria-pressed="false">Day</button>
+  <button type="button" data-mode-set="night" aria-pressed="false">Night</button>
 </fieldset>
 ```
 
-No `<select>`. A fieldset is the group; `aria-pressed` is the state.
+A fieldset is the group; `aria-pressed` marks the current mode. The group stays `hidden` until `site/src/scripts/theme-switch.ts` runs, so a no-JS page shows no dead control (the saved mode still applies through `theme-init.js`).
 
 | Part | Value |
 | --- | --- |
@@ -101,34 +96,33 @@ No `<select>`. A fieldset is the group; `aria-pressed` is the state.
 | Shadow | `3px 3px 0 var(--docs-shadow)` |
 | Idle fill | `--docs-elev` |
 | Hover | `--docs-hover` |
-| `aria-pressed="true"` | `--lm-marigold` fill, `--lm-ink` text |
+| `aria-pressed="true"` | `--lm-marigold` fill, `--lm-ink-fixed` text |
 | Type | Bricolage 13px / `--lm-font-size-small`, weight 600 |
 
-Storage key: `lm.ui.theme`. Values: `light` | `dark`. **Absence means Auto.**
+Storage: the shared cookie `lm-mode` (`day` | `night`, one year, `Path=/`, `SameSite=Lax`, `Domain=.luismatute.me` when on that domain, `Secure` on https), so the choice carries across luismatute.me, the blog and `/ui/`. It is mirrored in `localStorage['lm.ui.theme']` for older visits. Clicking a button saves that mode; there is no way to go back to "follow the OS" from the docs control.
 
 ### No flash of the wrong theme (CSP)
 
-Auto is the **CSS default**. `:root` follows `prefers-color-scheme`. No JavaScript is required for Auto on first paint.
-
-A saved Light or Dark choice is applied by a tiny **external, render-blocking** `theme.js` in `<head>` **before any stylesheet**. No `defer`. No `async`. No inline script — the site CSP hashes inline work and would reject a boot snippet.
+`theme-init.js` (built from `src/theme-init.ts`) is an **external, render-blocking** script in `<head>` **before any stylesheet**. No `defer`. No `async`. No inline script — the site CSP is `script-src 'self'` and would reject a boot snippet.
 
 ```html
 <head>
-  <script src="/ui/theme.js"></script>
-  <link rel="stylesheet" href="/ui/tokens.css" />
+  <script src="/ui/_astro/theme-init.[hash].js" data-lm-theme data-cookie-domain=".luismatute.me"></script>
+  <link rel="stylesheet" href="…" />
   …
 </head>
 ```
 
-`theme.js` (see `mock/theme.js`):
+It always sets `html[data-mode]` to `day` or `night`, reading in this order (bad values fall through):
 
-1. Read `localStorage['lm.ui.theme']`.
-2. If `light` or `dark`, set `html[data-theme]`.
-3. Otherwise leave `html` without `data-theme`.
+1. `?mode=` query (`day` | `night`; `light` / `dark` are accepted as aliases).
+2. The `lm-mode` cookie. A legacy `auto` value set by another site resolves through `prefers-color-scheme`.
+3. `localStorage['lm.ui.theme']`.
+4. `prefers-color-scheme` (`dark` → `night`, otherwise `day`).
 
-A saved Dark theme must **never** flash Light on load. If `theme.js` is deferred, async, inline, or placed after CSS, Dark users on a light OS will paint paper first. That fails this spec.
+A saved Night theme must **never** flash Day on load. If `theme-init.js` is deferred, async, inline, or placed after CSS, Night users on a light OS will paint paper first. That fails this spec.
 
-Docs `data-theme` is only `light` | `dark`. Scene themes (`hero`, `move`, …) stay on the **demo stage**, never on `html`.
+Docs `data-mode` is only `day` | `night`. Scene themes (`hero`, `move`, …) stay on the **demo stage** (`data-theme` there), never on `html`.
 
 ## Layout grid
 
@@ -177,7 +171,7 @@ Order (keyboard and visual, LTR):
 4. Caveat “wheels up”
 5. Version badge (from `package.json`; mock shows `v0.1.2`)
 6. Search trigger
-7. Theme Light / Dark / Auto
+7. Theme Day / Night
 8. GitHub → `https://github.com/pipa/luismatute-ui`
 9. luismatute.me → `https://luismatute.me`
 
@@ -218,7 +212,7 @@ Phone drawer: `translateX(-100%)` → `0` in `--lm-duration-copy` / `--lm-ease-o
 ## Component page
 
 1. Kicker `Components · Card` — tomato-d / marigold, mono 12px uppercase.
-2. Title `lm-card` — display `--lm-font-size-pass` (34–46), tomato text-shadow on light (`--lm-shadow-text`). On dark, shadow colour is `--lm-night` (no glow).
+2. Title `lm-card` — display `--lm-font-size-pass` (34–46), tomato text-shadow by Day (`--lm-shadow-text`). At Night, shadow colour is `--lm-night` (no glow).
 3. One-line lede — `--lm-font-size-lead` (18–21), muted, 68ch.
 4. Live demo frame.
 5. Dotted flight-path `hr.docs-flight` — 2px dotted `--docs-rule`, width `min(68ch, 100%)`, margin 32 0.
@@ -234,7 +228,7 @@ Headings are deep-linkable (`id` on the section or heading).
 
 | Part | Spec |
 | --- | --- |
-| Frame | 1px ink/paper border (`--lm-border-hairline`), radius 12 (`--lm-radius-skip`), `--lm-shadow-card` (6px 7px 0). Dark remaps shadow to paper. |
+| Frame | 1px ink/paper border (`--lm-border-hairline`), radius 12 (`--lm-radius-skip`), `--lm-shadow-card` (6px 7px 0). Night remaps shadow to paper. |
 | Chrome | 48px min, sand/night, 2px bottom border, three 7px dots (marigold / paper / tomato) matching `lm-shot` |
 | Label | Mono 10.5px uppercase tracking 0.06em |
 | Toggles | Pills, 36px min, 2px ink border, white idle, marigold when `aria-pressed="true"` |
@@ -251,13 +245,13 @@ Two tickets. Min 220×44, pad 12 16, radius 14, 2.5px border, shot shadow. Next 
 
 ## Code block (dark theme on both pages)
 
-Issue #18: dark code matching the palette. Block fill is **ink** on a light page, **night** on a dark page, so the block still reads as a separate ticket.
+Issue #18: dark code matching the palette. Block fill is the dark code panel in both themes (`--lm-docs-c-bg`: `--lm-sky-night-2` by Day, `--lm-code-bg` at Night), so the block still reads as a separate ticket.
 
 | Part | Spec |
 | --- | --- |
 | Radius | 14 |
 | Border | 2.5px `--docs-border` |
-| Shadow | `--lm-shadow-shot` / paper on dark |
+| Shadow | `--lm-shadow-shot` / paper at Night |
 | Caption | 44px, `--lm-hair-line` `#4b3428`, paper type, dashed sand bottom |
 | Filename | Mono 12px uppercase tracking 0.06em |
 | Pre | pad 16 18, 13px / 1.55 Plex Mono, paper text |
@@ -336,7 +330,7 @@ Pixel: bind the input to Pagefind. The mock filters three static rows so the lay
 
 **Callouts** (note, warning, tip): max 68ch, pad 14 16, radius 14, 2.5px `--docs-border`, elev fill. Shadow `4px 4px 0` in the kind colour (not a glow):
 
-| Kind | Light kind colour | Dark kind colour | Label contrast |
+| Kind | Day kind colour | Night kind colour | Label contrast |
 | --- | --- | --- | --- |
 | note | plum `#4a3570` | glass `#bfe6ee` | 9.61 / 12.42 |
 | warning | tomato-d `#a8321e` | beacon `#ff7a5c` | 6.23 / 6.45 |
@@ -354,13 +348,13 @@ Under reduced motion, duration becomes 0.01ms.
 
 ## Keyboard order
 
-Skip → (menu) → wordmark → search → Light → Dark → Auto → GitHub → site → sidebar → (inline TOC) → main → (aside TOC) → pager. Open dialogs and the drawer take the next tab stop and trap until closed.
+Skip → (menu) → wordmark → search → Day → Night → GitHub → site → sidebar → (inline TOC) → main → (aside TOC) → pager. Open dialogs and the drawer take the next tab stop and trap until closed.
 
 ## Files
 
 | File | Role |
 | --- | --- |
-| `mock/theme.js` | Render-blocking theme boot |
+| `mock/theme.js` | Mock-only theme boot (Light/Dark/Auto, superseded by `src/theme-init.ts`) |
 | `mock/mock.css` | Shell |
 | `mock/mock.js` | Toggle, drawer, search, copy, demo, shot query |
 | `mock/index.html` | Component page |
@@ -385,7 +379,7 @@ Shot helpers: `?shot=search`, `?shot=search-empty`, `?shot=drawer`. Theme stills
 - [ ] Copy + token copy announce through one polite live region
 - [ ] Reduced motion: no transform travel
 - [ ] Colour is not the only current-page cue (inset + weight)
-- [ ] Saved Dark never flashes Light (blocking `theme.js` before CSS)
+- [ ] Saved Night never flashes Day (blocking `theme-init.js` before CSS)
 - [ ] Base path `/ui/` on every in-site link in the real build
 
 ## Demo content
