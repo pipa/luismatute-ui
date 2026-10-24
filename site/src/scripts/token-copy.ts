@@ -30,6 +30,15 @@ function selectValue(text: string): void {
   sel?.addRange(range);
 }
 
+/** Empty the fallback span after a successful copy so no stale value lingers. */
+function clearValue(): void {
+  const holder = document.querySelector<HTMLElement>(`span.${SEL_CLASS}`);
+  if (!holder?.textContent) return;
+  const sel = window.getSelection();
+  if (sel?.anchorNode && holder.contains(sel.anchorNode)) sel.removeAllRanges();
+  holder.textContent = '';
+}
+
 export async function copyToken(
   button: HTMLButtonElement,
   deps: CopyDeps = {},
@@ -43,6 +52,7 @@ export async function copyToken(
   let ok = true;
   try {
     await write(text);
+    clearValue();
     button.setAttribute('data-copied', '');
     if (live) live.textContent = `Copied ${text}`;
   } catch {
